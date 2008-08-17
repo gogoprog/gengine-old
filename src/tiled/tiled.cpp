@@ -107,7 +107,6 @@ SCRIPT_REGISTERER()
                                             )
                                     end
                                 elseif component == "Physic" then
-                                    print(v)
                                     e:addComponent(
                                         ComponentPhysic(),
                                         {
@@ -128,8 +127,8 @@ SCRIPT_REGISTERER()
                                 end
                             end
 
-                            e.position.x = x * file.tilewidth + tile.width/2 + offset.x
-                            e.position.y = y * file.tileheight + tile.height/2 + offset.y
+                            e.position.x = (x-0.5) * file.tilewidth + tile.width/2 + offset.x
+                            e.position.y = (y-0.5) * file.tileheight + tile.height/2 + offset.y
 
                             table.insert(result, e)
                         end
