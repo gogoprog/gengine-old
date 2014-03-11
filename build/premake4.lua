@@ -8,7 +8,7 @@ solution "gengine"
 
       includedirs { "../src" }
 
-      links { "SDL2", "lua" }
+      links { "lua" }
 
       buildoptions { "-std=c++11" }
  
@@ -22,3 +22,8 @@ solution "gengine"
 
       configuration "*Emscripten"
          defines { "EMSCRIPTEN" }
+         targetname "gengine.bc"
+         postbuildcommands { "emcc gengine.bc -o gengine.html" }
+
+      configuration "not *Emscripten"
+         links { "SDL2" }

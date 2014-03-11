@@ -10,7 +10,27 @@ extern "C" {
 #include "lauxlib.h"
 }
 
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 using namespace gengine;
+
+window::Window mainWindow;
+unsigned long long last_ticks = 0, current_ticks;
+float dt;
+
+void loop()
+{
+    current_ticks = SDL_GetTicks();
+    dt = ( current_ticks - last_ticks ) / 1000.0f;
+
+    core::update(dt);
+
+    mainWindow.swap();
+
+    last_ticks = current_ticks;
+}
 
 int main()
 {
@@ -31,29 +51,20 @@ int main()
         s = lua_pcall(state, 0, LUA_MULTRET, 0);
     }
 
-    {
-        window::Window window;
-        window.init();
+    mainWindow.init();
 
-        unsigned long long last_ticks = 0, current_ticks;
-        float dt;
-
+    #ifndef EMSCRIPTEN
         while(!core::mustQuit())
         {
-            current_ticks = SDL_GetTicks();
-            dt = ( current_ticks - last_ticks ) / 1000.0f;
-
-            core::update(dt);
-
-            window.swap();
-
-            last_ticks = current_ticks;
+            loop();
         }
-    }
 
-    SDL_Quit();
+        SDL_Quit();
 
-    geLog("Terminated");
+        geLog("Terminated");
+    #else
+        emscripten_set_main_loop(loop, 0, 0);
+    #endif
 
     return 0;
 }

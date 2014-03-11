@@ -2,4 +2,5 @@ build/Makefile
 build/gengine.make
 build/obj
 build/gengine
+build/gengine.*
 
