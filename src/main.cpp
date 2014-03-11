@@ -1,5 +1,6 @@
 #include "kernel/debug.h"
 #include "window/window.h"
+#include "core/core.h"
 
 #include <SDL2/SDL.h>
 
@@ -32,9 +33,22 @@ int main()
 
     {
         window::Window window;
-        window.Init();
+        window.init();
 
-        SDL_Delay(3000);
+        unsigned long long last_ticks = 0, current_ticks;
+        float dt;
+
+        while(!core::mustQuit())
+        {
+            current_ticks = SDL_GetTicks();
+            dt = ( current_ticks - last_ticks ) / 1000.0f;
+
+            core::update(dt);
+
+            window.swap();
+
+            last_ticks = current_ticks;
+        }
     }
 
     SDL_Quit();

@@ -13,7 +13,8 @@ public:
     Window();
     ~Window();
 
-    void Init();
+    void init();
+    void swap();
 
 private:
     SDL_Window * pWindow;

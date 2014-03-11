@@ -11,7 +11,6 @@ Window::Window()
     :
     pWindow(nullptr)
 {
-    Init();
 }
 
 Window::~Window()
@@ -22,7 +21,7 @@ Window::~Window()
     }
 }
 
-void Window::Init()
+void Window::init()
 {
     pWindow = SDL_CreateWindow(
         "An SDL2 window",
@@ -31,7 +30,12 @@ void Window::Init()
         640,
         480,
         SDL_WINDOW_OPENGL
-    );
+        );
+}
+
+void Window::swap()
+{
+    SDL_GL_SwapWindow(pWindow);
 }
 
 }
