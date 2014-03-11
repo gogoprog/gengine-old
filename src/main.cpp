@@ -2,7 +2,7 @@
 #include "window/window.h"
 #include "core/core.h"
 
-#include <SDL2/SDL.h>
+#include "core/sdl.h"
 
 extern "C" {
 #include "lua.h"

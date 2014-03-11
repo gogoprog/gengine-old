@@ -1,6 +1,6 @@
 #include "window.h"
 
-#include <SDL2/SDL.h>
+#include "core/sdl.h"
 
 namespace gengine
 {

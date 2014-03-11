@@ -1,5 +1,5 @@
 solution "gengine"
-   configurations { "Debug", "Release" }
+   configurations { "Debug", "Release", "DebugEmscripten", "ReleaseEmscripten" }
 
    project "gengine"
       kind "ConsoleApp"
@@ -12,10 +12,13 @@ solution "gengine"
 
       buildoptions { "-std=c++11" }
  
-      configuration "Debug"
+      configuration "Debug*"
          defines { "DEBUG" }
          flags { "Symbols" }
  
-      configuration "Release"
+      configuration "Release*"
          defines { "NDEBUG" }
          flags { "Optimize" }
+
+      configuration "*Emscripten"
+         defines { "EMSCRIPTEN" }

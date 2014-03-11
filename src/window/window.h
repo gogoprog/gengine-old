@@ -1,6 +1,12 @@
 #pragma once
 
-struct SDL_Window;
+#ifdef EMSCRIPTEN
+#define INTERNAL_FORMAT SDL_Surface
+#else
+#define INTERNAL_FORMAT SDL_Window
+#endif
+
+struct INTERNAL_FORMAT;
 
 namespace gengine
 {
@@ -17,8 +23,10 @@ public:
     void swap();
 
 private:
-    SDL_Window * pWindow;
+    INTERNAL_FORMAT * pWindow;
 };
 
 }
 };
+
+#undef INTERNAL_FORMAT
