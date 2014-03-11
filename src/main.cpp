@@ -1,8 +1,8 @@
 #include "kernel/debug.h"
 #include "window/window.h"
 #include "core/core.h"
-
 #include "core/sdl.h"
+#include "graphics/opengl.h"
 
 extern "C" {
 #include "lua.h"
