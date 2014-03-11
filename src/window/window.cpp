@@ -14,6 +14,14 @@ Window::Window()
     Init();
 }
 
+Window::~Window()
+{
+    if(pWindow)
+    {
+        SDL_DestroyWindow(pWindow);
+    }
+}
+
 void Window::Init()
 {
     pWindow = SDL_CreateWindow(

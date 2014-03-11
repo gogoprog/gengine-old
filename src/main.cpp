@@ -30,10 +30,16 @@ int main()
         s = lua_pcall(state, 0, LUA_MULTRET, 0);
     }
 
-    window::Window window;
-    window.Init();
+    {
+        window::Window window;
+        window.Init();
 
-    SDL_Delay(3000);
+        SDL_Delay(3000);
+    }
+
+    SDL_Quit();
+
+    geLog("Terminated");
 
     return 0;
 }
