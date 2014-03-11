@@ -5,6 +5,8 @@ solution "gengine"
       kind "ConsoleApp"
       language "C++"
       files { "../src/**.h", "../src/**.cpp" }
+
+      links { "SDL2", "lua" }
  
       configuration "Debug"
          defines { "DEBUG" }

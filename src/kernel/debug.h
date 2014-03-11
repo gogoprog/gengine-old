@@ -2,7 +2,7 @@
 
 
 #ifdef DEBUG
-#define geLog(line) puts(line)
+#define geLog(line) puts("[gengine] " line)
 #else
 #define geLog(line)
 #endif
