@@ -11,6 +11,7 @@ namespace graphics
 class Shader
 {
 public:
+    uint getId() const { return id; }
     void init(const GLenum _type);
     void compile(const char *source);
 

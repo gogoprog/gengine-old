@@ -44,12 +44,16 @@ void System::init()
     Shader vertex_shader, fragment_shader;
     geLog("Creating default programs");
 
-
     vertex_shader.init(GL_VERTEX_SHADER);
     vertex_shader.compile(vertex_shader_source);
 
     fragment_shader.init(GL_FRAGMENT_SHADER);
     fragment_shader.compile(fragment_shader_source);
+
+    defaultProgram.init();
+    defaultProgram.attachShader(vertex_shader);
+    defaultProgram.attachShader(fragment_shader);
+    defaultProgram.link();
 }
 
 }
