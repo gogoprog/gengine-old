@@ -3,6 +3,7 @@
 #include "core_sdl.h"
 #include "input_system.h"
 #include "graphics_system.h"
+#include "window_window.h"
 
 namespace gengine
 {
@@ -10,6 +11,7 @@ namespace core
 {
 
 bool itMustQuit = false;
+window::Window mainWindow;
 
 bool mustQuit()
 {
@@ -18,11 +20,12 @@ bool mustQuit()
 
 void init()
 {
+    mainWindow.init();
     graphics::System::getInstance().init();
     input::System::getInstance().init();
 }
 
-void update(const float /*dt*/)
+void beginUpdate(const float /*dt*/)
 {
     SDL_Event e;
 
@@ -61,6 +64,11 @@ void update(const float /*dt*/)
             break;
         }
     }
+}
+
+void endUpdate(const float /*dt*/)
+{
+    mainWindow.swap();
 }
 
 }

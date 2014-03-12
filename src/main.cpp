@@ -1,9 +1,7 @@
 #include "debug.h"
-#include "window_window.h"
 #include "core.h"
 #include "core_sdl.h"
 #include "graphics_opengl.h"
-#include "input_system.h"
 
 extern "C" {
 #include "lua.h"
@@ -17,7 +15,6 @@ extern "C" {
 
 using namespace gengine;
 
-window::Window mainWindow;
 unsigned long long last_ticks = 0, current_ticks;
 float dt;
 
@@ -29,9 +26,9 @@ void loop()
     glClearColor(1.0f,current_ticks / 5000.0f,0.0f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    core::update(dt);
+    core::beginUpdate(dt);
 
-    mainWindow.swap();
+    core::endUpdate(dt);
 
     last_ticks = current_ticks;
 }
@@ -55,7 +52,6 @@ int main()
         s = lua_pcall(state, 0, LUA_MULTRET, 0);
     }
 
-    mainWindow.init();
     core::init();
 
     #ifndef EMSCRIPTEN
