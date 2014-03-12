@@ -1,4 +1,4 @@
-#include "system.h"
+#include "graphics_system.h"
 
 namespace gengine
 {

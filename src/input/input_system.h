@@ -1,8 +1,8 @@
 #pragma once
 
-#include "input/mouse.h"
-#include "kernel/primitives.h"
-#include "kernel/array.h"
+#include "input_mouse.h"
+#include "primitives.h"
+#include "array.h"
 
 namespace gengine
 {

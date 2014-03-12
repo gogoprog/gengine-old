@@ -1,4 +1,4 @@
-#include "mouse.h"
+#include "input_mouse.h"
 
 namespace gengine
 {

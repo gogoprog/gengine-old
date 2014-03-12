@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphics/program.h"
+#include "graphics_program.h"
 
 namespace gengine
 {

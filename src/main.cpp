@@ -1,9 +1,9 @@
-#include "kernel/debug.h"
-#include "window/window.h"
-#include "core/core.h"
-#include "core/sdl.h"
-#include "graphics/opengl.h"
-#include "input/system.h"
+#include "debug.h"
+#include "window_window.h"
+#include "core.h"
+#include "core_sdl.h"
+#include "graphics_opengl.h"
+#include "input_system.h"
 
 extern "C" {
 #include "lua.h"

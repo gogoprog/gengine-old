@@ -6,7 +6,7 @@ solution "gengine"
       language "C++"
       files { "../src/**.h", "../src/**.cpp" }
 
-      includedirs { "../src" }
+      includedirs { "../src/kernel", "../src/core", "../src/window", "../src/graphics", "../src/input" }
 
       links { "lua" }
 

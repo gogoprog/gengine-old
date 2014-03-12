@@ -1,7 +1,7 @@
 #include "core.h"
 
-#include "core/sdl.h"
-#include "input/system.h"
+#include "core_sdl.h"
+#include "input_system.h"
 
 namespace gengine
 {

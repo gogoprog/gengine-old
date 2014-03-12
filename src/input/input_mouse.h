@@ -1,6 +1,6 @@
 #pragma once
 
-#include "kernel/primitives.h"
+#include "primitives.h"
 
 namespace gengine
 {
