@@ -11,21 +11,23 @@ solution "gengine"
       links { "lua" }
 
       buildoptions { "-std=c++11" }
- 
+
       configuration "Debug*"
          defines { "DEBUG" }
          flags { "Symbols" }
+         targetname "gengined"
  
       configuration "Release*"
          defines { "NDEBUG" }
          flags { "Optimize" }
+         targetname "gengine"
 
       configuration "*Emscripten"
          defines { "EMSCRIPTEN" }
          libdirs { "../deps/emscripten/lib" }
          includedirs { "../deps/emscripten/include" }
-         targetname "gengine.bc"
-         postbuildcommands { "emcc gengine.bc -o gengine.html" }
+         targetsuffix ".bc"
+         postbuildcommands { "emcc $(TARGET) -o gengine.html" }
 
       configuration "not *Emscripten"
          links { "SDL2", "GL" }
