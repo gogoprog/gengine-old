@@ -34,6 +34,9 @@ void Window::init()
             480,
             SDL_WINDOW_OPENGL
             );
+
+        SDL_GLContext context = SDL_GL_CreateContext(pWindow);
+        SDL_GL_MakeCurrent(pWindow, context); 
     #else
         pWindow = SDL_SetVideoMode(
             640,

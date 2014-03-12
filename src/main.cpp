@@ -25,6 +25,9 @@ void loop()
     current_ticks = SDL_GetTicks();
     dt = ( current_ticks - last_ticks ) / 1000.0f;
 
+    glClearColor(1.0f,current_ticks / 5000.0f,0.0f,1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     core::update(dt);
 
     mainWindow.swap();

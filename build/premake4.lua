@@ -26,4 +26,4 @@ solution "gengine"
          postbuildcommands { "emcc gengine.bc -o gengine.html" }
 
       configuration "not *Emscripten"
-         links { "SDL2" }
+         links { "SDL2", "GL" }
