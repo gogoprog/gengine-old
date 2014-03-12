@@ -2,6 +2,7 @@
 
 #include "core_sdl.h"
 #include "input_system.h"
+#include "graphics_system.h"
 
 namespace gengine
 {
@@ -17,6 +18,7 @@ bool mustQuit()
 
 void init()
 {
+    graphics::System::getInstance().init();
     input::System::getInstance().init();
 }
 

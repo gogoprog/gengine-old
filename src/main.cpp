@@ -29,11 +29,6 @@ void loop()
     glClearColor(1.0f,current_ticks / 5000.0f,0.0f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    if(input::System::getInstance().getMouse(0).isDown(1))
-    {
-        geLog("Button Down");
-    }
-
     core::update(dt);
 
     mainWindow.swap();
@@ -60,8 +55,8 @@ int main()
         s = lua_pcall(state, 0, LUA_MULTRET, 0);
     }
 
-    core::init();
     mainWindow.init();
+    core::init();
 
     #ifndef EMSCRIPTEN
         while(!core::mustQuit())
