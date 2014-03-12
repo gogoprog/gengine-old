@@ -9,7 +9,7 @@ namespace input
 
 void System::init()
 {
-    mouseTable.push_back(Mouse());
+    mouseTable.add(Mouse());
 }
 
 void System::updateMouseCoordinates(const int index, const int x, const int y)

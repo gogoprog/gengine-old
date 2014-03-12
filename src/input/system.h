@@ -2,6 +2,7 @@
 
 #include "input/mouse.h"
 #include "kernel/primitives.h"
+#include "kernel/array.h"
 
 namespace gengine
 {
@@ -18,7 +19,7 @@ public:
     void updateMouseButton(const int index, const int button_index, const Mouse::ButtonState state);
 
 private:
-    std::vector<Mouse> mouseTable;
+    Array<Mouse> mouseTable;
 };
 
 }
