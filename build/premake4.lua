@@ -22,6 +22,8 @@ solution "gengine"
 
       configuration "*Emscripten"
          defines { "EMSCRIPTEN" }
+         libdirs { "../deps/emscripten/lib" }
+         includedirs { "../deps/emscripten/include" }
          targetname "gengine.bc"
          postbuildcommands { "emcc gengine.bc -o gengine.html" }
 
