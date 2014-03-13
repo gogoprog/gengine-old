@@ -46,6 +46,7 @@ const char fragment_shader_source[] =
 void System::init()
 {
     Vertex vertices[4];
+    ushort indices[6];
 
     Shader vertex_shader, fragment_shader;
     geLog("Creating default programs");
@@ -93,16 +94,6 @@ void System::init()
     vertices[3].b = 0.0f;
     vertices[3].a = 1.0f;
 
-    vboQuad.init();
-    vboQuad.setData(vertices, 4);
-}
-
-void System::test()
-{
-    VertexBuffer<Vertex> vb;
-    GLuint vboi;
-    ushort indices[6];
-
     indices[0] = 0;
     indices[1] = 1;
     indices[2] = 2;
@@ -111,17 +102,22 @@ void System::test()
     indices[4] = 3;
     indices[5] = 0;
 
+    vertexBufferQuad.init();
+    vertexBufferQuad.setData(vertices, 4);
+
+    indexBufferQuad.init();
+    indexBufferQuad.setData(indices, 6);
+}
+
+void System::test()
+{
     defaultProgram.use();
 
-    vboQuad.apply();
+    vertexBufferQuad.apply();
+    indexBufferQuad.apply();
 
-    glGenBuffers(1, &vboi);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboi);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ushort) * 6, indices, GL_STATIC_DRAW);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-
-    glDeleteBuffers(1, &vboi);
 }
 
 }
