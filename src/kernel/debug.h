@@ -1,9 +1,9 @@
 #pragma once
 
-#include <cstdio>
+#include <iostream>
 
 #ifdef DEBUG
-#define geLog(line) puts("[gengine] " line)
+#define geLog(line) std::cout << "[gengine] " << line << std::endl;
 #else
 #define geLog(line)
 #endif

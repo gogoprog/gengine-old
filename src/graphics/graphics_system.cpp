@@ -22,11 +22,11 @@ const char vertex_shader_source[] =
     "attribute vec2 vertex;\n"
     "attribute vec4 color;\n"
     "varying " PRECISION "vec4 v_color;\n"
-    "uniform mat3 transformMatrix;\n"
+    "uniform " PRECISION "mat3 transformMatrix;\n"
     "\n"
     "void main()\n"
     "{\n"
-    "    vec4 res = vec4(vertex,1.0,1.0);\n"
+    "    vec4 res = vec4( transformMatrix * vec3(vertex,1.0 ),1.0);\n"
     "    res.xy *= 0.5;\n"
     "    v_color = color;\n"
     "    gl_Position = res;\n"
@@ -112,13 +112,17 @@ void System::init()
 void System::test(const float dt)
 {
     Matrix3 m;
+    static float total = 0;
+    total += dt;
 
     m.setIdentity();
-    m.setTranslation(10,0);
+    m.setTranslation(total,0);
 
     defaultProgram.use();
 
     uint location = glGetUniformLocation(defaultProgram.getId(), "transformMatrix");
+    geLog( "loc:" << location );
+
     defaultProgram.setUniform(location, m);
     GL_CHECK();
 
