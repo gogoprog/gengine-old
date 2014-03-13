@@ -22,7 +22,7 @@ const char vertex_shader_source[] =
     "attribute vec2 vertex;\n"
     "attribute vec4 color;\n"
     "varying " PRECISION "vec4 v_color;\n"
-    //"uniform mat4 projectionMatrix;\n"
+    "uniform mat3 transformMatrix;\n"
     "\n"
     "void main()\n"
     "{\n"
@@ -109,15 +109,21 @@ void System::init()
     indexBufferQuad.setData(indices, 6);
 }
 
-void System::test()
+void System::test(const float dt)
 {
+    Matrix3 m;
+
+    m.setIdentity();
+    m.setTranslation(10,0);
+
     defaultProgram.use();
 
+    uint location = glGetUniformLocation(defaultProgram.getId(), "transformMatrix");
+    defaultProgram.setUniform(location, m);
+    GL_CHECK();
+
     vertexBufferQuad.apply();
-    indexBufferQuad.apply();
-
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+    indexBufferQuad.draw();
 }
 
 }

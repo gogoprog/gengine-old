@@ -29,7 +29,7 @@ void loop()
 
     core::beginUpdate(dt);
 
-    graphics::System::getInstance().test();
+    graphics::System::getInstance().test(dt);
 
     core::endUpdate(dt);
 

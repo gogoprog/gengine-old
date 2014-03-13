@@ -53,5 +53,10 @@ void Program::use()
     glUseProgram(id);
 }
 
+void Program::setUniform(const uint location, const Matrix3 & matrix)
+{
+    glUniformMatrix3fv(location, 1, GL_FALSE, reinterpret_cast<const float *>(&matrix));
+}
+
 }
 }

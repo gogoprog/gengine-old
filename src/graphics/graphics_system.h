@@ -14,7 +14,7 @@ class System
 public:
     SINGLETON(System);
     void init();
-    void test();
+    void test(const float dt);
 
     struct Vertex
     {
