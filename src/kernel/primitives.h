@@ -10,4 +10,3 @@
     }
 
 typedef unsigned int uint;
-

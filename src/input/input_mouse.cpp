@@ -17,4 +17,4 @@ bool Mouse::isUp(const int index) const
 }
 
 }
-};
+}

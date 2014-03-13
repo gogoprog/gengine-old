@@ -23,6 +23,7 @@ public:
     {
         return array[index];
     }
+
 protected:
     std::vector<T> array;
 };

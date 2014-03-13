@@ -26,4 +26,4 @@ void System::updateMouseButton(const int index, const int button_index, const Mo
 }
 
 }
-};
+}
