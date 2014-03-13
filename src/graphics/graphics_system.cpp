@@ -121,7 +121,6 @@ void System::test(const float dt)
     defaultProgram.use();
 
     uint location = glGetUniformLocation(defaultProgram.getId(), "transformMatrix");
-    geLog( "loc:" << location );
 
     defaultProgram.setUniform(location, m);
     GL_CHECK();

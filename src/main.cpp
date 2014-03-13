@@ -34,10 +34,6 @@ void loop()
     core::endUpdate(dt);
 
     last_ticks = current_ticks;
-#ifdef EMSCRIPTEN
-
-    emscripten_pause_main_loop();
-    #endif
 }
 
 int main()

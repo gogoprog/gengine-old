@@ -1,5 +1,7 @@
 #include "matrix3.h"
 
+#include "core_sdl.h"
+
 namespace gengine
 {
 
@@ -26,6 +28,15 @@ void Matrix3::setTranslation(const float x, const float y)
 {
     get(2,0) = x;
     get(2,1) = y;
+}
+
+void Matrix3::setRotation(const float angle)
+{
+    float sin = SDL_sinf(angle);
+    float cos = SDL_cosf(angle);
+
+    get(0,0) = cos;
+
 }
 
 }

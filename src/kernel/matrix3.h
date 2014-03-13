@@ -9,13 +9,14 @@ public:
     Matrix3();
     void setIdentity();
     void setTranslation(const float x, const float y);
+    void setRotation(const float angle);
 
-    inline float get(const int x, const int y) const
+    inline float get(const int y, const int x) const
     {
         return data[3*y + x];
     }
 
-    inline float & get(const int x, const int y)
+    inline float & get(const int y, const int x)
     {
         return data[3*y + x];
     }
