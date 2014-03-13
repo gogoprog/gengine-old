@@ -116,7 +116,8 @@ void System::test(const float dt)
     total += dt;
 
     m.setIdentity();
-    m.setTranslation(total,0);
+    //m.setTranslation(total,0);
+    m.setRotation(total);
 
     defaultProgram.use();
 

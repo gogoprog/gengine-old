@@ -1,13 +1,10 @@
 #include "matrix3.h"
 
 #include "core_sdl.h"
+#include <math.h>
 
 namespace gengine
 {
-
-Matrix3::Matrix3()
-{
-}
 
 void Matrix3::setIdentity()
 {
@@ -32,11 +29,13 @@ void Matrix3::setTranslation(const float x, const float y)
 
 void Matrix3::setRotation(const float angle)
 {
-    float sin = SDL_sinf(angle);
-    float cos = SDL_cosf(angle);
+    float sin = sinf(angle);
+    float cos = cosf(angle);
 
     get(0,0) = cos;
-
+    get(1,0) = -sin;
+    get(0,1) = sin;
+    get(1,1) = cos;
 }
 
 }

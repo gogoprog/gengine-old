@@ -6,7 +6,6 @@ namespace gengine
 class Matrix3
 {
 public:
-    Matrix3();
     void setIdentity();
     void setTranslation(const float x, const float y);
     void setRotation(const float angle);
