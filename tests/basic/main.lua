@@ -1,0 +1,2 @@
+print("Basic test")
+
