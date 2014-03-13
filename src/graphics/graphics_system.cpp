@@ -5,6 +5,7 @@
 #include "graphics_opengl.h"
 #include "graphics_program.h"
 #include "graphics_shader.h"
+#include "graphics_vertex_buffer.h"
 
 namespace gengine
 {
@@ -40,9 +41,11 @@ const char fragment_shader_source[] =
     "    gl_FragColor = v_color; //texture2D(tex0, v_texCoord) * v_color;\n"
     "}";
 
+#undef PRECISION
+
 void System::init()
 {
-    glViewport(0, 0, 640, 480);
+    Vertex vertices[4];
 
     Shader vertex_shader, fragment_shader;
     geLog("Creating default programs");
@@ -57,13 +60,6 @@ void System::init()
     defaultProgram.attachShader(vertex_shader);
     defaultProgram.attachShader(fragment_shader);
     defaultProgram.link();
-}
-
-void System::test()
-{
-    GLuint vbo, vboi;
-    Vertex vertices[4];
-    ushort indices[6];
 
     vertices[0].x = -1.0f;
     vertices[0].y = 1.0f;
@@ -97,6 +93,16 @@ void System::test()
     vertices[3].b = 0.0f;
     vertices[3].a = 1.0f;
 
+    vboQuad.init();
+    vboQuad.setData(vertices, 4);
+}
+
+void System::test()
+{
+    VertexBuffer<Vertex> vb;
+    GLuint vboi;
+    ushort indices[6];
+
     indices[0] = 0;
     indices[1] = 1;
     indices[2] = 2;
@@ -107,15 +113,7 @@ void System::test()
 
     defaultProgram.use();
 
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 4, vertices, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)0 + 8);
-    GL_CHECK();
+    vboQuad.apply();
 
     glGenBuffers(1, &vboi);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboi);
@@ -123,7 +121,6 @@ void System::test()
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
-    glDeleteBuffers(1, &vbo);
     glDeleteBuffers(1, &vboi);
 }
 

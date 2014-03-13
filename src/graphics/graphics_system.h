@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphics_program.h"
+#include "graphics_vertex_buffer.h"
 
 namespace gengine
 {
@@ -23,6 +24,7 @@ public:
 
 private:
     Program defaultProgram;
+    VertexBuffer<Vertex> vboQuad;
 };
 
 }
