@@ -1,8 +1,8 @@
 #include "graphics_shader.h"
 
 #include "debug.h"
+#include "memory.h"
 #include "graphics_opengl.h"
-#include "core_sdl.h"
 
 namespace gengine
 {
