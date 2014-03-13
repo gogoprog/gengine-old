@@ -15,6 +15,8 @@ public:
     void init();
     void attachShader(const Shader & shader);
     void link();
+    void use();
+
 private:
     uint id;
 };

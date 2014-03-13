@@ -2,6 +2,7 @@
 #include "core.h"
 #include "core_sdl.h"
 #include "graphics_opengl.h"
+#include "graphics_system.h"
 
 extern "C" {
 #include "lua.h"
@@ -27,6 +28,8 @@ void loop()
     glClear(GL_COLOR_BUFFER_BIT);
 
     core::beginUpdate(dt);
+
+    graphics::System::getInstance().test();
 
     core::endUpdate(dt);
 

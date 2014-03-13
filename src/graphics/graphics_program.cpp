@@ -48,5 +48,10 @@ void Program::link()
     }
 }
 
+void Program::use()
+{
+    glUseProgram(id);
+}
+
 }
 }

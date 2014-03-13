@@ -12,5 +12,6 @@
         if(error_code != GL_NO_ERROR) \
         { \
             geLog("OpenGL error!"); \
+            printf(" %x\n",error_code); \
         }\
     }
