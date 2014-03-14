@@ -10,6 +10,7 @@ solution "gengine"
 
       links { "lua" }
 
+      flags { "ExtraWarnings", "FatalWarnings" }
       buildoptions { "-std=c++11" }
 
       configuration "Debug*"

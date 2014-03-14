@@ -4,6 +4,7 @@
 #include "memory.h"
 #include "graphics_opengl.h"
 #include "graphics_shader.h"
+#include "graphics_uniform.h"
 
 namespace gengine
 {
@@ -57,9 +58,9 @@ void Program::use()
     glUseProgram(id);
 }
 
-void Program::setUniform(const uint location, const Matrix3 & matrix)
+void Program::setUniformValue(const Uniform & uniform, const Matrix3 & matrix)
 {
-    glUniformMatrix3fv(location, 1, GL_FALSE, reinterpret_cast<const float *>(&matrix));
+    glUniformMatrix3fv(uniform.location, 1, GL_FALSE, reinterpret_cast<const float *>(&matrix));
 }
 
 }

@@ -3,6 +3,7 @@
 #include "graphics_program.h"
 #include "graphics_vertex_buffer.h"
 #include "graphics_index_buffer.h"
+#include "graphics_uniform.h"
 
 namespace gengine
 {
@@ -27,6 +28,7 @@ private:
     Program defaultProgram;
     VertexBuffer<Vertex> vertexBufferQuad;
     IndexBuffer indexBufferQuad;
+    Uniform transformMatrixUniform;
 };
 
 }

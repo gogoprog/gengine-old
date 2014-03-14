@@ -62,6 +62,8 @@ void System::init()
     defaultProgram.attachShader(fragment_shader);
     defaultProgram.link();
 
+    transformMatrixUniform.init(defaultProgram, "transformMatrix");
+
     vertices[0].x = -1.0f;
     vertices[0].y = 1.0f;
 
@@ -120,10 +122,8 @@ void System::test(const float dt)
     m.setRotation(total);
 
     defaultProgram.use();
+    defaultProgram.setUniformValue(transformMatrixUniform, m);
 
-    uint location = glGetUniformLocation(defaultProgram.getId(), "transformMatrix");
-
-    defaultProgram.setUniform(location, m);
     GL_CHECK();
 
     vertexBufferQuad.apply();

@@ -10,6 +10,7 @@ namespace graphics
 {
 
 class Shader;
+class Uniform;
 
 class Program
 {
@@ -24,7 +25,7 @@ public:
     void attachShader(const Shader & shader);
     void link();
     void use();
-    void setUniform(const uint location, const Matrix3 & matrix);
+    void setUniformValue(const Uniform & uniform, const Matrix3 & matrix);
 
     uint getId() const { return id; }
 
