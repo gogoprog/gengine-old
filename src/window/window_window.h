@@ -20,6 +20,7 @@ public:
     ~Window();
 
     void init();
+    void finalize();
     void swap();
 
 private:

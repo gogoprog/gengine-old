@@ -1,6 +1,7 @@
 #include "input_system.h"
 
 #include "core_sdl.h"
+#include "debug.h"
 
 namespace gengine
 {
@@ -9,6 +10,8 @@ namespace input
 
 void System::init()
 {
+    geLog("input::System::init()");
+
     mouseTable.add(Mouse());
 }
 

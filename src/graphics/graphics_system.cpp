@@ -45,11 +45,12 @@ const char fragment_shader_source[] =
 
 void System::init()
 {
+    geLog("graphics::System::init()");
+
     Vertex vertices[4];
     ushort indices[6];
 
     Shader vertex_shader, fragment_shader;
-    geLog("Creating default programs");
 
     vertex_shader.init(GL_VERTEX_SHADER);
     vertex_shader.compile(vertex_shader_source);
@@ -109,6 +110,8 @@ void System::init()
 
     indexBufferQuad.init();
     indexBufferQuad.setData(indices, 6);
+
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 }
 
 void System::test(const float dt)

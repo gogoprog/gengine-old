@@ -15,12 +15,6 @@ Window::Window()
 
 Window::~Window()
 {
-    if(pWindow)
-    {
-        #ifndef EMSCRIPTEN
-            SDL_DestroyWindow(pWindow);
-        #endif
-    }
 }
 
 void Window::init()
@@ -45,6 +39,16 @@ void Window::init()
             SDL_OPENGL
             );
     #endif
+}
+
+void Window::finalize()
+{
+    if(pWindow)
+    {
+        #ifndef EMSCRIPTEN
+            SDL_DestroyWindow(pWindow);
+        #endif
+    }
 }
 
 void Window::swap()
