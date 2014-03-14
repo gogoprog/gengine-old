@@ -2,6 +2,7 @@
 
 #include "primitives.h"
 #include "matrix3.h"
+#include "map.h"
 
 namespace gengine
 {
@@ -13,6 +14,12 @@ class Shader;
 class Program
 {
 public:
+    enum AttributeLocation
+    {
+        ATTRIBUTE_LOCATION_POSITION,
+        ATTRIBUTE_LOCATION_COLOR
+    };
+
     void init();
     void attachShader(const Shader & shader);
     void link();

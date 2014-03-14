@@ -2,6 +2,7 @@
 
 #include "primitives.h"
 #include "graphics_opengl.h"
+#include "graphics_program.h"
 
 namespace gengine
 {
@@ -40,10 +41,10 @@ public:
     void apply()
     {
         glBindBuffer(GL_ARRAY_BUFFER, id);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), 0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VERTEX), (char*)0 + 8);
+        glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_POSITION);
+        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), 0);
+        glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_COLOR);
+        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(VERTEX), (char*)0 + 8);
     }
 
 private:

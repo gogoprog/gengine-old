@@ -19,14 +19,14 @@ namespace graphics
 #endif
 
 const char vertex_shader_source[] =
-    "attribute vec2 vertex;\n"
+    "attribute vec2 position;\n"
     "attribute vec4 color;\n"
     "varying " PRECISION "vec4 v_color;\n"
     "uniform " PRECISION "mat3 transformMatrix;\n"
     "\n"
     "void main()\n"
     "{\n"
-    "    vec4 res = vec4( transformMatrix * vec3(vertex,1.0 ),1.0);\n"
+    "    vec4 res = vec4( transformMatrix * vec3(position,1.0 ),1.0);\n"
     "    res.xy *= 0.5;\n"
     "    v_color = color;\n"
     "    gl_Position = res;\n"

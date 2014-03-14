@@ -13,6 +13,8 @@ namespace graphics
 void Program::init()
 {
     id = glCreateProgram();
+    glBindAttribLocation(id,ATTRIBUTE_LOCATION_POSITION,"position");
+    glBindAttribLocation(id,ATTRIBUTE_LOCATION_COLOR,"color");
 }
 
 void Program::attachShader(const Shader & shader)
@@ -46,6 +48,8 @@ void Program::link()
             puts(log);
         }
     }
+
+    GL_CHECK();
 }
 
 void Program::use()
