@@ -118,7 +118,7 @@ void System::test(const float dt)
 {
     Matrix3 m;
     static float total = 0;
-    total += dt;
+    total += dt * 10;
 
     m.setIdentity();
     //m.setTranslation(total,0);

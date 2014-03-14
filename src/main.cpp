@@ -19,7 +19,7 @@ int main()
 
         core::finalize();
     #else
-        emscripten_set_main_loop(core::update(), 0, 0);
+        emscripten_set_main_loop(core::update, 0, 0);
     #endif
 
     return 0;
