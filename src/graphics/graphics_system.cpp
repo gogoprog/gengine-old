@@ -24,15 +24,17 @@ const char vertex_shader_source[] =
     "attribute vec2 texCoords;\n"
     "varying " PRECISION "vec4 v_color;\n"
     "varying " PRECISION "vec2 v_texCoords;\n"
+    "uniform " PRECISION "mat3 projectionMatrix;\n"
     "uniform " PRECISION "mat3 transformMatrix;\n"
     "\n"
     "void main()\n"
     "{\n"
-    "    vec4 res = vec4( transformMatrix * vec3(position,1.0 ),1.0);\n"
-    "    res.xy *= 0.05;\n"
+    "    vec3 res = transformMatrix * vec3(position,1.0 ) * projectionMatrix;\n"
+    //"    vec4 res = vec4( transformMatrix * projectionMatrix * vec3(position,1.0 ),1.0);\n"
+    //"    res.xy *= 0.05;\n"
     "    v_color = color;\n"
     "    v_texCoords = texCoords;\n"
-    "    gl_Position = res;\n"
+    "    gl_Position = vec4(res,1.0);\n"
     "}";
 const char fragment_shader_source[] =
     "varying " PRECISION "vec4 v_color;\n"
@@ -64,6 +66,7 @@ void System::init()
     defaultProgram.attachShader(defaultFragmentShader);
     defaultProgram.link();
 
+    projectionMatrixUniform.init(defaultProgram, "projectionMatrix");
     transformMatrixUniform.init(defaultProgram, "transformMatrix");
     samplerUniform.init(defaultProgram, "tex0");
 
@@ -141,26 +144,27 @@ void System::finalize()
 
 void System::test(const float dt)
 {
+    Matrix3 projectionMatrix;
     Matrix3 m;
     static float total = 0;
     total += dt * 3;
+
+    projectionMatrix.initIdentity();
+    projectionMatrix.initProjection(640, 480);
 
     defaultProgram.use();
     vertexBufferQuad.apply();
 
     samplerUniform.apply(defaultTexture);
+    projectionMatrixUniform.apply(projectionMatrix);
 
-    for(int i=0;i<18;++i)
-    {
-        for(int j=0;j<18;++j)
-        {
-            m.setIdentity();
-            m.setTranslation(-18.0f + i * 2.5f,18.0f - j * 2.5f);
-            m.setRotation(total * ( j & 1 ? 1.0f : -1.0f));
-            transformMatrixUniform.apply(m);
-            indexBufferQuad.draw();
-        }
-    }
+
+    m.initIdentity();
+    m.setTranslation(320.0f, 240.0f);
+    m.setRotation(total);
+    m.preScale(50,50);
+    transformMatrixUniform.apply(m);
+    indexBufferQuad.draw();
 }
 
 }

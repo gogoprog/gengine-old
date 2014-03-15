@@ -6,7 +6,7 @@
 namespace gengine
 {
 
-void Matrix3::setIdentity()
+void Matrix3::initIdentity()
 {
     get(0,0) = 1.0f;
     get(1,0) = 0.0f;
@@ -18,6 +18,21 @@ void Matrix3::setIdentity()
 
     get(0,2) = 0.0f;
     get(1,2) = 0.0f;
+    get(2,2) = 1.0f;
+}
+
+void Matrix3::initProjection(const float width, const float height)
+{
+    get(0,0) = 2.0f / width;
+    get(1,0) = 0.0f;
+    get(2,0) = 0.0f;
+
+    get(0,1) = 0.0f;
+    get(1,1) = -2.0f / height,
+    get(2,1) = 0.0f;
+
+    get(0,2) = -1.0f;
+    get(1,2) = 1.0f;
     get(2,2) = 1.0f;
 }
 
