@@ -15,13 +15,13 @@ class VertexBuffer
 public:
     VertexBuffer()
         :
-        id(0xffffffff)
+        id(GL_NULL_ID)
     {
     }
 
     ~VertexBuffer()
     {
-        if(id != 0xffffffff)
+        if(id != GL_NULL_ID)
         {
             glDeleteBuffers(1, &id);
         }

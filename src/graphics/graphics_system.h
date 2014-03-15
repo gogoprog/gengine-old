@@ -5,6 +5,7 @@
 #include "graphics_index_buffer.h"
 #include "graphics_uniform.h"
 #include "graphics_shader.h"
+#include "graphics_texture.h"
 
 namespace gengine
 {
@@ -32,6 +33,7 @@ private:
     VertexBuffer<Vertex> vertexBufferQuad;
     IndexBuffer indexBufferQuad;
     Uniform transformMatrixUniform;
+    Texture defaultTexture;
 };
 
 }

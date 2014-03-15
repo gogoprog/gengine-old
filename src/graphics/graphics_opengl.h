@@ -18,3 +18,5 @@
 #else
 #define GL_CHECK()
 #endif
+
+#define GL_NULL_ID 0xffffffff

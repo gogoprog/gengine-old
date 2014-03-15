@@ -9,13 +9,13 @@ namespace graphics
 
 IndexBuffer::IndexBuffer()
     :
-    id(0xffffffff)
+    id(GL_NULL_ID)
 {
 }
 
 IndexBuffer::~IndexBuffer()
 {
-    if(id != 0xffffffff)
+    if(id != GL_NULL_ID)
     {
         glDeleteBuffers(1, &id);
     }

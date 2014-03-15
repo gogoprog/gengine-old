@@ -109,6 +109,9 @@ void System::init()
     indexBufferQuad.init();
     indexBufferQuad.setData(indices, 6);
 
+    defaultTexture.init();
+    defaultTexture.setFromFile("pic.png");
+
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 }
 
@@ -116,6 +119,7 @@ void System::finalize()
 {
     geLog("graphics::System::finalize()");
 
+    defaultTexture.finalize();
     defaultProgram.finalize();
     defaultFragmentShader.finalize();
     defaultVertexShader.finalize();
@@ -127,7 +131,7 @@ void System::test(const float dt)
 {
     Matrix3 m;
     static float total = 0;
-    total += dt * 10;
+    total += dt ;
 
     defaultProgram.use();
     vertexBufferQuad.apply();
