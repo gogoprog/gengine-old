@@ -30,8 +30,6 @@ const char vertex_shader_source[] =
     "void main()\n"
     "{\n"
     "    vec3 res = transformMatrix * vec3(position,1.0 ) * projectionMatrix;\n"
-    //"    vec4 res = vec4( transformMatrix * projectionMatrix * vec3(position,1.0 ),1.0);\n"
-    //"    res.xy *= 0.05;\n"
     "    v_color = color;\n"
     "    v_texCoords = texCoords;\n"
     "    gl_Position = vec4(res,1.0);\n"
@@ -43,7 +41,7 @@ const char fragment_shader_source[] =
     "\n"
     "void main()\n"
     "{\n"
-    "    gl_FragColor = texture2D(tex0, v_texCoords);// * v_color;\n"
+    "    gl_FragColor = texture2D(tex0, v_texCoords) * v_color;\n"
     "}";
 
 #undef PRECISION
@@ -70,8 +68,8 @@ void System::init()
     transformMatrixUniform.init(defaultProgram, "transformMatrix");
     samplerUniform.init(defaultProgram, "tex0");
 
-    vertices[0].x = -1.0f;
-    vertices[0].y = 1.0f;
+    vertices[0].x = -0.5f;
+    vertices[0].y = 0.5f;
     vertices[0].u = 0.0f;
     vertices[0].v = 0.0f;
 
@@ -80,8 +78,8 @@ void System::init()
     vertices[0].b = 0.0f;
     vertices[0].a = 1.0f;
 
-    vertices[1].x = 1.0f;
-    vertices[1].y = 1.0f;
+    vertices[1].x = 0.5f;
+    vertices[1].y = 0.5f;
     vertices[1].u = 1.0f;
     vertices[1].v = 0.0f;
 
@@ -90,8 +88,8 @@ void System::init()
     vertices[1].b = 1.0f;
     vertices[1].a = 1.0f;
 
-    vertices[2].x = 1.0f;
-    vertices[2].y = -1.0f;
+    vertices[2].x = 0.5f;
+    vertices[2].y = -0.5f;
     vertices[2].u = 1.0f;
     vertices[2].v = 1.0f;
 
@@ -100,8 +98,8 @@ void System::init()
     vertices[2].b = 1.0f;
     vertices[2].a = 1.0f;
 
-    vertices[3].x = -1.0f;
-    vertices[3].y = -1.0f;
+    vertices[3].x = -0.5f;
+    vertices[3].y = -0.5f;
     vertices[3].u = 0.0f;
     vertices[3].v = 1.0f;
 
