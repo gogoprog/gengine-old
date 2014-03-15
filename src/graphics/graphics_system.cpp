@@ -158,11 +158,10 @@ void System::test(const float dt)
     samplerUniform.apply(defaultTexture);
     projectionMatrixUniform.apply(projectionMatrix);
 
-
     m.initIdentity();
     m.setTranslation(0.0f, 0.0f);
-    //m.setRotation(total);
-    m.preScale(50,150);
+    m.setRotation(total);
+    m.preScale(32,32);
     transformMatrixUniform.apply(m);
     indexBufferQuad.draw();
 }
