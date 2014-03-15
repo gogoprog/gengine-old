@@ -21,7 +21,7 @@ void Matrix3::initIdentity()
     get(2,2) = 1.0f;
 }
 
-void Matrix3::initProjection(const float width, const float height)
+void Matrix3::initProjection(const float width, const float height, const float tx, const float ty)
 {
     get(0,0) = 2.0f / width;
     get(1,0) = 0.0f;
@@ -31,8 +31,8 @@ void Matrix3::initProjection(const float width, const float height)
     get(1,1) = -2.0f / height,
     get(2,1) = 0.0f;
 
-    get(0,2) = -1.0f;
-    get(1,2) = 1.0f;
+    get(0,2) = - get(0,0) * tx;
+    get(1,2) = - get(1,1) * ty;
     get(2,2) = 1.0f;
 }
 
@@ -54,6 +54,15 @@ void Matrix3::setRotation(const float angle)
 }
 
 void Matrix3::preScale(const float sx, const float sy)
+{
+    get(0,0) *= sx;
+    get(0,1) *= sx;
+
+    get(1,0) *= sy;
+    get(1,1) *= sy;
+}
+
+void Matrix3::scale(const float sx, const float sy)
 {
     get(0,0) *= sx;
     get(1,0) *= sx;

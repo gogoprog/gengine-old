@@ -160,9 +160,9 @@ void System::test(const float dt)
 
 
     m.initIdentity();
-    m.setTranslation(320.0f, 240.0f);
-    m.setRotation(total);
-    m.preScale(50,50);
+    m.setTranslation(0.0f, 0.0f);
+    //m.setRotation(total);
+    m.preScale(50,150);
     transformMatrixUniform.apply(m);
     indexBufferQuad.draw();
 }
