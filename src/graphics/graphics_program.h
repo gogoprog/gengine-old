@@ -11,6 +11,7 @@ namespace graphics
 
 class Shader;
 class Uniform;
+class Texture;
 
 class Program
 {
@@ -18,7 +19,8 @@ public:
     enum AttributeLocation
     {
         ATTRIBUTE_LOCATION_POSITION,
-        ATTRIBUTE_LOCATION_COLOR
+        ATTRIBUTE_LOCATION_COLOR,
+        ATTRIBUTE_LOCATION_TEXCOORDS
     };
 
     void init();
@@ -27,6 +29,7 @@ public:
     void link();
     void use();
     void setUniformValue(const Uniform & uniform, const Matrix3 & matrix);
+    void setUniformValue(const Uniform & uniform, const Texture & texture);
 
     uint getId() const { return id; }
 

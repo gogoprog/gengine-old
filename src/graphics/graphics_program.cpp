@@ -5,6 +5,7 @@
 #include "graphics_opengl.h"
 #include "graphics_shader.h"
 #include "graphics_uniform.h"
+#include "graphics_texture.h"
 
 namespace gengine
 {
@@ -16,6 +17,8 @@ void Program::init()
     id = glCreateProgram();
     glBindAttribLocation(id,ATTRIBUTE_LOCATION_POSITION,"position");
     glBindAttribLocation(id,ATTRIBUTE_LOCATION_COLOR,"color");
+    glBindAttribLocation(id,ATTRIBUTE_LOCATION_TEXCOORDS,"texCoords");
+
 }
 
 void Program::finalize()
@@ -67,6 +70,12 @@ void Program::setUniformValue(const Uniform & uniform, const Matrix3 & matrix)
 {
     glUniformMatrix3fv(uniform.location, 1, GL_FALSE, reinterpret_cast<const float *>(&matrix));
 }
+
+void Program::setUniformValue(const Uniform & uniform, const Texture & texture)
+{
+    glUniform1i(uniform.location, texture.getId());
+}
+
 
 }
 }

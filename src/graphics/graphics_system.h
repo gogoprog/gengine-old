@@ -32,7 +32,7 @@ private:
     Program defaultProgram;
     VertexBuffer<Vertex> vertexBufferQuad;
     IndexBuffer indexBufferQuad;
-    Uniform transformMatrixUniform;
+    Uniform transformMatrixUniform, samplerUniform;
     Texture defaultTexture;
 };
 

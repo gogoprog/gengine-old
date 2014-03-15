@@ -18,6 +18,8 @@ public:
     void finalize();
     void setFromFile(const char * filename);
 
+    uint getId() const { return id; }
+
 private:
     uint id;
     uint width, height;

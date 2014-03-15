@@ -21,7 +21,9 @@ namespace graphics
 const char vertex_shader_source[] =
     "attribute vec2 position;\n"
     "attribute vec4 color;\n"
+    "attribute vec2 texCoords;\n"
     "varying " PRECISION "vec4 v_color;\n"
+    "varying " PRECISION "vec2 v_texCoords;\n"
     "uniform " PRECISION "mat3 transformMatrix;\n"
     "\n"
     "void main()\n"
@@ -29,16 +31,17 @@ const char vertex_shader_source[] =
     "    vec4 res = vec4( transformMatrix * vec3(position,1.0 ),1.0);\n"
     "    res.xy *= 0.05;\n"
     "    v_color = color;\n"
+    "    v_texCoords = texCoords;\n"
     "    gl_Position = res;\n"
     "}";
 const char fragment_shader_source[] =
     "varying " PRECISION "vec4 v_color;\n"
-    //"varying " PRECISION "vec2 v_texCoord;\n"
-    //"uniform sampler2D tex0;\n"
+    "varying " PRECISION "vec2 v_texCoords;\n"
+    "uniform sampler2D tex0;\n"
     "\n"
     "void main()\n"
     "{\n"
-    "    gl_FragColor = v_color; //texture2D(tex0, v_texCoord) * v_color;\n"
+    "    gl_FragColor = texture2D(tex0, v_texCoords);// * v_color;\n"
     "}";
 
 #undef PRECISION
@@ -62,6 +65,7 @@ void System::init()
     defaultProgram.link();
 
     transformMatrixUniform.init(defaultProgram, "transformMatrix");
+    samplerUniform.init(defaultProgram, "tex0");
 
     vertices[0].x = -1.0f;
     vertices[0].y = 1.0f;
@@ -135,6 +139,8 @@ void System::test(const float dt)
 
     defaultProgram.use();
     vertexBufferQuad.apply();
+
+    defaultProgram.setUniformValue(samplerUniform, defaultTexture);
 
     for(int i=0;i<18;++i)
     {
