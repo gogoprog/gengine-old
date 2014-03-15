@@ -24,7 +24,7 @@ public:
     {
         float x, y;
         float r, g, b, a;
-        float s, t;
+        float u, v;
     };
 
 private:

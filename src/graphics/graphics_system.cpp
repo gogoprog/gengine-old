@@ -69,6 +69,8 @@ void System::init()
 
     vertices[0].x = -1.0f;
     vertices[0].y = 1.0f;
+    vertices[0].u = 0.0f;
+    vertices[0].v = 0.0f;
 
     vertices[0].r = 1.0f;
     vertices[0].g = 1.0f;
@@ -77,6 +79,8 @@ void System::init()
 
     vertices[1].x = 1.0f;
     vertices[1].y = 1.0f;
+    vertices[1].u = 1.0f;
+    vertices[1].v = 0.0f;
 
     vertices[1].r = 0.0f;
     vertices[1].g = 1.0f;
@@ -85,6 +89,8 @@ void System::init()
 
     vertices[2].x = 1.0f;
     vertices[2].y = -1.0f;
+    vertices[2].u = 1.0f;
+    vertices[2].v = 1.0f;
 
     vertices[2].r = 1.0f;
     vertices[2].g = 0.0f;
@@ -93,6 +99,8 @@ void System::init()
 
     vertices[3].x = -1.0f;
     vertices[3].y = -1.0f;
+    vertices[3].u = 0.0f;
+    vertices[3].v = 1.0f;
 
     vertices[3].r = 0.0f;
     vertices[3].g = 0.0f;

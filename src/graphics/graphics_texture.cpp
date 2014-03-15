@@ -2,6 +2,7 @@
 
 #include "core_sdl.h"
 #include "graphics_opengl.h"
+#include "debug.h"
 
 namespace gengine
 {
@@ -26,10 +27,14 @@ void Texture::finalize()
 
 void Texture::setFromFile(const char * filename)
 {
+    geLog("Texture::setFromFile \"" << filename << "\"");
+
     SDL_Surface *image = IMG_Load(filename);
 
     if(image)
     {
+        //SDL_PixelFormat & format = * image->format;
+
         glBindTexture(GL_TEXTURE_2D, id);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -38,11 +43,17 @@ void Texture::setFromFile(const char * filename)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 
         width = image->w;
         height = image->h;
         SDL_FreeSurface (image);
+
+        geLog("TexId: " << id);
+    }
+    else
+    {
+        geLog("Texture::setFromFile \"" << filename << "\" not loaded!");
     }
 }
 
