@@ -35,7 +35,7 @@ solution "gengine"
          libdirs { "../deps/emscripten/lib" }
          includedirs { "../deps/emscripten/include" }
          targetsuffix ".bc"
-         postbuildcommands { "emcc $(TARGET) -o gengine.html --embed-file ../tests/basic@" }
+         postbuildcommands { "emcc $(TARGET) -o gengine.html --preload-file ../tests/basic@" }
 
       configuration "not *Emscripten"
          links { "SDL2", "SDL2_image", "GL" }

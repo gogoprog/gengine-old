@@ -38,4 +38,13 @@ void Matrix3::setRotation(const float angle)
     get(1,1) = cos;
 }
 
+void Matrix3::preScale(const float sx, const float sy)
+{
+    get(0,0) *= sx;
+    get(1,0) *= sx;
+
+    get(0,1) *= sy;
+    get(1,1) *= sy;
+}
+
 }
