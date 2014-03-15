@@ -2,7 +2,6 @@
 
 #include "primitives.h"
 #include "matrix3.h"
-#include "map.h"
 
 namespace gengine
 {

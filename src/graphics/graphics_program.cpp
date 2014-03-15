@@ -66,16 +66,6 @@ void Program::use()
     glUseProgram(id);
 }
 
-void Program::setUniformValue(const Uniform & uniform, const Matrix3 & matrix)
-{
-    glUniformMatrix3fv(uniform.location, 1, GL_FALSE, reinterpret_cast<const float *>(&matrix));
-}
-
-void Program::setUniformValue(const Uniform & uniform, const Texture & texture)
-{
-    glUniform1i(uniform.location, texture.getId());
-}
-
 
 }
 }

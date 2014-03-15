@@ -143,12 +143,12 @@ void System::test(const float dt)
 {
     Matrix3 m;
     static float total = 0;
-    total += dt ;
+    total += dt * 3;
 
     defaultProgram.use();
     vertexBufferQuad.apply();
 
-    defaultProgram.setUniformValue(samplerUniform, defaultTexture);
+    samplerUniform.apply(defaultTexture);
 
     for(int i=0;i<18;++i)
     {
@@ -157,7 +157,7 @@ void System::test(const float dt)
             m.setIdentity();
             m.setTranslation(-18.0f + i * 2.5f,18.0f - j * 2.5f);
             m.setRotation(total * ( j & 1 ? 1.0f : -1.0f));
-            defaultProgram.setUniformValue(transformMatrixUniform, m);
+            transformMatrixUniform.apply(m);
             indexBufferQuad.draw();
         }
     }

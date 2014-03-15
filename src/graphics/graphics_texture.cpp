@@ -27,7 +27,7 @@ void Texture::finalize()
 
 void Texture::setFromFile(const char * filename)
 {
-    geLog("Texture::setFromFile \"" << filename << "\"");
+    geLogN("graphics::Texture::setFromFile \"" << filename << "\" ... ");
 
     SDL_Surface *image = IMG_Load(filename);
 
@@ -43,17 +43,17 @@ void Texture::setFromFile(const char * filename)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
         width = image->w;
         height = image->h;
         SDL_FreeSurface (image);
 
-        geLog("TexId: " << id);
+        geRawLog("Done (" << id << ")");
     }
     else
     {
-        geLog("Texture::setFromFile \"" << filename << "\" not loaded!");
+        geRawLog("Failed! " << IMG_GetError());
     }
 }
 
