@@ -29,7 +29,7 @@ void Window::init()
             SDL_WINDOW_OPENGL
             );
 
-        SDL_GLContext context = SDL_GL_CreateContext(pWindow);
+        context = SDL_GL_CreateContext(pWindow);
         SDL_GL_MakeCurrent(pWindow, context); 
     #else
         pWindow = SDL_SetVideoMode(
@@ -46,6 +46,7 @@ void Window::finalize()
     if(pWindow)
     {
         #ifndef EMSCRIPTEN
+            SDL_GL_DeleteContext(context);
             SDL_DestroyWindow(pWindow);
         #endif
     }

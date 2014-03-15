@@ -43,6 +43,8 @@ void finalize()
 {
     geLog("core::finalize()");
 
+    graphics::System::getInstance().finalize();
+
     mainWindow.finalize();
 
     script::System::getInstance().finalize();

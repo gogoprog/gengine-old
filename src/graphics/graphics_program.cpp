@@ -18,6 +18,11 @@ void Program::init()
     glBindAttribLocation(id,ATTRIBUTE_LOCATION_COLOR,"color");
 }
 
+void Program::finalize()
+{
+    glDeleteProgram(id);
+}
+
 void Program::attachShader(const Shader & shader)
 {
     glAttachShader(id, shader.getId());

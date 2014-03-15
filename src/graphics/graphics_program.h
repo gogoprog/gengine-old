@@ -22,6 +22,7 @@ public:
     };
 
     void init();
+    void finalize();
     void attachShader(const Shader & shader);
     void link();
     void use();

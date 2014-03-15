@@ -50,17 +50,15 @@ void System::init()
     Vertex vertices[4];
     ushort indices[6];
 
-    Shader vertex_shader, fragment_shader;
+    defaultVertexShader.init(GL_VERTEX_SHADER);
+    defaultVertexShader.compile(vertex_shader_source);
 
-    vertex_shader.init(GL_VERTEX_SHADER);
-    vertex_shader.compile(vertex_shader_source);
-
-    fragment_shader.init(GL_FRAGMENT_SHADER);
-    fragment_shader.compile(fragment_shader_source);
+    defaultFragmentShader.init(GL_FRAGMENT_SHADER);
+    defaultFragmentShader.compile(fragment_shader_source);
 
     defaultProgram.init();
-    defaultProgram.attachShader(vertex_shader);
-    defaultProgram.attachShader(fragment_shader);
+    defaultProgram.attachShader(defaultVertexShader);
+    defaultProgram.attachShader(defaultFragmentShader);
     defaultProgram.link();
 
     transformMatrixUniform.init(defaultProgram, "transformMatrix");
@@ -112,6 +110,15 @@ void System::init()
     indexBufferQuad.setData(indices, 6);
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+}
+
+void System::finalize()
+{
+    geLog("graphics::System::finalize()");
+
+    defaultProgram.finalize();
+    defaultFragmentShader.finalize();
+    defaultVertexShader.finalize();
 }
 
 void System::test(const float dt)

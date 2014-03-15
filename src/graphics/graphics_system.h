@@ -4,6 +4,7 @@
 #include "graphics_vertex_buffer.h"
 #include "graphics_index_buffer.h"
 #include "graphics_uniform.h"
+#include "graphics_shader.h"
 
 namespace gengine
 {
@@ -15,6 +16,7 @@ class System
 public:
     SINGLETON(System);
     void init();
+    void finalize();
     void test(const float dt);
 
     struct Vertex
@@ -25,6 +27,7 @@ public:
     };
 
 private:
+    Shader defaultVertexShader, defaultFragmentShader;
     Program defaultProgram;
     VertexBuffer<Vertex> vertexBufferQuad;
     IndexBuffer indexBufferQuad;

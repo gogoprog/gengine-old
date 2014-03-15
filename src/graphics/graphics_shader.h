@@ -13,6 +13,7 @@ class Shader
 public:
     uint getId() const { return id; }
     void init(const GLenum _type);
+    void finalize();
     void compile(const char *source);
 
 private:

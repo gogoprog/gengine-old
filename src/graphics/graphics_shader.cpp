@@ -15,6 +15,11 @@ void Shader::init(const GLenum _type)
     id = glCreateShader(type);
 }
 
+void Shader::finalize()
+{
+    glDeleteShader(id);
+}
+
 void Shader::compile(const char * source)
 {
     GLint status;
