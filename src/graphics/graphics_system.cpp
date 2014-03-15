@@ -27,7 +27,7 @@ const char vertex_shader_source[] =
     "void main()\n"
     "{\n"
     "    vec4 res = vec4( transformMatrix * vec3(position,1.0 ),1.0);\n"
-    "    res.xy *= 0.5;\n"
+    "    res.xy *= 0.05;\n"
     "    v_color = color;\n"
     "    gl_Position = res;\n"
     "}";
@@ -74,7 +74,7 @@ void System::init()
     vertices[1].x = 1.0f;
     vertices[1].y = 1.0f;
 
-    vertices[1].r = 1.0f;
+    vertices[1].r = 0.0f;
     vertices[1].g = 1.0f;
     vertices[1].b = 1.0f;
     vertices[1].a = 1.0f;
@@ -83,7 +83,7 @@ void System::init()
     vertices[2].y = -1.0f;
 
     vertices[2].r = 1.0f;
-    vertices[2].g = 1.0f;
+    vertices[2].g = 0.0f;
     vertices[2].b = 1.0f;
     vertices[2].a = 1.0f;
 
@@ -92,7 +92,7 @@ void System::init()
 
     vertices[3].r = 0.0f;
     vertices[3].g = 0.0f;
-    vertices[3].b = 0.0f;
+    vertices[3].b = 1.0f;
     vertices[3].a = 1.0f;
 
     indices[0] = 0;
@@ -109,7 +109,7 @@ void System::init()
     indexBufferQuad.init();
     indexBufferQuad.setData(indices, 6);
 
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 }
 
 void System::finalize()
@@ -119,6 +119,8 @@ void System::finalize()
     defaultProgram.finalize();
     defaultFragmentShader.finalize();
     defaultVertexShader.finalize();
+    vertexBufferQuad.finalize();
+    indexBufferQuad.finalize();
 }
 
 void System::test(const float dt)
@@ -127,17 +129,20 @@ void System::test(const float dt)
     static float total = 0;
     total += dt * 10;
 
-    m.setIdentity();
-    //m.setTranslation(total,0);
-    m.setRotation(total);
-
     defaultProgram.use();
-    defaultProgram.setUniformValue(transformMatrixUniform, m);
-
-    GL_CHECK();
-
     vertexBufferQuad.apply();
-    indexBufferQuad.draw();
+
+    for(int i=0;i<18;++i)
+    {
+        for(int j=0;j<18;++j)
+        {
+            m.setIdentity();
+            m.setTranslation(-18.0f + i * 2.5f,18.0f - j * 2.5f);
+            m.setRotation(total * ( j & 1 ? 1.0f : -1.0f));
+            defaultProgram.setUniformValue(transformMatrixUniform, m);
+            indexBufferQuad.draw();
+        }
+    }
 }
 
 }

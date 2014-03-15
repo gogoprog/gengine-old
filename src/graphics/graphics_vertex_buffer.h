@@ -32,6 +32,11 @@ public:
         glGenBuffers(1, &id);
     }
 
+    void finalize()
+    {
+        glDeleteBuffers(1, &id);
+    }
+
     void setData(const VERTEX * vertices, const uint count)
     {
         glBindBuffer(GL_ARRAY_BUFFER, id);

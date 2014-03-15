@@ -13,6 +13,7 @@ public:
     IndexBuffer();
     ~IndexBuffer();
     void init();
+    void finalize();
     void setData(const ushort * indices, const uint _count);
     void draw(const uint _count);
     void draw();

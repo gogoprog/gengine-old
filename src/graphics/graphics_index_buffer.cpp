@@ -26,6 +26,11 @@ void IndexBuffer::init()
     glGenBuffers(1, &id);
 }
 
+void IndexBuffer::finalize()
+{
+    glDeleteBuffers(1, &id);
+}
+
 void IndexBuffer::setData(const ushort * indices, const uint _count)
 {
     count = _count;
