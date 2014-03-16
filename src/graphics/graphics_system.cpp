@@ -6,6 +6,8 @@
 #include "graphics_program.h"
 #include "graphics_shader.h"
 #include "graphics_vertex_buffer.h"
+#include "graphics_world.h"
+#include "vector4.h"
 #include <math.h>
 
 namespace gengine
@@ -21,9 +23,7 @@ namespace graphics
 
 const char vertex_shader_source[] =
     "attribute vec2 position;\n"
-    "attribute vec4 color;\n"
     "attribute vec2 texCoords;\n"
-    "varying " PRECISION "vec4 v_color;\n"
     "varying " PRECISION "vec2 v_texCoords;\n"
     "uniform " PRECISION "mat3 projectionMatrix;\n"
     "uniform " PRECISION "mat3 transformMatrix;\n"
@@ -31,18 +31,17 @@ const char vertex_shader_source[] =
     "void main()\n"
     "{\n"
     "    vec3 res = transformMatrix * vec3(position,1.0 ) * projectionMatrix;\n"
-    "    v_color = color;\n"
     "    v_texCoords = texCoords;\n"
     "    gl_Position = vec4(res,1.0);\n"
     "}";
 const char fragment_shader_source[] =
-    "varying " PRECISION "vec4 v_color;\n"
     "varying " PRECISION "vec2 v_texCoords;\n"
     "uniform sampler2D tex0;\n"
+    "uniform " PRECISION "vec4 color;\n"
     "\n"
     "void main()\n"
     "{\n"
-    "    gl_FragColor = texture2D(tex0, v_texCoords) * v_color;\n"
+    "    gl_FragColor = texture2D(tex0, v_texCoords) * color;\n"
     "}";
 
 #undef PRECISION
@@ -68,46 +67,27 @@ void System::init()
     projectionMatrixUniform.init(defaultProgram, "projectionMatrix");
     transformMatrixUniform.init(defaultProgram, "transformMatrix");
     samplerUniform.init(defaultProgram, "tex0");
+    colorUniform.init(defaultProgram, "color");
 
     vertices[0].x = -0.5f;
     vertices[0].y = 0.5f;
     vertices[0].u = 0.0f;
     vertices[0].v = 0.0f;
 
-    vertices[0].r = 1.0f;
-    vertices[0].g = 1.0f;
-    vertices[0].b = 0.0f;
-    vertices[0].a = 1.0f;
-
     vertices[1].x = 0.5f;
     vertices[1].y = 0.5f;
     vertices[1].u = 1.0f;
     vertices[1].v = 0.0f;
-
-    vertices[1].r = 0.0f;
-    vertices[1].g = 1.0f;
-    vertices[1].b = 1.0f;
-    vertices[1].a = 1.0f;
 
     vertices[2].x = 0.5f;
     vertices[2].y = -0.5f;
     vertices[2].u = 1.0f;
     vertices[2].v = 1.0f;
 
-    vertices[2].r = 1.0f;
-    vertices[2].g = 0.0f;
-    vertices[2].b = 1.0f;
-    vertices[2].a = 1.0f;
-
     vertices[3].x = -0.5f;
     vertices[3].y = -0.5f;
     vertices[3].u = 0.0f;
     vertices[3].v = 1.0f;
-
-    vertices[3].r = 0.0f;
-    vertices[3].g = 0.0f;
-    vertices[3].b = 1.0f;
-    vertices[3].a = 1.0f;
 
     indices[0] = 0;
     indices[1] = 1;
@@ -124,16 +104,27 @@ void System::init()
     indexBufferQuad.setData(indices, 6);
 
     defaultTexture.init();
-    defaultTexture.setFromFile("pic.png");
+    defaultTexture.setFromFile("bird.png");
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
     glEnable(GL_BLEND);
+
+    {
+        World * world = new World();
+        world->init();
+        worldTable.add(world);
+    }
 }
 
 void System::finalize()
 {
     geLog("graphics::System::finalize()");
+
+    for(World * world : worldTable)
+    {
+        world->finalize();
+    }
 
     defaultTexture.finalize();
     defaultProgram.finalize();
@@ -158,13 +149,19 @@ void System::test(const float dt)
 
     samplerUniform.apply(defaultTexture);
     projectionMatrixUniform.apply(projectionMatrix);
+    colorUniform.apply(Vector4(1.0f, 1.0f, 1.0f, 1.0f * sinf(total)));
 
     m.initIdentity();
-    m.setTranslation(0.0f, 100.0f * sin(total));
-    //m.setRotation(total);
-    m.preScale(256,64);
+    m.setTranslation(0.0f, 50.0f * sinf(total));
+    //m.setRotation(sinf(total));
+    m.preScale(256,256);
     transformMatrixUniform.apply(m);
     indexBufferQuad.draw();
+}
+
+World & System::getWorld(const uint index)
+{
+    return * worldTable[index];
 }
 
 }

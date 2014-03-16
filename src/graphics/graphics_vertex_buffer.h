@@ -50,11 +50,8 @@ public:
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_POSITION);
         glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), 0);
 
-        glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_COLOR);
-        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(VERTEX), (char*)0 + 8);
-
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_TEXCOORDS);
-        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), (char*)0 + 8 + 16);
+        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), (char*)0 + 8);
     }
 
 private:

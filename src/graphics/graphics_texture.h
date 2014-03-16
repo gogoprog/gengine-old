@@ -1,7 +1,6 @@
 #pragma once
 
 #include "primitives.h"
-#include "core_sdl.h"
 
 namespace gengine
 {

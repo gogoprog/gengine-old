@@ -24,6 +24,15 @@ public:
         return array[index];
     }
 
+    uint getSize() const { return array.size(); }
+
+    typedef T* iterator;
+    typedef const T* const_iterator;
+    iterator begin() { return &array[0]; }
+    const_iterator begin() const { return &array[0]; }
+    iterator end() { return &array[getSize()]; }
+    const_iterator end() const { return &array[getSize()]; }
+
 protected:
     std::vector<T> array;
 };

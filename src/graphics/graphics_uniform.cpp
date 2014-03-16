@@ -2,8 +2,9 @@
 
 #include "graphics_program.h"
 #include "graphics_opengl.h"
-#include "matrix3.h"
 #include "graphics_texture.h"
+#include "matrix3.h"
+#include "vector4.h"
 
 namespace gengine
 {
@@ -25,6 +26,11 @@ void Uniform::apply(const Texture & texture)
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture.getId());
     glUniform1i(location, 0);
+}
+
+void Uniform::apply(const Vector4 & vector4)
+{
+    glUniform4fv(location, 1, reinterpret_cast<const float *>(&vector4));
 }
 
 }

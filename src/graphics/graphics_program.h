@@ -18,8 +18,8 @@ public:
     enum AttributeLocation
     {
         ATTRIBUTE_LOCATION_POSITION,
-        ATTRIBUTE_LOCATION_COLOR,
-        ATTRIBUTE_LOCATION_TEXCOORDS
+        ATTRIBUTE_LOCATION_TEXCOORDS,
+        ATTRIBUTE_LOCATION_COLOR
     };
 
     void init();

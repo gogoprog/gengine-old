@@ -6,6 +6,7 @@ namespace gengine
 {
 
 class Matrix3;
+struct Vector4;
 
 namespace graphics
 {
@@ -21,6 +22,7 @@ public:
     void init(const Program & program, const char * name);
     void apply(const Matrix3 & matrix);
     void apply(const Texture & texture);
+    void apply(const Vector4 & vector4);
 
     uint getLocation() const { return location; }
 

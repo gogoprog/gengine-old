@@ -6,11 +6,14 @@
 #include "graphics_uniform.h"
 #include "graphics_shader.h"
 #include "graphics_texture.h"
+#include "array.h"
 
 namespace gengine
 {
 namespace graphics
 {
+
+class World;
 
 class System
 {
@@ -20,20 +23,22 @@ public:
     void finalize();
     void test(const float dt);
 
+    World & getWorld(const uint index = 0);
+
     struct Vertex
     {
         float x, y;
-        float r, g, b, a;
         float u, v;
     };
-
 private:
     Shader defaultVertexShader, defaultFragmentShader;
     Program defaultProgram;
     VertexBuffer<Vertex> vertexBufferQuad;
     IndexBuffer indexBufferQuad;
-    Uniform projectionMatrixUniform, transformMatrixUniform, samplerUniform;
+    Uniform projectionMatrixUniform, transformMatrixUniform, samplerUniform, colorUniform;
     Texture defaultTexture;
+
+    Array<World *> worldTable;
 };
 
 }
