@@ -2,6 +2,7 @@
 
 #include "primitives.h"
 #include "vector2.h"
+#include "stack.h"
 
 namespace gengine
 {
@@ -18,6 +19,7 @@ public:
     void finalize();
 
 private:
+
 };
 
 }
