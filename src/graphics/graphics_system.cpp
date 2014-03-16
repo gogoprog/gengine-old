@@ -142,7 +142,7 @@ void System::test(const float dt)
     total += dt * 3;
 
     projectionMatrix.initIdentity();
-    projectionMatrix.initProjection(640, 480);
+    projectionMatrix.initProjection(Vector2(640, 480));
 
     defaultProgram.use();
     vertexBufferQuad.apply();
@@ -152,9 +152,9 @@ void System::test(const float dt)
     colorUniform.apply(Vector4(1.0f, 1.0f, 1.0f, 1.0f * sinf(total)));
 
     m.initIdentity();
-    m.setTranslation(0.0f, 50.0f * sinf(total));
+    m.setTranslation(Vector2(0.0f, 50.0f * sinf(total)));
     //m.setRotation(sinf(total));
-    m.preScale(256,256);
+    m.preScale(Vector2(256.0f,256.0f));
     transformMatrixUniform.apply(m);
     indexBufferQuad.draw();
 }

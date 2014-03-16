@@ -21,25 +21,25 @@ void Matrix3::initIdentity()
     get(2,2) = 1.0f;
 }
 
-void Matrix3::initProjection(const float width, const float height, const float tx, const float ty)
+void Matrix3::initProjection(const Vector2 & extent, const Vector2 & translation)
 {
-    get(0,0) = 2.0f / width;
+    get(0,0) = 2.0f / extent.x;
     get(1,0) = 0.0f;
     get(2,0) = 0.0f;
 
     get(0,1) = 0.0f;
-    get(1,1) = 2.0f / height,
+    get(1,1) = 2.0f / extent.y,
     get(2,1) = 0.0f;
 
-    get(0,2) = - get(0,0) * tx;
-    get(1,2) = - get(1,1) * ty;
+    get(0,2) = - get(0,0) * translation.x;
+    get(1,2) = - get(1,1) * translation.y;
     get(2,2) = 1.0f;
 }
 
-void Matrix3::setTranslation(const float x, const float y)
+void Matrix3::setTranslation(const Vector2 & translation)
 {
-    get(2,0) = x;
-    get(2,1) = y;
+    get(2,0) = translation.x;
+    get(2,1) = translation.y;
 }
 
 void Matrix3::setRotation(const float angle)
@@ -53,22 +53,22 @@ void Matrix3::setRotation(const float angle)
     get(1,1) = cos;
 }
 
-void Matrix3::preScale(const float sx, const float sy)
+void Matrix3::preScale(const Vector2 & s)
 {
-    get(0,0) *= sx;
-    get(0,1) *= sx;
+    get(0,0) *= s.x;
+    get(0,1) *= s.x;
 
-    get(1,0) *= sy;
-    get(1,1) *= sy;
+    get(1,0) *= s.y;
+    get(1,1) *= s.y;
 }
 
-void Matrix3::scale(const float sx, const float sy)
+void Matrix3::scale(const Vector2 & s)
 {
-    get(0,0) *= sx;
-    get(1,0) *= sx;
+    get(0,0) *= s.x;
+    get(1,0) *= s.x;
 
-    get(0,1) *= sy;
-    get(1,1) *= sy;
+    get(0,1) *= s.y;
+    get(1,1) *= s.y;
 }
 
 }

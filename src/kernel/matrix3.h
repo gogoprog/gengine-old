@@ -1,5 +1,8 @@
 #pragma once
 
+#include "primitives.h"
+#include "vector2.h"
+
 namespace gengine
 {
 
@@ -7,11 +10,11 @@ class Matrix3
 {
 public:
     void initIdentity();
-    void initProjection(const float width, const float height, const float tx = 0.0f, const float ty = 0.0f);
-    void setTranslation(const float x, const float y);
+    void initProjection(const Vector2 & extent, const Vector2 & translation = Vector2::zero);
+    void setTranslation(const Vector2 & translation);
     void setRotation(const float angle);
-    void preScale(const float sx, const float sy);
-    void scale(const float sx, const float sy);
+    void preScale(const Vector2 & s);
+    void scale(const Vector2 & s);
 
     inline float get(const int y, const int x) const
     {
