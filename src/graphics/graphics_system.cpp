@@ -6,6 +6,7 @@
 #include "graphics_program.h"
 #include "graphics_shader.h"
 #include "graphics_vertex_buffer.h"
+#include <math.h>
 
 namespace gengine
 {
@@ -126,6 +127,8 @@ void System::init()
     defaultTexture.setFromFile("pic.png");
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+    glEnable(GL_BLEND);
 }
 
 void System::finalize()
@@ -157,9 +160,9 @@ void System::test(const float dt)
     projectionMatrixUniform.apply(projectionMatrix);
 
     m.initIdentity();
-    m.setTranslation(0.0f, 0.0f);
-    m.setRotation(total);
-    m.preScale(32,32);
+    m.setTranslation(0.0f, 100.0f * sin(total));
+    //m.setRotation(total);
+    m.preScale(256,64);
     transformMatrixUniform.apply(m);
     indexBufferQuad.draw();
 }

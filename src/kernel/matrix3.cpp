@@ -28,7 +28,7 @@ void Matrix3::initProjection(const float width, const float height, const float 
     get(2,0) = 0.0f;
 
     get(0,1) = 0.0f;
-    get(1,1) = -2.0f / height,
+    get(1,1) = 2.0f / height,
     get(2,1) = 0.0f;
 
     get(0,2) = - get(0,0) * tx;
