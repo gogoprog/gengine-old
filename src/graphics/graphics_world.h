@@ -9,6 +9,8 @@ namespace gengine
 namespace graphics
 {
 
+class Camera;
+
 class World
 {
 friend class System;
@@ -19,7 +21,7 @@ public:
     void finalize();
 
 private:
-
+    Stack<const Camera*> cameraStack;
 };
 
 }

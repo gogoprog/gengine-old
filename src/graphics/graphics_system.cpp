@@ -107,7 +107,7 @@ void System::init()
     defaultTexture.setFromFile("bird.png");
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     glEnable(GL_BLEND);
 
     {
@@ -115,6 +115,8 @@ void System::init()
         world->init();
         worldTable.add(world);
     }
+
+    defaultCamera.setExtent(Vector2(640.0f, 480.0f));
 }
 
 void System::finalize()

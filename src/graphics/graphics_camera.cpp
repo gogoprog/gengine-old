@@ -8,6 +8,13 @@ namespace gengine
 namespace graphics
 {
 
+Camera::Camera()
+    :
+    position(Vector2::zero),
+    dirty(true)
+{
+}
+
 void Camera::init()
 {
 
@@ -24,7 +31,7 @@ void Camera::update()
     {
         dirty = false;
 
-        projectionMatrix.init();
+        projectionMatrix.initProjection(extent, position);
     }
 }
 

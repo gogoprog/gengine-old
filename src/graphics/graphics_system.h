@@ -6,6 +6,7 @@
 #include "graphics_uniform.h"
 #include "graphics_shader.h"
 #include "graphics_texture.h"
+#include "graphics_camera.h"
 #include "array.h"
 
 namespace gengine
@@ -25,18 +26,32 @@ public:
 
     World & getWorld(const uint index = 0);
 
+    const Camera & getDefaultCamera() const { return defaultCamera; }
+
     struct Vertex
     {
         float x, y;
         float u, v;
     };
 private:
-    Shader defaultVertexShader, defaultFragmentShader;
-    Program defaultProgram;
-    VertexBuffer<Vertex> vertexBufferQuad;
-    IndexBuffer indexBufferQuad;
-    Uniform projectionMatrixUniform, transformMatrixUniform, samplerUniform, colorUniform;
-    Texture defaultTexture;
+    Shader
+        defaultVertexShader,
+        defaultFragmentShader;
+    Program
+        defaultProgram;
+    VertexBuffer<Vertex>
+        vertexBufferQuad;
+    IndexBuffer
+        indexBufferQuad;
+    Uniform
+        projectionMatrixUniform,
+        transformMatrixUniform,
+        samplerUniform,
+        colorUniform;
+    Texture
+        defaultTexture;
+    Camera
+        defaultCamera;
 
     Array<World *> worldTable;
 };

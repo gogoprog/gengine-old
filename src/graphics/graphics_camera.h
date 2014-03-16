@@ -2,6 +2,7 @@
 
 #include "primitives.h"
 #include "vector2.h"
+#include "matrix3.h"
 
 namespace gengine
 {
@@ -12,7 +13,7 @@ class Camera
 {
 
 public:
-    Camera() = default;
+    Camera();
     void init();
     void finalize();
     void update();
