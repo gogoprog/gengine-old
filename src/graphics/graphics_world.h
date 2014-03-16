@@ -19,9 +19,10 @@ public:
     World();
     void init();
     void finalize();
+    void update();
 
 private:
-    Stack<const Camera*> cameraStack;
+    Stack<Camera*> cameraStack;
 };
 
 }

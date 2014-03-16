@@ -26,7 +26,7 @@ public:
 
     World & getWorld(const uint index = 0);
 
-    const Camera & getDefaultCamera() const { return defaultCamera; }
+    Camera & getDefaultCamera() { return defaultCamera; }
 
     struct Vertex
     {

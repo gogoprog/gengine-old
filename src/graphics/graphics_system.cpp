@@ -151,11 +151,11 @@ void System::test(const float dt)
 
     samplerUniform.apply(defaultTexture);
     projectionMatrixUniform.apply(projectionMatrix);
-    colorUniform.apply(Vector4(1.0f, 1.0f, 1.0f, 1.0f * sinf(total)));
+    colorUniform.apply(Vector4(1.0f, 1.0f, 1.0f, 0.5f + 0.5f * sinf(total)));
 
     m.initIdentity();
     m.setTranslation(Vector2(0.0f, 50.0f * sinf(total)));
-    //m.setRotation(sinf(total));
+    m.setRotation(3.14 * 2 * sinf(total*0.1f));
     m.preScale(Vector2(256.0f,256.0f));
     transformMatrixUniform.apply(m);
     indexBufferQuad.draw();

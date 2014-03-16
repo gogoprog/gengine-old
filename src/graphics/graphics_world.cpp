@@ -23,5 +23,10 @@ void World::finalize()
 
 }
 
+void World::update()
+{
+    cameraStack.getTop()->update();
+}
+
 }
 }
