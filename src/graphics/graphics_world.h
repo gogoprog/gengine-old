@@ -3,6 +3,7 @@
 #include "primitives.h"
 #include "vector2.h"
 #include "stack.h"
+#include "array.h"
 
 namespace gengine
 {
@@ -10,6 +11,7 @@ namespace graphics
 {
 
 class Camera;
+class Sprite;
 
 class World
 {
@@ -23,6 +25,7 @@ public:
 
 private:
     Stack<Camera*> cameraStack;
+    Array<Sprite*> spriteTable;
 };
 
 }

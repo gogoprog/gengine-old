@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "graphics_opengl.h"
 #include "graphics_system.h"
+#include "graphics_sprite.h"
 
 namespace gengine
 {
