@@ -64,11 +64,6 @@ void System::init()
     defaultProgram.attachShader(defaultFragmentShader);
     defaultProgram.link();
 
-    projectionMatrixUniform.init(defaultProgram, "projectionMatrix");
-    transformMatrixUniform.init(defaultProgram, "transformMatrix");
-    samplerUniform.init(defaultProgram, "tex0");
-    colorUniform.init(defaultProgram, "color");
-
     vertices[0].x = -0.5f;
     vertices[0].y = 0.5f;
     vertices[0].u = 0.0f;
@@ -117,13 +112,19 @@ void System::init()
         world->init();
         worldTable.add(world);
 
-        testSprite.setPosition(Vector2(0.0f,0.0f));
-        testSprite.setExtent(Vector2(256.0f,256.0f));
-        testSprite.setTexture(defaultTexture);
+        for(int i=0; i<256; i++)
+        {
+            int x,y;
+            x = i % 16;
+            y = i / 16;
+            testSpriteTable[i].setPosition(Vector2(-640.0f + x * 64.0f,-480.0f + y * 64.0f));
+            testSpriteTable[i].setExtent(Vector2(64.0f,64.0f));
+            testSpriteTable[i].setTexture(defaultTexture);
 
-        world->addSprite(testSprite);
+            world->addSprite(testSpriteTable[i]);
+        }
+
     }
-
 }
 
 void System::finalize()
@@ -164,7 +165,11 @@ void System::test(const float dt)
     static float total = 0;
     total += dt * 3;
 
-    testSprite.setRotation(total);
+    for(int i=0; i<256; i++)
+    {
+        testSpriteTable[i].setRotation(i + total);
+    }
+
 }
 
 World & System::getWorld(const uint index)

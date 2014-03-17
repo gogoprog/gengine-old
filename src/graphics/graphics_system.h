@@ -50,11 +50,6 @@ private:
         vertexBufferQuad;
     IndexBuffer
         indexBufferQuad;
-    Uniform
-        projectionMatrixUniform,
-        transformMatrixUniform,
-        samplerUniform,
-        colorUniform;
     Texture
         defaultTexture;
     Camera
@@ -62,7 +57,7 @@ private:
     Array<World *>
         worldTable;
     Sprite
-        testSprite;
+        testSpriteTable[256];
 };
 
 }
