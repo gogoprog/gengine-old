@@ -20,7 +20,11 @@ public:
     void call(const char * name, const float arg);
 
 private:
-    lua_State * state;
+    void internalCall(const uint arg_count);
+    void handleError();
+
+    lua_State
+        * state;
 };
 
 }

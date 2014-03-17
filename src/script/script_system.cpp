@@ -31,6 +31,15 @@ void System::executeFile(const char * file)
     if(!s)
     {
         s = lua_pcall(state, 0, LUA_MULTRET, 0);
+
+        if(s)
+        {
+            handleError();
+        }
+    }
+    else
+    {
+        handleError();
     }
 }
 
@@ -38,7 +47,7 @@ void System::call(const char * name)
 {
     lua_getglobal(state, name);
 
-    lua_pcall(state, 0, 0, 0);
+    internalCall(0);
 }
 
 void System::call(const char * name, const float arg)
@@ -46,7 +55,23 @@ void System::call(const char * name, const float arg)
     lua_getglobal(state, name);
     lua_pushnumber(state, arg);
 
-    lua_pcall(state, 1, 0, 0);
+    internalCall(1);
+}
+
+void System::internalCall(const uint arg_count)
+{
+    int s = lua_pcall(state, arg_count, 0, 0);
+
+    if(s)
+    {
+        handleError();
+    }
+}
+
+void System::handleError()
+{
+    const char * message = lua_tostring(state, -1);
+    geLog("script:" << message);
 }
 
 }
