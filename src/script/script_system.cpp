@@ -10,7 +10,7 @@ namespace script
 
 void System::init()
 {
-    geLog("script::System::init()");
+    geDebugLog("script::System::init()");
 
     state = luaL_newstate();
     luaL_openlibs(state);
@@ -18,7 +18,7 @@ void System::init()
 
 void System::finalize()
 {
-    geLog("script::System::finalize()");
+    geDebugLog("script::System::finalize()");
 
     lua_close(state);
     state = nullptr;
@@ -71,7 +71,8 @@ void System::internalCall(const uint arg_count)
 void System::handleError()
 {
     const char * message = lua_tostring(state, -1);
-    geLog("script:" << message);
+    geDebugLog("script:" << message);
+    puts(message);
 }
 
 }

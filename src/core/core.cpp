@@ -26,7 +26,7 @@ bool mustQuit()
 
 void init()
 {
-    geLog("core::init()");
+    geDebugLog("core::init()");
 
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -44,7 +44,7 @@ void init()
 
 void finalize()
 {
-    geLog("core::finalize()");
+    geDebugLog("core::finalize()");
 
     script::System::getInstance().call("stop");
 

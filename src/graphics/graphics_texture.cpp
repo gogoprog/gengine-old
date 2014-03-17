@@ -27,7 +27,7 @@ void Texture::finalize()
 
 void Texture::setFromFile(const char * filename)
 {
-    geLogN("graphics::Texture::setFromFile \"" << filename << "\" ... ");
+    geDebugLogN("graphics::Texture::setFromFile \"" << filename << "\" ... ");
 
     SDL_Surface *image = IMG_Load(filename);
 
@@ -49,11 +49,11 @@ void Texture::setFromFile(const char * filename)
         height = image->h;
         SDL_FreeSurface (image);
 
-        geRawLog("Done (" << id << ")");
+        geDebugRawLog("Done (" << id << ")");
     }
     else
     {
-        geRawLog("Failed! " << IMG_GetError());
+        geDebugRawLog("Failed! " << IMG_GetError());
     }
 }
 

@@ -10,7 +10,7 @@ namespace input
 
 void System::init()
 {
-    geLog("input::System::init()");
+    geDebugLog("input::System::init()");
 
     mouseTable.add(Mouse());
 }

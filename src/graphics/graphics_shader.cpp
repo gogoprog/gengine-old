@@ -39,7 +39,7 @@ void Shader::compile(const char * source)
 
         if(length > 0)
         {
-            geLog("Error while compiling shader");
+            geDebugLog("Error while compiling shader");
             puts(log);
         }
     }

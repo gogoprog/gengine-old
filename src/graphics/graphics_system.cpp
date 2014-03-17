@@ -48,7 +48,7 @@ const char fragment_shader_source[] =
 
 void System::init()
 {
-    geLog("graphics::System::init()");
+    geDebugLog("graphics::System::init()");
 
     Vertex vertices[4];
     ushort indices[6];
@@ -112,13 +112,13 @@ void System::init()
         world->init();
         worldTable.add(world);
 
-        for(int i=0; i<256; i++)
+        for(int i=0; i<2560; i++)
         {
             int x,y;
-            x = i % 16;
-            y = i / 16;
-            testSpriteTable[i].setPosition(Vector2(-640.0f + x * 64.0f,-480.0f + y * 64.0f));
-            testSpriteTable[i].setExtent(Vector2(64.0f,64.0f));
+            x = i % 48;
+            y = i / 48;
+            testSpriteTable[i].setPosition(Vector2(-320.0f + x * 16.0f,-240.0f + y * 16.0f));
+            testSpriteTable[i].setExtent(Vector2(16.0f,16.0f));
             testSpriteTable[i].setTexture(defaultTexture);
 
             world->addSprite(testSpriteTable[i]);
@@ -129,7 +129,7 @@ void System::init()
 
 void System::finalize()
 {
-    geLog("graphics::System::finalize()");
+    geDebugLog("graphics::System::finalize()");
 
     for(World * world : worldTable)
     {
@@ -165,9 +165,10 @@ void System::test(const float dt)
     static float total = 0;
     total += dt * 3;
 
-    for(int i=0; i<256; i++)
+    for(int i=0; i<2560; i++)
     {
         testSpriteTable[i].setRotation(i + total);
+        testSpriteTable[i].setColorAlpha(0.6f + 0.4f * sinf(total + i));
     }
 
 }

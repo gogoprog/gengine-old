@@ -53,7 +53,7 @@ void Program::link()
 
         if(length > 0)
         {
-            geLog("Error while linking program");
+            geDebugLog("Error while linking program");
             puts(log);
         }
     }

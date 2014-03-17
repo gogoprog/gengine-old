@@ -57,7 +57,7 @@ private:
     Array<World *>
         worldTable;
     Sprite
-        testSpriteTable[256];
+        testSpriteTable[2560];
 };
 
 }
