@@ -106,6 +106,8 @@ void System::init()
     defaultTexture.init();
     defaultTexture.setFromFile("bird.png");
 
+    defaultCamera.setExtent(Vector2(640.0f, 480.0f));
+
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     glEnable(GL_BLEND);
@@ -114,9 +116,14 @@ void System::init()
         World * world = new World();
         world->init();
         worldTable.add(world);
+
+        testSprite.setPosition(Vector2(0.0f,0.0f));
+        testSprite.setExtent(Vector2(256.0f,256.0f));
+        testSprite.setTexture(defaultTexture);
+
+        world->addSprite(testSprite);
     }
 
-    defaultCamera.setExtent(Vector2(640.0f, 480.0f));
 }
 
 void System::finalize()
@@ -136,29 +143,28 @@ void System::finalize()
     indexBufferQuad.finalize();
 }
 
+void System::update()
+{
+    for(World * world : worldTable)
+    {
+        world->update();
+    }
+}
+
+void System::render()
+{
+    for(World * world : worldTable)
+    {
+        world->render();
+    }
+}
+
 void System::test(const float dt)
 {
-    Matrix3 projectionMatrix;
-    Matrix3 m;
     static float total = 0;
     total += dt * 3;
 
-    projectionMatrix.initIdentity();
-    projectionMatrix.initProjection(Vector2(640, 480));
-
-    defaultProgram.use();
-    vertexBufferQuad.apply();
-
-    samplerUniform.apply(defaultTexture);
-    projectionMatrixUniform.apply(projectionMatrix);
-    colorUniform.apply(Vector4(1.0f, 1.0f, 1.0f, 0.5f + 0.5f * sinf(total)));
-
-    m.initIdentity();
-    m.setTranslation(Vector2(0.0f, 50.0f * sinf(total)));
-    m.setRotation(3.14 * 2 * sinf(total*0.1f));
-    m.preScale(Vector2(256.0f,256.0f));
-    transformMatrixUniform.apply(m);
-    indexBufferQuad.draw();
+    testSprite.setRotation(total);
 }
 
 World & System::getWorld(const uint index)

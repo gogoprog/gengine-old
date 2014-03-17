@@ -17,7 +17,7 @@ solution "gengine"
 
       links { "lua" }
 
-      flags { "ExtraWarnings", "FatalWarnings" }
+      flags { "ExtraWarnings", "FatalWarnings", "FloatFast", "NoExceptions", "NoFramePointer", "NoNativeWChar" }
       buildoptions { "-std=c++11" }
 
       configuration "Debug*"

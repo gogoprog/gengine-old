@@ -67,6 +67,10 @@ void update()
 
     graphics::System::getInstance().test(dt);
 
+    graphics::System::getInstance().update();
+
+    graphics::System::getInstance().render();
+
     mainWindow.swap();
 
     last_ticks = current_ticks;

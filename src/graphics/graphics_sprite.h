@@ -2,6 +2,7 @@
 
 #include "primitives.h"
 #include "vector2.h"
+#include "vector4.h"
 #include "matrix3.h"
 
 namespace gengine
@@ -23,13 +24,19 @@ public:
 
     void setPosition(const Vector2 & _position) { position = _position; }
     void setExtent(const Vector2 & _extent) { extent = _extent; }
-
+    void setColor(const Vector4 & _color) { color = _color; }
+    void setColorAlpha(const float alpha) { color.w = alpha; }
+    void setRotation(const float angle) { rotation = angle; }
     void setTexture(const Texture & _texture) { texture = & _texture; }
 
 private:
     Vector2
         position,
         extent;
+    Vector4
+        color;
+    float
+        rotation;
     const Texture
         * texture;
 };

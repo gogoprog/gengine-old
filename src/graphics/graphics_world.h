@@ -4,6 +4,7 @@
 #include "vector2.h"
 #include "stack.h"
 #include "array.h"
+#include "graphics_uniform.h"
 
 namespace gengine
 {
@@ -22,10 +23,19 @@ public:
     void init();
     void finalize();
     void update();
+    void render();
+    void addSprite(Sprite & sprite);
 
 private:
-    Stack<Camera*> cameraStack;
-    Array<Sprite*> spriteTable;
+    Stack<Camera*>
+        cameraStack;
+    Array<Sprite*>
+        spriteTable;
+    Uniform
+        projectionMatrixUniform,
+        transformMatrixUniform,
+        samplerUniform,
+        colorUniform;
 };
 
 }

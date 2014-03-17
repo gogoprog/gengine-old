@@ -7,6 +7,7 @@
 #include "graphics_shader.h"
 #include "graphics_texture.h"
 #include "graphics_camera.h"
+#include "graphics_sprite.h"
 #include "array.h"
 
 namespace gengine
@@ -19,20 +20,26 @@ class World;
 class System
 {
 public:
-    SINGLETON(System);
-    void init();
-    void finalize();
-    void test(const float dt);
-
-    World & getWorld(const uint index = 0);
-
-    Camera & getDefaultCamera() { return defaultCamera; }
-
     struct Vertex
     {
         float x, y;
         float u, v;
     };
+
+    SINGLETON(System);
+    void init();
+    void finalize();
+    void update();
+    void render();
+    void test(const float dt);
+
+    World & getWorld(const uint index = 0);
+
+    Program & getDefaultProgram() { return defaultProgram; }
+    VertexBuffer<Vertex> & getVertexBufferQuad() { return vertexBufferQuad; }
+    IndexBuffer & getIndexBufferQuad() { return indexBufferQuad; }
+    Camera & getDefaultCamera() { return defaultCamera; }
+
 private:
     Shader
         defaultVertexShader,
@@ -52,8 +59,10 @@ private:
         defaultTexture;
     Camera
         defaultCamera;
-
-    Array<World *> worldTable;
+    Array<World *>
+        worldTable;
+    Sprite
+        testSprite;
 };
 
 }
