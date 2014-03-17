@@ -71,8 +71,7 @@ void System::internalCall(const uint arg_count)
 void System::handleError()
 {
     const char * message = lua_tostring(state, -1);
-    geDebugLog("script:" << message);
-    puts(message);
+    geLog("script:" << message);
 }
 
 }
