@@ -31,17 +31,22 @@ void init()
     SDL_Init(SDL_INIT_VIDEO);
 
     script::System::getInstance().init();
-
     script::System::getInstance().executeFile("main.lua");
+
+    script::System::getInstance().call("init");
 
     mainWindow.init();
     graphics::System::getInstance().init();
     input::System::getInstance().init();
+
+    script::System::getInstance().call("start");
 }
 
 void finalize()
 {
     geLog("core::finalize()");
+
+    script::System::getInstance().call("stop");
 
     graphics::System::getInstance().finalize();
 

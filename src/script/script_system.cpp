@@ -34,6 +34,13 @@ void System::executeFile(const char * file)
     }
 }
 
+void System::call(const char * name)
+{
+    lua_getglobal(state, name);
+
+    lua_pcall(state, 0, 0, 0);
+}
+
 void System::call(const char * name, const float arg)
 {
     lua_getglobal(state, name);
