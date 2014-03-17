@@ -39,6 +39,8 @@ private:
         rotation;
     const Texture
         * texture;
+    int
+        layer;
 };
 
 }

@@ -4,6 +4,7 @@
 #include "graphics_opengl.h"
 #include "graphics_system.h"
 #include "graphics_sprite.h"
+#include <algorithm>
 
 namespace gengine
 {
@@ -35,7 +36,7 @@ void World::update()
 {
     cameraStack.getTop()->update();
 
-    // todo: sort on layer
+    std::sort(spriteTable.begin(), spriteTable.end(), compare);
 }
 
 void World::render()
@@ -72,6 +73,10 @@ void World::addSprite(Sprite & sprite)
     spriteTable.add(&sprite);
 }
 
+bool World::compare(Sprite *a, Sprite *b)
+{
+    return a->layer < b->layer;
+}
 
 }
 }

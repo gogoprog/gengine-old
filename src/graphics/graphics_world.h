@@ -27,6 +27,8 @@ public:
     void addSprite(Sprite & sprite);
 
 private:
+    static bool compare(Sprite *a, Sprite *b);
+
     Stack<Camera*>
         cameraStack;
     Array<Sprite*>
