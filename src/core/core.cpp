@@ -74,6 +74,8 @@ void update()
 
     script::System::getInstance().call("update", dt);
 
+    input::System::getInstance().update();
+
     graphics::System::getInstance().test(dt);
 
     graphics::System::getInstance().update();

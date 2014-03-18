@@ -19,11 +19,18 @@ public:
         DOWN
     };
 
+    enum
+    {
+        BUTTON_COUNT = 3
+    };
+
     Mouse();
     SCRIPT_REGISTERER() const;
 
     static SCRIPT_FUNCTION(isDown);
     static SCRIPT_FUNCTION(isUp);
+    static SCRIPT_FUNCTION(isJustDown);
+    static SCRIPT_FUNCTION(isJustUp);
     static SCRIPT_FUNCTION(getPosition);
 
 private:
@@ -31,8 +38,8 @@ private:
         x,
         y;
     ButtonState
-        buttonStateTable[3],
-        previousButtonStateTable[3];
+        buttonStateTable[BUTTON_COUNT],
+        previousButtonStateTable[BUTTON_COUNT];
 };
 
 }

@@ -2,7 +2,7 @@ print("tests/basic")
 
 function init()
     print("tests/basic init")
-    setExtent(800,600)
+    setExtent(320,200)
 end
 
 function start()
@@ -10,14 +10,22 @@ function start()
     graphics.setClearColor(1,1,0.1,1)
 end
 
+local total = 0
+
 function update(dt)
-    if input.mouse:isDown(1) then
+    total = total + dt
+
+    graphics.setClearColor(1,1,math.sin(total),1)
+
+
+    if input.mouse:isJustDown(1) then
         local x,y = input.mouse:getPosition()
         print("Mouse button 1 is down : " .. x .. ", " ..y)
     end
 
-    if input.mouse:isDown(3) then
-        print("Mouse button 3 is down")
+    if input.mouse:isJustDown(3) then
+        local x,y = input.mouse:getPosition()
+        print("Mouse button 3 is down : " .. x .. ", " ..y)
     end
 end
 

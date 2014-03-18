@@ -17,6 +17,7 @@ public:
     void init();
     void updateMouseCoordinates(const int index, const int x, const int y);
     void updateMouseButton(const int index, const int button_index, const Mouse::ButtonState state);
+    void update();
 
 private:
     Array<Mouse>
