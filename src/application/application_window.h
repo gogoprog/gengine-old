@@ -4,7 +4,7 @@
 
 namespace gengine
 {
-namespace window
+namespace application
 {
 
 class Window

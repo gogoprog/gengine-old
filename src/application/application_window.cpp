@@ -1,10 +1,10 @@
-#include "window_window.h"
+#include "application_window.h"
 
 #include "core_sdl.h"
 
 namespace gengine
 {
-namespace window
+namespace application
 {
 
 Window::Window()

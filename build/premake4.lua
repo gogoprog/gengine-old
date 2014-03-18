@@ -9,7 +9,7 @@ solution "gengine"
       includedirs {
          "../src/kernel",
          "../src/core",
-         "../src/window",
+         "../src/application",
          "../src/graphics",
          "../src/input",
          "../src/script"

@@ -4,7 +4,7 @@
 #include "input_system.h"
 #include "graphics_system.h"
 #include "graphics_opengl.h"
-#include "window_window.h"
+#include "application_window.h"
 #include "script_system.h"
 #include "debug.h"
 
@@ -17,7 +17,7 @@ void handleEvents();
 
 bool itMustQuit = false;
 unsigned long long last_ticks = 0, current_ticks;
-window::Window mainWindow;
+application::Window mainWindow;
 
 bool mustQuit()
 {
