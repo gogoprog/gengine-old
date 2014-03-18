@@ -7,7 +7,7 @@ end
 
 function start()
     print("tests/basic start")
-    graphics.setClearColor(1,1,1,1)
+    graphics.setClearColor(1,1,0.1,1)
 end
 
 function update()

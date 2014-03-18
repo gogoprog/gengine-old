@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "application.h"
 #include "graphics.h"
+#include "input.h"
 
 namespace gengine
 {
@@ -19,6 +20,7 @@ void System::init()
 
     application::luaRegister(state);
     graphics::luaRegister(state);
+    input::luaRegister(state);
 }
 
 void System::finalize()

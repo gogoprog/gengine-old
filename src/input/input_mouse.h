@@ -21,7 +21,6 @@ public:
     bool isDown(const int index) const;
     bool isUp(const int index) const;
 
-
 private:
     uint
         x,
