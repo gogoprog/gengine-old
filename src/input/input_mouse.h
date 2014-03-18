@@ -23,6 +23,8 @@ public:
     SCRIPT_REGISTERER() const;
 
     static SCRIPT_FUNCTION(isDown);
+    static SCRIPT_FUNCTION(isUp);
+    static SCRIPT_FUNCTION(getPosition);
 
 private:
     uint

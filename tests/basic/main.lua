@@ -12,7 +12,8 @@ end
 
 function update(dt)
     if input.mouse:isDown(1) then
-        print("Mouse button 1 is down")
+        local x,y = input.mouse:getPosition()
+        print("Mouse button 1 is down : " .. x .. ", " ..y)
     end
 
     if input.mouse:isDown(3) then

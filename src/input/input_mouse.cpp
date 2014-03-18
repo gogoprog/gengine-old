@@ -18,9 +18,10 @@ Mouse::Mouse()
 SCRIPT_CLASS_REGISTERER(Mouse) const
 {
     lua_newtable(state);
-    lua_pushlightuserdata(state, (void*)(this));
-    lua_setfield(state, -2, "this");
-    SCRIPT_PUSH_FUNCTION(Mouse, isDown);
+    SCRIPT_TABLE_PUSH_THIS();
+    SCRIPT_TABLE_PUSH_FUNCTION(Mouse, isDown);
+    SCRIPT_TABLE_PUSH_FUNCTION(Mouse, isUp);
+    SCRIPT_TABLE_PUSH_FUNCTION(Mouse, getPosition);
 }
 
 SCRIPT_CLASS_FUNCTION(Mouse, isDown)
@@ -29,9 +30,30 @@ SCRIPT_CLASS_FUNCTION(Mouse, isDown)
 
     uint button_index = lua_tonumber(state,2);
 
-    lua_pushboolean(state, self.buttonStateTable[button_index] == DOWN);
+    SCRIPT_PUSH_BOOL(self.buttonStateTable[button_index] == DOWN);
 
     return 1;
+}
+
+SCRIPT_CLASS_FUNCTION(Mouse, isUp)
+{
+    SCRIPT_GET_SELF(Mouse);
+
+    uint button_index = lua_tonumber(state,2);
+
+    SCRIPT_PUSH_BOOL(self.buttonStateTable[button_index] == UP);
+
+    return 1;
+}
+
+SCRIPT_CLASS_FUNCTION(Mouse, getPosition)
+{
+    SCRIPT_GET_SELF(Mouse);
+
+    SCRIPT_PUSH_NUMBER(self.x);
+    SCRIPT_PUSH_NUMBER(self.y);
+
+    return 2;
 }
 
 }
