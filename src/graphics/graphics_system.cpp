@@ -104,9 +104,10 @@ void System::init()
 
     defaultCamera.setExtent(application::getExtent());
 
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    setClearColor(Vector4(0.2f,0.2f,0.2f,1.0f));
+
     glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     {
         World * world = new World();
@@ -161,6 +162,11 @@ void System::render()
     }
 }
 
+void System::setClearColor(const Vector4 & c)
+{
+    glClearColor(c.x, c.y ,c.z, c.w);
+}
+
 void System::test(const float dt)
 {
     static float total = 0;
@@ -177,6 +183,10 @@ void System::test(const float dt)
 World & System::getWorld(const uint index)
 {
     return * worldTable[index];
+}
+
+SCRIPT_CLASS_REGISTERER(System)
+{
 }
 
 }

@@ -32,6 +32,7 @@ public:
     void finalize();
     void update();
     void render();
+    void setClearColor(const Vector4 & color);
     void test(const float dt);
 
     World & getWorld(const uint index = 0);
@@ -40,6 +41,8 @@ public:
     VertexBuffer<Vertex> & getVertexBufferQuad() { return vertexBufferQuad; }
     IndexBuffer & getIndexBufferQuad() { return indexBufferQuad; }
     Camera & getDefaultCamera() { return defaultCamera; }
+
+    static SCRIPT_REGISTERER();
 
 private:
     Shader
