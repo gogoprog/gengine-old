@@ -8,6 +8,7 @@
 #include "graphics_texture.h"
 #include "graphics_camera.h"
 #include "graphics_sprite.h"
+#include "script.h"
 #include "array.h"
 
 namespace gengine

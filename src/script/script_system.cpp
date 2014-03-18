@@ -2,6 +2,7 @@
 
 #include "script_lua.h"
 #include "debug.h"
+#include "application.h"
 
 namespace gengine
 {
@@ -14,6 +15,8 @@ void System::init()
 
     state = luaL_newstate();
     luaL_openlibs(state);
+
+    application::luaRegister(state);
 }
 
 void System::finalize()

@@ -8,6 +8,7 @@
 #include "graphics_vertex_buffer.h"
 #include "graphics_world.h"
 #include "vector4.h"
+#include "application.h"
 #include <math.h>
 
 namespace gengine
@@ -101,7 +102,7 @@ void System::init()
     defaultTexture.init();
     defaultTexture.setFromFile("bird.png");
 
-    defaultCamera.setExtent(Vector2(640.0f, 480.0f));
+    defaultCamera.setExtent(application::getExtent());
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);

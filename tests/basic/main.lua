@@ -2,6 +2,7 @@ print("tests/basic")
 
 function init()
     print("tests/basic init")
+    setExtent(800,600)
 end
 
 function start()
