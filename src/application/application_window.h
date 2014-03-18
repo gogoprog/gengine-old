@@ -19,10 +19,13 @@ public:
 
 private:
     #ifndef EMSCRIPTEN
-        SDL_Window * pWindow;
-        SDL_GLContext context;
+        SDL_Window
+            * pWindow;
+        SDL_GLContext
+            context;
     #else
-        SDL_Surface * pWindow;
+        SDL_Surface
+            * pWindow;
     #endif
 };
 

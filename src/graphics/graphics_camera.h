@@ -26,10 +26,13 @@ public:
     void setExtent(const Vector2 & _extent);
 
 private:
-    Matrix3 projectionMatrix;
-    Vector2 position;
-    Vector2 extent;
-    bool dirty;
+    Matrix3
+        projectionMatrix;
+    Vector2
+        position,
+        extent;
+    bool
+        dirty;
 };
 
 }

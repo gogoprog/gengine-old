@@ -17,8 +17,10 @@ public:
     void compile(const char *source);
 
 private:
-    uint id;
-    GLenum type;
+    uint
+        id;
+    GLenum
+        type;
 };
 
 }

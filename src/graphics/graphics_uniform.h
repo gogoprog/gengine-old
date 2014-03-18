@@ -27,7 +27,8 @@ public:
     uint getLocation() const { return location; }
 
 private:
-    uint location;
+    uint
+        location;
 };
 
 }

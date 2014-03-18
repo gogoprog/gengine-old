@@ -23,8 +23,12 @@ public:
 
 
 private:
-    uint x,y;
-    ButtonState buttonStateTable[3], previousButtonStateTable[3];
+    uint
+        x,
+        y;
+    ButtonState
+        buttonStateTable[3],
+        previousButtonStateTable[3];
 };
 
 }

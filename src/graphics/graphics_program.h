@@ -33,7 +33,8 @@ public:
     uint getId() const { return id; }
 
 private:
-    uint id;
+    uint
+        id;
 };
 
 }

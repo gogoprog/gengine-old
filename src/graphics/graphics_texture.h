@@ -20,8 +20,10 @@ public:
     uint getId() const { return id; }
 
 private:
-    uint id;
-    uint width, height;
+    uint
+        id,
+        width,
+        height;
 };
 
 }

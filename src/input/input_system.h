@@ -19,7 +19,8 @@ public:
     void updateMouseButton(const int index, const int button_index, const Mouse::ButtonState state);
 
 private:
-    Array<Mouse> mouseTable;
+    Array<Mouse>
+        mouseTable;
 };
 
 }

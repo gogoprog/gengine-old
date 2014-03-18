@@ -19,8 +19,9 @@ public:
     void draw();
 
 private:
-    uint id;
-    uint count;
+    uint
+        id,
+        count;
 };
 
 }

@@ -55,7 +55,8 @@ public:
     }
 
 private:
-    uint id;
+    uint
+        id;
 };
 
 }
