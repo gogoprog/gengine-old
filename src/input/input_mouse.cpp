@@ -1,19 +1,37 @@
 #include "input_mouse.h"
 
+#include "script.h"
+#include "debug.h"
+
 namespace gengine
 {
 namespace input
 {
 
-
-bool Mouse::isDown(const int index) const
+Mouse::Mouse()
+    :
+    x(0),
+    y(0)
 {
-    return buttonStateTable[index] == DOWN;
 }
 
-bool Mouse::isUp(const int index) const
+SCRIPT_CLASS_REGISTERER(Mouse) const
 {
-    return buttonStateTable[index] == UP;
+    lua_newtable(state);
+    lua_pushlightuserdata(state, (void*)(this));
+    lua_setfield(state, -2, "this");
+    SCRIPT_PUSH_FUNCTION(Mouse, isDown);
+}
+
+SCRIPT_CLASS_FUNCTION(Mouse, isDown)
+{
+    SCRIPT_GET_SELF(Mouse);
+
+    uint button_index = lua_tonumber(state,2);
+
+    lua_pushboolean(state, self.buttonStateTable[button_index] == DOWN);
+
+    return 1;
 }
 
 }

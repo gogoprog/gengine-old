@@ -1,6 +1,7 @@
 #pragma once
 
 #include "primitives.h"
+#include "script.h"
 
 namespace gengine
 {
@@ -18,8 +19,10 @@ public:
         DOWN
     };
 
-    bool isDown(const int index) const;
-    bool isUp(const int index) const;
+    Mouse();
+    SCRIPT_REGISTERER() const;
+
+    static SCRIPT_FUNCTION(isDown);
 
 private:
     uint

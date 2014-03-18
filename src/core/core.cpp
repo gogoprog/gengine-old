@@ -28,18 +28,22 @@ void init()
 {
     geDebugLog("core::init()");
 
+    script::System & script_system = script::System::getInstance();
+
     SDL_Init(SDL_INIT_VIDEO);
 
-    script::System::getInstance().init();
-    script::System::getInstance().executeFile("main.lua");
+    script_system.init();
+    script_system.executeFile("main.lua");
 
-    script::System::getInstance().call("init");
+    script_system.call("init");
 
     mainWindow.init();
     graphics::System::getInstance().init();
     input::System::getInstance().init();
 
-    script::System::getInstance().call("start");
+    script_system.init2();
+
+    script_system.call("start");
 }
 
 void finalize()

@@ -19,8 +19,6 @@ void System::init()
     luaL_openlibs(state);
 
     application::luaRegister(state);
-    graphics::luaRegister(state);
-    input::luaRegister(state);
 }
 
 void System::finalize()
@@ -29,6 +27,12 @@ void System::finalize()
 
     lua_close(state);
     state = nullptr;
+}
+
+void System::init2()
+{
+    graphics::luaRegister(state);
+    input::luaRegister(state);
 }
 
 void System::executeFile(const char * file)
