@@ -25,8 +25,7 @@ SCRIPT_FUNCTION(setClearColor)
 SCRIPT_REGISTERER()
 {
     lua_newtable(state);
-    lua_pushcfunction(state, &setClearColor);
-    lua_setfield(state, -2, "setClearColor");
+    SCRIPT_TABLE_PUSH_FUNCTION(setClearColor);
     lua_setglobal(state,"graphics");
 }
 

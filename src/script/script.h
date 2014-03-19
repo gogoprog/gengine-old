@@ -21,7 +21,11 @@
     lua_getfield(state, 1, "this"); \
     _class_ & self = * static_cast<_class_*>(lua_touserdata(state, -1))
 
-#define SCRIPT_TABLE_PUSH_FUNCTION(_class_, _name_) \
+#define SCRIPT_TABLE_PUSH_FUNCTION(_name_) \
+    lua_pushcfunction(state, &_name_); \
+    lua_setfield(state, -2, #_name_)
+
+#define SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, _name_) \
     lua_pushcfunction(state, &_class_::_name_); \
     lua_setfield(state, -2, #_name_)
 
