@@ -5,6 +5,7 @@
 #include "script.h"
 #include "script_system.h"
 #include "debug.h"
+#include "vector2.h"
 
 namespace gengine
 {
@@ -18,12 +19,31 @@ void System::init()
 void System::update(const float dt)
 {
     lua_State * state = script::System::getInstance().getState();
+    Transform transform;
 
     for(int ref : refTable)
     {
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
+        lua_getfield(state, -1, "position");
 
+        lua_getfield(state, -1, "x");
+        transform.position.x = lua_tonumber(state, -1);
+        lua_pop(state, 1);
+
+        lua_getfield(state, -1, "y");
+        transform.position.y = lua_tonumber(state, -1);
+        lua_pop(state, 1);
+
+        lua_pop(state, 1);
+
+        lua_getfield(state, -1, "rotation");
+        transform.rotation = lua_tonumber(state, -1);
+        lua_pop(state, 1);
+
+        // todo: update components.
+
+        pushTransform(state, transform);
 
         lua_pop(state, 1);
     }
@@ -60,6 +80,19 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     return 1;
 }
+
+
+void System::pushTransform(lua_State * state, const Transform & transform)
+{
+    lua_getfield(state, -1, "position");
+    SCRIPT_TABLE_PUSH_NUMBER(x, transform.position.x);
+    SCRIPT_TABLE_PUSH_NUMBER(y, transform.position.y);
+
+    lua_pop(state, 1);
+
+    SCRIPT_TABLE_PUSH_NUMBER(rotation, transform.rotation);
+}
+
 
 }
 }
