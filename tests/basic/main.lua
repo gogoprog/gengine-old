@@ -2,7 +2,7 @@ print("tests/basic")
 
 function init()
     print("tests/basic init")
-    setExtent(320,200)
+    application.setExtent(320,200)
 end
 
 function start()

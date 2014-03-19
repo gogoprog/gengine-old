@@ -37,8 +37,10 @@ Vector2 getExtent() { return Vector2(width, height); }
 
 SCRIPT_REGISTERER()
 {
-    SCRIPT_REGISTER(setName);
-    SCRIPT_REGISTER(setExtent);
+    lua_newtable(state);
+    SCRIPT_TABLE_PUSH_FUNCTION(setName);
+    SCRIPT_TABLE_PUSH_FUNCTION(setExtent);
+    lua_setglobal(state,"application");
 }
 
 }
