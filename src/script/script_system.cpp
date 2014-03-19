@@ -5,6 +5,7 @@
 #include "application.h"
 #include "graphics.h"
 #include "input.h"
+#include "entity.h"
 
 namespace gengine
 {
@@ -33,6 +34,7 @@ void System::init2()
 {
     graphics::luaRegister(state);
     input::luaRegister(state);
+    entity::luaRegister(state);
 }
 
 void System::executeFile(const char * file)

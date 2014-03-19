@@ -8,6 +8,15 @@ end
 function start()
     print("tests/basic start")
     graphics.setClearColor(1,1,0.1,1)
+
+    local te = entity.create()
+
+    print(te.name)
+    print(te.position.x)
+    print(te.position.y)
+
+    te = entity.create()
+    te.name = "Yeah"
 end
 
 local total = 0

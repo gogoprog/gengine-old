@@ -29,6 +29,10 @@
     lua_pushcfunction(state, &_class_::_name_); \
     lua_setfield(state, -2, #_name_)
 
+#define SCRIPT_TABLE_PUSH_NUMBER(_name_, _value_) \
+    lua_pushnumber(state, _value_);\
+    lua_setfield(state, -2, #_name_)
+
 #define SCRIPT_TABLE_PUSH_THIS() \
     lua_pushlightuserdata(state, (void*)(this)); \
     lua_setfield(state, -2, "this");
