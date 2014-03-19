@@ -17,14 +17,11 @@ function update(dt)
 
     graphics.setClearColor(1,1,math.sin(total),1)
 
-    if input.mouse:isJustDown(1) then
-        local x,y = input.mouse:getPosition()
-        print("Mouse button 1 is down : " .. x .. ", " ..y)
-    end
-
-    if input.mouse:isJustDown(3) then
-        local x,y = input.mouse:getPosition()
-        print("Mouse button 3 is down : " .. x .. ", " ..y)
+    for i=1,3 do
+        if input.mouse:isJustDown(i) then
+            local x,y = input.mouse:getPosition()
+            print("Mouse button " .. i .. " is just down @(" .. x .. ", " .. y .. ")")
+        end
     end
 end
 

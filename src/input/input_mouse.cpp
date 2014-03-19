@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "debug.h"
+#include <string.h>
 
 namespace gengine
 {
@@ -13,6 +14,8 @@ Mouse::Mouse()
     x(0),
     y(0)
 {
+    memset(buttonStateTable, 0, sizeof(ButtonState) * BUTTON_COUNT);
+    memset(previousButtonStateTable, 0, sizeof(ButtonState) * BUTTON_COUNT);
 }
 
 SCRIPT_CLASS_REGISTERER(Mouse) const
