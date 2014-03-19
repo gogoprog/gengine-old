@@ -13,7 +13,8 @@ solution "gengine"
             "../src/application",
             "../src/graphics",
             "../src/input",
-            "../src/script"
+            "../src/script",
+            "../src/entity"
             }
 
         links { "lua" }

@@ -6,6 +6,7 @@
 #include "graphics_opengl.h"
 #include "application_window.h"
 #include "script_system.h"
+#include "entity_system.h"
 #include "debug.h"
 
 namespace gengine
@@ -40,6 +41,7 @@ void init()
     mainWindow.init();
     graphics::System::getInstance().init();
     input::System::getInstance().init();
+    entity::System::getInstance().init();
 
     script_system.init2();
 
@@ -79,6 +81,8 @@ void update()
     graphics::System::getInstance().test(dt);
 
     graphics::System::getInstance().update();
+
+    entity::System::getInstance().update(dt);
 
     graphics::System::getInstance().render();
 

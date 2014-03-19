@@ -1,7 +1,7 @@
 print("tests/basic")
 
 function init()
-    print("tests/basic init")
+    application.setName("gengine-tests:basic")
     application.setExtent(320,200)
 end
 
@@ -16,7 +16,6 @@ function update(dt)
     total = total + dt
 
     graphics.setClearColor(1,1,math.sin(total),1)
-
 
     if input.mouse:isJustDown(1) then
         local x,y = input.mouse:getPosition()
