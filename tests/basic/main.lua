@@ -25,10 +25,10 @@ local total = 0
 
 function update(dt)
     total = total + dt
-    print(e.rotation)
+
     graphics.setClearColor(1,1,math.sin(total),1)
 
-    for i=1,3 do
+    for i = 1,3 do
         if input.mouse:isJustDown(i) then
             local x,y = input.mouse:getPosition()
             print("Mouse button " .. i .. " is just down @(" .. x .. ", " .. y .. ")")

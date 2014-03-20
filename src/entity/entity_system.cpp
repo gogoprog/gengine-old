@@ -19,6 +19,7 @@ void System::init()
 void System::update(const float dt)
 {
     lua_State * state = script::System::getInstance().getState();
+    currentDt = dt;
     Transform transform;
 
     for(int ref : refTable)
@@ -71,6 +72,8 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     lua_pushstring(state, "Unnamed");
     lua_setfield(state, -2, "name");
+
+    
 
     int ref = luaL_ref(state, LUA_REGISTRYINDEX);
 

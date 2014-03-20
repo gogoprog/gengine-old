@@ -34,6 +34,8 @@ private:
 
     Array<int>
         refTable;
+    float
+        currentDt;
 };
 
 }
