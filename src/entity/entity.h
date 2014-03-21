@@ -7,6 +7,8 @@ namespace gengine
 namespace entity
 {
 
+int getMetaTableRef();
+
 SCRIPT_REGISTERER();
 
 }

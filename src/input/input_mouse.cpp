@@ -31,7 +31,7 @@ SCRIPT_CLASS_REGISTERER(Mouse) const
 
 SCRIPT_CLASS_FUNCTION(Mouse, isDown)
 {
-    SCRIPT_GET_SELF(Mouse);
+    SCRIPT_TABLE_GET_THIS(Mouse);
 
     uint button_index = lua_tonumber(state,2);
 
@@ -42,7 +42,7 @@ SCRIPT_CLASS_FUNCTION(Mouse, isDown)
 
 SCRIPT_CLASS_FUNCTION(Mouse, isUp)
 {
-    SCRIPT_GET_SELF(Mouse);
+    SCRIPT_TABLE_GET_THIS(Mouse);
 
     uint button_index = lua_tonumber(state,2);
 
@@ -53,7 +53,7 @@ SCRIPT_CLASS_FUNCTION(Mouse, isUp)
 
 SCRIPT_CLASS_FUNCTION(Mouse, isJustDown)
 {
-    SCRIPT_GET_SELF(Mouse);
+    SCRIPT_TABLE_GET_THIS(Mouse);
 
     uint button_index = lua_tonumber(state,2);
 
@@ -64,7 +64,7 @@ SCRIPT_CLASS_FUNCTION(Mouse, isJustDown)
 
 SCRIPT_CLASS_FUNCTION(Mouse, isJustUp)
 {
-    SCRIPT_GET_SELF(Mouse);
+    SCRIPT_TABLE_GET_THIS(Mouse);
 
     uint button_index = lua_tonumber(state,2);
 
@@ -75,7 +75,7 @@ SCRIPT_CLASS_FUNCTION(Mouse, isJustUp)
 
 SCRIPT_CLASS_FUNCTION(Mouse, getPosition)
 {
-    SCRIPT_GET_SELF(Mouse);
+    SCRIPT_TABLE_GET_THIS(Mouse);
 
     SCRIPT_PUSH_NUMBER(self.x);
     SCRIPT_PUSH_NUMBER(self.y);

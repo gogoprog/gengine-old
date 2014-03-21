@@ -11,14 +11,15 @@ function start()
     print("tests/basic start")
     graphics.setClearColor(1,1,0.1,1)
 
-    local te = entity.create()
-
-    print(te.name)
-    print(te.position.x)
-    print(te.position.y)
-
     e = entity.create()
     e.name = "Yeah"
+
+    if e.truc then
+    end
+
+    print(type(ComponentSprite))
+    local c = ComponentSprite()
+    c:insert();
 end
 
 local total = 0

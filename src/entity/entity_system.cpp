@@ -6,6 +6,8 @@
 #include "script_system.h"
 #include "debug.h"
 #include "vector2.h"
+#include "entity.h"
+#include "entity_component_sprite.h"
 
 namespace gengine
 {
@@ -55,6 +57,8 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
     lua_setglobal(state,"entity");
+
+    ComponentSprite::luaRegister(state);
 }
 
 SCRIPT_CLASS_FUNCTION(System, create)
@@ -73,7 +77,8 @@ SCRIPT_CLASS_FUNCTION(System, create)
     lua_pushstring(state, "Unnamed");
     lua_setfield(state, -2, "name");
 
-    
+    lua_rawgeti(state, LUA_REGISTRYINDEX, getMetaTableRef());
+    lua_setmetatable(state, -2);
 
     int ref = luaL_ref(state, LUA_REGISTRYINDEX);
 

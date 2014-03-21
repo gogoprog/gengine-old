@@ -13,12 +13,15 @@ class ComponentSprite
 public:
     ComponentSprite() = default;
 
-    SCRIPT_REGISTERER();
+    static SCRIPT_REGISTERER();
 
-    //static SCRIPT_FUNCTION(init);
+    static SCRIPT_FUNCTION(create);
+
     static SCRIPT_FUNCTION(insert);
     //static SCRIPT_FUNCTION(update);
     //static SCRIPT_FUNCTION(remove);
+
+    static uint metaTableRef;
 
 private:
     graphics::Sprite

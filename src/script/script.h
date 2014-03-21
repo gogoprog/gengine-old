@@ -2,6 +2,9 @@
 
 #include "script_lua.h"
 
+#define SCRIPT_DEBUG_TOP() \
+    geDebugLog(lua_gettop(state))
+
 #define SCRIPT_REGISTERER() \
     void luaRegister(lua_State * state)
 
@@ -18,6 +21,9 @@
     lua_register(state, #_name_, &_name_)
 
 #define SCRIPT_GET_SELF(_class_) \
+    SCRIPT_TABLE_GET_THIS(_class_)
+
+#define SCRIPT_TABLE_GET_THIS(_class_) \
     lua_getfield(state, 1, "this"); \
     _class_ & self = * static_cast<_class_*>(lua_touserdata(state, -1))
 
