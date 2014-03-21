@@ -13,8 +13,6 @@ class ComponentSprite
 public:
     ComponentSprite() = default;
 
-    static SCRIPT_REGISTERER();
-
     static SCRIPT_FUNCTION(create);
 
     static SCRIPT_FUNCTION(insert);

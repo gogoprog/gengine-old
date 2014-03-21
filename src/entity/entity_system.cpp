@@ -58,7 +58,7 @@ SCRIPT_CLASS_REGISTERER(System)
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
     lua_setglobal(state,"entity");
 
-    ComponentSprite::luaRegister(state);
+    registerComponent<ComponentSprite>(state, "ComponentSprite");
 }
 
 SCRIPT_CLASS_FUNCTION(System, create)
