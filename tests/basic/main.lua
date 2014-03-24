@@ -17,9 +17,11 @@ function start()
     if e.truc then
     end
 
-    print(type(ComponentSprite))
     local c = ComponentSprite()
-    c:insert();
+
+    e:addComponent(c)
+
+    e:update()
 end
 
 local total = 0

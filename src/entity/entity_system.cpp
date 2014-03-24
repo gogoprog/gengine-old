@@ -46,6 +46,8 @@ void System::update(const float dt)
 
         // todo: update components.
 
+
+
         pushTransform(state, transform);
 
         lua_pop(state, 1);
@@ -73,6 +75,9 @@ SCRIPT_CLASS_FUNCTION(System, create)
     lua_setfield(state, -2, "position");
 
     SCRIPT_TABLE_PUSH_NUMBER(rotation, 0);
+
+    lua_newtable(state);
+    lua_setfield(state, -2, "components");
 
     lua_pushstring(state, "Unnamed");
     lua_setfield(state, -2, "name");

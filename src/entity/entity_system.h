@@ -13,10 +13,21 @@ namespace entity
 class System
 {
 public:
+    struct Transform
+    {
+        Vector2
+            position;
+        float
+            rotation;
+    };
+
     SINGLETON(System);
 
     void init();
     void update(const float dt);
+
+    float getCurrentDt() const { return currentDt; }
+    Transform & getCurrentTransform() { return currentTransform; }
 
     SCRIPT_REGISTERER();
 
@@ -37,14 +48,8 @@ public:
     }
 
     static SCRIPT_FUNCTION(create);
+
 private:
-    struct Transform
-    {
-        Vector2
-            position;
-        float
-            rotation;
-    };
 
     template<typename COMPONENT>
     static void registerComponent(lua_State * state, const char * name)
@@ -52,6 +57,8 @@ private:
         lua_newtable(state);
 
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, insert);
+        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, update);
+        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, remove);
 
         lua_pushcfunction(state, &COMPONENT::create);
         lua_setfield(state, -2, "__call");
@@ -73,6 +80,8 @@ private:
 
     Array<int>
         refTable;
+    Transform
+        currentTransform;
     float
         currentDt;
 };
