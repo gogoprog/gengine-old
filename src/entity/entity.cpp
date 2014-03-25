@@ -21,7 +21,7 @@ SCRIPT_REGISTERER()
 
     lua_newtable(state);
 
-    luaL_dostring(state, "return function(self) for k,v in pairs(self.components) do v:update() end end");
+    luaL_dostring(state, "return function(self, dt) for k,v in pairs(self.components) do v:update(dt) end end");
     lua_setfield(state, -2, "update");
 
     luaL_dostring(state, "return function(self) for k,v in pairs(self.components) do v:insert() end end");

@@ -45,7 +45,8 @@ void System::update(const float dt)
 
         lua_getfield(state, -1, "update");
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
-        lua_call(state, 1, 0);
+        lua_pushnumber(state, dt);
+        lua_call(state, 2, 0);
 
         pushTransform(state, currentTransform);
 
