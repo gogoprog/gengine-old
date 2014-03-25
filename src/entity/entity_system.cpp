@@ -22,7 +22,6 @@ void System::update(const float dt)
 {
     lua_State * state = script::System::getInstance().getState();
     currentDt = dt;
-    Transform transform;
 
     for(int ref : refTable)
     {
@@ -31,24 +30,24 @@ void System::update(const float dt)
         lua_getfield(state, -1, "position");
 
         lua_getfield(state, -1, "x");
-        transform.position.x = lua_tonumber(state, -1);
+        currentTransform.position.x = lua_tonumber(state, -1);
         lua_pop(state, 1);
 
         lua_getfield(state, -1, "y");
-        transform.position.y = lua_tonumber(state, -1);
+        currentTransform.position.y = lua_tonumber(state, -1);
         lua_pop(state, 1);
 
         lua_pop(state, 1);
 
         lua_getfield(state, -1, "rotation");
-        transform.rotation = lua_tonumber(state, -1);
+        currentTransform.rotation = lua_tonumber(state, -1);
         lua_pop(state, 1);
 
         lua_getfield(state, -1, "update");
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
         lua_call(state, 1, 0);
 
-        pushTransform(state, transform);
+        pushTransform(state, currentTransform);
 
         lua_pop(state, 1);
     }

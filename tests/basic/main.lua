@@ -15,6 +15,8 @@ function start()
     e.name = "Yeah"
 
     e:addComponent(ComponentSprite(), { texture = 0 })
+
+    e:insert()
 end
 
 local total = 0
@@ -30,6 +32,8 @@ function update(dt)
             print("Mouse button " .. i .. " is just down @(" .. x .. ", " .. y .. ")")
         end
     end
+
+    e.rotation = total;
 end
 
 function stop()

@@ -28,6 +28,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
     graphics::Sprite & sprite = self.sprite;
 
     sprite.setExtent(Vector2(64,64));
+    sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
 
     return 0;
 }
