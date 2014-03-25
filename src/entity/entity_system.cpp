@@ -44,9 +44,10 @@ void System::update(const float dt)
         transform.rotation = lua_tonumber(state, -1);
         lua_pop(state, 1);
 
-        // todo: update components.
-
-
+        
+        lua_getfield(state, -1, "update");
+        lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
+        lua_call(state, 1, 0);
 
         pushTransform(state, transform);
 
@@ -60,7 +61,7 @@ SCRIPT_CLASS_REGISTERER(System)
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
     lua_setglobal(state,"entity");
 
-    registerComponent<ComponentSprite>(state, "ComponentSprite");
+    registerComponent<ComponentSprite>(state, "ComponentSprite", "sprite");
 }
 
 SCRIPT_CLASS_FUNCTION(System, create)

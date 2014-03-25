@@ -15,39 +15,18 @@ int
 
 int getMetaTableRef() { return metaTableRef; }
 
-SCRIPT_FUNCTION(update)
-{
-    geLog("oui");
-
-    return 0;
-}
-
-SCRIPT_FUNCTION(addComponent)
-{
-    lua_gettable(state, 1);
-
-    lua_getfield(state, -1, "components");
-
-    /*lua_gettable(state, 2);
-
-    lua_setfield(state, -2, "test");*/
-
-    lua_pop(state, 2);
-
-    return 0;
-}
-
-
 SCRIPT_REGISTERER()
 {
     System::getInstance().luaRegister(state);
 
     lua_newtable(state);
 
-    lua_pushcfunction(state, &update);
+    luaL_dostring(state, "return function(self) for k,v in pairs(self.components) do v:update() end end");
+
     lua_setfield(state, -2, "update");
 
-    lua_pushcfunction(state, &addComponent);
+    luaL_dostring(state, "return function(self, comp) self.components[comp.name] = comp end");
+
     lua_setfield(state, -2, "addComponent");
 
     metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
