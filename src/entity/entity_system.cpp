@@ -44,7 +44,6 @@ void System::update(const float dt)
         transform.rotation = lua_tonumber(state, -1);
         lua_pop(state, 1);
 
-        
         lua_getfield(state, -1, "update");
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
         lua_call(state, 1, 0);

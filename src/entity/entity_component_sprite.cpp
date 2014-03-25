@@ -16,6 +16,22 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, create)
     return System::getInstance().createComponent<ComponentSprite>(state);
 }
 
+SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
+{
+    SCRIPT_GET_SELF(ComponentSprite);
+
+    lua_getfield(state, 2, "texture");
+    uint texture = lua_tonumber(state, -1);
+
+    (void)texture;
+
+    graphics::Sprite & sprite = self.sprite;
+
+    sprite.setExtent(Vector2(64,64));
+
+    return 0;
+}
+
 SCRIPT_CLASS_FUNCTION(ComponentSprite, insert)
 {
     SCRIPT_GET_SELF(ComponentSprite);
@@ -29,7 +45,12 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, update)
 {
     SCRIPT_GET_SELF(ComponentSprite);
 
-    (void)self;
+    graphics::Sprite & sprite = self.sprite;
+
+    System::Transform & transform = System::getInstance().getCurrentTransform();
+
+    sprite.setPosition(transform.position);
+    sprite.setRotation(transform.rotation);
 
     return 0;
 }

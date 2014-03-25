@@ -14,14 +14,7 @@ function start()
     e = entity.create()
     e.name = "Yeah"
 
-    if e.truc then
-    end
-
-    local c = ComponentSprite()
-
-    e:addComponent(c)
-
-    e:update()
+    e:addComponent(ComponentSprite(), { texture = 0 })
 end
 
 local total = 0

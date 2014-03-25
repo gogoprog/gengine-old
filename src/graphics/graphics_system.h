@@ -33,7 +33,6 @@ public:
     void update();
     void render();
     void setClearColor(const Vector4 & color);
-    void test(const float dt);
 
     World & getWorld(const uint index = 0);
 
@@ -60,8 +59,6 @@ private:
         defaultCamera;
     Array<World *>
         worldTable;
-    Sprite
-        testSpriteTable[2560];
 };
 
 }

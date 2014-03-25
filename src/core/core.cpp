@@ -78,8 +78,6 @@ void update()
 
     input::System::getInstance().update();
 
-    graphics::System::getInstance().test(dt);
-
     graphics::System::getInstance().update();
 
     entity::System::getInstance().update(dt);

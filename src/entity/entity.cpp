@@ -25,7 +25,7 @@ SCRIPT_REGISTERER()
 
     lua_setfield(state, -2, "update");
 
-    luaL_dostring(state, "return function(self, comp) self.components[comp.name] = comp end");
+    luaL_dostring(state, "return function(self, comp, params) self.components[comp.name] = comp comp:init(params) end");
 
     lua_setfield(state, -2, "addComponent");
 

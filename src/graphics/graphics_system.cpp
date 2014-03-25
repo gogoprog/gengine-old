@@ -113,19 +113,6 @@ void System::init()
         World * world = new World();
         world->init();
         worldTable.add(world);
-
-        for(int i=0; i<2560; i++)
-        {
-            int x,y;
-            x = i % 48;
-            y = i / 48;
-            testSpriteTable[i].setPosition(Vector2(-320.0f + x * 16.0f,-240.0f + y * 16.0f));
-            testSpriteTable[i].setExtent(Vector2(16.0f,16.0f));
-            testSpriteTable[i].setTexture(defaultTexture);
-
-            world->addSprite(testSpriteTable[i]);
-        }
-
     }
 }
 
@@ -165,19 +152,6 @@ void System::render()
 void System::setClearColor(const Vector4 & c)
 {
     glClearColor(c.x, c.y ,c.z, c.w);
-}
-
-void System::test(const float dt)
-{
-    static float total = 0;
-    total += dt * 3;
-
-    for(int i=0; i<2560; i++)
-    {
-        testSpriteTable[i].setRotation(i + total);
-        testSpriteTable[i].setColorAlpha(0.6f + 0.4f * sinf(total + i));
-    }
-
 }
 
 World & System::getWorld(const uint index)

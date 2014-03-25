@@ -9,6 +9,7 @@ Sprite::Sprite()
     :
     color(1.0f, 1.0f, 1.0f, 1.0f),
     rotation(0.0f),
+    texture(nullptr),
     layer(0)
 {
 
