@@ -73,6 +73,11 @@ void World::addSprite(Sprite & sprite)
     spriteTable.add(&sprite);
 }
 
+Camera & World::getCurrentCamera()
+{
+    return * cameraStack.getTop();
+}
+
 bool World::compare(Sprite *a, Sprite *b)
 {
     return a->layer > b->layer || ( a->layer == b->layer && a > b);

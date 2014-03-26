@@ -25,6 +25,7 @@ public:
     void update();
     void render();
     void addSprite(Sprite & sprite);
+    Camera & getCurrentCamera();
 
 private:
     static bool compare(Sprite *a, Sprite *b);
