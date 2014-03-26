@@ -75,7 +75,7 @@ void World::addSprite(Sprite & sprite)
 
 bool World::compare(Sprite *a, Sprite *b)
 {
-    return a->layer < b->layer;
+    return a->layer > b->layer || ( a->layer == b->layer && a > b);
 }
 
 }

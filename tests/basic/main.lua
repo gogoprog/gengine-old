@@ -30,6 +30,12 @@ function update(dt)
         if input.mouse:isJustDown(i) then
             local x,y = input.mouse:getPosition()
             print("Mouse button " .. i .. " is just down @(" .. x .. ", " .. y .. ")")
+            local et
+            et = entity.create()
+            et:addComponent(ComponentSprite(), { texture = 0 })
+            et:insert()
+            et.position.x = x
+            et.position.y = y
         end
     end
 
