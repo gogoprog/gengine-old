@@ -14,6 +14,17 @@ public:
         array.push_back(t);
     }
 
+    void remove(const T & t)
+    {
+        typename std::vector<T>::iterator it;
+        it = find(array.begin(), array.end(), t);
+
+        if(it != array.end())
+        {
+            array.erase(it);
+        }
+    }
+
     T & operator[](const int index)
     {
         return array[index];

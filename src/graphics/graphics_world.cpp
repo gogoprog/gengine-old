@@ -73,6 +73,11 @@ void World::addSprite(Sprite & sprite)
     spriteTable.add(&sprite);
 }
 
+void World::removeSprite(Sprite & sprite)
+{
+    spriteTable.remove(&sprite);
+}
+
 Camera & World::getCurrentCamera()
 {
     return * cameraStack.getTop();

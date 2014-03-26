@@ -25,6 +25,7 @@ public:
     void update();
     void render();
     void addSprite(Sprite & sprite);
+    void removeSprite(Sprite & sprite);
     Camera & getCurrentCamera();
 
 private:

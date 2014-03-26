@@ -60,9 +60,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, remove)
 {
     SCRIPT_GET_SELF(ComponentSprite);
 
-    (void)self;
-
-    //graphics::System::getInstance().getWorld(0).removeSprite(self.sprite);
+    graphics::System::getInstance().getWorld(0).removeSprite(self.sprite);
 
     return 0;
 }
