@@ -2,6 +2,7 @@
 
 #include "script_lua.h"
 #include "vector2.h"
+#include "vector4.h"
 
 #define SCRIPT_DEBUG_TOP() \
     geDebugLog(lua_gettop(state))
@@ -62,7 +63,8 @@ namespace script
 
 void fillVector2(lua_State * state, Vector2 & result, int position = -1);
 void fillTableVector2Safe(lua_State * state, Vector2 & result, const char * name, int position = -1, const Vector2 default_value = Vector2::zero);
-
+void fillVector4(lua_State * state, Vector4 & result, int position = -1);
+void fillTableVector4Safe(lua_State * state, Vector4 & result, const char * name, int position = -1, const Vector4 default_value = Vector4::zero);
 int getTableInteger(lua_State * state, const char * name, const int table_position = -1);
 int getTableIntegerSafe(lua_State * state, const char * name, const int table_position = -1, const int default_value = 0);
 float getTableFloat(lua_State * state, const char * name, const int table_position = -1);

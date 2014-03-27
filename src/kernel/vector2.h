@@ -10,7 +10,9 @@ struct Vector2
 
     float x,y;
 
-    static Vector2 zero;
+    static Vector2
+        zero,
+        one;
 };
 
 }

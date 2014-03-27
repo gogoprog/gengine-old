@@ -31,6 +31,9 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
 
     script::fillTableVector2Safe(state, sprite.getExtent(), "extent", 2, Vector2(64,64));
 
+    script::fillTableVector4Safe(state, sprite.getColor(), "color", 2, Vector4::one);
+
+
     sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
 
     return 0;

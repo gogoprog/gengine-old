@@ -23,6 +23,8 @@ public:
     Vector2 & getPosition() { return position; }
     const Vector2 & getExtent() const { return extent; }
     Vector2 & getExtent() { return extent; }
+    const Vector4 & getColor() const { return color; }
+    Vector4 & getColor() { return color; }
 
     void setPosition(const Vector2 & _position) { position = _position; }
     void setExtent(const Vector2 & _extent) { extent = _extent; }
