@@ -28,6 +28,7 @@ public:
     void setColorAlpha(const float alpha) { color.w = alpha; }
     void setRotation(const float angle) { rotation = angle; }
     void setTexture(const Texture & _texture) { texture = & _texture; }
+    void setLayer(const int _layer) { layer = _layer; }
 
 private:
     Vector2

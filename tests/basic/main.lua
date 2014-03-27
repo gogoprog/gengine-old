@@ -20,6 +20,7 @@ function start()
 end
 
 local total = 0
+local layer = 0
 
 function update(dt)
     total = total + dt
@@ -35,10 +36,12 @@ function update(dt)
 
             local et
             et = entity.create()
-            et:addComponent(ComponentSprite(), { texture = 0 })
+            et:addComponent(ComponentSprite(), { texture = 0, layer = layer })
             et:insert()
             et.position.x = wx
             et.position.y = wy
+
+            layer = layer - 1
         end
     end
 

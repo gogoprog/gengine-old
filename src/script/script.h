@@ -52,3 +52,14 @@
 
 #define SCRIPT_PUSH_NUMBER(_value_) \
     lua_pushnumber(state, _value_);
+
+
+namespace gengine
+{
+namespace script
+{
+
+int getTableInteger(lua_State * state, const int table_position, const char * name, const int default_value = 0);
+
+}
+}
