@@ -2,7 +2,7 @@ print("tests/basic")
 
 function init()
     application.setName("gengine-tests:basic")
-    application.setExtent(320,200)
+    --application.setExtent(320,200)
 end
 
 local e
@@ -21,7 +21,7 @@ end
 
 local total = 0
 local layer = 0
-
+local my_entities = {}
 function update(dt)
     total = total + dt
 
@@ -42,7 +42,13 @@ function update(dt)
             et.position.y = wy
 
             layer = layer - 1
+
+            table.insert(my_entities, et)
         end
+    end
+
+    for k,v in ipairs(my_entities) do
+        v.rotation = v.rotation + dt
     end
 
     e.rotation = total;

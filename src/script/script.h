@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script_lua.h"
+#include "vector2.h"
 
 #define SCRIPT_DEBUG_TOP() \
     geDebugLog(lua_gettop(state))
@@ -59,7 +60,12 @@ namespace gengine
 namespace script
 {
 
-int getTableInteger(lua_State * state, const int table_position, const char * name, const int default_value = 0);
+void fillVector2(lua_State * state, Vector2 & result, int position = -1);
+
+int getTableInteger(lua_State * state, const char * name, const int table_position = -1);
+int getTableIntegerSafe(lua_State * state, const char * name, const int table_position = -1, const int default_value = 0);
+float getTableFloat(lua_State * state, const char * name, const int table_position = -1);
+float getTableFloatSafe(lua_State * state, const char * name, const int table_position = -1, const float default_value = 0.0f);
 
 }
 }

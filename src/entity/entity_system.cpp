@@ -29,13 +29,7 @@ void System::update(const float dt)
 
         lua_getfield(state, -1, "position");
 
-        lua_getfield(state, -1, "x");
-        currentTransform.position.x = lua_tonumber(state, -1);
-        lua_pop(state, 1);
-
-        lua_getfield(state, -1, "y");
-        currentTransform.position.y = lua_tonumber(state, -1);
-        lua_pop(state, 1);
+        script::fillVector2(state, currentTransform.position);
 
         lua_pop(state, 1);
 
