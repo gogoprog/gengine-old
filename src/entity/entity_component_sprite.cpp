@@ -16,6 +16,17 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, create)
     return System::getInstance().createComponent<ComponentSprite>(state);
 }
 
+SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
+{
+    SCRIPT_GET_SELF(ComponentSprite);
+    const char * key = lua_tostring(state, 2);
+
+    (void)self;
+    geLog(key);
+
+    return 0;
+}
+
 SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
 {
     SCRIPT_GET_SELF(ComponentSprite);
@@ -32,7 +43,6 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
     script::fillTableVector2Safe(state, sprite.getExtent(), "extent", 2, Vector2(64,64));
 
     script::fillTableVector4Safe(state, sprite.getColor(), "color", 2, Vector4::one);
-
 
     sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
 

@@ -47,6 +47,8 @@ function update(dt)
             et.position.x = wx
             et.position.y = wy
 
+            et.components.sprite.blabla = "truc"
+
             layer = layer - 1
 
             table.insert(my_entities, et)

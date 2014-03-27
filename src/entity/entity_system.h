@@ -76,6 +76,10 @@ private:
         lua_rawgeti(state, LUA_REGISTRYINDEX, COMPONENT::metaTableRef);
         lua_setfield(state, -2, "__index");
 
+        /*lua_pushstring(state, "__newindex");
+        lua_pushcfunction(state, &COMPONENT::newIndex);
+        lua_rawset(state, -3 );*/
+
         lua_setglobal(state, name);
     }
 

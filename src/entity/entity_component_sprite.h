@@ -14,6 +14,7 @@ public:
     ComponentSprite() = default;
 
     static SCRIPT_FUNCTION(create);
+    static SCRIPT_FUNCTION(newIndex);
     static SCRIPT_FUNCTION(init);
     static SCRIPT_FUNCTION(insert);
     static SCRIPT_FUNCTION(update);
