@@ -14,7 +14,7 @@ function start()
     e = entity.create()
     e.name = "Yeah"
 
-    e:addComponent(ComponentSprite(), { texture = 0 })
+    e:addComponent(ComponentSprite(), { texture = 0, extent = { x=256, y=256 } })
 
     e:insert()
 end

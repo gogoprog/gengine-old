@@ -29,7 +29,8 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
 
     sprite.setLayer(script::getTableIntegerSafe(state, "layer", 2, 0));
 
-    sprite.setExtent(Vector2(64,64));
+    script::fillTableVector2Safe(state, sprite.getExtent(), "extent", 2, Vector2(64,64));
+
     sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
 
     return 0;

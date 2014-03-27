@@ -61,6 +61,7 @@ namespace script
 {
 
 void fillVector2(lua_State * state, Vector2 & result, int position = -1);
+void fillTableVector2Safe(lua_State * state, Vector2 & result, const char * name, int position = -1, const Vector2 default_value = Vector2::zero);
 
 int getTableInteger(lua_State * state, const char * name, const int table_position = -1);
 int getTableIntegerSafe(lua_State * state, const char * name, const int table_position = -1, const int default_value = 0);
