@@ -36,19 +36,19 @@ void fillTableVector2Safe(lua_State * state, Vector2 & result, const char * name
 
 void fillVector4(lua_State * state, Vector4 & result, int position)
 {
-    lua_getfield(state, -1, "x");
+    lua_getfield(state, position, "x");
     result.x = lua_tonumber(state, -1);
     lua_pop(state, 1);
 
-    lua_getfield(state, -1, "y");
+    lua_getfield(state, position, "y");
     result.y = lua_tonumber(state, -1);
     lua_pop(state, 1);
 
-    lua_getfield(state, -1, "z");
+    lua_getfield(state, position, "z");
     result.z = lua_tonumber(state, -1);
     lua_pop(state, 1);
 
-    lua_getfield(state, -1, "w");
+    lua_getfield(state, position, "w");
     result.w = lua_tonumber(state, -1);
     lua_pop(state, 1);
 }

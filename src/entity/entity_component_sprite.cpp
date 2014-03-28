@@ -30,6 +30,14 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
     {
         script::fillVector2(state, self.sprite.getExtent(), 3);
     }
+    else if(!strcmp(key,"color"))
+    {
+        script::fillVector4(state, self.sprite.getColor(), 3);
+    }
+    else if(!strcmp(key,"texture"))
+    {
+        self.sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
+    }
     else
     {
         geLog("Unknown attribute \"" << key << "\"");
@@ -40,23 +48,6 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
 
 SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
 {
-    SCRIPT_GET_SELF(ComponentSprite);
-
-    lua_getfield(state, 2, "texture");
-    uint texture = lua_tonumber(state, -1);
-
-    (void)texture;
-
-    graphics::Sprite & sprite = self.sprite;
-
-    sprite.setLayer(script::getTableIntegerSafe(state, "layer", 2, 0));
-
-    script::fillTableVector2Safe(state, sprite.getExtent(), "extent", 2, Vector2(64,64));
-
-    script::fillTableVector4Safe(state, sprite.getColor(), "color", 2, Vector4::one);
-
-    sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
-
     return 0;
 }
 

@@ -37,6 +37,7 @@ function update(dt)
             {
                 texture = 0,
                 layer = layer,
+                extent = { x=64, y=64 },
                 color = { x=0.5, y=0.9, z=0.6, w=1.0 }
             })
 

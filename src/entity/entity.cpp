@@ -27,7 +27,7 @@ SCRIPT_REGISTERER()
     luaL_dostring(state, "return function(self) for k,v in pairs(self.components) do v:insert() end end");
     lua_setfield(state, -2, "insert");
 
-    luaL_dostring(state, "return function(self, comp, params) self.components[comp.name] = comp comp:init(params) end");
+    luaL_dostring(state, "return function(self, comp, params) self.components[comp.name] = comp for k,v in pairs(params) do comp[k] = v end comp:init(params) end");
     lua_setfield(state, -2, "addComponent");
 
     metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
