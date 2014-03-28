@@ -2,8 +2,9 @@
 
 #include "primitives.h"
 #include "array.h"
-#include "script.h"
 #include "vector2.h"
+#include "script.h"
+#include "debug.h"
 
 namespace gengine
 {
@@ -41,8 +42,9 @@ public:
         lua_rawgeti(state, LUA_REGISTRYINDEX, COMPONENT::metaTableRef);
         lua_setmetatable(state, -2);
 
+        lua_pushstring(state, "this");
         lua_pushlightuserdata(state, instance);
-        lua_setfield(state, -2, "this");
+        lua_rawset(state, -3);
 
         return 1;
     }
@@ -73,12 +75,13 @@ private:
         lua_rawgeti(state, LUA_REGISTRYINDEX, COMPONENT::metaTableRef);
         lua_setmetatable(state, -2);
 
-        lua_rawgeti(state, LUA_REGISTRYINDEX, COMPONENT::metaTableRef);
-        lua_setfield(state, -2, "__index");
-
-        /*lua_pushstring(state, "__newindex");
+        lua_pushstring(state, "__newindex");
         lua_pushcfunction(state, &COMPONENT::newIndex);
-        lua_rawset(state, -3 );*/
+        lua_rawset(state, -3);
+
+        lua_pushstring(state, "__index");
+        lua_rawgeti(state, LUA_REGISTRYINDEX, COMPONENT::metaTableRef);
+        lua_rawset(state, -3);
 
         lua_setglobal(state, name);
     }
