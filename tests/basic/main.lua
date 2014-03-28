@@ -27,32 +27,31 @@ function update(dt)
 
     graphics.setClearColor(1,1,math.sin(total),1)
 
-    for i = 1,3 do
-        if input.mouse:isJustDown(i) then
-            local x,y = input.mouse:getPosition()
-            print("Mouse button " .. i .. " is just down @(" .. x .. ", " .. y .. ")")
+    if input.mouse:isJustDown(1) then
+        local x,y = input.mouse:getPosition()
+        local wx, wy = graphics.getWorldPosition(x,y)
 
-            local wx, wy = graphics.getWorldPosition(x,y)
+        local et
+        et = entity.create()
+        et:addComponent(ComponentSprite(),
+            {
+                texture = 0,
+                layer = layer,
+                color = { x=0.5, y=0.9, z=0.6, w=1.0 }
+            })
 
-            local et
-            et = entity.create()
-            et:addComponent(ComponentSprite(),
-                {
-                    texture = 0,
-                    layer = layer,
-                    color = { x=0.5, y=0.9, z=0.6, w=1.0 }
-                })
+        et:insert()
+        et.position.x = wx
+        et.position.y = wy
 
-            et:insert()
-            et.position.x = wx
-            et.position.y = wy
+        layer = layer + 1
 
-            et.components.sprite.blabla = "truc"
+        table.insert(my_entities, et)
+    end
 
-            layer = layer - 1
-
-            table.insert(my_entities, et)
-        end
+    if input.mouse:isJustDown(2) then
+        e.components.sprite.layer = 100
+        e.components.sprite.extent = { x=138,y=128}
     end
 
     for k,v in ipairs(my_entities) do

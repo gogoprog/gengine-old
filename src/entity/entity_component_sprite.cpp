@@ -5,6 +5,7 @@
 #include "entity_system.h"
 #include "script.h"
 #include "debug.h"
+#include <string.h>
 
 namespace gengine
 {
@@ -21,8 +22,18 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
     SCRIPT_GET_SELF(ComponentSprite);
     const char * key = lua_tostring(state, 2);
 
-    (void)self;
-    geLog(key);
+    if(!strcmp(key,"layer"))
+    {
+        self.sprite.setLayer(lua_tonumber(state,3));
+    }
+    else if(!strcmp(key,"extent"))
+    {
+        script::fillVector2(state, self.sprite.getExtent(), 3);
+    }
+    else
+    {
+        geLog("Unknown attribute \"" << key << "\"");
+    }
 
     return 0;
 }

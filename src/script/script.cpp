@@ -9,11 +9,11 @@ namespace script
 
 void fillVector2(lua_State * state, Vector2 & result, int position)
 {
-    lua_getfield(state, -1, "x");
+    lua_getfield(state, position, "x");
     result.x = lua_tonumber(state, -1);
     lua_pop(state, 1);
 
-    lua_getfield(state, -1, "y");
+    lua_getfield(state, position, "y");
     result.y = lua_tonumber(state, -1);
     lua_pop(state, 1);
 }

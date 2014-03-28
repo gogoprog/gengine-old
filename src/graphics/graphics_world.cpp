@@ -85,7 +85,7 @@ Camera & World::getCurrentCamera()
 
 bool World::compare(Sprite *a, Sprite *b)
 {
-    return a->layer > b->layer || ( a->layer == b->layer && a > b);
+    return a->layer < b->layer || ( a->layer == b->layer && a > b);
 }
 
 }
