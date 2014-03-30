@@ -5,6 +5,7 @@
 #include "graphics_camera.h"
 #include "script.h"
 #include "application.h"
+#include "graphics_texture_manager.h"
 
 namespace gengine
 {
@@ -49,6 +50,11 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_FUNCTION(setClearColor);
     SCRIPT_TABLE_PUSH_FUNCTION(getWorldPosition);
+    
+    TextureManager::luaRegister(state);
+    lua_setfield(state, -2, "texture");
+
+
     lua_setglobal(state,"graphics");
 }
 

@@ -20,7 +20,8 @@ public:
     static SCRIPT_FUNCTION(update);
     static SCRIPT_FUNCTION(remove);
 
-    static uint metaTableRef;
+    static uint
+        metaTableRef;
 
 private:
     graphics::Sprite

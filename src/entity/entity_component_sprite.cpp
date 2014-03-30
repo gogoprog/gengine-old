@@ -83,7 +83,8 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, remove)
     return 0;
 }
 
-uint ComponentSprite::metaTableRef;
+uint
+    ComponentSprite::metaTableRef;
 
 }
 }
