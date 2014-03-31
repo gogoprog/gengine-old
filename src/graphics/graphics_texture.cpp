@@ -49,7 +49,7 @@ void Texture::setFromFile(const char * filename)
         height = image->h;
         SDL_FreeSurface (image);
 
-        geDebugRawLog("Done (" << id << ")");
+        geDebugRawLog("#" << id << " " << width << "x" << height);
     }
     else
     {

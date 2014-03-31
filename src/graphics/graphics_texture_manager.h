@@ -4,6 +4,7 @@
 #include "map.h"
 #include "graphics_texture.h"
 #include "script.h"
+#include <string>
 
 namespace gengine
 {
