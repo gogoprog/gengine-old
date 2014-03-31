@@ -40,7 +40,8 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
     }
     else if(!strcmp(key,"texture"))
     {
-        self.sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
+        graphics::Texture * texture = static_cast<graphics::Texture *>(lua_touserdata(state, 3));
+        self.sprite.setTexture(*texture);
     }
     else
     {

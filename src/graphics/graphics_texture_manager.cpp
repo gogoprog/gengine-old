@@ -19,15 +19,30 @@ SCRIPT_CLASS_FUNCTION(TextureManager, load)
     const char * name = lua_tostring(state, 1);
     Texture * texture = new Texture();
 
+    texture->init();
     texture->setFromFile(name);
 
     getInstance().textureMap.add(texture, name);
 
-    return 0;
+    lua_pushlightuserdata(state, texture);
+
+    return 1;
 }
 
 SCRIPT_CLASS_FUNCTION(TextureManager, get)
 {
+    const char * name = lua_tostring(state, 1);
+    Texture * texture;
+
+    if(getInstance().textureMap.find(texture, name))
+    {
+        lua_pushlightuserdata(state, texture);
+    }
+    else
+    {
+        lua_pushnil(state);
+    }
+
     return 1;
 }
 

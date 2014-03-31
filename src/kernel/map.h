@@ -24,6 +24,21 @@ public:
         return data[key];
     }
 
+    bool find(V & result, const K & k) const
+    {
+        typename std::map<K,V>::const_iterator it;
+
+        it = data.find(k);
+
+        if(it != data.end())
+        {
+            result = it->second;
+            return true;
+        }
+
+        return false;
+    }
+
 protected:
     std::map<K,V> data;
 };

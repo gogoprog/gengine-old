@@ -11,10 +11,13 @@ function start()
     print("tests/basic start")
     graphics.setClearColor(1,1,0.1,1)
 
+    graphics.texture.load("bird.png")
+    graphics.texture.load("logo.png")
+
     e = entity.create()
     e.name = "Yeah"
 
-    e:addComponent(ComponentSprite(), { texture = 0, extent = { x=256, y=256 } })
+    e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo.png"), extent = { x=256, y=256 } })
 
     e:insert()
 end
@@ -35,7 +38,7 @@ function update(dt)
         et = entity.create()
         et:addComponent(ComponentSprite(),
             {
-                texture = 0,
+                texture = graphics.texture.get("bird.png"),
                 layer = layer,
                 extent = { x=64, y=64 },
                 color = { x=0.5, y=0.9, z=0.6, w=1.0 }
