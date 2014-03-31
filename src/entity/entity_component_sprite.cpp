@@ -34,6 +34,10 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
     {
         script::fillVector4(state, self.sprite.getColor(), 3);
     }
+    else if(!strcmp(key,"alpha"))
+    {
+        self.sprite.setColorAlpha(lua_tonumber(state,3));
+    }
     else if(!strcmp(key,"texture"))
     {
         self.sprite.setTexture(graphics::System::getInstance().getDefaultTexture());
