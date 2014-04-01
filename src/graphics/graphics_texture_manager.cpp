@@ -7,6 +7,19 @@ namespace gengine
 namespace graphics
 {
 
+void TextureManager::init()
+{
+
+}
+
+void TextureManager::finalize()
+{
+    for(auto & kv : textureMap)
+    {
+        geDebugLog(kv.first);
+    }
+}
+
 SCRIPT_CLASS_REGISTERER(TextureManager)
 {
     lua_newtable(state);

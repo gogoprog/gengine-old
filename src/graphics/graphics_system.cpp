@@ -7,6 +7,7 @@
 #include "graphics_shader.h"
 #include "graphics_vertex_buffer.h"
 #include "graphics_world.h"
+#include "graphics_texture_manager.h"
 #include "vector4.h"
 #include "application.h"
 #include <math.h>
@@ -99,6 +100,8 @@ void System::init()
     indexBufferQuad.init();
     indexBufferQuad.setData(indices, 6);
 
+    TextureManager::getInstance().init();
+
     defaultTexture.init();
     defaultTexture.setFromFile("bird.png");
 
@@ -124,6 +127,8 @@ void System::finalize()
     {
         world->finalize();
     }
+
+    TextureManager::getInstance().finalize();
 
     defaultTexture.finalize();
     defaultProgram.finalize();

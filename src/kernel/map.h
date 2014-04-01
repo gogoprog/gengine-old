@@ -39,6 +39,13 @@ public:
         return false;
     }
 
+    typedef typename std::map<K,V>::iterator iterator;
+    typedef typename std::map<K,V>::const_iterator const_iterator;
+    iterator begin() { return data.begin(); }
+    const_iterator begin() const { return data.begin(); }
+    iterator end() { return data.end(); }
+    const_iterator end() const { return data.end(); }
+
 protected:
     std::map<K,V> data;
 };

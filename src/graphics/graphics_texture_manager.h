@@ -17,6 +17,9 @@ class TextureManager
 public:
     TextureManager() = default;
 
+    void init();
+    void finalize();
+
     SINGLETON(TextureManager);
     static SCRIPT_REGISTERER();
     static SCRIPT_FUNCTION(load);
