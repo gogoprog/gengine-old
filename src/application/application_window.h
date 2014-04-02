@@ -21,8 +21,8 @@ private:
     #ifndef EMSCRIPTEN
         SDL_Window
             * pWindow;
-        SDL_GLContext
-            context;
+        SDL_Renderer
+            * pRenderer;
     #else
         SDL_Surface
             * pWindow;

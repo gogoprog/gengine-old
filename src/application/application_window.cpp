@@ -30,8 +30,7 @@ void Window::init()
             SDL_WINDOW_OPENGL
             );
 
-        context = SDL_GL_CreateContext(pWindow);
-        SDL_GL_MakeCurrent(pWindow, context); 
+        pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     #else
         pWindow = SDL_SetVideoMode(
             getWidth(),
@@ -47,7 +46,7 @@ void Window::finalize()
     if(pWindow)
     {
         #ifndef EMSCRIPTEN
-            SDL_GL_DeleteContext(context);
+            SDL_DestroyRenderer(pRenderer);
             SDL_DestroyWindow(pWindow);
         #endif
     }
