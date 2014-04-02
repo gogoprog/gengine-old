@@ -10,8 +10,14 @@
 #define SCRIPT_REGISTERER() \
     void luaRegister(lua_State * state)
 
+#define SCRIPT_UNREGISTERER() \
+    void luaUnregister(lua_State * state)
+
 #define SCRIPT_CLASS_REGISTERER(_name_) \
     void _name_::luaRegister(lua_State * state)
+
+#define SCRIPT_CLASS_UNREGISTERER(_name_) \
+    void _name_::luaUnregister(lua_State * state)
 
 #define SCRIPT_FUNCTION(_name_) \
     int _name_(lua_State * state)

@@ -18,6 +18,10 @@ void System::init()
 {
 }
 
+void System::finalize()
+{
+}
+
 void System::update(const float dt)
 {
     lua_State * state = script::System::getInstance().getState();
@@ -55,6 +59,11 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_setglobal(state,"entity");
 
     registerComponent<ComponentSprite>(state, "ComponentSprite", "sprite");
+}
+
+SCRIPT_CLASS_UNREGISTERER(System)
+{
+    // :todo: remove entities/components
 }
 
 SCRIPT_CLASS_FUNCTION(System, create)

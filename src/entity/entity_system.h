@@ -25,12 +25,14 @@ public:
     SINGLETON(System);
 
     void init();
+    void finalize();
     void update(const float dt);
 
     float getCurrentDt() const { return currentDt; }
     Transform & getCurrentTransform() { return currentTransform; }
 
     SCRIPT_REGISTERER();
+    SCRIPT_UNREGISTERER();
 
     template<typename COMPONENT>
     static int createComponent(lua_State * state)
