@@ -1,6 +1,7 @@
 #include "graphics_texture_manager.h"
 
 #include "debug.h"
+#include <cstring>
 
 namespace gengine
 {
@@ -29,11 +30,16 @@ SCRIPT_CLASS_REGISTERER(TextureManager)
 
 SCRIPT_CLASS_FUNCTION(TextureManager, load)
 {
-    const char * name = lua_tostring(state, 1);
+    const char * file_path = lua_tostring(state, 1);
     Texture * texture = new Texture();
+    char name[128];
 
     texture->init();
-    texture->setFromFile(name);
+    texture->setFromFile(file_path);
+
+    getBaseName(name, file_path);
+
+    geDebugLog(name);
 
     getInstance().textureMap.add(texture, name);
 
@@ -57,6 +63,27 @@ SCRIPT_CLASS_FUNCTION(TextureManager, get)
     }
 
     return 1;
+}
+
+void TextureManager::getBaseName(char * result, const char * file_path)
+{
+    const char * begin, * end;
+    uint length;
+
+    if(!(begin = strchr(file_path,'/')))
+    {
+        begin = file_path;
+    }
+
+    if(!(end = strrchr(begin,'.')))
+    {
+        end = begin + strlen(begin);
+    }
+
+    length = end - begin;
+
+    strncpy(result, begin, length);
+    result[length] = 0;
 }
 
 }

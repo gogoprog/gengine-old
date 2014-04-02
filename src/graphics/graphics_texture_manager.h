@@ -26,6 +26,7 @@ public:
     static SCRIPT_FUNCTION(get);
 
 private:
+    static void getBaseName(char * result, const char * file_path);
     Map<std::string, Texture*>
         textureMap;
 };
