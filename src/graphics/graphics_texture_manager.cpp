@@ -17,7 +17,8 @@ void TextureManager::finalize()
 {
     for(auto & kv : textureMap)
     {
-        geDebugLog(kv.first);
+        kv.second->finalize();
+        delete kv.second;
     }
 }
 
@@ -35,15 +36,19 @@ SCRIPT_CLASS_FUNCTION(TextureManager, load)
     char name[128];
 
     texture->init();
-    texture->setFromFile(file_path);
-
-    getBaseName(name, file_path);
-
-    geDebugLog(name);
-
-    getInstance().textureMap.add(texture, name);
-
-    lua_pushlightuserdata(state, texture);
+    
+    if(texture->setFromFile(file_path))
+    {
+        getBaseName(name, file_path);
+        getInstance().textureMap.add(texture, name);
+        lua_pushlightuserdata(state, texture);
+    }
+    else
+    {
+        texture->finalize();
+        delete texture;
+        lua_pushnil(state);
+    }
 
     return 1;
 }

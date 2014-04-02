@@ -25,7 +25,7 @@ void Texture::finalize()
     glDeleteTextures(1, &id);
 }
 
-void Texture::setFromFile(const char * filename)
+bool Texture::setFromFile(const char * filename)
 {
     geDebugLogN("graphics::Texture::setFromFile \"" << filename << "\" ... ");
 
@@ -50,10 +50,14 @@ void Texture::setFromFile(const char * filename)
         SDL_FreeSurface (image);
 
         geDebugRawLog("#" << id << " " << width << "x" << height);
+
+        return true;
     }
     else
     {
         geDebugRawLog("Failed! " << IMG_GetError());
+
+        return false;
     }
 }
 

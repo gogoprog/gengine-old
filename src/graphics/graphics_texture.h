@@ -15,7 +15,7 @@ public:
     Texture();
     void init();
     void finalize();
-    void setFromFile(const char * filename);
+    bool setFromFile(const char * filename);
 
     uint getId() const { return id; }
 
