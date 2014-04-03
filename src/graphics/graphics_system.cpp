@@ -17,36 +17,31 @@ namespace gengine
 namespace graphics
 {
 
-#ifdef EMSCRIPTEN
-#define PRECISION " highp "
-#else
-#define PRECISION
-#endif
+const char vertex_shader_source[] = GL_GLSL(
+    attribute vec2 position;
+    attribute vec2 texCoords;
+    varying highp vec2 v_texCoords;
+    uniform highp mat3 projectionMatrix;
+    uniform highp mat3 transformMatrix;
 
-const char vertex_shader_source[] =
-    "attribute vec2 position;\n"
-    "attribute vec2 texCoords;\n"
-    "varying " PRECISION "vec2 v_texCoords;\n"
-    "uniform " PRECISION "mat3 projectionMatrix;\n"
-    "uniform " PRECISION "mat3 transformMatrix;\n"
-    "\n"
-    "void main()\n"
-    "{\n"
-    "    vec3 res = transformMatrix * vec3(position,1.0 ) * projectionMatrix;\n"
-    "    v_texCoords = texCoords;\n"
-    "    gl_Position = vec4(res,1.0);\n"
-    "}";
-const char fragment_shader_source[] =
-    "varying " PRECISION "vec2 v_texCoords;\n"
-    "uniform sampler2D tex0;\n"
-    "uniform " PRECISION "vec4 color;\n"
-    "\n"
-    "void main()\n"
-    "{\n"
-    "    gl_FragColor = texture2D(tex0, v_texCoords) * color;\n"
-    "}";
+    void main()
+    {
+        vec3 res = transformMatrix * vec3(position,1.0 ) * projectionMatrix;
+        v_texCoords = texCoords;
+        gl_Position = vec4(res,1.0);
+    }
+);
 
-#undef PRECISION
+const char fragment_shader_source[] = GL_GLSL(
+    varying highp vec2 v_texCoords;
+    uniform sampler2D tex0;
+    uniform highp vec4 color;
+
+    void main()
+    {
+        gl_FragColor = texture2D(tex0, v_texCoords) * color;
+    }
+);
 
 void System::init()
 {

@@ -20,3 +20,11 @@
 #endif
 
 #define GL_NULL_ID 0xffffffff
+
+#ifdef EMSCRIPTEN
+#define GL_GLSL(src) \
+    #src
+#else
+#define GL_GLSL(src) \
+    "#define highp \n#define mediump \n#define lowp \n" #src
+#endif
