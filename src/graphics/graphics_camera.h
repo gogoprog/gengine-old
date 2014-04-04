@@ -18,12 +18,16 @@ public:
     void finalize();
     void update();
 
-    const Matrix3 & getProjectionMatrix() { return projectionMatrix; }
-    const Vector2 & getPosition() { return position; }
-    const Vector2 & getExtent() { return extent; }
+    const Matrix3 & getProjectionMatrix() const { return projectionMatrix; }
+    const Vector2 & getPosition() const { return position; }
+    Vector2 & getPosition() { return position; }
+    const Vector2 & getExtent() const { return extent; }
+    Vector2 & getExtent() { return extent; }
 
     void setPosition(const Vector2 & _position);
     void setExtent(const Vector2 & _extent);
+
+    void markDirty() { dirty = true; }
 
 private:
     Matrix3

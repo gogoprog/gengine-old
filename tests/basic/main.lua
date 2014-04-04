@@ -2,10 +2,10 @@ print("tests/basic")
 
 function init()
     application.setName("gengine-tests:basic")
-    --application.setExtent(320,200)
+    application.setExtent(640,480)
 end
 
-local e
+local e, cameraEntity
 
 function start()
     print("tests/basic start")
@@ -20,6 +20,10 @@ function start()
     e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=256 } })
 
     e:insert()
+
+    cameraEntity = entity.create()
+    cameraEntity:addComponent(ComponentCamera(), { extent = { x=320, y=200} })
+    cameraEntity:insert()
 end
 
 local total = 0
@@ -32,7 +36,7 @@ function update(dt)
 
     if input.mouse:isJustDown(1) then
         local x,y = input.mouse:getPosition()
-        local wx, wy = graphics.getWorldPosition(x,y)
+        local wx, wy = cameraEntity.components.camera:getWorldPosition(x,y)
 
         local et
         et = entity.create()

@@ -78,6 +78,16 @@ void World::removeSprite(Sprite & sprite)
     spriteTable.remove(&sprite);
 }
 
+void World::pushCamera(Camera & camera)
+{
+    cameraStack.push(&camera);
+}
+
+void World::popCamera()
+{
+    cameraStack.pop();
+}
+
 Camera & World::getCurrentCamera()
 {
     return * cameraStack.getTop();

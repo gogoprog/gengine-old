@@ -65,6 +65,8 @@ private:
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, update);
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, remove);
 
+        COMPONENT::luaRegister(state);
+
         lua_pushcfunction(state, &COMPONENT::create);
         lua_setfield(state, -2, "__call");
 

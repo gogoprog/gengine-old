@@ -1,17 +1,17 @@
 #pragma once
 
 #include "script.h"
-#include "graphics_sprite.h"
+#include "graphics_camera.h"
 
 namespace gengine
 {
 namespace entity
 {
 
-class ComponentSprite
+class ComponentCamera
 {
 public:
-    ComponentSprite() = default;
+    ComponentCamera() = default;
 
     static SCRIPT_REGISTERER();
 
@@ -22,12 +22,16 @@ public:
     static SCRIPT_FUNCTION(update);
     static SCRIPT_FUNCTION(remove);
 
+    static SCRIPT_FUNCTION(push);
+    static SCRIPT_FUNCTION(pop);
+    static SCRIPT_FUNCTION(getWorldPosition);
+
     static uint
         metaTableRef;
 
 private:
-    graphics::Sprite
-        sprite;
+    graphics::Camera
+        camera;
 };
 
 }

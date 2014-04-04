@@ -12,6 +12,11 @@ namespace gengine
 namespace entity
 {
 
+SCRIPT_CLASS_REGISTERER(ComponentSprite)
+{
+    
+}
+
 SCRIPT_CLASS_FUNCTION(ComponentSprite, create)
 {
     return System::getInstance().createComponent<ComponentSprite>(state);
