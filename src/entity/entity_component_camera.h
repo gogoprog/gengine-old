@@ -11,7 +11,7 @@ namespace entity
 class ComponentCamera
 {
 public:
-    ComponentCamera() = default;
+    ComponentCamera();
 
     static SCRIPT_REGISTERER();
 
@@ -32,6 +32,8 @@ public:
 private:
     graphics::Camera
         camera;
+    bool
+        itIsPushed;
 };
 
 }

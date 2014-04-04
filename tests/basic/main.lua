@@ -29,6 +29,7 @@ end
 local total = 0
 local layer = 0
 local my_entities = {}
+
 function update(dt)
     total = total + dt
 
