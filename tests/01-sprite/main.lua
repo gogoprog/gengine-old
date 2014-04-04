@@ -16,7 +16,8 @@ function start()
         ComponentSprite(),
         {
             texture = graphics.texture.get("logo"),
-            extent = { x=256, y=128 }
+            extent = { x=256, y=128 },
+            layer = 0
         }
         )
 
