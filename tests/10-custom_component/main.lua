@@ -26,7 +26,6 @@ function init()
     application.setExtent(320,600)
 end
 
-local logoEntity
 
 function start()
     graphics.setClearColor(0,0.1,0.1,1)
@@ -35,29 +34,31 @@ function start()
 
     entity.registerCustomComponent(ComponentCustom, "custom")
 
-    logoEntity = entity.create()
+    for i=0,8 do
+        local logoEntity = entity.create()
 
-    logoEntity:addComponent(
-        ComponentSprite(),
-        {
-            texture = graphics.texture.get("logo"),
-            extent = { x=256, y=128 },
-            layer = 0
-        }
-        )
+        logoEntity:addComponent(
+            ComponentSprite(),
+            {
+                texture = graphics.texture.get("logo"),
+                extent = { x=256, y=128 },
+                layer = 0
+            }
+            )
 
-    logoEntity:addComponent(
-        ComponentCustom(),
-        {
-            distance = 10,
-            angle = 0.1,
-            speed = 10
-        }
-        )
+        logoEntity:addComponent(
+            ComponentCustom(),
+            {
+                distance = math.random(10,100),
+                angle = math.random(0.1,0.3),
+                speed = math.random(5,10),
+            }
+            )
 
-    logoEntity:insert()
+        logoEntity:insert()
 
-    logoEntity.position.y = -256
+        logoEntity.position.y = -256 + i * 64
+    end
 end
 
 function update(dt)
