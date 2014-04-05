@@ -27,7 +27,6 @@ public:
     void setPosition(const Vector2 & _position);
     void setExtent(const Vector2 & _extent);
 
-    void markDirty() { dirty = true; }
     void getWorldPosition(Vector2 & result, const Vector2 & position) const;
 
 private:
@@ -38,7 +37,8 @@ private:
         extent,
         screenRatio;
     bool
-        dirty;
+        dirtyProjection,
+        dirtyRatio;
 };
 
 }

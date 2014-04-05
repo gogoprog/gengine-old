@@ -12,7 +12,8 @@ namespace graphics
 Camera::Camera()
     :
     position(Vector2::zero),
-    dirty(true)
+    dirtyProjection(true),
+    dirtyRatio(true)
 {
 }
 
@@ -28,11 +29,16 @@ void Camera::finalize()
 
 void Camera::update()
 {
-    if(dirty)
+    if(dirtyProjection)
     {
-        dirty = false;
+        dirtyProjection = false;
 
         projectionMatrix.initProjection(extent, position);
+    }
+
+    if(dirtyRatio)
+    {
+        dirtyRatio = false;
 
         screenRatio.x = application::getWidth() / extent.x;
         screenRatio.y = application::getHeight() / extent.y;
@@ -42,13 +48,14 @@ void Camera::update()
 void Camera::setPosition(const Vector2 & _position)
 {
     position = _position;
-    dirty = true;
+    dirtyProjection = true;
 }
 
 void Camera::setExtent(const Vector2 & _extent)
 {
     extent = _extent;
-    dirty = true;
+    dirtyProjection = true;
+    dirtyRatio = true;
 }
 
 void Camera::getWorldPosition(Vector2 & result, const Vector2 & position) const
@@ -64,7 +71,6 @@ void Camera::getWorldPosition(Vector2 & result, const Vector2 & position) const
 
     result -= getExtent() * 0.5f;
 }
-
 
 }
 }
