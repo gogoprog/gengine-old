@@ -2,21 +2,8 @@
 
 ComponentCustom = {}
 
-ComponentCustom = {
-    name = "custom",
-    __call = function()
-        local o = {}
-        o.total = 0
-        setmetatable(o, ComponentCustom)
-        return o
-    end
-}
-
-function ComponentCustom:__newindex(k,v)
-    rawset(self,k,v)
-end
-
 function ComponentCustom:init()
+    self.total = 0
 end
 
 function ComponentCustom:insert()
@@ -32,14 +19,11 @@ end
 function ComponentCustom:remove()
 end
 
-ComponentCustom.__index = ComponentCustom
-setmetatable(ComponentCustom, ComponentCustom)
-
 -- App
 
 function init()
     application.setName("[gengine-tests] 10-custom_component")
-    application.setExtent(320,200)
+    application.setExtent(320,600)
 end
 
 local logoEntity
@@ -48,6 +32,8 @@ function start()
     graphics.setClearColor(0,0.1,0.1,1)
 
     graphics.texture.load("logo.png")
+
+    entity.registerCustomComponent(ComponentCustom, "custom")
 
     logoEntity = entity.create()
 
@@ -70,6 +56,8 @@ function start()
         )
 
     logoEntity:insert()
+
+    logoEntity.position.y = -256
 end
 
 function update(dt)

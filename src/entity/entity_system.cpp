@@ -45,6 +45,27 @@ SCRIPT_CLASS_REGISTERER(System)
 {
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
+
+    SCRIPT_DO(
+        return function(_table,name)
+            _table.name = name
+            _table.__call = function()
+                local o = {}
+                setmetatable(o, _table)
+                return o
+            end
+
+            _table.__newindex = function(self,k,v)
+                rawset(self,k,v)
+            end
+
+            _table.__index = _table
+            setmetatable(_table, _table)
+        end
+        );
+
+    lua_setfield(state, -2, "registerCustomComponent");
+
     lua_setglobal(state,"entity");
 
     registerComponent<ComponentSprite>(state, "ComponentSprite", "sprite");
@@ -86,7 +107,6 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     return 1;
 }
-
 
 void System::pushTransform(lua_State * state, const Transform & transform)
 {

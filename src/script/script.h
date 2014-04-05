@@ -61,6 +61,8 @@
 #define SCRIPT_PUSH_NUMBER(_value_) \
     lua_pushnumber(state, _value_);
 
+#define SCRIPT_DO(_code_) \
+    luaL_dostring(state, #_code_);
 
 namespace gengine
 {
