@@ -41,7 +41,9 @@ private:
         projectionMatrixUniform,
         transformMatrixUniform,
         samplerUniform,
-        colorUniform;
+        colorUniform,
+        uvScaleUniform,
+        uvOffsetUniform;
 };
 
 }

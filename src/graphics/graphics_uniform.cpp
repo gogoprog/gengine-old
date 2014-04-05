@@ -5,6 +5,7 @@
 #include "graphics_texture.h"
 #include "matrix3.h"
 #include "vector4.h"
+#include "vector2.h"
 
 namespace gengine
 {
@@ -31,6 +32,11 @@ void Uniform::apply(const Texture & texture)
 void Uniform::apply(const Vector4 & vector4)
 {
     glUniform4fv(location, 1, reinterpret_cast<const float *>(&vector4));
+}
+
+void Uniform::apply(const Vector2 & vector2)
+{
+    glUniform2fv(location, 1, reinterpret_cast<const float *>(&vector2));
 }
 
 }

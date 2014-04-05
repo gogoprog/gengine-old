@@ -25,6 +25,8 @@ void World::init()
     transformMatrixUniform.init(program, "transformMatrix");
     samplerUniform.init(program, "tex0");
     colorUniform.init(program, "color");
+    uvScaleUniform.init(program, "uvScale");
+    uvOffsetUniform.init(program, "uvOffset");
 }
 
 void World::finalize()
@@ -63,6 +65,9 @@ void World::render()
         colorUniform.apply(sprite.color);
 
         samplerUniform.apply(* sprite.texture);
+
+        uvScaleUniform.apply(sprite.uvScale);
+        uvOffsetUniform.apply(sprite.uvOffset);
 
         system.getIndexBufferQuad().draw();
     }
