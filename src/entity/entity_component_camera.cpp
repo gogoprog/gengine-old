@@ -7,6 +7,7 @@
 #include "debug.h"
 #include <string.h>
 #include "application.h"
+#include "entity.h"
 
 namespace gengine
 {
@@ -63,7 +64,8 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, update)
 
     graphics::Camera & camera = self.camera;
 
-    System::Transform & transform = System::getInstance().getCurrentTransform();
+    Transform transform;
+    fillTransformFromComponent(state, transform);
 
     camera.setPosition(transform.position);
 
@@ -74,7 +76,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, remove)
 {
     SCRIPT_GET_SELF(ComponentCamera);
 
-    if ( self.itIsPushed )
+    if(self.itIsPushed)
     {
         graphics::System::getInstance().getWorld(0).popCamera();
     }
@@ -96,7 +98,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, pop)
 {
     SCRIPT_GET_SELF(ComponentCamera);
 
-    if( self.itIsPushed && & graphics::System::getInstance().getWorld(0).getCurrentCamera() == & self.camera )
+    if(self.itIsPushed && & graphics::System::getInstance().getWorld(0).getCurrentCamera() == & self.camera)
     {
         graphics::System::getInstance().getWorld(0).popCamera();
         self.itIsPushed = false;

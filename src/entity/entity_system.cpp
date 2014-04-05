@@ -32,22 +32,10 @@ void System::update(const float dt)
     {
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
-        lua_getfield(state, -1, "position");
-
-        script::fillVector2(state, currentTransform.position);
-
-        lua_pop(state, 1);
-
-        lua_getfield(state, -1, "rotation");
-        currentTransform.rotation = lua_tonumber(state, -1);
-        lua_pop(state, 1);
-
         lua_getfield(state, -1, "update");
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
         lua_pushnumber(state, dt);
         lua_call(state, 2, 0);
-
-        pushTransform(state, currentTransform);
 
         lua_pop(state, 1);
     }

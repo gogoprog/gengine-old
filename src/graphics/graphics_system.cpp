@@ -97,9 +97,6 @@ void System::init()
 
     TextureManager::getInstance().init();
 
-    defaultTexture.init();
-    defaultTexture.setFromFile("bird.png");
-
     defaultCamera.setExtent(application::getExtent());
 
     setClearColor(Vector4(0.2f,0.2f,0.2f,1.0f));
@@ -125,7 +122,6 @@ void System::finalize()
 
     TextureManager::getInstance().finalize();
 
-    defaultTexture.finalize();
     defaultProgram.finalize();
     defaultFragmentShader.finalize();
     defaultVertexShader.finalize();

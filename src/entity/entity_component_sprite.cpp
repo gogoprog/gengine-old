@@ -6,6 +6,7 @@
 #include "script.h"
 #include "debug.h"
 #include <string.h>
+#include "entity.h"
 
 namespace gengine
 {
@@ -76,7 +77,8 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, update)
 
     graphics::Sprite & sprite = self.sprite;
 
-    System::Transform & transform = System::getInstance().getCurrentTransform();
+    Transform transform;
+    fillTransformFromComponent(state, transform);
 
     sprite.setPosition(transform.position);
     sprite.setRotation(transform.rotation);

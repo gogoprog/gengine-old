@@ -40,7 +40,6 @@ public:
     VertexBuffer<Vertex> & getVertexBufferQuad() { return vertexBufferQuad; }
     IndexBuffer & getIndexBufferQuad() { return indexBufferQuad; }
     Camera & getDefaultCamera() { return defaultCamera; }
-    const Texture & getDefaultTexture() const { return defaultTexture; }
 
     static SCRIPT_REGISTERER();
 
@@ -54,8 +53,6 @@ private:
         vertexBufferQuad;
     IndexBuffer
         indexBufferQuad;
-    Texture
-        defaultTexture;
     Camera
         defaultCamera;
     Array<World *>
