@@ -29,4 +29,3 @@ function update(dt)
     total = total + dt
     logoEntity.position.x = math.sin(total * 2) * 50
 end
-
