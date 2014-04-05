@@ -37,7 +37,7 @@ function update(dt)
 
     if input.mouse:isJustDown(1) then
         local x,y = input.mouse:getPosition()
-        local wx, wy = cameraEntity.components.camera:getWorldPosition(x,y)
+        local wx, wy = cameraEntity.camera:getWorldPosition(x,y)
 
         local et
         et = entity.create()
@@ -59,8 +59,8 @@ function update(dt)
     end
 
     if input.mouse:isJustDown(2) then
-        e.components.sprite.layer = 100
-        e.components.sprite.extent = { x=138,y=128}
+        e.sprite.layer = 100
+        e.sprite.extent = { x=138,y=128}
     end
 
     for k,v in ipairs(my_entities) do

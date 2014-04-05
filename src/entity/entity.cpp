@@ -23,7 +23,7 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(self, dt)
-            for k,v in pairs(self.components) do
+            for k,v in ipairs(self.components) do
                 v:update(dt)
             end
         end
@@ -33,7 +33,7 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(self)
-            for k,v in pairs(self.components) do
+            for k,v in ipairs(self.components) do
                 v:insert()
             end
         end
@@ -43,7 +43,8 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(self, comp, params)
-            self.components[comp.name] = comp
+            self[comp.name] = comp
+            table.insert(self.components, comp)
             for k,v in pairs(params) do
                 comp[k] = v
             end
