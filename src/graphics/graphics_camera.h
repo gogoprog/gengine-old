@@ -28,13 +28,15 @@ public:
     void setExtent(const Vector2 & _extent);
 
     void markDirty() { dirty = true; }
+    void getWorldPosition(Vector2 & result, const Vector2 & position) const;
 
 private:
     Matrix3
         projectionMatrix;
     Vector2
         position,
-        extent;
+        extent,
+        screenRatio;
     bool
         dirty;
 };

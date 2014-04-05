@@ -9,6 +9,7 @@
 #include "entity.h"
 #include "entity_component_sprite.h"
 #include "entity_component_camera.h"
+#include "entity_component_mouseable.h"
 
 namespace gengine
 {
@@ -70,6 +71,7 @@ SCRIPT_CLASS_REGISTERER(System)
 
     registerComponent<ComponentSprite>(state, "ComponentSprite", "sprite");
     registerComponent<ComponentCamera>(state, "ComponentCamera", "camera");
+    registerComponent<ComponentMouseable>(state, "ComponentMouseable", "mouseable");
 }
 
 SCRIPT_CLASS_UNREGISTERER(System)

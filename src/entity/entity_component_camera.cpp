@@ -120,31 +120,15 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, getWorldPosition)
 {
     SCRIPT_GET_SELF(ComponentCamera);
 
-    Vector2 pos, ratio;
+    Vector2 result;
 
-    pos.x = lua_tonumber(state, 2);
-    pos.y = application::getHeight() - lua_tonumber(state, 3);
+    self.camera.getWorldPosition(result, Vector2(lua_tonumber(state, 2), lua_tonumber(state, 3)));
 
-    graphics::Camera & camera = self.camera;
-
-    ratio.x = application::getWidth() / camera.getExtent().x;
-    ratio.y = application::getHeight() / camera.getExtent().y;
-
-    pos.x /= ratio.x;
-    pos.y /= ratio.y;
-
-    pos.x += camera.getPosition().x;
-    pos.y += camera.getPosition().y;
-
-    pos.x -= camera.getExtent().x * 0.5f;
-    pos.y -= camera.getExtent().y * 0.5f;
-
-    SCRIPT_PUSH_NUMBER(pos.x);
-    SCRIPT_PUSH_NUMBER(pos.y);
+    SCRIPT_PUSH_NUMBER(result.x);
+    SCRIPT_PUSH_NUMBER(result.y);
 
     return 2;
 }
-
 
 uint
     ComponentCamera::metaTableRef;

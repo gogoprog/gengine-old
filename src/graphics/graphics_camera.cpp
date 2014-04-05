@@ -2,6 +2,7 @@
 
 #include "graphics_opengl.h"
 #include "debug.h"
+#include "application.h"
 
 namespace gengine
 {
@@ -32,6 +33,9 @@ void Camera::update()
         dirty = false;
 
         projectionMatrix.initProjection(extent, position);
+
+        screenRatio.x = application::getWidth() / extent.x;
+        screenRatio.y = application::getHeight() / extent.y;
     }
 }
 
@@ -46,6 +50,24 @@ void Camera::setExtent(const Vector2 & _extent)
     extent = _extent;
     dirty = true;
 }
+
+void Camera::getWorldPosition(Vector2 & result, const Vector2 & position) const
+{
+    Vector2 ratio;
+
+    result.x = position.x;
+    result.y = application::getHeight() - position.y;
+
+    result.x /= screenRatio.x;
+    result.y /= screenRatio.y;
+
+    result.x += getPosition().x;
+    result.y += getPosition().y;
+
+    result.x -= getExtent().x * 0.5f;
+    result.y -= getExtent().y * 0.5f;
+}
+
 
 }
 }
