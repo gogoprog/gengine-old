@@ -45,8 +45,10 @@ SCRIPT_REGISTERER()
         return function(self, comp, params)
             self[comp.name] = comp
             table.insert(self.components, comp)
-            for k,v in pairs(params) do
-                comp[k] = v
+            if params ~= nil then
+                for k,v in pairs(params) do
+                    comp[k] = v
+                end
             end
             comp:init(params)
             rawset(comp,'entity',self)

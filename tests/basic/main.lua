@@ -17,12 +17,14 @@ function start()
     e = entity.create()
     e.name = "Yeah"
 
-    e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=256 } })
+    e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=128 } })
+
+    e:addComponent(ComponentMouseable(), { extent = { x=256, y=128} })
 
     e:insert()
 
     cameraEntity = entity.create()
-    cameraEntity:addComponent(ComponentCamera(), { extent = { x=320, y=200} })
+    cameraEntity:addComponent(ComponentCamera(), { extent = { x=640, y=480} })
     cameraEntity:insert()
 end
 
@@ -58,16 +60,9 @@ function update(dt)
         table.insert(my_entities, et)
     end
 
-    if input.mouse:isJustDown(2) then
-        e.sprite.layer = 100
-        e.sprite.extent = { x=138,y=128}
-    end
-
     for k,v in ipairs(my_entities) do
         v.rotation = v.rotation + dt
     end
-
-    e.rotation = total;
 end
 
 function stop()

@@ -27,6 +27,9 @@ public:
     Mouse();
     SCRIPT_REGISTERER() const;
 
+    uint getX() const { return x; }
+    uint getY() const { return y; }
+
     static SCRIPT_FUNCTION(isDown);
     static SCRIPT_FUNCTION(isUp);
     static SCRIPT_FUNCTION(isJustDown);
