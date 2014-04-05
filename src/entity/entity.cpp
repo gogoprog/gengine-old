@@ -21,13 +21,37 @@ SCRIPT_REGISTERER()
 
     lua_newtable(state);
 
-    luaL_dostring(state, "return function(self, dt) for k,v in pairs(self.components) do v:update(dt) end end");
+    SCRIPT_DO(
+        return function(self, dt)
+            for k,v in pairs(self.components) do
+                v:update(dt)
+            end
+        end
+        );
+
     lua_setfield(state, -2, "update");
 
-    luaL_dostring(state, "return function(self) for k,v in pairs(self.components) do v:insert() end end");
+    SCRIPT_DO(
+        return function(self)
+            for k,v in pairs(self.components) do
+                v:insert()
+            end
+        end
+        );
+
     lua_setfield(state, -2, "insert");
 
-    luaL_dostring(state, "return function(self, comp, params) self.components[comp.name] = comp for k,v in pairs(params) do comp[k] = v end comp:init(params) rawset(comp,'entity',self) end");
+    SCRIPT_DO(
+        return function(self, comp, params)
+            self.components[comp.name] = comp
+            for k,v in pairs(params) do
+                comp[k] = v
+            end
+            comp:init(params)
+            rawset(comp,'entity',self)
+        end
+        );
+
     lua_setfield(state, -2, "addComponent");
 
     metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
