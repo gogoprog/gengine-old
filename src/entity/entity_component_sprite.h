@@ -11,7 +11,7 @@ namespace entity
 class ComponentSprite
 {
 public:
-    ComponentSprite() = default;
+    ComponentSprite();
 
     static SCRIPT_REGISTERER();
 
@@ -28,6 +28,8 @@ public:
 private:
     graphics::Sprite
         sprite;
+    uint
+        worldIndex;
 };
 
 }

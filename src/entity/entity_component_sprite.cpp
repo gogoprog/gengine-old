@@ -13,9 +13,14 @@ namespace gengine
 namespace entity
 {
 
+ComponentSprite::ComponentSprite()
+    :
+    worldIndex(0)
+{
+}
+
 SCRIPT_CLASS_REGISTERER(ComponentSprite)
 {
-    
 }
 
 SCRIPT_CLASS_FUNCTION(ComponentSprite, create)
@@ -49,6 +54,10 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
         graphics::Texture * texture = static_cast<graphics::Texture *>(lua_touserdata(state, 3));
         self.sprite.setTexture(*texture);
     }
+    else if(!strcmp(key,"world"))
+    {
+        self.worldIndex = lua_tonumber(state,3);
+    }
     else
     {
         geLog("Unknown attribute \"" << key << "\"");
@@ -66,7 +75,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, insert)
 {
     SCRIPT_GET_SELF(ComponentSprite);
 
-    graphics::System::getInstance().getWorld(0).addSprite(self.sprite);
+    graphics::System::getInstance().getWorld(self.worldIndex).addSprite(self.sprite);
 
     return 0;
 }
@@ -90,7 +99,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, remove)
 {
     SCRIPT_GET_SELF(ComponentSprite);
 
-    graphics::System::getInstance().getWorld(0).removeSprite(self.sprite);
+    graphics::System::getInstance().getWorld(self.worldIndex).removeSprite(self.sprite);
 
     return 0;
 }

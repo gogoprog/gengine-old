@@ -16,6 +16,7 @@ namespace entity
 
 ComponentCamera::ComponentCamera()
     :
+    worldIndex(0),
     itIsPushed(false)
 {
 }
@@ -39,6 +40,14 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, newIndex)
     {
         script::fillVector2(state, self.camera.getExtent(), 3);
     }
+    else if(!strcmp(key,"world"))
+    {
+        self.worldIndex = lua_tonumber(state,3);
+    }
+    else
+    {
+        geLog("Unknown attribute \"" << key << "\"");
+    }
 
     return 0;
 }
@@ -52,7 +61,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, insert)
 {
     SCRIPT_GET_SELF(ComponentCamera);
 
-    graphics::System::getInstance().getWorld(0).pushCamera(self.camera);
+    graphics::System::getInstance().getWorld(self.worldIndex).pushCamera(self.camera);
     self.itIsPushed = true;
 
     return 0;
@@ -78,7 +87,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, remove)
 
     if(self.itIsPushed)
     {
-        graphics::System::getInstance().getWorld(0).popCamera();
+        graphics::System::getInstance().getWorld(self.worldIndex).popCamera();
     }
 
     return 0;
@@ -88,7 +97,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, push)
 {
     SCRIPT_GET_SELF(ComponentCamera);
 
-    graphics::System::getInstance().getWorld(0).pushCamera(self.camera);
+    graphics::System::getInstance().getWorld(self.worldIndex).pushCamera(self.camera);
     self.itIsPushed = true;
 
     return 0;
@@ -98,9 +107,9 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, pop)
 {
     SCRIPT_GET_SELF(ComponentCamera);
 
-    if(self.itIsPushed && & graphics::System::getInstance().getWorld(0).getCurrentCamera() == & self.camera)
+    if(self.itIsPushed && & graphics::System::getInstance().getWorld(self.worldIndex).getCurrentCamera() == & self.camera)
     {
-        graphics::System::getInstance().getWorld(0).popCamera();
+        graphics::System::getInstance().getWorld(self.worldIndex).popCamera();
         self.itIsPushed = false;
     }
 

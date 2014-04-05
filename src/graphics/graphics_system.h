@@ -33,8 +33,9 @@ public:
     void update();
     void render();
     void setClearColor(const Vector4 & color);
+    void createWorlds(const uint count);
 
-    World & getWorld(const uint index = 0);
+    World & getWorld(const uint index);
 
     Program & getDefaultProgram() { return defaultProgram; }
     VertexBuffer<Vertex> & getVertexBufferQuad() { return vertexBufferQuad; }

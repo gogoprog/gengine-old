@@ -104,11 +104,7 @@ void System::init()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    {
-        World * world = new World();
-        world->init();
-        worldTable.add(world);
-    }
+    createWorlds(1);
 }
 
 void System::finalize()
@@ -148,6 +144,18 @@ void System::render()
 void System::setClearColor(const Vector4 & c)
 {
     glClearColor(c.x, c.y ,c.z, c.w);
+}
+
+void System::createWorlds(const uint count)
+{
+    int new_count = count - worldTable.getSize();
+
+    for(int i=0; i<new_count; ++i)
+    {
+        World * world = new World();
+        world->init();
+        worldTable.add(world);
+    }
 }
 
 World & System::getWorld(const uint index)

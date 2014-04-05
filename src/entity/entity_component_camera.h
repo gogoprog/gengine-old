@@ -32,6 +32,8 @@ public:
 private:
     graphics::Camera
         camera;
+    uint
+        worldIndex;
     bool
         itIsPushed;
 };
