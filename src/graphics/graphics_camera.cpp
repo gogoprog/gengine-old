@@ -58,14 +58,11 @@ void Camera::getWorldPosition(Vector2 & result, const Vector2 & position) const
     result.x = position.x;
     result.y = application::getHeight() - position.y;
 
-    result.x /= screenRatio.x;
-    result.y /= screenRatio.y;
+    result /= screenRatio;
 
-    result.x += getPosition().x;
-    result.y += getPosition().y;
+    result += getPosition();
 
-    result.x -= getExtent().x * 0.5f;
-    result.y -= getExtent().y * 0.5f;
+    result -= getExtent() * 0.5f;
 }
 
 
