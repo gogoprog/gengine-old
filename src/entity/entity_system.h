@@ -78,7 +78,13 @@ private:
         lua_rawset(state, -3);
 
         lua_pushstring(state, "__index");
-        lua_rawgeti(state, LUA_REGISTRYINDEX, COMPONENT::metaTableRef);
+
+        SCRIPT_DO(
+            return function(_t, _key)
+                return rawget(getmetatable(_t),_key)
+            end
+            );
+
         lua_rawset(state, -3);
 
         lua_setglobal(state, name);

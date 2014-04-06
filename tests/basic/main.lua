@@ -1,5 +1,23 @@
 print("tests/basic")
 
+ComponentCustom = {}
+
+function ComponentCustom:init()
+end
+
+function ComponentCustom:insert()
+end
+
+function ComponentCustom:update(dt)
+end
+
+function ComponentCustom:remove()
+end
+
+function ComponentCustom:onMouseJustDown()
+    self.entity.sprite.color = {x=1,y=0,z=0,w=1}
+end
+
 function init()
     application.setName("gengine-tests:basic")
     application.setExtent(640,480)
@@ -9,6 +27,9 @@ local e, cameraEntity
 
 function start()
     print("tests/basic start")
+
+    entity.registerCustomComponent(ComponentCustom, "custom")
+
     graphics.setClearColor(1,1,0.1,1)
 
     graphics.texture.load("bird.png")
@@ -19,14 +40,7 @@ function start()
 
     e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=128 } })
     e:addComponent(ComponentMouseable(), { extent = { x=256, y=128} })
-
-    e.onMouseEnter = function(o)
-        o.sprite.color = {x=1,y=0,z=1,w=1}
-    end
-
-    e.onMouseExit = function(o)
-        o.sprite.color = {x=1,y=1,z=1,w=1}
-    end
+    e:addComponent(ComponentCustom(), {})
 
     e:insert()
 

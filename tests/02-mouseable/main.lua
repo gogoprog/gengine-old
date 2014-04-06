@@ -28,16 +28,22 @@ function start()
         }
         )
 
-    logoEntity.onMouseEnter = function(o)
-        o.sprite.color = {x=1,y=0,z=0,w=1}
+    logoEntity.onMouseEnter = function(e)
+        local extent = { x=300, y=140 }
+        e.sprite.extent = extent
+        e.mouseable.extent = extent
+        e.sprite.color = {x=1,y=0,z=0,w=1}
     end
 
-    logoEntity.onMouseExit = function(o)
-        o.sprite.color = {x=1,y=1,z=1,w=1}
+    logoEntity.onMouseExit = function(e)
+        local extent = { x=256, y=128 }
+        e.sprite.extent = extent
+        e.mouseable.extent = extent
+        e.sprite.color = {x=1,y=1,z=1,w=1}
     end
 
-    logoEntity.onMouseJustDown = function(o)
-        o.position.y = o.position.y - 16
+    logoEntity.onMouseJustDown = function(e)
+        e.position.y = e.position.y - 16
     end
 
     logoEntity.position.y = 128

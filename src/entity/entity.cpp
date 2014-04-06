@@ -19,6 +19,15 @@ SCRIPT_REGISTERER()
 {
     System::getInstance().luaRegister(state);
 
+    SCRIPT_DO(
+        _trick = {
+            __call = function(o, e, ...)
+                return _trick.func(_trick.comp, ...)
+            end
+        }
+        setmetatable(_trick,_trick)
+        );
+
     lua_newtable(state);
 
     SCRIPT_DO(
@@ -61,7 +70,20 @@ SCRIPT_REGISTERER()
 
     lua_rawgeti(state, LUA_REGISTRYINDEX, metaTableRef);
 
-    lua_rawgeti(state, LUA_REGISTRYINDEX, metaTableRef);
+    SCRIPT_DO(
+        return function(_t, _key)
+            if _key:sub(1,2) == "on" then
+                for k,v in ipairs(_t.components) do
+                    if v[_key] ~= nil then
+                        _trick.func = v[_key]
+                        _trick.comp = v
+                        return _trick
+                    end
+                end
+            end
+            return rawget(getmetatable(_t),_key)
+        end
+        );
 
     lua_setfield(state, -2, "__index");
 

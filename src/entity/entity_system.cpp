@@ -60,7 +60,10 @@ SCRIPT_CLASS_REGISTERER(System)
                 rawset(self,k,v)
             end
 
-            _table.__index = _table
+            _table.__index = function(_t, _key)
+                return rawget(getmetatable(_t),_key)
+            end
+
             setmetatable(_table, _table)
         end
         );
