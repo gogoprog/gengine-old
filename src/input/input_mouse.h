@@ -29,6 +29,8 @@ public:
 
     uint getX() const { return x; }
     uint getY() const { return y; }
+    bool _isJustDown(const uint button_index) const;
+    bool _isDown(const uint button_index) const;
 
     static SCRIPT_FUNCTION(isDown);
     static SCRIPT_FUNCTION(isUp);

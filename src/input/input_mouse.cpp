@@ -18,6 +18,16 @@ Mouse::Mouse()
     memset(previousButtonStateTable, 0, sizeof(ButtonState) * BUTTON_COUNT);
 }
 
+bool Mouse::_isJustDown(const uint button_index) const
+{
+    return buttonStateTable[button_index] == DOWN && previousButtonStateTable[button_index] == UP;
+}
+
+bool Mouse::_isDown(const uint button_index) const
+{
+    return buttonStateTable[button_index] == DOWN;
+}
+
 SCRIPT_CLASS_REGISTERER(Mouse) const
 {
     lua_newtable(state);

@@ -76,11 +76,11 @@ void update()
 
     script::System::getInstance().call("update", dt);
 
-    input::System::getInstance().update();
-
     graphics::System::getInstance().update();
 
     entity::System::getInstance().update(dt);
+
+    input::System::getInstance().update();
 
     graphics::System::getInstance().render();
 

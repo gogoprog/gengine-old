@@ -18,8 +18,15 @@ function start()
     e.name = "Yeah"
 
     e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=128 } })
-
     e:addComponent(ComponentMouseable(), { extent = { x=256, y=128} })
+
+    e.onMouseEnter = function(o)
+        o.sprite.color = {x=1,y=0,z=1,w=1}
+    end
+
+    e.onMouseExit = function(o)
+        o.sprite.color = {x=1,y=1,z=1,w=1}
+    end
 
     e:insert()
 

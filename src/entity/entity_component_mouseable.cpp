@@ -16,7 +16,8 @@ namespace entity
 
 ComponentMouseable::ComponentMouseable()
     :
-    worldIndex(0)
+    worldIndex(0),
+    itIsHovered(false)
 {
 }
 
@@ -72,17 +73,48 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, update)
 
     fillTransformFromComponent(state, transform);
 
+    const Vector2 & entity_position = transform.position;
+
     x = mouse.getX();
     y = mouse.getY();
 
     graphics::System::getInstance().getWorld(self.worldIndex).getCurrentCamera().getWorldPosition(cursor_position, Vector2(x, y));
 
-    if(cursor_position.x > transform.position.x - extent.x * 0.5f
-        && cursor_position.x < transform.position.x + extent.x * 0.5f
-        && cursor_position.y > transform.position.y - extent.y * 0.5f
-        && cursor_position.y < transform.position.y + extent.y * 0.5f)
+    if(cursor_position.x > entity_position.x - extent.x * 0.5f
+        && cursor_position.x < entity_position.x + extent.x * 0.5f
+        && cursor_position.y > entity_position.y - extent.y * 0.5f
+        && cursor_position.y < entity_position.y + extent.y * 0.5f)
     {
-        // :todo:
+        if(!self.itIsHovered)
+        {
+            lua_getfield(state, 1, "entity");
+            lua_getfield(state, -1, "onMouseEnter");
+            lua_getfield(state, 1, "entity");
+            lua_pcall(state, 1, 0, 0);
+            lua_pop(state, 1);
+            self.itIsHovered = true;
+        }
+
+        if(mouse._isJustDown(1))
+        {
+            lua_getfield(state, 1, "entity");
+            lua_getfield(state, -1, "onMouseJustDown");
+            lua_getfield(state, 1, "entity");
+            lua_pcall(state, 1, 0, 0);
+            lua_pop(state, 1);
+        }
+    }
+    else
+    {
+        if(self.itIsHovered)
+        {
+            lua_getfield(state, 1, "entity");
+            lua_getfield(state, -1, "onMouseExit");
+            lua_getfield(state, 1, "entity");
+            lua_pcall(state, 1, 0, 0);
+            lua_pop(state, 1);
+            self.itIsHovered = false;
+        }
     }
 
     return 0;

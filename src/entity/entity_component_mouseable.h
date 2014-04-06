@@ -30,6 +30,8 @@ private:
         extent;
     uint
         worldIndex;
+    bool
+        itIsHovered;
 };
 
 }
