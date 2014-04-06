@@ -28,6 +28,16 @@ bool Mouse::_isDown(const uint button_index) const
     return buttonStateTable[button_index] == DOWN;
 }
 
+bool Mouse::_isJustUp(const uint button_index) const
+{
+    return buttonStateTable[button_index] == UP && previousButtonStateTable[button_index] == DOWN;
+}
+
+bool Mouse::_isUp(const uint button_index) const
+{
+    return buttonStateTable[button_index] == UP;
+}
+
 SCRIPT_CLASS_REGISTERER(Mouse) const
 {
     lua_newtable(state);

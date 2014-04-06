@@ -21,7 +21,9 @@ public:
 
     enum
     {
-        BUTTON_COUNT = 3
+        BUTTON_FIRST = 1,
+        BUTTON_LAST = 3,
+        BUTTON_COUNT
     };
 
     Mouse();
@@ -31,6 +33,8 @@ public:
     uint getY() const { return y; }
     bool _isJustDown(const uint button_index) const;
     bool _isDown(const uint button_index) const;
+    bool _isJustUp(const uint button_index) const;
+    bool _isUp(const uint button_index) const;
 
     static SCRIPT_FUNCTION(isDown);
     static SCRIPT_FUNCTION(isUp);

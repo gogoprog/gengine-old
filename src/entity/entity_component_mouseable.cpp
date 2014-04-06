@@ -95,13 +95,17 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, update)
             self.itIsHovered = true;
         }
 
-        if(mouse._isJustDown(1))
+        for(uint i = input::Mouse::BUTTON_FIRST; i <= input::Mouse::BUTTON_LAST; ++i )
         {
-            lua_getfield(state, 1, "entity");
-            lua_getfield(state, -1, "onMouseJustDown");
-            lua_getfield(state, 1, "entity");
-            lua_pcall(state, 1, 0, 0);
-            lua_pop(state, 1);
+            if(mouse._isJustDown(i))
+            {
+                lua_getfield(state, 1, "entity");
+                lua_getfield(state, -1, "onMouseJustDown");
+                lua_getfield(state, 1, "entity");
+                lua_pushnumber(state, i);
+                lua_pcall(state, 2, 0, 0);
+                lua_pop(state, 1);
+            }
         }
     }
     else
