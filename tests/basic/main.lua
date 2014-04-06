@@ -3,6 +3,7 @@ print("tests/basic")
 ComponentCustom = {}
 
 function ComponentCustom:init()
+    self.entity.sprite.color = {x=0.3,y=0.3,z=0.3,w=1}
 end
 
 function ComponentCustom:insert()
@@ -12,6 +13,14 @@ function ComponentCustom:update(dt)
 end
 
 function ComponentCustom:remove()
+end
+
+function ComponentCustom:onMouseEnter()
+    self.entity.sprite.color = {x=1,y=1,z=1,w=1}
+end
+
+function ComponentCustom:onMouseExit()
+    self.entity.sprite.color = {x=0.3,y=0.3,z=0.3,w=1}
 end
 
 function ComponentCustom:onMouseJustDown()

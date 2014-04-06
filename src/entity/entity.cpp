@@ -53,6 +53,7 @@ SCRIPT_REGISTERER()
     SCRIPT_DO(
         return function(self, comp, params)
             self[comp.name] = comp
+            rawset(comp,'entity',self)
             table.insert(self.components, comp)
             if params ~= nil then
                 for k,v in pairs(params) do
@@ -60,7 +61,6 @@ SCRIPT_REGISTERER()
                 end
             end
             comp:init(params)
-            rawset(comp,'entity',self)
         end
         );
 

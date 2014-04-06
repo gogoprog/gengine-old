@@ -60,8 +60,6 @@ void Camera::setExtent(const Vector2 & _extent)
 
 void Camera::getWorldPosition(Vector2 & result, const Vector2 & position) const
 {
-    Vector2 ratio;
-
     result.x = position.x;
     result.y = application::getHeight() - position.y;
 
