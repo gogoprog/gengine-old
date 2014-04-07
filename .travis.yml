@@ -1,8 +1,12 @@
 language: cpp
 before_install:
   - sudo bash -c "echo 'deb http://lgp203.free.fr/ubuntu quantal universe' >> /etc/apt/sources.list.d/lgp203.free.fr.source.list"
-  - sudo apt-get update
-install: sudo apt-get install --force-yes make premake4 libsdl2-dev libsdl2-image-dev
+  - wget http://libsdl.org/release/SDL2-2.0.1.tar.gz -O - | tar xz
+  - (cd SDL2-2.0.1 && ./configure --prefix=$PREFIX && make -j5 && make install)
+  - wget http://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.0.tar.gz -O - | tar xz
+  - (cd SDL2_image-2.0.0 && ./configure --prefix=$PREFIX && make -j5 && make install)
+install:
+  - sudo apt-get install --force-yes make premake4
 compiler:
   - gcc
 script:
