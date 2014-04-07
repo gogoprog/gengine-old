@@ -16,9 +16,13 @@ namespace core
 
 void handleEvents();
 
-bool itMustQuit = false;
-unsigned long long last_ticks = 0, current_ticks;
-application::Window mainWindow;
+bool
+    itMustQuit = false;
+unsigned long long
+    last_ticks = 0,
+    current_ticks;
+application::Window
+    mainWindow;
 
 bool mustQuit()
 {
