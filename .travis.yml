@@ -13,7 +13,7 @@ before_install:
 install:
   - sudo apt-get install --force-yes make premake4
 compiler:
-  - gcc
+  - clang
 script:
     - cd build/
     - premake4 gmake
