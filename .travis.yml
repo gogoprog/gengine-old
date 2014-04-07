@@ -15,7 +15,7 @@ before_install:
   - wget http://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.0.tar.gz -O - | tar xz
   - (cd SDL2_image-2.0.0 && ./configure --prefix=$PREFIX && make -j5 && make install)
 install:
-  - sudo apt-get install --force-yes make premake4 lua5.2
+  - sudo apt-get install --force-yes make premake4 liblua5.2-dev
 compiler:
   - gcc
 script:
