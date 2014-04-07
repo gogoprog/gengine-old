@@ -1,6 +1,7 @@
 language: cpp
 before_install:
   - sudo bash -c "echo 'deb http://lgp203.free.fr/ubuntu quantal universe' >> /etc/apt/sources.list.d/lgp203.free.fr.source.list"
+  - mkdir dummyprefix
   - export PREFIX=$PWD/dummyprefix
   - export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
   - export PATH=$PATH:$PWD/dummyprefix/bin
