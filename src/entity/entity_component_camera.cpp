@@ -54,6 +54,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, newIndex)
 
 SCRIPT_CLASS_FUNCTION(ComponentCamera, init)
 {
+    (void)state;
     return 0;
 }
 
