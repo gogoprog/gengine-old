@@ -14,7 +14,7 @@ before_install:
 install:
   - sudo apt-get install --force-yes make premake4 liblua5.2-dev
   - sudo cp /usr/include/lua5.2/** /usr/include/
-  - sudo ln -s /usr/lib/liblua5.2.so /usr/lib/liblua.so
+  - sudo ln -s /usr/lib/x86_64-linux-gnu/liblua5.2.a /usr/lib/liblua.a
 compiler:
   - gcc
 script:
