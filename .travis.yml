@@ -16,6 +16,8 @@ before_install:
   - (cd SDL2_image-2.0.0 && ./configure --prefix=$PREFIX && make -j5 && make install)
 install:
   - sudo apt-get install --force-yes make premake4 liblua5.2-dev
+  - sudo cp /usr/include/lua5.2/** /usr/include/
+  - sudo ln -s /usr/lib/liblua5.2.so /usr/lib/liblua.so
 compiler:
   - gcc
 script:
