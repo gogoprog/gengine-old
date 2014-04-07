@@ -16,5 +16,5 @@ compiler:
   - gcc
 script:
     - cd build/
-    - premake4 gmakeng
+    - premake4 gmake
     - make
