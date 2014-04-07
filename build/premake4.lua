@@ -20,7 +20,7 @@ solution "gengine"
         links { "lua" }
 
         flags { "ExtraWarnings", "FatalWarnings", "FloatFast", "NoExceptions", "NoFramePointer", "NoNativeWChar" }
-        buildoptions { "-std=c++11 -Wno-error=unused-variable" }
+        buildoptions { "-std=c++11 -Wno-error=unused-variable -Wno-error=unused-parameter" }
 
         configuration "Debug*"
             defines { "DEBUG" }
