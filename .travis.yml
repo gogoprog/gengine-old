@@ -7,9 +7,9 @@ before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
   - wget http://libsdl.org/release/SDL2-2.0.1.tar.gz -O - | tar xz
-  - (cd SDL2-2.0.1 && ./configure --prefix=$PREFIX && make -j5 && make install)
+  - (cd SDL2-2.0.1 && ./configure --prefix=$PREFIX && make -j5 && sudo make install)
   - wget http://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.0.tar.gz -O - | tar xz
-  - (cd SDL2_image-2.0.0 && ./configure --prefix=$PREFIX && make -j5 && make install)
+  - (cd SDL2_image-2.0.0 && ./configure --prefix=$PREFIX && make -j5 && sudo make install)
 install:
   - sudo apt-get install --force-yes make premake4 liblua5.2-dev
   - sudo cp /usr/include/lua5.2/** /usr/include/
