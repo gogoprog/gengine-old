@@ -19,12 +19,20 @@ bool Atlas::setFromTexture(const Texture *_texture, const uint x_cell_count, con
 {
     texture = _texture;
     uint i,j;
+    Vector2 scale;
+    scale.x = 1.0f / x_cell_count;
+    scale.y = 1.0f / y_cell_count;
 
     for(i=0; i<x_cell_count; ++i)
     {
         for(j=0; j<y_cell_count; ++j)
         {
-            
+            itemTable.add(
+                AtlasItem(
+                    Vector2(scale.x * i, scale.y * j),
+                    scale
+                    )
+                );
         }
     }
 

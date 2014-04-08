@@ -6,8 +6,8 @@
 #include "graphics_program.h"
 #include "graphics_shader.h"
 #include "graphics_vertex_buffer.h"
-#include "graphics_world.h"
 #include "graphics_texture_manager.h"
+#include "graphics_world.h"
 #include "vector4.h"
 #include "application.h"
 #include <math.h>

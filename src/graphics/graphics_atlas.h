@@ -22,6 +22,9 @@ public:
     void finalize();
     bool setFromTexture(const Texture *texture, const uint x_cell_count, const uint y_cell_count);
 
+    AtlasItem & getItem(const uint index) { return itemTable[index]; }
+    const AtlasItem & getItem(const uint index) const { return itemTable[index]; }
+
 private:
     Array<AtlasItem>
         itemTable;

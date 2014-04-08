@@ -6,6 +6,8 @@
 #include "script.h"
 #include "application.h"
 #include "graphics_texture_manager.h"
+#include "graphics_atlas_manager.h"
+#include "graphics_animation_manager.h"
 
 namespace gengine
 {
@@ -42,6 +44,11 @@ SCRIPT_REGISTERER()
     TextureManager::luaRegister(state);
     lua_setfield(state, -2, "texture");
 
+    AnimationManager::luaRegister(state);
+    lua_setfield(state, -2, "annimation");
+
+    AtlasManager::luaRegister(state);
+    lua_setfield(state, -2, "atlas");
 
     lua_setglobal(state,"graphics");
 }
