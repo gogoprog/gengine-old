@@ -26,13 +26,14 @@ public:
     static uint
         metaTableRef;
 
-private:
+protected:
     graphics::Sprite
         sprite;
     graphics::Atlas
         * atlas;
     uint
-        worldIndex;
+        worldIndex,
+        atlasItem;
 };
 
 }

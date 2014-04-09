@@ -18,7 +18,8 @@ namespace entity
 ComponentSprite::ComponentSprite()
     :
     atlas(nullptr),
-    worldIndex(0)
+    worldIndex(0),
+    atlasItem(0)
 {
 }
 
@@ -68,13 +69,10 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
     else if(!strcmp(key, "atlas"))
     {
         self.atlas = static_cast<graphics::Atlas *>(lua_touserdata(state, 3));
-        self.sprite.setTexture(self.atlas->getTexture());
     }
     else if(!strcmp(key, "atlasItem"))
     {
-        const graphics::AtlasItem & item = self.atlas->getItem(lua_tonumber(state,3));
-        self.sprite.setUvOffset(item.uvOffset);
-        self.sprite.setUvScale(item.uvScale);
+        self.atlasItem = lua_tonumber(state,3);
     }
     else if(!strcmp(key, "world"))
     {
@@ -90,6 +88,16 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
 
 SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
 {
+    SCRIPT_GET_SELF(ComponentSprite);
+
+    if(self.atlas)
+    {
+        self.sprite.setTexture(self.atlas->getTexture());
+        const graphics::AtlasItem & item = self.atlas->getItem(self.atlasItem);
+        self.sprite.setUvOffset(item.uvOffset);
+        self.sprite.setUvScale(item.uvScale);
+    }
+
     return 0;
 }
 
