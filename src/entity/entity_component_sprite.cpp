@@ -2,6 +2,8 @@
 
 #include "graphics_system.h"
 #include "graphics_world.h"
+#include "graphics_texture.h"
+#include "graphics_atlas.h"
 #include "entity_system.h"
 #include "script.h"
 #include "debug.h"
@@ -15,6 +17,7 @@ namespace entity
 
 ComponentSprite::ComponentSprite()
     :
+    atlas(nullptr),
     worldIndex(0)
 {
 }
@@ -61,6 +64,17 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
     {
         graphics::Texture * texture = static_cast<graphics::Texture *>(lua_touserdata(state, 3));
         self.sprite.setTexture(*texture);
+    }
+    else if(!strcmp(key, "atlas"))
+    {
+        self.atlas = static_cast<graphics::Atlas *>(lua_touserdata(state, 3));
+        self.sprite.setTexture(self.atlas->getTexture());
+    }
+    else if(!strcmp(key, "atlasItem"))
+    {
+        const graphics::AtlasItem & item = self.atlas->getItem(lua_tonumber(state,3));
+        self.sprite.setUvOffset(item.uvOffset);
+        self.sprite.setUvScale(item.uvScale);
     }
     else if(!strcmp(key, "world"))
     {

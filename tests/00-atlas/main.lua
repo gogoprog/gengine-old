@@ -10,14 +10,15 @@ function start()
 
     local texture = graphics.texture.load("logo.png")
 
-    local atlas = graphics.atlas.create("test", texture, 5, 5)
+    graphics.atlas.create("test", texture, 5, 1)
 
     logoEntity = entity.create()
 
     logoEntity:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get("logo"),
+            atlas = graphics.atlas.get("test"),
+            atlasItem = 4,
             extent = { x=256, y=128 },
             layer = 0
         }

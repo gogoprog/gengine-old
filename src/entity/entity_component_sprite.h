@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "graphics_sprite.h"
+#include "graphics_atlas.h"
 
 namespace gengine
 {
@@ -28,6 +29,8 @@ public:
 private:
     graphics::Sprite
         sprite;
+    graphics::Atlas
+        * atlas;
     uint
         worldIndex;
 };
