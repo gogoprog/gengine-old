@@ -4,6 +4,7 @@
 #include "graphics_world.h"
 #include "graphics_texture.h"
 #include "graphics_atlas.h"
+#include "graphics_animation.h"
 #include "entity_system.h"
 #include "script.h"
 #include "debug.h"
@@ -17,7 +18,9 @@ namespace entity
 
 ComponentAnimatedSprite::ComponentAnimatedSprite()
     :
-    ComponentSprite()
+    ComponentSprite(),
+    animation(nullptr),
+    currentTime(0.0f)
 {
 }
 
@@ -37,11 +40,29 @@ SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, newIndex)
 
     ComponentSprite::newIndex(state);
 
+    if(!strcmp(key, "animation"))
+    {
+        self.animation = static_cast<const graphics::Animation *>(lua_touserdata(state, 3));
+    }
+
     return 0;
 }
 
 SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, update)
 {
+    SCRIPT_GET_SELF(ComponentAnimatedSprite);
+
+    if(self.animation)
+    {
+        self.currentTime += System::getInstance().getCurrentDt();
+
+        const graphics::AnimationFrame & frame = self.animation->getFrame(self.currentTime);
+
+        self.sprite.setTexture(frame.atlas->getTexture());
+        self.sprite.setUvOffset(frame.uvOffset);
+        self.sprite.setUvScale(frame.uvScale);
+    }
+
     return ComponentSprite::update(state);
 }
 

@@ -12,10 +12,11 @@ function start()
 
     local atlas = graphics.atlas.create("test", texture, 5, 1)
 
-    graphics.animation.create("testa",
+    local animation = graphics.animation.create("testa",
         {
             atlas = atlas,
-            frames = { 0, 1, 2, 3 }
+            frames = { 0, 1, 2, 3 },
+            framerate = 12
         }
         )
 
@@ -24,8 +25,7 @@ function start()
     logoEntity:addComponent(
         ComponentAnimatedSprite(),
         {
-            atlas = graphics.atlas.get("test"),
-            atlasItem = 4,
+            animation = animation,
             extent = { x=256, y=128 },
             layer = 0
         }

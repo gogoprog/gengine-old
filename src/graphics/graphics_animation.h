@@ -20,11 +20,16 @@ public:
     void finalize();
     bool set(lua_State * state);
 
+    float getDuration() const { return duration; }
+    const AnimationFrame & getFrame(const float time) const;
+
 private:
     Array<AnimationFrame>
         frameTable;
     float
-        frameRate;
+        frameRate,
+        frameDuration,
+        duration;
 };
 
 }

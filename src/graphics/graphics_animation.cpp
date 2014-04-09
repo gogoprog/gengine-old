@@ -38,9 +38,23 @@ bool Animation::set(lua_State * state)
     }
     lua_pop(state, 1);
 
-    (void)atlas;
+    lua_getfield(state, 2, "framerate");
+    frameRate = lua_tonumber(state, -1);
+    lua_pop(state, 1);
 
-    return false;
+    frameDuration = ( 1.0f / frameRate );
+    duration = frameDuration * frameTable.getSize();
+
+    return true;
+}
+
+const AnimationFrame & Animation::getFrame(const float _time) const
+{
+    uint index;
+
+    index = uint( (_time / duration) * frameTable.getSize() ) % frameTable.getSize();
+
+    return frameTable[index];
 }
 
 }
