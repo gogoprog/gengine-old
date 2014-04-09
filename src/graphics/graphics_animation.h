@@ -18,7 +18,7 @@ public:
     Animation();
     void init();
     void finalize();
-    bool setFromTable(lua_State * state);
+    bool set(lua_State * state);
 
 private:
     Array<AnimationFrame>

@@ -21,8 +21,25 @@ void Animation::finalize()
 {
 }
 
-bool Animation::setFromTable(lua_State * state)
+bool Animation::set(lua_State * state)
 {
+    const graphics::Atlas * atlas;
+
+    lua_getfield(state, 2, "atlas");
+    atlas = static_cast<graphics::Atlas *>(lua_touserdata(state, -1));
+    lua_pop(state, 1);
+
+    lua_getfield(state, 2, "frames");
+    lua_pushnil(state);
+    while(lua_next(state, -2) != 0)
+    {
+        frameTable.add(AnimationFrame(atlas, lua_tonumber(state, -1)));
+        lua_pop(state, 1);
+    }
+    lua_pop(state, 1);
+
+    (void)atlas;
+
     return false;
 }
 

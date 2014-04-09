@@ -45,7 +45,7 @@ SCRIPT_REGISTERER()
     lua_setfield(state, -2, "texture");
 
     AnimationManager::luaRegister(state);
-    lua_setfield(state, -2, "annimation");
+    lua_setfield(state, -2, "animation");
 
     AtlasManager::luaRegister(state);
     lua_setfield(state, -2, "atlas");

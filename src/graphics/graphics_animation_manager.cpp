@@ -25,18 +25,18 @@ void AnimationManager::finalize()
 SCRIPT_CLASS_REGISTERER(AnimationManager)
 {
     lua_newtable(state);
-    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(AnimationManager, load);
+    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(AnimationManager, create);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(AnimationManager, get);
 }
 
-SCRIPT_CLASS_FUNCTION(AnimationManager, load)
+SCRIPT_CLASS_FUNCTION(AnimationManager, create)
 {
     const char * name = lua_tostring(state, 1);
     Animation * animation = new Animation();
 
     animation->init();
     
-    if(animation->setFromTable(state))
+    if(animation->set(state))
     {
         getInstance().animationMap.add(animation, name);
         lua_pushlightuserdata(state, animation);
@@ -66,27 +66,6 @@ SCRIPT_CLASS_FUNCTION(AnimationManager, get)
     }
 
     return 1;
-}
-
-void AnimationManager::getBaseName(char * result, const char * file_path)
-{
-    const char * begin, * end;
-    uint length;
-
-    if(!(begin = strchr(file_path,'/')))
-    {
-        begin = file_path;
-    }
-
-    if(!(end = strrchr(begin,'.')))
-    {
-        end = begin + strlen(begin);
-    }
-
-    length = end - begin;
-
-    strncpy(result, begin, length);
-    result[length] = 0;
 }
 
 }
