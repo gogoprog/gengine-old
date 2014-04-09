@@ -16,7 +16,7 @@ function start()
         {
             atlas = atlas,
             frames = { 0, 1, 2, 3 },
-            framerate = 12
+            framerate = 5
         }
         )
 

@@ -13,6 +13,7 @@ struct AnimationFrame
 {
     AnimationFrame(const Atlas * _atlas, const uint item_index)
         :
+        atlas(_atlas),
         uvOffset(atlas->getItem(item_index).uvOffset),
         uvScale(atlas->getItem(item_index).uvScale)
     {

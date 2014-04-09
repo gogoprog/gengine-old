@@ -38,11 +38,13 @@ SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, newIndex)
     SCRIPT_GET_SELF(ComponentAnimatedSprite);
     const char * key = lua_tostring(state, 2);
 
-    ComponentSprite::newIndex(state);
-
     if(!strcmp(key, "animation"))
     {
         self.animation = static_cast<const graphics::Animation *>(lua_touserdata(state, 3));
+    }
+    else
+    {
+        ComponentSprite::newIndex(state);
     }
 
     return 0;
