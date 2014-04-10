@@ -75,9 +75,13 @@ void TextureManager::getBaseName(char * result, const char * file_path)
     const char * begin, * end;
     uint length;
 
-    if(!(begin = strchr(file_path,'/')))
+    if(!(begin = strrchr(file_path,'/')))
     {
         begin = file_path;
+    }
+    else
+    {
+        ++begin;
     }
 
     if(!(end = strrchr(begin,'.')))
