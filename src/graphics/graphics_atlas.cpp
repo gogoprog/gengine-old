@@ -23,9 +23,9 @@ bool Atlas::setFromTexture(const Texture *_texture, const uint x_cell_count, con
     scale.x = 1.0f / x_cell_count;
     scale.y = 1.0f / y_cell_count;
 
-    for(i=0; i<x_cell_count; ++i)
+    for(j=0; j<y_cell_count; ++j)
     {
-        for(j=0; j<y_cell_count; ++j)
+        for(i=0; i<x_cell_count; ++i)
         {
             itemTable.add(
                 AtlasItem(

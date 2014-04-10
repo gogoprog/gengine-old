@@ -8,14 +8,14 @@ local logoEntity
 function start()
     graphics.setClearColor(0,0.1,0.1,1)
 
-    local texture = graphics.texture.load("logo.png")
+    local texture = graphics.texture.load("man.png")
 
-    local atlas = graphics.atlas.create("test", texture, 5, 1)
+    local atlas = graphics.atlas.create("test", texture, 12, 8)
 
     local animation = graphics.animation.create("testa",
         {
             atlas = atlas,
-            frames = { 0, 1, 2, 3 },
+            frames = { 0, 1, 2, 1 },
             framerate = 5
         }
         )
@@ -26,7 +26,7 @@ function start()
         ComponentAnimatedSprite(),
         {
             animation = animation,
-            extent = { x=256, y=128 },
+            extent = { x=128, y=128 },
             layer = 0
         }
         )
