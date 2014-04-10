@@ -33,7 +33,15 @@ bool Texture::setFromFile(const char * filename)
 
     if(image)
     {
-        //SDL_PixelFormat & format = * image->format;
+
+        if((image->w & (image->w - 1)) || (image->h & (image->h - 1)))
+        {
+            SDL_FreeSurface (image);
+
+            geDebugRawLog("Failed! Non-power-of-2. " << image->w << "x" << image->h);
+
+            return false;
+        }
 
         glBindTexture(GL_TEXTURE_2D, id);
 
