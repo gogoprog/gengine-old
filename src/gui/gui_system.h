@@ -12,8 +12,9 @@ class System
 public:
     SINGLETON(System);
 
-    void init();
+    void init(int argc, char *argv[]);
     void finalize();
+    void update();
 
 private:
 };

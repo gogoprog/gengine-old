@@ -7,9 +7,9 @@
 
 using namespace gengine;
 
-int main()
+int main(int argc, char *argv[])
 {
-    core::init();
+    core::init(argc, argv);
 
     #ifndef EMSCRIPTEN
         while(!core::mustQuit())

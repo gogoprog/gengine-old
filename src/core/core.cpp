@@ -7,6 +7,7 @@
 #include "application_window.h"
 #include "script_system.h"
 #include "entity_system.h"
+#include "gui_system.h"
 #include "debug.h"
 
 namespace gengine
@@ -29,7 +30,7 @@ bool mustQuit()
     return itMustQuit;
 }
 
-void init()
+void init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
 
@@ -46,6 +47,7 @@ void init()
     graphics::System::getInstance().init();
     input::System::getInstance().init();
     entity::System::getInstance().init();
+    gui::System::getInstance().init(argc,argv);
 
     script_system.init2();
 
@@ -85,6 +87,8 @@ void update()
     entity::System::getInstance().update(dt);
 
     input::System::getInstance().update();
+
+    gui::System::getInstance().update();
 
     graphics::System::getInstance().render();
 
