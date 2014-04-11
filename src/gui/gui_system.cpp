@@ -14,6 +14,7 @@ void System::init(int argc, char *argv[])
 
     #ifndef EMSCRIPTEN
     {
+        // :todo: insert --disable-setuid-sandbox
         CefMainArgs args(argc, argv);
         CefRefPtr<App> app(new App);
         CefSettings settings;
