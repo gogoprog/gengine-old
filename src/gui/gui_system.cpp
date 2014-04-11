@@ -25,11 +25,21 @@ void System::init(int argc, char *argv[])
 
         modified_argv[argc] = (char*)"--disable-setuid-sandbox";
 
+        CefMainArgs args(argc + 1, modified_argv);
+
+        CefRefPtr<App> app(new App);
+
+        int exit_code = CefExecuteProcess(args, app.get(), nullptr);
+        if (exit_code >= 0)
+        {
+            exit(exit_code);
+            return;
+        }
+
         handler.init();
 
-        CefMainArgs args(argc + 1, modified_argv);
-        CefRefPtr<App> app(new App);
         CefSettings settings;
+        settings.single_process = true;
 
         CefInitialize(args, settings, app.get(), nullptr);
 
@@ -63,6 +73,16 @@ void System::render()
     #ifndef EMSCRIPTEN
     {
         handler.render();
+    }
+    #endif
+}
+
+void System::loadFile(const char *file_path)
+{
+    #ifndef EMSCRIPTEN
+    {
+        //browser.get()->GetMainFrame()->LoadString("Atessst", "dummy");
+        browser->GetMainFrame()->LoadURL("file:///tmp/test.html");
     }
     #endif
 }

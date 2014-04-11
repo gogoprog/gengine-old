@@ -16,14 +16,17 @@ void App::OnContextInitialized()
     CefWindowInfo window_info;
 
     window_info.SetAsOffScreen(nullptr);
+    window_info.SetTransparentPainting(true);
 
     CefRefPtr<Handler> handler(& System::getInstance().getHandler());
 
     CefBrowserSettings browser_settings;
 
-    std::string url = "http://gogopr.org";
+    std::string url = "";//file:///tmp/test.html";
 
-    CefBrowserHost::CreateBrowserSync(window_info, handler.get(), url, browser_settings, nullptr);
+    System::getInstance().browser = CefBrowserHost::CreateBrowserSync(window_info, handler.get(), url, browser_settings, nullptr);
+
+    //System::getInstance().loadFile("test");
 }
 
 }

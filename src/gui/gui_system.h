@@ -10,6 +10,8 @@ namespace gui
 
 class System
 {
+    friend class App;
+
 public:
     SINGLETON(System);
 
@@ -17,12 +19,14 @@ public:
     void finalize();
     void update();
     void render();
+    void loadFile(const char *file_path);
 
 #ifndef EMSCRIPTEN
     Handler & getHandler() { return handler; }
 
 private:
     Handler handler;
+    CefRefPtr<CefBrowser> browser;
 #endif
 };
 
