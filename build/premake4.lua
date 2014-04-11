@@ -1,6 +1,5 @@
 solution "gengine"
     configurations { "Debug", "Release", "DebugEmscripten", "ReleaseEmscripten" }
-    platforms { "x32" }
 
     project "gengine"
         kind "ConsoleApp"
@@ -44,4 +43,4 @@ solution "gengine"
         configuration "not *Emscripten"
             libdirs { "../deps/linux/lib" }
             includedirs { "../deps/linux/include", "../deps/linux/include/cef" }
-            links { "SDL2", "SDL2_image", "GL", "cef" }
+            links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper" }

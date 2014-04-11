@@ -15,7 +15,7 @@ void System::init()
 
         CefInitialize(CefMainArgs(), settings, app.get(), NULL);
 
-        // CefRunMessageLoop();
+        CefRunMessageLoop();
     }
     #endif
 }
@@ -24,7 +24,7 @@ void System::finalize()
 {
     #ifndef EMSCRIPTEN
     {
-        CefShutdown();
+        //CefShutdown();
     }
     #endif
 }
