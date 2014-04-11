@@ -14,10 +14,14 @@ setmetatable(Game,Game)
 function Game:load()
     graphics.texture.load("data/tile.png")
 
-    for i=0,8 do
-        local e = self:createTile()
-        e.position.x = -256 + i * 64
-        e.rotation = math.random(1,4) * 3.14/2
+    for j=0,8 do
+        for i=0,8 do
+            local e = self:createTile()
+            e.position.x = -256 + i * 64
+            e.position.y = -256 + j * 64
+
+            e.rotation = math.random(1,4) * 3.14/2
+        end
     end
 end
 
