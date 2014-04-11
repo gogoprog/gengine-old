@@ -17,6 +17,11 @@ public:
     void finalize();
     void swap();
 
+
+    #ifndef EMSCRIPTEN
+        SDL_Window * getSdlWindow() { return pWindow; }
+    #endif
+
 private:
     #ifndef EMSCRIPTEN
         SDL_Window

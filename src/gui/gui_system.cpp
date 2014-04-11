@@ -25,6 +25,8 @@ void System::init(int argc, char *argv[])
 
         modified_argv[argc] = (char*)"--disable-setuid-sandbox";
 
+        handler.init();
+
         CefMainArgs args(argc + 1, modified_argv);
         CefRefPtr<App> app(new App);
         CefSettings settings;
@@ -36,16 +38,31 @@ void System::init(int argc, char *argv[])
     #endif
 }
 
-void System::update()
-{
-    CefDoMessageLoopWork();
-}
-
 void System::finalize()
 {
     #ifndef EMSCRIPTEN
     {
         CefShutdown();
+
+        handler.finalize();
+    }
+    #endif
+}
+
+void System::update()
+{
+    #ifndef EMSCRIPTEN
+    {
+        CefDoMessageLoopWork();
+    }
+    #endif
+}
+
+void System::render()
+{
+    #ifndef EMSCRIPTEN
+    {
+        handler.render();
     }
     #endif
 }

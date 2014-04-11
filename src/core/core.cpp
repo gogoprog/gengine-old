@@ -30,6 +30,11 @@ bool mustQuit()
     return itMustQuit;
 }
 
+application::Window getMainWindow()
+{
+    return mainWindow;
+}
+
 void init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
@@ -91,6 +96,8 @@ void update()
     gui::System::getInstance().update();
 
     graphics::System::getInstance().render();
+
+    gui::System::getInstance().render();
 
     mainWindow.swap();
 
