@@ -25,6 +25,7 @@ void Handler::finalize()
 void Handler::render()
 {
     SDL_BlitSurface(surface, nullptr, windowSurface, nullptr);
+    SDL_UpdateWindowSurface(core::getMainWindow().getSdlWindow());
 }
 
 bool Handler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
