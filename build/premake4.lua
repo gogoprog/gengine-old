@@ -1,6 +1,8 @@
 solution "gengine"
     configurations { "Debug", "Release", "DebugEmscripten", "ReleaseEmscripten" }
 
+    platforms { "x32", "x64" }
+
     project "gengine"
         kind "ConsoleApp"
         language "C++"
@@ -41,6 +43,12 @@ solution "gengine"
             postbuildcommands { "emcc $(TARGET) -o gengine.html --preload-file ../tests/basic@" }
 
         configuration "not *Emscripten"
-            libdirs { "../deps/linux/lib" }
             includedirs { "../deps/linux/include", "../deps/linux/include/cef" }
             links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper" }
+
+        configuration { "not *Emscripten", "x32" }
+            libdirs { "../deps/linux/lib32" }
+
+        configuration { "not *Emscripten", "x64" }
+            libdirs { "../deps/linux/lib64" }
+
