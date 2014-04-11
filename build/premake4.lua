@@ -1,5 +1,6 @@
 solution "gengine"
     configurations { "Debug", "Release", "DebugEmscripten", "ReleaseEmscripten" }
+    platforms { "x32" }
 
     project "gengine"
         kind "ConsoleApp"
@@ -14,7 +15,8 @@ solution "gengine"
             "../src/graphics",
             "../src/input",
             "../src/script",
-            "../src/entity"
+            "../src/entity",
+            "../src/gui"
             }
 
         links { "lua" }
@@ -40,4 +42,6 @@ solution "gengine"
             postbuildcommands { "emcc $(TARGET) -o gengine.html --preload-file ../tests/basic@" }
 
         configuration "not *Emscripten"
-            links { "SDL2", "SDL2_image", "GL" }
+            libdirs { "../deps/linux/lib" }
+            includedirs { "../deps/linux/include", "../deps/linux/include/cef" }
+            links { "SDL2", "SDL2_image", "GL", "cef" }
