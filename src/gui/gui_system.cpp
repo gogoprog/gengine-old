@@ -89,6 +89,11 @@ void System::update(const float dt)
             {
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
             }
+
+            if(mouse._isDown(3))
+            {
+                browser->GetHost()->SendMouseMoveEvent(mouse_event, true);
+            }
         }
 
         CefDoMessageLoopWork();

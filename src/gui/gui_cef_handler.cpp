@@ -105,6 +105,12 @@ void Handler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, cons
     glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
 
     glBindTexture(GL_TEXTURE_2D, texture.getId());
+
+    /*for(const CefRect & rect : dirtyRects)
+    {
+        glTexSubImage2D(GL_TEXTURE_2D, 0, rect.x, rect.y, rect.width, rect.height, GL_BGRA, GL_UNSIGNED_BYTE, 0);
+    }*/
+
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
