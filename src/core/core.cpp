@@ -91,13 +91,13 @@ void update()
 
     entity::System::getInstance().update(dt);
 
-    input::System::getInstance().update();
-
-    gui::System::getInstance().update();
+    gui::System::getInstance().update(dt);
 
     graphics::System::getInstance().render();
 
     gui::System::getInstance().render();
+
+    input::System::getInstance().update();
 
     mainWindow.swap();
 

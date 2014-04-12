@@ -98,8 +98,6 @@ bool Handler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 
 void Handler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
 {
-    geDebugLog("OnPaint " << width << "x" << height);
-
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboId);
 
     void * memory = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);

@@ -2,6 +2,9 @@
 
 #include "gui_cef_app.h"
 #include "debug.h"
+#include "unistd.h"
+#include "input_mouse.h"
+#include "input_system.h"
 
 namespace gengine
 {
@@ -40,10 +43,13 @@ void System::init(int argc, char *argv[])
 
         CefSettings settings;
         settings.single_process = true;
+        settings.multi_threaded_message_loop = false;
 
         CefInitialize(args, settings, app.get(), nullptr);
 
         delete []modified_argv;
+
+        timeSinceLastUpdate = 0.0f;
     }
     #endif
 }
@@ -59,10 +65,32 @@ void System::finalize()
     #endif
 }
 
-void System::update()
+void System::update(const float dt)
 {
     #ifndef EMSCRIPTEN
     {
+        timeSinceLastUpdate += dt;
+
+        {
+            static CefMouseEvent last_mouse_event;
+
+            CefMouseEvent mouse_event;
+            const input::Mouse & mouse = input::System::getInstance().getMouse(0);
+
+            mouse_event.x = mouse.getX();
+            mouse_event.y = mouse.getY();
+
+            if(mouse._isJustDown(1))
+            {
+                browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
+            }
+
+            if(mouse._isJustUp(1))
+            {
+                browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
+            }
+        }
+
         CefDoMessageLoopWork();
     }
     #endif
@@ -81,8 +109,19 @@ void System::loadFile(const char *file_path)
 {
     #ifndef EMSCRIPTEN
     {
-        //browser.get()->GetMainFrame()->LoadString("Atessst", "dummy");
-        browser->GetMainFrame()->LoadURL("file:///tmp/test.html");
+        char cwd[1024];
+        std::string url;
+        url = "file://";
+
+        if(file_path[0] != '/')
+        {
+            url += getcwd(cwd, 1024);
+            url += "/";
+        }
+
+        url += file_path;
+
+        browser->GetMainFrame()->LoadURL(url);
     }
     #endif
 }

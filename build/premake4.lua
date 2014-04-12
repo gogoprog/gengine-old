@@ -44,7 +44,7 @@ solution "gengine"
 
         configuration "not *Emscripten"
             includedirs { "../deps/linux/include", "../deps/linux/include/cef" }
-            links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper" }
+            links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper"}
 
         configuration { "not *Emscripten", "x32" }
             libdirs { "../deps/linux/lib32" }

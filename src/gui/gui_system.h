@@ -17,7 +17,7 @@ public:
 
     void init(int argc, char *argv[]);
     void finalize();
-    void update();
+    void update(const float dt);
     void render();
     void loadFile(const char *file_path);
 
@@ -25,8 +25,12 @@ public:
     Handler & getHandler() { return handler; }
 
 private:
-    Handler handler;
-    CefRefPtr<CefBrowser> browser;
+    Handler
+        handler;
+    CefRefPtr<CefBrowser>
+        browser;
+    float
+        timeSinceLastUpdate;
 #endif
 };
 
