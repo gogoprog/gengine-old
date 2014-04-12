@@ -71,6 +71,8 @@ void World::render()
 
         system.getIndexBufferQuad().draw();
     }
+
+    glUseProgram(0);
 }
 
 void World::addSprite(Sprite & sprite)

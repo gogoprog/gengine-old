@@ -18,7 +18,6 @@ void Program::init()
     glBindAttribLocation(id,ATTRIBUTE_LOCATION_POSITION,"position");
     glBindAttribLocation(id,ATTRIBUTE_LOCATION_COLOR,"color");
     glBindAttribLocation(id,ATTRIBUTE_LOCATION_TEXCOORDS,"texCoords");
-
 }
 
 void Program::finalize()

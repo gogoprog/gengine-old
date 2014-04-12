@@ -22,7 +22,8 @@ void App::OnContextInitialized()
 
     CefBrowserSettings browser_settings;
 
-    std::string url = "";//file:///tmp/test.html";
+    std::string url = "file:///tmp/test.html";
+    //std::string url = "http://google.be";
 
     System::getInstance().browser = CefBrowserHost::CreateBrowserSync(window_info, handler.get(), url, browser_settings, nullptr);
 

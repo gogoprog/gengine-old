@@ -30,7 +30,11 @@ void Window::init()
             SDL_WINDOW_OPENGL
             );
 
-        pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        pRenderer = SDL_CreateRenderer(
+            pWindow,
+            -1, 
+            SDL_RENDERER_ACCELERATED //| SDL_RENDERER_PRESENTVSYNC
+            );
     #else
         pWindow = SDL_SetVideoMode(
             getWidth(),
@@ -55,7 +59,8 @@ void Window::finalize()
 void Window::swap()
 {
     #ifndef EMSCRIPTEN
-        SDL_GL_SwapWindow(pWindow);
+        SDL_RenderPresent(pRenderer);
+        //SDL_GL_SwapWindow(pWindow);
     #else
         SDL_GL_SwapBuffers();
     #endif

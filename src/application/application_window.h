@@ -20,6 +20,7 @@ public:
 
     #ifndef EMSCRIPTEN
         SDL_Window * getSdlWindow() { return pWindow; }
+        SDL_Renderer * getSdlRenderer() { return pRenderer; }
     #endif
 
 private:

@@ -6,6 +6,10 @@
 #include "include/cef_app.h"
 #include "include/cef_client.h"
 #include "core_sdl.h"
+#include "graphics_texture.h"
+#include "graphics_shader.h"
+#include "graphics_program.h"
+#include "graphics_uniform.h"
 
 namespace gengine
 {
@@ -29,9 +33,17 @@ public:
     IMPLEMENT_REFCOUNTING(BrowserClient);
 
 private:
-    SDL_Surface
-        * surface,
-        * windowSurface;
+    graphics::Shader
+        vertexShader,
+        fragmentShader;
+    graphics::Program
+        program;
+    uint
+        pboId;
+    graphics::Texture
+        texture;
+    graphics::Uniform
+        samplerUniform;
 };
 
 }
