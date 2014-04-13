@@ -40,7 +40,7 @@ solution "gengine"
             libdirs { "../deps/emscripten/lib" }
             includedirs { "../deps/emscripten/include" }
             targetsuffix ".bc"
-            postbuildcommands { "emcc $(TARGET) -o gengine.html --preload-file ../tests/basic@" }
+            postbuildcommands { "emcc $(TARGET) -o gengine.html --preload-file ../tests/50-gui@" }
 
         configuration "not *Emscripten"
             includedirs { "../deps/linux/include", "../deps/linux/include/cef" }

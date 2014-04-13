@@ -6,6 +6,13 @@
 #include "input_mouse.h"
 #include "input_system.h"
 
+#ifdef EMSCRIPTEN
+    #include <emscripten.h>
+
+    #define JAVASCRIPT(src) \
+        #src
+#endif
+
 namespace gengine
 {
 namespace gui
@@ -129,6 +136,17 @@ void System::loadFile(const char *file_path)
         url += file_path;
 
         browser->GetMainFrame()->LoadURL(url);
+    }
+    #else
+    {
+        emscripten_run_script(JAVASCRIPT(
+            var newdiv = document.createElement('div');
+            newdiv.style.position = "absolute";
+            newdiv.setAttribute("style","width:1024px; height:800px;");
+            newdiv.innerHTML='<object type="text/html" data="menu.html" ></object>';
+            document.getElementById("canvas").parentNode.appendChild(newdiv);
+            )
+            );
     }
     #endif
 }
