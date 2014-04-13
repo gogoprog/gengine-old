@@ -112,6 +112,8 @@ void System::render()
 
 void System::loadFile(const char *file_path)
 {
+    geDebugLog("gui::System::loadFile \"" << file_path << "\"");
+
     #ifndef EMSCRIPTEN
     {
         char cwd[1024];

@@ -16,12 +16,14 @@ function start()
         ComponentSprite(),
         {
             texture = graphics.texture.get("logo"),
-            extent = { x=256, y=128 },
+            extent = { x=2560, y=1280 },
             layer = 0
         }
         )
 
     logoEntity:insert()
+
+    gui.loadFile("menu.html")
 end
 
 local total = 0

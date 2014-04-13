@@ -22,9 +22,7 @@ void App::OnContextInitialized()
 
     CefBrowserSettings browser_settings;
 
-    System::getInstance().browser = CefBrowserHost::CreateBrowserSync(window_info, handler.get(), "", browser_settings, nullptr);
-
-    System::getInstance().loadFile("/tmp/test.html");
+    System::getInstance().browser = CefBrowserHost::CreateBrowserSync(window_info, handler.get(), "about:blank", browser_settings, nullptr);
 }
 
 }
