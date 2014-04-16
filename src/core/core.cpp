@@ -39,6 +39,8 @@ void init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
 
+    gui::System::getInstance().preinit(argc,argv);
+
     script::System & script_system = script::System::getInstance();
 
     SDL_Init(SDL_INIT_VIDEO);

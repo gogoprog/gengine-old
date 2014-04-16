@@ -18,6 +18,40 @@ namespace gengine
 namespace gui
 {
 
+void System::preinit(int argc, char *argv[])
+{
+    geDebugLog("gui::System::preinit()");
+
+    #ifndef EMSCRIPTEN
+    {
+        char **modified_argv;
+
+        modified_argv = new char*[argc+1];
+
+        for(int i=0; i<argc; ++i)
+        {
+            modified_argv[i] = argv[i];
+        }
+
+        modified_argv[argc] = (char*)"--disable-setuid-sandbox";
+
+        CefMainArgs args(argc + 1, modified_argv);
+
+        CefRefPtr<App> app(new App);
+
+        int exit_code = CefExecuteProcess(args, app.get(), nullptr);
+
+        if (exit_code >= 0)
+        {
+            exit(exit_code);
+            return;
+        }
+
+        delete []modified_argv;
+    }
+    #endif
+}
+
 void System::init(int argc, char *argv[])
 {
     geDebugLog("gui::System::init()");
@@ -38,13 +72,6 @@ void System::init(int argc, char *argv[])
         CefMainArgs args(argc + 1, modified_argv);
 
         CefRefPtr<App> app(new App);
-
-        int exit_code = CefExecuteProcess(args, app.get(), nullptr);
-        if (exit_code >= 0)
-        {
-            exit(exit_code);
-            return;
-        }
 
         handler.init();
 

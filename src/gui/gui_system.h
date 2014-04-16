@@ -15,6 +15,7 @@ class System
 public:
     SINGLETON(System);
 
+    void preinit(int argc, char *argv[]);
     void init(int argc, char *argv[]);
     void finalize();
     void update(const float dt);
