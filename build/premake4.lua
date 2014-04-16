@@ -41,6 +41,7 @@ solution "gengine"
             includedirs { "../deps/emscripten/include" }
             targetsuffix ".bc"
             postbuildcommands { "emcc $(TARGET) -o gengine.html --preload-file ../tests/50-gui@" }
+            linkoptions { "-Wno-warn-absolute-paths" }
 
         configuration "not *Emscripten"
             includedirs { "../deps/linux/include", "../deps/linux/include/cef" }
