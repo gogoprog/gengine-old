@@ -31,3 +31,7 @@ function update(dt)
     total = total + dt
     logoEntity.rotation = total
 end
+
+function newGame()
+    print("newGame() called!")
+end

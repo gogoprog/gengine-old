@@ -2,6 +2,8 @@
 
 if [ "$1" == "" ]; then
     echo "Usage : gengine-html5 <directory> [OPTIONS]"
+    echo "Options :"
+    echo " --debug, -d       Debug mode"
     exit -1
 fi
 

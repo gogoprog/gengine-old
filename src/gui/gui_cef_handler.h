@@ -3,6 +3,7 @@
 #ifndef EMSCRIPTEN
 
 #include "primitives.h"
+#include "debug.h"
 #include "include/cef_app.h"
 #include "include/cef_client.h"
 #include "core_sdl.h"
@@ -27,7 +28,7 @@ public:
 
     virtual bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
     virtual void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
-    
+
     CefRefPtr<CefRenderHandler> GetRenderHandler() { return this; }
 
     IMPLEMENT_REFCOUNTING(BrowserClient);

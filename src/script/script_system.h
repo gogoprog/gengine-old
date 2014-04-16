@@ -17,6 +17,7 @@ public:
     void finalize();
     void init2();
     void executeFile(const char * file);
+    void executeText(const char * text);
     void call(const char * name);
     void call(const char * name, const float arg);
 

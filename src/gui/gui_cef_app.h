@@ -17,6 +17,7 @@ public:
 
     virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override { return this; }
     virtual void OnContextInitialized() override;
+    virtual void OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar) override;
 
 private:
 

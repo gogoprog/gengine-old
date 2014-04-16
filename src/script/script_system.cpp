@@ -58,6 +58,11 @@ void System::executeFile(const char * file)
     }
 }
 
+void System::executeText(const char * text)
+{
+    luaL_dostring(state, text);
+}
+
 void System::call(const char * name)
 {
     lua_getglobal(state, name);
