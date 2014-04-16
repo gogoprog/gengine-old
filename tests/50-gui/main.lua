@@ -35,3 +35,7 @@ end
 function newGame()
     print("newGame() called!")
 end
+
+function options()
+    print("options() called!")
+end

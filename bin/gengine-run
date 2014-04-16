@@ -5,15 +5,12 @@ if [ "${GENGINE}" == "" ]; then
     exit -1
 fi
 
-if [ "$1" == "" ]; then
-    echo "Usage : gengine-html5 <directory> [OPTIONS]"
-    echo "Options :"
-    echo " --debug, -d       Debug mode"
-    exit -1
-fi
-
 if [ "$2" == "" ]; then
-    DIR=$1
+    if [ "$1" == "" ]; then
+        DIR=`echo $(pwd)`
+    else
+        DIR=$1
+    fi
     OPTION=""
 else
     if [[ ${1:0:1} == "-" ]]; then
@@ -37,32 +34,22 @@ else
 fi
 
 if [[ "$OPTION" == "-d" ]] || [[ "$OPTION" == "--debug" ]]; then
-    BYTECODE="gengined.bc"
-    TARGET="debugemscripten${PLATFORM}"
+    BINARY="gengined"
+    TARGET="debug${PLATFORM}"
 else
-    BYTECODE="gengine.bc"
-    TARGET="releaseemscripten${PLATFORM}"
+    BINARY="gengine"
+    TARGET="release${PLATFORM}"
 fi
-
-DEST=`echo $(pwd)`
-
-pushd ${DIR} > /dev/null
-
-BASEDIR=`echo $(pwd)`
-
-BASENAME=`basename $(pwd)`
 
 pushd ${GENGINE}/build > /dev/null
 
 echo "[gengine] Generating Makefile ..."
 premake4 gmake
+make config=${TARGET} -j
 
-echo "[gengine] Building gengine ..."
-emmake make config=${TARGET} -j
-
-echo "[gengine] Generating html/js files ..."
-emcc ${BYTECODE} -o ${DEST}/${BASENAME}.html --preload-file ${BASEDIR}@
-
+pushd ${DIR} > /dev/null
+echo $(pwd)
+LD_LIBRARY_PATH="${GENGINE}/deps/linux/lib${PLATFORM}" ${GENGINE}/build/${BINARY}
 popd > /dev/null
 
 popd > /dev/null
