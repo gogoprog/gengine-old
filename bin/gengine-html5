@@ -1,0 +1,66 @@
+#!/bin/bash
+
+if [ "$1" == "" ]; then
+    echo "Usage : gengine-html5 <directory> [OPTIONS]"
+    exit -1
+fi
+
+if [ "$2" == "" ]; then
+    DIR=$1
+    OPTION=""
+else
+    if [[ ${1:0:1} == "-" ]]; then
+        DIR=$2
+        OPTION=$1
+    else
+        DIR=$1
+        OPTION=$2
+    fi
+fi
+
+ARCH=`uname -m`
+
+if [ "$ARCH" == "i686" ]; then
+    PLATFORM="32"
+elif [ "$ARCH" == "x86_64" ]; then
+    PLATFORM="64"
+else
+    echo "Unknown platform"
+    exit -1
+fi
+
+if [[ "$OPTION" == "-d" ]] || [[ "$OPTION" == "--debug" ]]; then
+    BYTECODE="gengined.bc"
+    TARGET="debugemscripten${PLATFORM}"
+else
+    BYTECODE="gengine.bc"
+    TARGET="releaseemscripten${PLATFORM}"
+fi
+
+if [ "${GENGINE}" == "" ]; then
+    echo "GENGINE variable not set."
+    exit -1
+fi
+
+DEST=`echo $(pwd)`
+
+pushd ${DIR} > /dev/null
+
+BASEDIR=`echo $(pwd)`
+
+BASENAME=`basename $(pwd)`
+
+pushd ${GENGINE}/build > /dev/null
+
+echo "[gengine] Generating Makefile ..."
+premake4 gmake
+
+echo "[gengine] Building gengine ..."
+emmake make config=${TARGET} -j
+
+echo "[gengine] Generating html/js files ..."
+emcc ${BYTECODE} -o ${DEST}/${BASENAME}.html --preload-file ${BASEDIR}@
+
+popd > /dev/null
+
+popd > /dev/null
