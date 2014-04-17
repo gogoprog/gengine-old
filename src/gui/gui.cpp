@@ -17,11 +17,21 @@ SCRIPT_FUNCTION(loadFile)
     return 0;
 }
 
+SCRIPT_FUNCTION(executeScript)
+{
+    const char * code = lua_tostring(state, 1);
+
+    System::getInstance().executeScript(code);
+
+    return 0;
+}
+
 SCRIPT_REGISTERER()
 {
     lua_newtable(state);
 
     SCRIPT_TABLE_PUSH_FUNCTION(loadFile);
+    SCRIPT_TABLE_PUSH_FUNCTION(executeScript);    
 
     lua_setglobal(state,"gui");
 }

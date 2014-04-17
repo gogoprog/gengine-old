@@ -178,5 +178,20 @@ void System::loadFile(const char *file_path)
     #endif
 }
 
+void System::executeScript(const char *code)
+{
+    #ifndef EMSCRIPTEN
+    {
+        CefRefPtr<CefFrame> frame = browser->GetMainFrame();
+        frame->ExecuteJavaScript(code, frame->GetURL(), 0);
+    }
+    #else
+    {
+        emscripten_run_script(code);
+    }
+    #endif
+}
+
+
 }
 }

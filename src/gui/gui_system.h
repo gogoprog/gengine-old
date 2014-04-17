@@ -21,6 +21,7 @@ public:
     void update(const float dt);
     void render();
     void loadFile(const char *file_path);
+    void executeScript(const char *code);
 
 #ifndef EMSCRIPTEN
     Handler & getHandler() { return handler; }

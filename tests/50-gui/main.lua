@@ -27,15 +27,18 @@ function start()
 end
 
 local total = 0
+local sens = 1
 function update(dt)
-    total = total + dt
+    total = total + dt * sens
     logoEntity.rotation = total
 end
 
 function newGame()
     print("newGame() called!")
+    sens = 1
 end
 
 function options()
     print("options() called!")
+    sens = -1
 end
