@@ -28,9 +28,11 @@ end
 
 local total = 0
 local sens = 1
+
 function update(dt)
     total = total + dt * sens
     logoEntity.rotation = total
+    gui.executeScript("updateTotal('" .. total .. "');")
 end
 
 function newGame()

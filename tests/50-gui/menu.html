@@ -44,23 +44,27 @@
    #content {
       padding: 0 50px 50px; }
 </style>
+<script>
+   function updateTotal(n)
+   {
+      document.getElementById("total").innerHTML = n;
+   }
+</script>
 </head>
 
 <body>
+
 <div id="wrap">
    <h1>[gengine] gui test</h1>
    
-   <!-- Here's all it takes to make this navigation bar. -->
    <ul id="nav">
       <li><a href="gengine://newGame()">New game</a></li>
       <li><a href="gengine://options()">Options</a></li>
-      <li><a href="#">FAQs</a></li>
-      <li><a href="#">Contact</a></li>
-      <li><a href="#">Login</a></li>
+      <li><a href="gengine://exit()">Exit</a></li>
    </ul>
-   <!-- That's it! -->
    
    <div id="content">
+      Total is <span id='total'></span>
       <p>It doesn't get much simpler than the navigation bar above. For more information on how this works, please <a href="http://www.cssnewbie.com/super-simple-horizontal-navigation-bar/">see the original CSS Newbie article.</a> For the code, just view the source.</p>
    </div>
 </div>
