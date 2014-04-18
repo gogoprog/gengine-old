@@ -63,7 +63,7 @@ solution "gengine"
                 includedirs { "../deps/windows/include" }
                 includedirs { "../deps/windows/include/cef" }
                 libdirs { "../deps/windows/lib" }
-                links { "SDL2", "SDL2_image", "OpenGL32", "libcef", "libcef_dll_wrapper"}
+                links { "SDL2", "SDL2_image", "OpenGL32", "libcef", "libcef_dll_wrapper", "glew32"}
             end
 
         configuration { "not *Emscripten", "x32" }
