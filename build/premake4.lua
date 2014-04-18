@@ -24,6 +24,7 @@ solution "gengine"
 
         flags { "ExtraWarnings", "FatalWarnings", "FloatFast", "NoExceptions", "NoFramePointer", "NoNativeWChar" }
         buildoptions { "-std=c++11 -Wno-error=unused-variable -Wno-error=unused-parameter" }
+        includedirs { "../deps/common/include" }
 
         configuration "Debug*"
             defines { "DEBUG" }
@@ -38,12 +39,11 @@ solution "gengine"
         configuration "*Emscripten"
             defines { "EMSCRIPTEN" }
             libdirs { "../deps/emscripten/lib" }
-            includedirs { "../deps/emscripten/include" }
             targetsuffix ".bc"
             linkoptions { "-Wno-warn-absolute-paths" }
 
         configuration "not *Emscripten"
-            includedirs { "../deps/common/include", "../deps/common/include/cef" }
+            includedirs { "../deps/common/include/cef" }
             links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper"}
 
         configuration { "not *Emscripten", "x32" }

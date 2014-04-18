@@ -4,7 +4,6 @@
 ** See Copyright Notice in lua.h
 */
 
-
 #ifndef lconfig_h
 #define lconfig_h
 
