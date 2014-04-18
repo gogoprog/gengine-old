@@ -1,0 +1,4 @@
+#!/bin/bash
+
+wget http://dl.bintray.com/gogoprog/gengine/lib32.tar.gz
+tar xvfz lib32.tar.gz
