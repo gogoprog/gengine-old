@@ -2,9 +2,10 @@
 
 #ifndef EMSCRIPTEN
 
+#define CEF_ENABLE_SANDBOX 0
+
 #include "primitives.h"
 #include "include/cef_app.h"
-
 namespace gengine
 {
 namespace gui
