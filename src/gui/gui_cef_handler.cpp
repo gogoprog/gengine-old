@@ -7,6 +7,7 @@
 #include "core.h"
 #include "graphics_opengl.h"
 #include "graphics_system.h"
+#include "script_system.h"
 
 namespace gengine
 {
@@ -75,6 +76,18 @@ void Handler::finalize()
 {
 }
 
+void Handler::update()
+{
+    if(textToExecute.size())
+    {
+        lock();
+        script::System::getInstance().executeText(textToExecute.c_str());
+        textToExecute.clear();
+        unlock();
+    }
+}
+
+
 void Handler::render()
 {
     graphics::System & system = graphics::System::getInstance();
@@ -89,6 +102,25 @@ void Handler::render()
 
     glUseProgram(0);
 }
+
+void Handler::lock()
+{
+    Lock();
+}
+
+void Handler::unlock()
+{
+    Unlock();
+}
+
+void Handler::addTextToExecute(const char *text)
+{
+    lock();
+    textToExecute += " ";
+    textToExecute += text;
+    unlock();
+}
+
 
 bool Handler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 {

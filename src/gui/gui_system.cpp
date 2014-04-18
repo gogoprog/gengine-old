@@ -40,11 +40,11 @@ void System::preinit(int argc, char *argv[])
 
         modified_argv[argc] = (char*)"--disable-setuid-sandbox";
 
-		#ifdef _LINUX
-			CefMainArgs args(argc + 1, modified_argv);
-		#elif defined(_WINDOWS)
-			CefMainArgs args(GetModuleHandle(NULL));
-		#endif
+        #ifdef _LINUX
+            CefMainArgs args(argc + 1, modified_argv);
+        #elif defined(_WINDOWS)
+            CefMainArgs args(GetModuleHandle(NULL));
+        #endif
 
         CefRefPtr<App> app(new App);
 
@@ -79,21 +79,21 @@ void System::init(int argc, char *argv[])
         modified_argv[argc] = (char*)"--disable-setuid-sandbox";
 
         #ifdef _LINUX
-			CefMainArgs args(argc + 1, modified_argv);
-		#elif defined(_WINDOWS)
-			CefMainArgs args(GetModuleHandle(NULL));
-		#endif
+            CefMainArgs args(argc + 1, modified_argv);
+        #elif defined(_WINDOWS)
+            CefMainArgs args(GetModuleHandle(NULL));
+        #endif
 
         CefRefPtr<App> app(new App);
 
         handler.init();
 
         CefSettings settings;
-		memset(&settings, 0, sizeof(CefSettings));
+        memset(&settings, 0, sizeof(CefSettings));
         settings.single_process = true;
-		settings.no_sandbox = true;
+        settings.no_sandbox = true;
         settings.multi_threaded_message_loop = false;
-		settings.size = sizeof(CefSettings);
+        settings.size = sizeof(CefSettings);
 
         CefInitialize(args, settings, app.get(), nullptr);
 
@@ -147,6 +147,8 @@ void System::update(const float dt)
         }
 
         CefDoMessageLoopWork();
+
+        handler.update();
     }
     #endif
 }

@@ -24,7 +24,13 @@ public:
 
     void init();
     void finalize();
+    void update();
     void render();
+
+    void lock();
+    void unlock();
+
+    void addTextToExecute(const char *text);
 
     virtual bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
     virtual void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
@@ -45,6 +51,10 @@ private:
         texture;
     graphics::Uniform
         samplerUniform;
+    std::string
+        textToExecute;
+
+    IMPLEMENT_LOCKING(Handler)
 };
 
 }

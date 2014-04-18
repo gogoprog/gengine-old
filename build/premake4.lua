@@ -59,7 +59,7 @@ solution "gengine"
             if os.is("linux") then
                 includedirs { "../deps/linux/include" }
                 includedirs { "../deps/linux/include/cef" }
-                links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper"}
+                links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper", "pthread"}
             elseif os.is("windows") then
                 includedirs { "../deps/windows/include" }
                 includedirs { "../deps/windows/include/cef" }

@@ -27,7 +27,7 @@ public:
 
         code = code.substr(10);
 
-        script::System::getInstance().executeText(code.c_str());
+        gui::System::getInstance().getHandler().addTextToExecute(code.c_str());
 
         return true;
     }
