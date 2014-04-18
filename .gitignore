@@ -2,4 +2,5 @@ build/Makefile
 build/obj
 build/gengine*
 libcef.so
-
+deps/*/lib*/*.so
+deps/*/lib*/libcef_dll_wrapper*
