@@ -2,9 +2,14 @@
 
 #include "gui_cef_app.h"
 #include "debug.h"
-//#include "unistd.h"
 #include "input_mouse.h"
 #include "input_system.h"
+
+#ifdef _WINDOWS
+	#include <direct.h>
+#else
+	#include "unistd.h"
+#endif
 
 #ifdef EMSCRIPTEN
     #include <emscripten.h>
@@ -164,7 +169,12 @@ void System::loadFile(const char *file_path)
 
         if(file_path[0] != '/')
         {
-            url += getcwd(cwd, 1024);
+			#ifdef _WINDOWS
+				url += _getcwd(cwd, 1024);
+			#else
+				url += getcwd(cwd, 1024);
+			#endif
+
             url += "/";
         }
 

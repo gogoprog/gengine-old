@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef _WINDOWS
+	#include <windows.h>
+#endif
+
 #define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glext.h>
