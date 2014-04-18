@@ -32,6 +32,7 @@ solution "gengine"
             defines { "_LINUX" }
         elseif os.is("windows") then
             defines { "_WINDOWS" }
+            flags { "StaticRuntime" }
         end
 
         includedirs { "../deps/common/include" }
