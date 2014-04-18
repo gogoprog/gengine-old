@@ -3,5 +3,8 @@ build/obj
 build/gengine*
 libcef.so
 deps/*/lib*/*.so
+deps/*/lib*/*.dll
+deps/*/lib*/*.lib
+deps/*/lib*/*.txt
 deps/*/lib*/libcef_dll_wrapper*
 *.tar.gz
