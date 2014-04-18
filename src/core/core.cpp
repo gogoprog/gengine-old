@@ -43,10 +43,6 @@ void init(int argc, char *argv[])
 
     script::System & script_system = script::System::getInstance();
 
-    #ifdef _WINDOWS
-        glewInit();
-    #endif
-
     SDL_Init(SDL_INIT_VIDEO);
 
     script_system.init();
@@ -55,6 +51,11 @@ void init(int argc, char *argv[])
     script_system.call("init");
 
     mainWindow.init();
+
+	#ifdef _WINDOWS
+		glewInit();
+	#endif
+
     graphics::System::getInstance().init();
     input::System::getInstance().init();
     entity::System::getInstance().init();

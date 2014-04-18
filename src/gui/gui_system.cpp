@@ -89,7 +89,9 @@ void System::init(int argc, char *argv[])
         handler.init();
 
         CefSettings settings;
+		memset(&settings, 0, sizeof(CefSettings));
         settings.single_process = true;
+		settings.no_sandbox = true;
         settings.multi_threaded_message_loop = false;
 
         CefInitialize(args, settings, app.get(), nullptr);
