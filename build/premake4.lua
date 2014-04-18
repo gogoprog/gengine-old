@@ -28,6 +28,12 @@ solution "gengine"
             buildoptions { "-std=c++11 -Wno-error=unused-variable -Wno-error=unused-parameter" }
         end
 
+        if os.is("linux") then
+            defines { "_LINUX" }
+        elseif os.is("windows") then
+            defines { "_WINDOWS" }
+        end
+
         includedirs { "../deps/common/include" }
 
         configuration "Debug*"
@@ -49,14 +55,13 @@ solution "gengine"
             end
 
         configuration "not *Emscripten"
-            includedirs { "../deps/common/include/cef" }
-
             if os.is("linux") then
                 includedirs { "../deps/linux/include" }
+                includedirs { "../deps/linux/include/cef" }
             elseif os.is("windows") then
                 includedirs { "../deps/windows/include" }
+                includedirs { "../deps/windows/include/cef" }
             end
-
             links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper"}
 
         configuration { "not *Emscripten", "x32" }

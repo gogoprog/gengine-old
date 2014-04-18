@@ -2,7 +2,7 @@
 
 #include "gui_cef_app.h"
 #include "debug.h"
-#include "unistd.h"
+//#include "unistd.h"
 #include "input_mouse.h"
 #include "input_system.h"
 
@@ -35,7 +35,11 @@ void System::preinit(int argc, char *argv[])
 
         modified_argv[argc] = (char*)"--disable-setuid-sandbox";
 
-        CefMainArgs args(argc + 1, modified_argv);
+		#ifdef _LINUX
+			CefMainArgs args(argc + 1, modified_argv);
+		#elif defined(_WINDOWS)
+			CefMainArgs args(GetModuleHandle(NULL));
+		#endif
 
         CefRefPtr<App> app(new App);
 
@@ -69,7 +73,11 @@ void System::init(int argc, char *argv[])
 
         modified_argv[argc] = (char*)"--disable-setuid-sandbox";
 
-        CefMainArgs args(argc + 1, modified_argv);
+        #ifdef _LINUX
+			CefMainArgs args(argc + 1, modified_argv);
+		#elif defined(_WINDOWS)
+			CefMainArgs args(GetModuleHandle(NULL));
+		#endif
 
         CefRefPtr<App> app(new App);
 
