@@ -43,7 +43,7 @@ solution "gengine"
             linkoptions { "-Wno-warn-absolute-paths" }
 
         configuration "not *Emscripten"
-            includedirs { "../deps/linux/include", "../deps/linux/include/cef" }
+            includedirs { "../deps/common/include", "../deps/common/include/cef" }
             links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper"}
 
         configuration { "not *Emscripten", "x32" }
