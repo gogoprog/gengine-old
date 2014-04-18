@@ -93,6 +93,7 @@ void System::init(int argc, char *argv[])
         settings.single_process = true;
 		settings.no_sandbox = true;
         settings.multi_threaded_message_loop = false;
+		settings.size = sizeof(CefSettings);
 
         CefInitialize(args, settings, app.get(), nullptr);
 

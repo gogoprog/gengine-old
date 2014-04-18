@@ -61,8 +61,7 @@ void Window::finalize()
 void Window::swap()
 {
     #ifndef EMSCRIPTEN
-        SDL_RenderPresent(pRenderer);
-        //SDL_GL_SwapWindow(pWindow);
+        SDL_GL_SwapWindow(pWindow);
     #else
         SDL_GL_SwapBuffers();
     #endif
