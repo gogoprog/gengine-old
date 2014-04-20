@@ -87,7 +87,6 @@ void Handler::update()
     }
 }
 
-
 void Handler::render()
 {
     graphics::System & system = graphics::System::getInstance();

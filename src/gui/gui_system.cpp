@@ -29,19 +29,8 @@ void System::preinit(int argc, char *argv[])
 
     #ifndef EMSCRIPTEN
     {
-        char **modified_argv;
-
-        modified_argv = new char*[argc+1];
-
-        for(int i=0; i<argc; ++i)
-        {
-            modified_argv[i] = argv[i];
-        }
-
-        modified_argv[argc] = (char*)"--disable-setuid-sandbox";
-
         #ifdef _LINUX
-            CefMainArgs args(argc + 1, modified_argv);
+            CefMainArgs args(argc, argv);
         #elif defined(_WINDOWS)
             CefMainArgs args(GetModuleHandle(NULL));
         #endif
@@ -55,8 +44,6 @@ void System::preinit(int argc, char *argv[])
             exit(exit_code);
             return;
         }
-
-        delete []modified_argv;
     }
     #endif
 }
@@ -67,19 +54,8 @@ void System::init(int argc, char *argv[])
 
     #ifndef EMSCRIPTEN
     {
-        char **modified_argv;
-
-        modified_argv = new char*[argc+1];
-
-        for(int i=0; i<argc; ++i)
-        {
-            modified_argv[i] = argv[i];
-        }
-
-        modified_argv[argc] = (char*)"--disable-setuid-sandbox";
-
         #ifdef _LINUX
-            CefMainArgs args(argc + 1, modified_argv);
+            CefMainArgs args(argc, argv);
         #elif defined(_WINDOWS)
             CefMainArgs args(GetModuleHandle(NULL));
         #endif
@@ -96,8 +72,6 @@ void System::init(int argc, char *argv[])
         settings.size = sizeof(CefSettings);
 
         CefInitialize(args, settings, app.get(), nullptr);
-
-        delete []modified_argv;
 
         timeSinceLastUpdate = 0.0f;
     }
@@ -122,8 +96,6 @@ void System::update(const float dt)
         timeSinceLastUpdate += dt;
 
         {
-            static CefMouseEvent last_mouse_event;
-
             CefMouseEvent mouse_event;
             const input::Mouse & mouse = input::System::getInstance().getMouse(0);
 
