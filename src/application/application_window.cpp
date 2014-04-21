@@ -36,7 +36,7 @@ void Window::init()
             SDL_RENDERER_ACCELERATED //| SDL_RENDERER_PRESENTVSYNC
             );
 
-		context = SDL_GL_CreateContext(pWindow);
+        context = SDL_GL_CreateContext(pWindow);
     #else
         pWindow = SDL_SetVideoMode(
             getWidth(),

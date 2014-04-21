@@ -29,8 +29,8 @@ private:
             * pWindow;
         SDL_Renderer
             * pRenderer;
-		SDL_GLContext
-			context;
+        SDL_GLContext
+            context;
     #else
         SDL_Surface
             * pWindow;

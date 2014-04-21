@@ -52,9 +52,9 @@ void init(int argc, char *argv[])
 
     mainWindow.init();
 
-	#ifdef _WINDOWS
-		glewInit();
-	#endif
+    #ifdef _WINDOWS
+        glewInit();
+    #endif
 
     graphics::System::getInstance().init();
     input::System::getInstance().init();

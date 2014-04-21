@@ -6,9 +6,9 @@
 #include "input_system.h"
 
 #ifdef _WINDOWS
-	#include <direct.h>
+    #include <direct.h>
 #else
-	#include "unistd.h"
+    #include "unistd.h"
 #endif
 
 #ifdef EMSCRIPTEN
@@ -146,11 +146,11 @@ void System::loadFile(const char *file_path)
 
         if(file_path[0] != '/')
         {
-			#ifdef _WINDOWS
-				url += _getcwd(cwd, 1024);
-			#else
-				url += getcwd(cwd, 1024);
-			#endif
+            #ifdef _WINDOWS
+                url += _getcwd(cwd, 1024);
+            #else
+                url += getcwd(cwd, 1024);
+            #endif
 
             url += "/";
         }
