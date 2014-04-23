@@ -4,6 +4,7 @@ import platform
 import os
 import sys
 import argparse
+import multiprocessing
 
 debugMode = False
 targetDir = None
@@ -42,7 +43,7 @@ def build(emscripten=False):
     config = ('debug' if debugMode else 'release') + ('emscripten' if emscripten else '') + ('64' if isPlatform64() else '32')
     os.chdir(os.environ['GENGINE']+"/build")
     os.system("premake4 gmake")
-    os.system(('emmake' if emscripten else '') + "make config=" + config)
+    os.system(('emmake' if emscripten else '') + "make config=" + config + " -j" + str(multiprocessing.cpu_count()))
     os.chdir(current_dir)
 
 def run():
