@@ -1,3 +1,4 @@
+bin/__pycache__
 build/Makefile
 build/obj
 build/gengine*
