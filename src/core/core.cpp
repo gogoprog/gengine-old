@@ -70,6 +70,8 @@ void finalize()
 {
     geDebugLog("core::finalize()");
 
+    gui::System::getInstance().finalize();
+
     script::System::getInstance().call("stop");
 
     graphics::System::getInstance().finalize();
