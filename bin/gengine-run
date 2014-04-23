@@ -1,55 +1,9 @@
-#!/bin/bash
+#!/bin/python3
 
-if [ "${GENGINE}" == "" ]; then
-    echo "GENGINE variable not set."
-    exit -1
-fi
+from common import *
 
-if [ "$2" == "" ]; then
-    if [ "$1" == "" ]; then
-        DIR=`echo $(pwd)`
-    else
-        DIR=$1
-    fi
-    OPTION=""
-else
-    if [[ ${1:0:1} == "-" ]]; then
-        DIR=$2
-        OPTION=$1
-    else
-        DIR=$1
-        OPTION=$2
-    fi
-fi
+sanityCheck()
+init()
+build()
 
-ARCH=`uname -m`
-
-if [ "$ARCH" == "i686" ]; then
-    PLATFORM="32"
-elif [ "$ARCH" == "x86_64" ]; then
-    PLATFORM="64"
-else
-    echo "Unknown platform"
-    exit -1
-fi
-
-if [[ "$OPTION" == "-d" ]] || [[ "$OPTION" == "--debug" ]]; then
-    BINARY="gengined"
-    TARGET="debug${PLATFORM}"
-else
-    BINARY="gengine"
-    TARGET="release${PLATFORM}"
-fi
-
-pushd ${GENGINE}/build > /dev/null
-
-echo "[gengine] Generating Makefile ..."
-premake4 gmake
-make config=${TARGET} -j
-
-pushd ${DIR} > /dev/null
-echo $(pwd)
-LD_LIBRARY_PATH="${GENGINE}/deps/linux/lib${PLATFORM}" ${GENGINE}/build/${BINARY}
-popd > /dev/null
-
-popd > /dev/null
+run()
