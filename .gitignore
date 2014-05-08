@@ -9,3 +9,8 @@ deps/*/lib*/*.lib
 deps/*/lib*/*.txt
 deps/*/lib*/libcef_dll_wrapper*
 *.tar.gz
+*.data
+*.js
+*.html
+*.html.map
+
