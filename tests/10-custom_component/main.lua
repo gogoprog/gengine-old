@@ -30,7 +30,7 @@ end
 function start()
     graphics.setClearColor(0,0.1,0.1,1)
 
-    graphics.texture.load("logo.png")
+    graphics.texture.create("logo.png")
 
     entity.registerCustomComponent(ComponentCustom, "custom")
 

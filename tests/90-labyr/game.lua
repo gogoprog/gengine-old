@@ -12,7 +12,7 @@ end
 setmetatable(Game,Game)
 
 function Game:load()
-    graphics.texture.load("data/tile.png")
+    graphics.texture.create("data/tile.png")
 
     for j=0,8 do
         for i=0,8 do

@@ -41,8 +41,8 @@ function start()
 
     graphics.setClearColor(1,1,0.1,1)
 
-    graphics.texture.load("bird.png")
-    graphics.texture.load("logo.png")
+    graphics.texture.create("bird.png")
+    graphics.texture.create("logo.png")
 
     e = entity.create()
     e.name = "Yeah"

@@ -64,10 +64,14 @@
 #define SCRIPT_DO(...) \
     luaL_dostring(state, #__VA_ARGS__);
 
+
 namespace gengine
 {
 namespace script
 {
+
+typedef lua_State *
+    State;
 
 void fillVector2(lua_State * state, Vector2 & result, int position = -1);
 void fillTableVector2Safe(lua_State * state, Vector2 & result, const char * name, int position = -1, const Vector2 default_value = Vector2::zero);

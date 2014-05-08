@@ -8,7 +8,7 @@ local logoEntity
 function start()
     graphics.setClearColor(0,0.1,0.1,1)
 
-    local texture = graphics.texture.load("man.png")
+    local texture = graphics.texture.create("man.png")
 
     local atlas = graphics.atlas.create("test", texture, 12, 8)
 

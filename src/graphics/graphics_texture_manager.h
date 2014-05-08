@@ -4,6 +4,7 @@
 #include "map.h"
 #include "graphics_texture.h"
 #include "script.h"
+#include "manager.h"
 #include <string>
 
 namespace gengine
@@ -11,25 +12,17 @@ namespace gengine
 namespace graphics
 {
 
-class TextureManager
+class TextureManager : public Manager<Texture>
 {
 
 public:
     TextureManager() = default;
 
-    void init();
-    void finalize();
-
-    SINGLETON(TextureManager);
-    static SCRIPT_REGISTERER();
-    static SCRIPT_FUNCTION(load);
-    static SCRIPT_FUNCTION(get);
+    MANAGER_DECLARE(TextureManager);
 
 private:
-    static void getBaseName(char * result, const char * file_path);
-
-    Map<std::string, Texture*>
-        textureMap;
+    virtual bool internalCreate(Texture * texture, const char * arg) override;
+    virtual void internalGetName(char * name, const char * arg) override;
 };
 
 }
