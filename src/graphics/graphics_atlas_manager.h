@@ -3,6 +3,7 @@
 #include "primitives.h"
 #include "map.h"
 #include "script.h"
+#include "manager.h"
 #include <string>
 
 namespace gengine
@@ -12,25 +13,17 @@ namespace graphics
 
 class Atlas;
 
-class AtlasManager
+class AtlasManager : public Manager<Atlas>
 {
 
 public:
     AtlasManager() = default;
 
-    void init();
-    void finalize();
-
-    SINGLETON(AtlasManager);
-    static SCRIPT_REGISTERER();
-    static SCRIPT_FUNCTION(create);
-    static SCRIPT_FUNCTION(get);
+    MANAGER_DECLARE(AtlasManager);
 
 private:
-    static void getBaseName(char * result, const char * file_path);
-
-    Map<std::string, Atlas*>
-        atlasMap;
+    virtual bool internalCreate(Atlas * atlas, script::State state) override;
+    virtual void internalGetName(char * name, const char * arg) override;
 };
 
 }

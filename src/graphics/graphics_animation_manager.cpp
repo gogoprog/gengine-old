@@ -15,7 +15,7 @@ bool AnimationManager::internalCreate(Animation * animation, script::State state
 
 void AnimationManager::internalGetName(char * result, const char * arg)
 {
-    strcmp(result,arg);
+    strcpy(result, arg);
 }
 
 }
