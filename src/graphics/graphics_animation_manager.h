@@ -4,6 +4,7 @@
 #include "map.h"
 #include "graphics_animation.h"
 #include "script.h"
+#include "manager.h"
 #include <string>
 
 namespace gengine
@@ -11,23 +12,17 @@ namespace gengine
 namespace graphics
 {
 
-class AnimationManager
+class AnimationManager : public Manager<Animation>
 {
 
 public:
     AnimationManager() = default;
 
-    void init();
-    void finalize();
-
-    SINGLETON(AnimationManager);
-    static SCRIPT_REGISTERER();
-    static SCRIPT_FUNCTION(create);
-    static SCRIPT_FUNCTION(get);
+    MANAGER_DECLARE(AnimationManager);
 
 private:
-    Map<std::string, Animation*>
-        animationMap;
+    virtual bool internalCreate(Animation * animation, script::State state) override;
+    virtual void internalGetName(char * name, const char * arg) override;
 };
 
 }

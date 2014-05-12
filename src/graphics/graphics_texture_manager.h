@@ -21,7 +21,7 @@ public:
     MANAGER_DECLARE(TextureManager);
 
 private:
-    virtual bool internalCreate(Texture * texture, const char * arg) override;
+    virtual bool internalCreate(Texture * texture, script::State state) override;
     virtual void internalGetName(char * name, const char * arg) override;
 };
 

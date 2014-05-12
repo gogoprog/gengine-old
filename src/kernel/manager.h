@@ -46,7 +46,7 @@ public:
     }
 
 protected:
-    virtual bool internalCreate(T * t, const char * arg) = 0;
+    virtual bool internalCreate(T * t, script::State state) = 0;
     virtual void internalGetName(char * name, const char * arg) = 0;
 
     int createItem(script::State state)
@@ -58,7 +58,7 @@ protected:
 
         t->init();
 
-        if(internalCreate(t, arg))
+        if(internalCreate(t, state))
         {
             internalGetName(name, arg);
             itemMap.add(t, name);

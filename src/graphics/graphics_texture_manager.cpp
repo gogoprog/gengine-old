@@ -8,9 +8,10 @@ namespace gengine
 namespace graphics
 {
 
-bool TextureManager::internalCreate(Texture * texture, const char * arg)
+bool TextureManager::internalCreate(Texture * texture, script::State state)
 {
-    return texture->setFromFile(arg);
+    const char * path = lua_tostring(state, 1);
+    return texture->setFromFile(path);
 }
 
 void TextureManager::internalGetName(char * result, const char * file_path)
