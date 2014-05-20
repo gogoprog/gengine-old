@@ -49,7 +49,7 @@ public:
 private:
 
     template<typename COMPONENT>
-    static void registerComponent(lua_State * state, const char * name, const char * attribute_name)
+    static void registerComponent(lua_State * state, const char * name)
     {
         lua_newtable(state);
 
@@ -63,8 +63,6 @@ private:
 
         lua_pushcfunction(state, &COMPONENT::create);
         lua_setfield(state, -2, "__call");
-
-        SCRIPT_TABLE_PUSH_STRING(name, attribute_name);
 
         COMPONENT::metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
 

@@ -49,8 +49,7 @@ SCRIPT_CLASS_REGISTERER(System)
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
 
     SCRIPT_DO(
-        return function(_table,name)
-            _table.name = name
+        return function(_table)
             _table.__call = function()
                 local o = {}
                 setmetatable(o, _table)
@@ -73,10 +72,10 @@ SCRIPT_CLASS_REGISTERER(System)
 
     lua_setglobal(state,"entity");
 
-    registerComponent<ComponentSprite>(state, "ComponentSprite", "sprite");
-    registerComponent<ComponentCamera>(state, "ComponentCamera", "camera");
-    registerComponent<ComponentMouseable>(state, "ComponentMouseable", "mouseable");
-    registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite", "sprite");
+    registerComponent<ComponentSprite>(state, "ComponentSprite");
+    registerComponent<ComponentCamera>(state, "ComponentCamera");
+    registerComponent<ComponentMouseable>(state, "ComponentMouseable");
+    registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");
 }
 
 SCRIPT_CLASS_UNREGISTERER(System)
@@ -99,9 +98,6 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     lua_newtable(state);
     lua_setfield(state, -2, "components");
-
-    lua_pushstring(state, "Unnamed");
-    lua_setfield(state, -2, "name");
 
     lua_rawgeti(state, LUA_REGISTRYINDEX, getMetaTableRef());
     lua_setmetatable(state, -2);

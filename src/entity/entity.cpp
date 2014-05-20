@@ -51,8 +51,10 @@ SCRIPT_REGISTERER()
     lua_setfield(state, -2, "insert");
 
     SCRIPT_DO(
-        return function(self, comp, params)
-            self[comp.name] = comp
+        return function(self, comp, params, name)
+            if name ~= nil then
+                self[name] = comp
+            end
             rawset(comp,'entity',self)
             table.insert(self.components, comp)
             if params ~= nil then

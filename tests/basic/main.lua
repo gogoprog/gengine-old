@@ -37,7 +37,7 @@ local e, cameraEntity
 function start()
     print("tests/basic start")
 
-    entity.registerCustomComponent(ComponentCustom, "custom")
+    entity.registerCustomComponent(ComponentCustom)
 
     graphics.setClearColor(1,1,0.1,1)
 
@@ -47,14 +47,14 @@ function start()
     e = entity.create()
     e.name = "Yeah"
 
-    e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=128 } })
+    e:addComponent(ComponentSprite(), { texture = graphics.texture.get("logo"), extent = { x=256, y=128 } }, "sprite")
     e:addComponent(ComponentMouseable(), { extent = { x=256, y=128} })
-    e:addComponent(ComponentCustom(), {})
+    e:addComponent(ComponentCustom(), {}, "custom")
 
     e:insert()
 
     cameraEntity = entity.create()
-    cameraEntity:addComponent(ComponentCamera(), { extent = { x=640, y=480} })
+    cameraEntity:addComponent(ComponentCamera(), { extent = { x=640, y=480} }, "camera")
     cameraEntity:insert()
 end
 
