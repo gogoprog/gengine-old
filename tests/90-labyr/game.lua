@@ -1,3 +1,4 @@
+dofile('component_tile.lua')
 
 Game = {}
 
@@ -6,21 +7,30 @@ Game.__call = function()
     setmetatable(o, o)
     o.__index = Game
     o.tiles = {}
+    o.origin = { -256, -256 }
+    o.tileSize = 64
     return o
 end
 
 setmetatable(Game,Game)
 
 function Game:load()
+    entity.registerCustomComponent(ComponentTile)
+
     graphics.texture.create("data/tile.png")
 
     for j=0,8 do
         for i=0,8 do
             local e = self:createTile()
-            e.position.x = -256 + i * 64
-            e.position.y = -256 + j * 64
+            e.tile:setGridPosition(i,j)
 
             e.rotation = math.random(1,4) * 3.14/2
+
+            if self.tiles[i] == nil then
+                self.tiles[i] = {}
+            end
+
+            self.tiles[i][j] = e
         end
     end
 end
@@ -35,11 +45,28 @@ function Game:createTile()
             texture = graphics.texture.get("tile"),
             extent = { x=64, y=64 },
             layer = 0
-        }
+        },
+        "sprite"
+        )
+
+    e:addComponent(
+        ComponentTile(),
+        {
+            game = self
+        },
+        "tile"
         )
 
     e:insert()
     table.insert(self.tiles, e)
 
     return e
+end
+
+function Game:update(dt)
+    if input.mouse:isJustDown(1) then
+        for i=0,8 do
+            self.tiles[i][6].tile:moveTo(i+1,6)
+        end
+    end
 end

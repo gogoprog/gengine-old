@@ -18,14 +18,16 @@ function start()
             texture = graphics.texture.get("logo"),
             extent = { x=256, y=128 },
             layer = 0
-        }
+        },
+        "sprite"
         )
 
     logoEntity:addComponent(
         ComponentMouseable(),
         {
             extent = { x=256, y=128 }
-        }
+        },
+        "mouseable"
         )
 
     logoEntity.onMouseEnter = function(e)
