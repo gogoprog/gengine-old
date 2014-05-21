@@ -7,6 +7,7 @@
 #include "input.h"
 #include "entity.h"
 #include "gui.h"
+#include "audio.h"
 
 namespace gengine
 {
@@ -37,6 +38,7 @@ void System::init2()
     input::luaRegister(state);
     entity::luaRegister(state);
     gui::luaRegister(state);
+    audio::luaRegister(state);
 }
 
 void System::executeFile(const char * file)

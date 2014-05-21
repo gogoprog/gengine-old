@@ -14,6 +14,7 @@ solution "gengine"
             "../src/core",
             "../src/application",
             "../src/graphics",
+            "../src/audio",
             "../src/input",
             "../src/script",
             "../src/entity",
@@ -59,12 +60,12 @@ solution "gengine"
             if os.is("linux") then
                 includedirs { "../deps/linux/include" }
                 includedirs { "../deps/linux/include/cef" }
-                links { "SDL2", "SDL2_image", "GL", "cef", "cef_dll_wrapper", "pthread"}
+                links { "SDL2", "SDL2_image", "SDL2_mixer", "GL", "cef", "cef_dll_wrapper", "pthread"}
             elseif os.is("windows") then
                 includedirs { "../deps/windows/include" }
                 includedirs { "../deps/windows/include/cef" }
                 libdirs { "../deps/windows/lib" }
-                links { "SDL2", "SDL2_image", "OpenGL32", "libcef", "libcef_dll_wrapper", "glew32"}
+                links { "SDL2", "SDL2_image", "SDL2_mixer", "OpenGL32", "libcef", "libcef_dll_wrapper", "glew32"}
             end
 
         configuration { "not *Emscripten", "x32" }

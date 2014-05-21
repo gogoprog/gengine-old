@@ -42,8 +42,6 @@ public:
     IndexBuffer & getIndexBufferQuad() { return indexBufferQuad; }
     Camera & getDefaultCamera() { return defaultCamera; }
 
-    static SCRIPT_REGISTERER();
-
 private:
     Shader
         defaultVertexShader,

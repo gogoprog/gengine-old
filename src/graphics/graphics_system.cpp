@@ -166,9 +166,5 @@ World & System::getWorld(const uint index)
     return * worldTable[index];
 }
 
-SCRIPT_CLASS_REGISTERER(System)
-{
-}
-
 }
 }

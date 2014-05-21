@@ -8,6 +8,7 @@
 #include "script_system.h"
 #include "entity_system.h"
 #include "gui_system.h"
+#include "audio_system.h"
 #include "debug.h"
 
 namespace gengine
@@ -43,7 +44,7 @@ void init(int argc, char *argv[])
 
     script::System & script_system = script::System::getInstance();
 
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
     script_system.init();
     script_system.executeFile("main.lua");
@@ -60,6 +61,7 @@ void init(int argc, char *argv[])
     input::System::getInstance().init();
     entity::System::getInstance().init();
     gui::System::getInstance().init(argc,argv);
+    audio::System::getInstance().init();
 
     script_system.init2();
 
@@ -69,6 +71,8 @@ void init(int argc, char *argv[])
 void finalize()
 {
     geDebugLog("core::finalize()");
+
+    audio::System::getInstance().finalize();
 
     gui::System::getInstance().finalize();
 
