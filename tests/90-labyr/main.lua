@@ -2,7 +2,7 @@ dofile("game.lua")
 
 function init()
     application.setName("[gengine-tests] 90-labyr")
-    application.setExtent(800,600)
+    application.setExtent(800,800)
 end
 
 local logoEntity

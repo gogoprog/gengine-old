@@ -17,7 +17,9 @@ setmetatable(Game,Game)
 function Game:load()
     entity.registerCustomComponent(ComponentTile)
 
-    graphics.texture.create("data/tile.png")
+    for i=0,2 do
+        graphics.texture.create("data/tile" .. i .. ".png")
+    end
 
     for j=0,8 do
         for i=0,8 do
@@ -42,7 +44,7 @@ function Game:createTile()
     e:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get("tile"),
+            texture = graphics.texture.get("tile" .. math.random(0,2)),
             extent = { x=64, y=64 },
             layer = 0
         },
