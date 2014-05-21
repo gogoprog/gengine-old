@@ -1,4 +1,5 @@
 dofile('component_tile.lua')
+dofile('component_placer.lua')
 
 Game = {}
 
@@ -16,6 +17,7 @@ setmetatable(Game,Game)
 
 function Game:load()
     entity.registerCustomComponent(ComponentTile)
+    entity.registerCustomComponent(ComponentPlacer)
 
     for i=0,2 do
         graphics.texture.create("data/tile" .. i .. ".png")
@@ -28,12 +30,40 @@ function Game:load()
 
             e.rotation = math.random(1,4) * 3.14/2
 
-            if self.tiles[i] == nil then
-                self.tiles[i] = {}
-            end
-
-            self.tiles[i][j] = e
+            self:setTile(i,j,e)
         end
+    end
+
+    local i = -1
+    for j=0,8 do
+        local e = self:createPlacer()
+        e.tile:setGridPosition(i,j)
+        e.placer.row = j
+        e.placer.sens = 1
+    end
+
+    i = 9
+    for j=0,8 do
+        local e = self:createPlacer()
+        e.tile:setGridPosition(i,j)
+        e.placer.row = j
+        e.placer.sens = -1
+    end
+
+    local j = -1
+    for i=0,8 do
+        local e = self:createPlacer()
+        e.tile:setGridPosition(i,j)
+        e.placer.col = i
+        e.placer.sens = 1
+    end
+
+    j = 9
+    for i=0,8 do
+        local e = self:createPlacer()
+        e.tile:setGridPosition(i,j)
+        e.placer.col = i
+        e.placer.sens = -1
     end
 end
 
@@ -65,10 +95,68 @@ function Game:createTile()
     return e
 end
 
+function Game:createPlacer()
+    local e
+    e = entity.create()
+
+    e:addComponent(
+        ComponentSprite(),
+        {
+            texture = graphics.texture.get("tile0"),
+            extent = { x=64, y=64 },
+            layer = 0
+        },
+        "sprite"
+        )
+
+    e:addComponent(
+        ComponentMouseable(),
+        {
+            extent = { x=64, y=64 }
+        }
+        )
+
+    e:addComponent(
+        ComponentPlacer(),
+        {
+            game = self
+        },
+        "placer"
+        )
+
+    e:addComponent(
+        ComponentTile(),
+        {
+            game = self
+        },
+        "tile"
+        )
+
+    e:insert()
+
+    return e
+end
+
 function Game:update(dt)
-    if input.mouse:isJustDown(1) then
+
+end
+
+function Game:moveTiles(i,j,d)
+    if not i then
         for i=0,8 do
-            self.tiles[i][6].tile:moveTo(i+1,6)
+            self.tiles[i][j].tile:moveTo(i+d,j)
+        end
+    elseif not j then
+        for j=0,8 do
+            self.tiles[i][j].tile:moveTo(i,j+d)
         end
     end
+end
+
+function Game:setTile(i,j,e)
+    if self.tiles[i] == nil then
+        self.tiles[i] = {}
+    end
+
+    self.tiles[i][j] = e
 end
