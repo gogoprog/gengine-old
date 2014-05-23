@@ -8,6 +8,7 @@
 #include <string.h>
 #include "entity.h"
 #include "input_system.h"
+#include "script_system.h"
 
 namespace gengine
 {
@@ -90,7 +91,7 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, update)
             lua_getfield(state, 1, "entity");
             lua_getfield(state, -1, "onMouseEnter");
             lua_getfield(state, 1, "entity");
-            lua_pcall(state, 1, 0, 0);
+            script::System::getInstance().call(1, 0);
             lua_pop(state, 1);
             self.itIsHovered = true;
         }
@@ -103,7 +104,7 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, update)
                 lua_getfield(state, -1, "onMouseJustDown");
                 lua_getfield(state, 1, "entity");
                 lua_pushnumber(state, i);
-                lua_pcall(state, 2, 0, 0);
+                script::System::getInstance().call(2, 0);
                 lua_pop(state, 1);
             }
         }
@@ -115,7 +116,7 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, update)
             lua_getfield(state, 1, "entity");
             lua_getfield(state, -1, "onMouseExit");
             lua_getfield(state, 1, "entity");
-            lua_pcall(state, 1, 0, 0);
+            script::System::getInstance().call(1, 0);
             lua_pop(state, 1);
             self.itIsHovered = false;
         }

@@ -74,7 +74,7 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(_t, _key)
-            if _key:sub(1,2) == "on" then
+            if type(_key) == "string" and _key:sub(1,2) == "on" then
                 for k,v in ipairs(_t.components) do
                     if v[_key] ~= nil then
                         _trick.func = v[_key]

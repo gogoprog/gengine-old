@@ -82,9 +82,10 @@ void System::finalize()
 {
     #ifndef EMSCRIPTEN
     {
-        CefShutdown();
-
         handler.finalize();
+
+        CefQuitMessageLoop();
+        CefShutdown();
     }
     #endif
 }

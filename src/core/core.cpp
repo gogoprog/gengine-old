@@ -98,7 +98,7 @@ void update()
 
     handleEvents();
 
-    script::System::getInstance().call("update", dt);
+    script::System::getInstance().call1("update", dt);
 
     graphics::System::getInstance().update();
 

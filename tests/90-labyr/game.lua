@@ -75,7 +75,7 @@ function Game:createTile()
         ComponentSprite(),
         {
             texture = graphics.texture.get("tile" .. math.random(0,2)),
-            extent = { x=64, y=64 },
+            extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },
         "sprite"
@@ -103,7 +103,7 @@ function Game:createPlacer()
         ComponentSprite(),
         {
             texture = graphics.texture.get("tile0"),
-            extent = { x=64, y=64 },
+            extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },
         "sprite"
@@ -112,7 +112,7 @@ function Game:createPlacer()
     e:addComponent(
         ComponentMouseable(),
         {
-            extent = { x=64, y=64 }
+            extent = { x=self.tileSize, y=self.tileSize }
         }
         )
 
@@ -144,19 +144,29 @@ end
 function Game:moveTiles(i,j,d)
     if not i then
         for i=0,8 do
-            self.tiles[i][j].tile:moveTo(i+d,j)
+            if self.tiles[i][j] then
+                self.tiles[i][j].tile:moveTo(i+d,j)
+            end
         end
     elseif not j then
         for j=0,8 do
-            self.tiles[i][j].tile:moveTo(i,j+d)
+            if self.tiles[i][j] then
+                self.tiles[i][j].tile:moveTo(i,j+d)
+            end
         end
     end
 end
 
 function Game:setTile(i,j,e)
+    if e.x and e.y then
+        self.tiles[e.x][e.y] = nil
+    end
+
     if self.tiles[i] == nil then
         self.tiles[i] = {}
     end
 
     self.tiles[i][j] = e
+    e.x = i
+    e.y = j
 end

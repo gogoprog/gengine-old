@@ -19,12 +19,12 @@ public:
     void executeFile(const char * file);
     void executeText(const char * text);
     void call(const char * name);
-    void call(const char * name, const float arg);
+    void call1(const char * name, const float arg);
+    void call(const uint nargs, const uint nresults);
 
     lua_State * getState() { return state; }
 
 private:
-    void internalCall(const uint arg_count);
     void handleError();
 
     lua_State

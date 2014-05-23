@@ -69,20 +69,20 @@ void System::call(const char * name)
 {
     lua_getglobal(state, name);
 
-    internalCall(0);
+    call(0, 0);
 }
 
-void System::call(const char * name, const float arg)
+void System::call1(const char * name, const float arg)
 {
     lua_getglobal(state, name);
     lua_pushnumber(state, arg);
 
-    internalCall(1);
+    call(1, 0);
 }
 
-void System::internalCall(const uint arg_count)
+void System::call(const uint nargs, const uint nresults)
 {
-    int s = lua_pcall(state, arg_count, 0, 0);
+    int s = lua_pcall(state, nargs, nresults, 0);
 
     if(s)
     {
