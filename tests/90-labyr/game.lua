@@ -144,24 +144,34 @@ end
 function Game:moveTiles(i,j,d)
     if not i then
         for i=0,8 do
-            if self.tiles[i][j] then
+            if self.tiles[i] and self.tiles[i][j] then
                 self.tiles[i][j].tile:moveTo(i+d,j)
+            else
+                print("notile " .. i .. ", " .. j)
             end
+        end
+        if d > 0 then
+            self.tiles[0][j] = nil
+        else
+            self.tiles[8][j] = nil
         end
     elseif not j then
         for j=0,8 do
-            if self.tiles[i][j] then
+            if self.tiles[i] and self.tiles[i][j] then
                 self.tiles[i][j].tile:moveTo(i,j+d)
+            else
+                print("notile")
             end
+        end
+        if d > 0 then
+            self.tiles[i][0] = nil
+        else
+            self.tiles[i][8] = nil
         end
     end
 end
 
 function Game:setTile(i,j,e)
-    if e.x and e.y then
-        self.tiles[e.x][e.y] = nil
-    end
-
     if self.tiles[i] == nil then
         self.tiles[i] = {}
     end

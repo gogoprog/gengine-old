@@ -43,8 +43,16 @@ def build(emscripten=False):
     config = ('debug' if debugMode else 'release') + ('emscripten' if emscripten else '') + ('64' if isPlatform64() else '32')
     os.chdir(os.environ['GENGINE']+"/build")
     os.system("premake4 gmake")
-    os.system(('emmake' if emscripten else '') + "make config=" + config + " -j" + str(multiprocessing.cpu_count()))
+    os.system(('emmake ' if emscripten else '') + "make config=" + config + " -j" + str(multiprocessing.cpu_count()))
     os.chdir(current_dir)
 
 def run():
     os.system("LD_LIBRARY_PATH=" + rootPath + "/deps/linux/lib" + ('64' if isPlatform64() else '32') + " " + rootPath + "/build/gengine" + ('d' if debugMode else ''))
+
+def packHtml():
+    current_dir = os.getcwd()
+    basename = os.path.basename(os.path.normpath(targetDir))
+    os.chdir(os.environ['GENGINE']+"/build")
+    os.system("emcc gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "@")
+    os.chdir(current_dir)
+
