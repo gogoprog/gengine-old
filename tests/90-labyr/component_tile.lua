@@ -19,8 +19,7 @@ function ComponentTile:update(dt)
             self.time = self.moveDuration
             self.moving = false
             local i,j = self.target[1], self.target[2]
-            self.game:setTile(i, j, self.entity)
-            print("ok arrived")
+            self.game.grid:onTileArrived(self.entity, i, j)
         end
 
         local p = self.entity.position
@@ -60,10 +59,6 @@ function ComponentTile:moveTo(i,j)
         self.moving = true
         self.time = 0
     else
-        print("new target " .. i .. ", " .. j )
-
          i,j = self.target[1], self.target[2]
-
-        print("i am moving " .. self.time .. " " .. i .. ", " .. j )
     end
 end

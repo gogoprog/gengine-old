@@ -1,5 +1,6 @@
 dofile('component_tile.lua')
 dofile('component_placer.lua')
+dofile('grid.lua')
 
 Game = {}
 
@@ -7,7 +8,8 @@ Game.__call = function()
     local o = {}
     setmetatable(o, o)
     o.__index = Game
-    o.tiles = {}
+    o.grid = Grid(9, 9)
+    o.grid.game = o
     o.origin = { -256, -256 }
     o.tileSize = 64
     return o
@@ -26,11 +28,10 @@ function Game:load()
     for j=0,8 do
         for i=0,8 do
             local e = self:createTile()
-            e.tile:setGridPosition(i,j)
 
             e.rotation = math.random(1,4) * 3.14/2
 
-            self:setTile(i,j,e)
+            self.grid:setTile(i,j,e)
         end
     end
 
@@ -90,7 +91,6 @@ function Game:createTile()
         )
 
     e:insert()
-    table.insert(self.tiles, e)
 
     return e
 end
@@ -141,42 +141,7 @@ function Game:update(dt)
 
 end
 
-function Game:moveTiles(i,j,d)
-    if not i then
-        for i=0,8 do
-            if self.tiles[i] and self.tiles[i][j] then
-                self.tiles[i][j].tile:moveTo(i+d,j)
-            else
-                print("notile " .. i .. ", " .. j)
-            end
-        end
-        if d > 0 then
-            self.tiles[0][j] = nil
-        else
-            self.tiles[8][j] = nil
-        end
-    elseif not j then
-        for j=0,8 do
-            if self.tiles[i] and self.tiles[i][j] then
-                self.tiles[i][j].tile:moveTo(i,j+d)
-            else
-                print("notile")
-            end
-        end
-        if d > 0 then
-            self.tiles[i][0] = nil
-        else
-            self.tiles[i][8] = nil
-        end
-    end
-end
 
-function Game:setTile(i,j,e)
-    if self.tiles[i] == nil then
-        self.tiles[i] = {}
-    end
-
-    self.tiles[i][j] = e
-    e.x = i
-    e.y = j
+function Game:moveTiles(i, j, d)
+    self.grid:moveTiles(i, j, d, self:createTile())
 end
