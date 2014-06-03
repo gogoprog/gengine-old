@@ -51,6 +51,16 @@ SCRIPT_REGISTERER()
     lua_setfield(state, -2, "insert");
 
     SCRIPT_DO(
+        return function(self)
+            for k,v in ipairs(self.components) do
+                v:remove()
+            end
+        end
+        );
+
+    lua_setfield(state, -2, "remove");
+
+    SCRIPT_DO(
         return function(self, comp, params, name)
             if name ~= nil then
                 self[name] = comp
