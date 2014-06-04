@@ -84,9 +84,18 @@ void System::call(const uint nargs, const uint nresults)
 {
     int s = lua_pcall(state, nargs, nresults, 0);
 
-    if(s)
+    switch(s)
     {
+    case LUA_ERRRUN:
+        geLog("script: runtime error");
         handleError();
+        break;
+    case LUA_ERRMEM:
+        geLog("script: memory allocation error");
+        handleError();
+        break;
+    default:
+        break;
     }
 }
 

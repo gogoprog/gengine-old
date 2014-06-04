@@ -8,6 +8,7 @@ Game.__call = function()
     local o = {}
     setmetatable(o, o)
     o.__index = Game
+    o.placers = {}
     o.grid = Grid(9, 9)
     o.grid.game = o
     o.origin = { -256, -256 }
@@ -134,11 +135,15 @@ function Game:createPlacer()
 
     e:insert()
 
+    table.insert(self.placers, e)
+
     return e
 end
 
 function Game:update(dt)
-
+    if input.mouse:isDown(3) then
+       self:moveTiles(0, nil, 1)
+    end
 end
 
 

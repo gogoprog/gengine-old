@@ -17,4 +17,8 @@ end
 
 function update(dt)
     game:update(dt)
+    
+    if input.mouse:isJustDown(1) then
+        print("Entities : " .. entity.getCount())
+    end
 end
