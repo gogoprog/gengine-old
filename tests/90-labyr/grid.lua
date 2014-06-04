@@ -45,6 +45,7 @@ function Grid:moveTiles(i, j, d, ntile)
             self:setTile(9,j,ntile)
             ntile.tile:moveTo(8,j)
         end
+        self.movingTiles = self.movingTiles + 1
     elseif not j then
         for j=0,8 do
             if self.tiles[i] and self.tiles[i][j] then
@@ -59,6 +60,7 @@ function Grid:moveTiles(i, j, d, ntile)
             self:setTile(i,9,ntile)
             ntile.tile:moveTo(i,8)
         end
+        self.movingTiles = self.movingTiles + 1
     end
 end
 
