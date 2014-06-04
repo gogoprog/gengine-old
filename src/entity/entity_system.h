@@ -45,6 +45,7 @@ public:
     }
 
     static SCRIPT_FUNCTION(create);
+    static SCRIPT_FUNCTION(getCount);
 
 private:
 

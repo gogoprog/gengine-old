@@ -46,6 +46,7 @@ void System::update(const float dt)
 SCRIPT_CLASS_REGISTERER(System)
 {
     lua_newtable(state);
+    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, getCount);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
 
     SCRIPT_DO(
@@ -107,6 +108,13 @@ SCRIPT_CLASS_FUNCTION(System, create)
     getInstance().refTable.add(ref);
 
     lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
+
+    return 1;
+}
+
+SCRIPT_CLASS_FUNCTION(System, getCount)
+{
+    lua_pushnumber(state, getInstance().refTable.getSize());
 
     return 1;
 }
