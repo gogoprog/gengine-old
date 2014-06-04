@@ -10,6 +10,7 @@ debugMode = False
 targetDir = None
 rootPath = None
 binaryPath = None
+itMustRun = False
 
 def printn(*args):
     sys.stdout.write(*args)
@@ -29,11 +30,14 @@ def init():
     global debugMode
     global targetDir
     global rootPath
+    global itMustRun
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', help='Debug mode', default=False, action='store_true')
+    parser.add_argument('-r', help='It must run', default=False, action='store_true')
     parser.add_argument('dir', help='Target directory', default='.', nargs='?')
     args = parser.parse_args()
     debugMode = args.d
+    itMustRun = args.r
     targetDir = os.getcwd() + "/" + args.dir + "/"
     rootPath = os.environ['GENGINE']
     binaryPath = rootPath + "/build/gengine" + ('d' if debugMode else '')
@@ -53,6 +57,9 @@ def packHtml():
     current_dir = os.getcwd()
     basename = os.path.basename(os.path.normpath(targetDir))
     os.chdir(os.environ['GENGINE']+"/build")
-    os.system("emcc gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "@")
+    os.system("emcc gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "@ -s TOTAL_MEMORY=64000000")
     os.chdir(current_dir)
+
+    if itMustRun:
+        os.system("emrun " + basename + ".html")
 
