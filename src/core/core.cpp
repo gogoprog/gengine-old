@@ -22,7 +22,8 @@ bool
     itMustQuit = false;
 unsigned long long
     last_ticks = 0,
-    current_ticks;
+    current_ticks,
+    frameIndex = 0;
 application::Window
     mainWindow;
 
@@ -115,6 +116,8 @@ void update()
     mainWindow.swap();
 
     last_ticks = current_ticks;
+
+    ++frameIndex;
 }
 
 void handleEvents()
