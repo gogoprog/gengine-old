@@ -25,6 +25,11 @@ public:
         }
     }
 
+    void removeAt(const int index)
+    {
+        array.erase(array.begin() + index);
+    }
+
     T & operator[](const int index)
     {
         return array[index];

@@ -46,6 +46,7 @@ public:
 
     static SCRIPT_FUNCTION(create);
     static SCRIPT_FUNCTION(getCount);
+    static SCRIPT_FUNCTION(destroy);
 
 private:
 
@@ -93,6 +94,8 @@ private:
 
     Array<int>
         refTable;
+    Array<int>
+        refToRemoveTable;
     float
         currentDt;
 };

@@ -41,6 +41,27 @@ void System::update(const float dt)
 
         lua_pop(state, 1);
     }
+
+    if(refToRemoveTable.getSize() > 0 && refTable.getSize() > 0)
+    {
+        for(int i = int(refTable.getSize()) - 1; i >= 0; --i)
+        {
+            int ref = refTable[i];
+
+            for(uint j = 0; j < refToRemoveTable.getSize(); ++j)
+            {
+                int refToRemove = refToRemoveTable[j];
+
+                if(ref == refToRemove)
+                {
+                    luaL_unref(state, LUA_REGISTRYINDEX, ref);
+                    refTable.removeAt(i);
+                    refToRemoveTable.removeAt(j);
+                    break;
+                }
+            }
+        }
+    }
 }
 
 SCRIPT_CLASS_REGISTERER(System)
@@ -48,6 +69,7 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, getCount);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
+    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, destroy);
 
     SCRIPT_DO(
         return function(_table)
@@ -109,6 +131,9 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
+    lua_pushnumber(state, ref);
+    lua_setfield(state, -2, "_ref");
+
     return 1;
 }
 
@@ -117,6 +142,20 @@ SCRIPT_CLASS_FUNCTION(System, getCount)
     lua_pushnumber(state, getInstance().refTable.getSize());
 
     return 1;
+}
+
+SCRIPT_CLASS_FUNCTION(System, destroy)
+{
+    lua_getfield(state, 1, "_ref");
+    int ref = lua_tonumber(state, -1);
+    lua_pop(state, 1);
+
+    lua_pushboolean(state, true);
+    lua_setfield(state, 1, "destroyed");
+
+    getInstance().refToRemoveTable.add(ref);
+
+    return 0;
 }
 
 void System::pushTransform(lua_State * state, const Transform & transform)

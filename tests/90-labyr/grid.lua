@@ -28,6 +28,7 @@ end
 function Grid:moveTiles(i, j, d, ntile)
     if self.movingTiles > 0 then
         ntile:remove()
+        entity.destroy(ntile)
         return
     end
 
@@ -71,6 +72,7 @@ function Grid:onTileArrived(tile, i, j)
         self:setTile(i, j, tile)
     else
         tile:remove()
+        entity.destroy(tile)
     end
 
     self.movingTiles = self.movingTiles - 1
