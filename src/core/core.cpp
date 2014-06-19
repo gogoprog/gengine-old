@@ -101,9 +101,9 @@ void update()
 
     script::System::getInstance().call1("update", dt);
 
-    graphics::System::getInstance().update();
-
     entity::System::getInstance().update(dt);
+
+    graphics::System::getInstance().update();
 
     gui::System::getInstance().update(dt);
 

@@ -31,8 +31,11 @@ function Grid:moveTiles(i, j, d, ntile)
         return
     end
 
+    local w = self.width -1
+    local h = self.height -1
+
     if not i then
-        for i=0,8 do
+        for i=0,w do
             if self.tiles[i] and self.tiles[i][j] then
                 self.tiles[i][j].tile:moveTo(i+d,j)
                 self.movingTiles = self.movingTiles + 1
@@ -42,13 +45,13 @@ function Grid:moveTiles(i, j, d, ntile)
             self:setTile(-1,j,ntile)
             ntile.tile:moveTo(0,j)
         else
-            self:setTile(9,j,ntile)
-            ntile.tile:moveTo(8,j)
+            self:setTile(w + 1,j,ntile)
+            ntile.tile:moveTo(w,j)
         end
         ntile:insert()
         self.movingTiles = self.movingTiles + 1
     elseif not j then
-        for j=0,8 do
+        for j=0,h do
             if self.tiles[i] and self.tiles[i][j] then
                 self.tiles[i][j].tile:moveTo(i,j+d)
                 self.movingTiles = self.movingTiles + 1
@@ -58,8 +61,8 @@ function Grid:moveTiles(i, j, d, ntile)
             self:setTile(i,-1,ntile)
             ntile.tile:moveTo(i,0)
         else
-            self:setTile(i,9,ntile)
-            ntile.tile:moveTo(i,8)
+            self:setTile(i,h+1,ntile)
+            ntile.tile:moveTo(i,h)
         end
         ntile:insert()
         self.movingTiles = self.movingTiles + 1

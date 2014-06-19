@@ -9,9 +9,8 @@ Game.__call = function()
     setmetatable(o, o)
     o.__index = Game
     o.placers = {}
-    o.grid = Grid(9, 9)
+    o.grid = Grid(3, 3)
     o.grid.game = o
-    o.origin = { -256, -256 }
     o.tileSize = 64
     return o
 end
@@ -26,8 +25,11 @@ function Game:load()
         graphics.texture.create("data/tile" .. i .. ".png")
     end
 
-    for j=0,8 do
-        for i=0,8 do
+    local w = self.grid.width -1
+    local h = self.grid.height -1
+
+    for j=0,h do
+        for i=0,w do
             local e = self:createTile()
 
             e.rotation = math.random(1,4) * 3.14/2
@@ -39,15 +41,15 @@ function Game:load()
     end
 
     local i = -1
-    for j=0,8 do
+    for j=0,h do
         local e = self:createPlacer()
         e.tile:setGridPosition(i,j)
         e.placer.row = j
         e.placer.sens = 1
     end
 
-    i = 9
-    for j=0,8 do
+    i = w + 1
+    for j=0,h do
         local e = self:createPlacer()
         e.tile:setGridPosition(i,j)
         e.placer.row = j
@@ -55,15 +57,15 @@ function Game:load()
     end
 
     local j = -1
-    for i=0,8 do
+    for i=0,w do
         local e = self:createPlacer()
         e.tile:setGridPosition(i,j)
         e.placer.col = i
         e.placer.sens = 1
     end
 
-    j = 9
-    for i=0,8 do
+    j = h + 1
+    for i=0,w do
         local e = self:createPlacer()
         e.tile:setGridPosition(i,j)
         e.placer.col = i
