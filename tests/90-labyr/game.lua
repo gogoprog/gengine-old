@@ -33,6 +33,8 @@ function Game:load()
             e.rotation = math.random(1,4) * 3.14/2
 
             self.grid:setTile(i,j,e)
+
+            e:insert()
         end
     end
 
@@ -90,8 +92,6 @@ function Game:createTile()
         },
         "tile"
         )
-
-    e:insert()
 
     return e
 end

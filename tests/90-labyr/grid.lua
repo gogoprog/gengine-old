@@ -27,7 +27,6 @@ end
 
 function Grid:moveTiles(i, j, d, ntile)
     if self.movingTiles > 0 then
-        ntile:remove()
         entity.destroy(ntile)
         return
     end
@@ -46,6 +45,7 @@ function Grid:moveTiles(i, j, d, ntile)
             self:setTile(9,j,ntile)
             ntile.tile:moveTo(8,j)
         end
+        ntile:insert()
         self.movingTiles = self.movingTiles + 1
     elseif not j then
         for j=0,8 do
@@ -61,6 +61,7 @@ function Grid:moveTiles(i, j, d, ntile)
             self:setTile(i,9,ntile)
             ntile.tile:moveTo(i,8)
         end
+        ntile:insert()
         self.movingTiles = self.movingTiles + 1
     end
 end
