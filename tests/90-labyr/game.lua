@@ -1,5 +1,6 @@
 dofile('component_tile.lua')
 dofile('component_placer.lua')
+dofile('component_path.lua')
 dofile('grid.lua')
 
 Game = {}
@@ -20,6 +21,7 @@ setmetatable(Game,Game)
 function Game:load()
     entity.registerCustomComponent(ComponentTile)
     entity.registerCustomComponent(ComponentPlacer)
+    entity.registerCustomComponent(ComponentPath)
 
     for i=0,2 do
         graphics.texture.create("data/tile" .. i .. ".png")
@@ -31,8 +33,6 @@ function Game:load()
     for j=0,h do
         for i=0,w do
             local e = self:createTile()
-
-            e.rotation = math.random(1,4) * 3.14/2
 
             self.grid:setTile(i,j,e)
 
@@ -75,12 +75,13 @@ end
 
 function Game:createTile()
     local e
+    local t = math.random(0,2)
     e = entity.create()
 
     e:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get("tile" .. math.random(0,2)),
+            texture = graphics.texture.get("tile" .. t ),
             extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },
@@ -94,6 +95,18 @@ function Game:createTile()
         },
         "tile"
         )
+
+    if t > 0 then
+        e:addComponent(
+        ComponentPath(),
+        {
+            game = self
+        },
+        "path"
+        )
+    end
+
+    e.rotation = math.random(0,3) * 3.141592/2
 
     return e
 end

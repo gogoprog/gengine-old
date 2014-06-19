@@ -39,8 +39,8 @@ function ComponentTile:setGridPosition(i,j)
     local e = self.entity
     local game = self.game
     local origin = {
-        ( game.tileSize * game.grid.width ) * -0.5,
-        ( game.tileSize * game.grid.height ) * -0.5
+        game.tileSize * ( game.grid.width - 0.5 ) * -0.5,
+        game.tileSize * ( game.grid.height - 0.5 ) * -0.5
         }
 
     e.position.x = origin[1] + i * game.tileSize
@@ -51,8 +51,8 @@ function ComponentTile:moveTo(i,j)
     if not self.moving then
         local game = self.game
         local origin = {
-            ( game.tileSize * game.grid.width ) * -0.5,
-            ( game.tileSize * game.grid.height ) * -0.5
+            game.tileSize * ( game.grid.width - 0.5 ) * -0.5,
+            game.tileSize * ( game.grid.height - 0.5 ) * -0.5
             }
 
         self.targetPos = {
@@ -69,7 +69,5 @@ function ComponentTile:moveTo(i,j)
 
         self.moving = true
         self.time = 0
-    else
-         i,j = self.target[1], self.target[2]
     end
 end
