@@ -43,21 +43,9 @@ void System::init2()
 
 void System::executeFile(const char * file)
 {
-    int s = luaL_loadfile(state, file);
+    luaL_loadfile(state, file);
 
-    if(!s)
-    {
-        s = lua_pcall(state, 0, LUA_MULTRET, 0);
-
-        if(s)
-        {
-            handleError();
-        }
-    }
-    else
-    {
-        handleError();
-    }
+    call(0, LUA_MULTRET);
 }
 
 void System::executeText(const char * text)
@@ -82,28 +70,47 @@ void System::call1(const char * name, const float arg)
 
 void System::call(const uint nargs, const uint nresults)
 {
-    int s = lua_pcall(state, nargs, nresults, 0);
+    int status;
+    int base = lua_gettop(state) - nargs;
+    lua_pushcfunction(state, System::traceBack);
+    lua_insert(state, base);
+    status = lua_pcall(state, nargs, nresults, base);
+    lua_remove(state, base);
 
-    switch(s)
+    switch(status)
     {
     case LUA_ERRRUN:
         geLog("script: runtime error");
-        handleError();
         break;
     case LUA_ERRMEM:
         geLog("script: memory allocation error");
-        handleError();
         break;
     default:
         break;
     }
 }
 
-void System::handleError()
+int System::traceBack(lua_State *state)
 {
-    const char * message = lua_tostring(state, -1);
-    geLog("script:" << message);
+    const char *msg = lua_tostring(state, 1);
+    if (msg)
+    {
+        luaL_traceback(state, state, msg, 1);
+    }
+    else if (!lua_isnoneornil(state, 1))
+    {
+        if (!luaL_callmeta(state, 1, "__tostring"))
+        {
+            lua_pushliteral(state, "(no error message)");
+        }
+    }
+
+    const char *bt = lua_tostring(state, -1);
+    geLog(bt);
+
+    return 1;
 }
+
 
 }
 }

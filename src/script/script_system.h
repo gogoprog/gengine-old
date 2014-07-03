@@ -25,7 +25,7 @@ public:
     lua_State * getState() { return state; }
 
 private:
-    void handleError();
+    static int traceBack(lua_State *state);
 
     lua_State
         * state;
