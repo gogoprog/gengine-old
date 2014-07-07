@@ -1,6 +1,6 @@
 Grid = {}
 
-Grid.__call = function(d, w, h)
+Grid.__call = function(d, w, h, ts)
     local o = {}
     setmetatable(o, o)
     o.__index = Grid
@@ -8,6 +8,10 @@ Grid.__call = function(d, w, h)
     o.width = w
     o.height = h
     o.movingTiles = 0
+    o.origin = {
+        ts * ( w - 0.5 ) * -0.5,
+        ts * ( h - 0.5 ) * -0.5
+        }
     return o
 end
 
@@ -80,4 +84,17 @@ function Grid:onTileArrived(tile, i, j)
     end
 
     self.movingTiles = self.movingTiles - 1
+end
+
+function Grid:getTile(x, y)
+    local game = self.game
+    local origin = {
+        game.tileSize * ( self.width - 0.5 ) * -0.5,
+        game.tileSize * ( self.height - 0.5 ) * -0.5
+        }
+
+    i = ( x - origin[1] ) / game.tileSize
+    j = ( y - origin[2] ) / game.tileSize
+
+    return self.tiles[i][j]
 end

@@ -21,8 +21,8 @@ function ComponentPath:update(dt)
     
 end
 
-function ComponentPath:setOriginalDirections(n,e,s,o)
-    self.validDirections = {n,e,s,o}
+function ComponentPath:setOriginalDirections(valids)
+    self.validDirections = valids
 end
 
 function ComponentPath:isValidDirection(i)
