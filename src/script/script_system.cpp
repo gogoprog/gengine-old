@@ -9,24 +9,25 @@
 #include "gui.h"
 #include "audio.h"
 
-extern "C" {
-#include "../../deps/common/libluasocket/luasocket.h"
-}
+#ifndef EMSCRIPTEN
+    extern "C" {
+    #include "../../deps/common/libluasocket/luasocket.h"
+    }
 
-#define PRELOAD(name, function) \
-    lua_getglobal(state, "package"); \
-    lua_getfield(state, -1, "preload"); \
-    lua_pushcfunction(state, function); \
-    lua_setfield(state, -2, name); \
-    lua_pop(state, 2);  
+    #define PRELOAD(name, function) \
+        lua_getglobal(state, "package"); \
+        lua_getfield(state, -1, "preload"); \
+        lua_pushcfunction(state, function); \
+        lua_setfield(state, -2, name); \
+        lua_pop(state, 2);  
 
-int __open_luasocket_socket(lua_State * L)
-{
-    #include "../../deps/common/libluasocket/socket.lua.h"
-    lua_getglobal(L, "socket");
-    return 1;
-}
-
+    int __open_luasocket_socket(lua_State * L)
+    {
+        #include "../../deps/common/libluasocket/socket.lua.h"
+        lua_getglobal(L, "socket");
+        return 1;
+    }
+#endif
 
 namespace gengine
 {
@@ -40,7 +41,9 @@ void System::init()
     state = luaL_newstate();
     luaL_openlibs(state);
 
-    PRELOAD("socket.core", luaopen_socket_core);
+    #ifndef EMSCRIPTEN
+        PRELOAD("socket.core", luaopen_socket_core);
+    #endif
 
     application::luaRegister(state);
 }

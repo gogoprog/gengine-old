@@ -24,9 +24,17 @@ solution "gengine"
             "../src/gui"
             }
 
-        links { "lua" }
+        links {
+            "lua"
+            }
 
-        flags { "ExtraWarnings", "FloatFast", "NoExceptions", "NoFramePointer", "NoNativeWChar" }
+        flags {
+            "ExtraWarnings",
+            "FloatFast",
+            "NoExceptions",
+            "NoFramePointer",
+            "NoNativeWChar"
+            }
 
         if not os.is("windows") then
             buildoptions { "-std=c++11 -Wno-error=unused-variable -Wno-error=unused-parameter" }
@@ -61,10 +69,21 @@ solution "gengine"
 
         configuration "not *Emscripten"
             if os.is("linux") then
-                files { "../deps/common/libluasocket/*.c" }
+                includedirs { "../deps/common/libluasocket/" }
                 includedirs { "../deps/linux/include" }
                 includedirs { "../deps/linux/include/cef" }
-                links { "SDL2", "SDL2_image", "SDL2_mixer", "GL", "cef", "cef_dll_wrapper", "pthread"}
+                libdirs  { "../deps/common/libluasocket/" }
+                links {
+                    "SDL2",
+                    "SDL2_image",
+                    "SDL2_mixer",
+                    "GL",
+                    "cef",
+                    "cef_dll_wrapper",
+                    "pthread",
+                    "luasocket"
+                    }
+
             elseif os.is("windows") then
                 includedirs { "../deps/windows/include" }
                 includedirs { "../deps/windows/include/cef" }

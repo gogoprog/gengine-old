@@ -13,4 +13,7 @@ deps/*/lib*/libcef_dll_wrapper*
 *.js
 *.html
 *.html.map
-
+deps/**/*.a
+deps/**/*.make
+deps/**/Makefile
+deps/**/obj/
