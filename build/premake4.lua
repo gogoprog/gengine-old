@@ -7,7 +7,10 @@ solution "gengine"
         kind "ConsoleApp"
         language "C++"
 
-        files { "../src/**.h", "../src/**.cpp" }
+        files {
+            "../src/**.h",
+            "../src/**.cpp"
+            }
 
         includedirs {
             "../src/kernel",
@@ -58,6 +61,7 @@ solution "gengine"
 
         configuration "not *Emscripten"
             if os.is("linux") then
+                files { "../deps/common/libluasocket/*.c" }
                 includedirs { "../deps/linux/include" }
                 includedirs { "../deps/linux/include/cef" }
                 links { "SDL2", "SDL2_image", "SDL2_mixer", "GL", "cef", "cef_dll_wrapper", "pthread"}

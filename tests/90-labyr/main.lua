@@ -1,6 +1,8 @@
 dofile("game.lua")
 
 function init()
+    debug = require("debug")
+    require("mobdebug").start()
     application.setName("[gengine-tests] 90-labyr")
     application.setExtent(640,480)
 end
