@@ -9,8 +9,8 @@ Grid.__call = function(d, w, h, ts)
     o.height = h
     o.movingTiles = 0
     o.origin = {
-        ts * ( w - 0.5 ) * -0.5,
-        ts * ( h - 0.5 ) * -0.5
+        ts * ( w - 1 ) * -0.5,
+        ts * ( h - 1 ) * -0.5
         }
     return o
 end
