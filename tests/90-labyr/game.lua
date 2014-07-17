@@ -19,6 +19,8 @@ end
 
 setmetatable(Game,Game)
 
+stateMachine(Game)
+
 function Game:load()
     entity.registerCustomComponent(ComponentTile)
     entity.registerCustomComponent(ComponentPlacer)

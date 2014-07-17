@@ -45,6 +45,29 @@ void System::init()
         PRELOAD("socket.core", luaopen_socket_core);
     #endif
 
+    SCRIPT_DO(
+        return function(_class)
+            _class.onStateEnter = {}
+            setmetatable(_class.onStateEnter, { __index = function(t,k) return function() end end })
+            _class.onStateUpdate = {}
+            setmetatable(_class.onStateUpdate, { __index = function(t,k) return function() end end })
+            _class.onStateExit = {}
+            setmetatable(_class.onStateExit, { __index = function(t,k) return function() end end })
+
+            _class.changeState = function(s, state)
+                s.onStateExit[s.state](s)
+                s.onStateEnter[state](s)
+                s.state = state
+            end
+
+            _class.updateState = function(s, ...)
+                s.onStateUpdate[s.state](s, ...)
+            end
+        end
+        );
+
+    lua_setglobal(state,"stateMachine");
+
     application::luaRegister(state);
 }
 
