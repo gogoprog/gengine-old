@@ -15,6 +15,10 @@ itMustRun = False
 def printn(*args):
     sys.stdout.write(*args)
 
+def log(*args):
+    sys.stdout.write("[gengine] ")
+    print(*args)
+
 def isPlatform64():
     return "_64" in platform.machine()
 
@@ -26,6 +30,8 @@ def sanityCheck():
     print("Ok!")
 
 def init():
+    log("Init script...")
+
     global binaryPath
     global debugMode
     global targetDir
@@ -42,8 +48,20 @@ def init():
     rootPath = os.environ['GENGINE']
     binaryPath = rootPath + "/build/gengine" + ('d' if debugMode else '')
 
+def buildDeps():
+    log("Building dependencies...")
+    os.chdir(os.environ['GENGINE']+"/deps/common/libluasocket")
+    config = 'release' + ('64' if isPlatform64() else '32')
+    os.system("premake4 gmake")
+    os.system("make config=" + config + " -j" + str(multiprocessing.cpu_count()))
+
 def build(emscripten=False):
     current_dir = os.getcwd()
+    if not emscripten:
+        buildDeps()
+
+    log("Building gengine...")
+
     config = ('debug' if debugMode else 'release') + ('emscripten' if emscripten else '') + ('64' if isPlatform64() else '32')
     os.chdir(os.environ['GENGINE']+"/build")
     os.system("premake4 gmake")
@@ -54,6 +72,7 @@ def run():
     os.system("LD_LIBRARY_PATH=" + rootPath + "/deps/linux/lib" + ('64' if isPlatform64() else '32') + " " + rootPath + "/build/gengine" + ('d' if debugMode else ''))
 
 def packHtml():
+    log("Packing html...")
     current_dir = os.getcwd()
     basename = os.path.basename(os.path.normpath(targetDir))
     os.chdir(os.environ['GENGINE']+"/build")
