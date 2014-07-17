@@ -5,10 +5,32 @@ Tiles = {
     },
     {
         file = "tile1",
-        validDirections = { true, false, true, false }
+        validDirections = { true, false, true, false },
+        rotation = 0
     },
     {
         file = "tile1",
-        validDirections = { false, true, true, false }
+        validDirections = { true, false, true, false },
+        rotation = 3.141592/2
+    },
+    {
+        file = "tile2",
+        validDirections = { false, true, true, false },
+        rotation = 0
+    },
+    {
+        file = "tile2",
+        validDirections = { false, true, true, false },
+        rotation = 3.141592/2 * 1
+    },
+    {
+        file = "tile2",
+        validDirections = { false, true, true, false },
+        rotation = 3.141592/2 * 2
+    },
+    {
+        file = "tile2",
+        validDirections = { false, true, true, false },
+        rotation = 3.141592/2 * 3
     }
 }

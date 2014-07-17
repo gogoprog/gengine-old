@@ -11,8 +11,8 @@ Game.__call = function()
     setmetatable(o, o)
     o.__index = Game
     o.placers = {}
-    o.tileSize = 64
-    o.grid = Grid(3, 3, o.tileSize)
+    o.tileSize = 32
+    o.grid = Grid(9, 9, o.tileSize)
     o.grid.game = o
     return o
 end
@@ -47,6 +47,7 @@ function Game:load()
         e.tile:setGridPosition(i,j)
         e.placer.row = j
         e.placer.sens = 1
+        e.placer.game = self
     end
 
     i = w + 1
@@ -72,17 +73,22 @@ function Game:load()
         e.placer.col = i
         e.placer.sens = -1
     end
+
+    self.nextPiece = math.random(1,#Tiles)
 end
 
-function Game:createTile()
+function Game:createTile(_t)
     local e
-    local t = math.random(1, #Tiles)
+    local t = _t == nil and math.random(1, #Tiles) or _t
+
+    local definition = Tiles[t]
+
     e = entity.create()
 
     e:addComponent(
         ComponentSprite(),
         {
-            texture = graphics.texture.get(Tiles[t].file),
+            texture = graphics.texture.get(definition.file),
             extent = { x=self.tileSize, y=self.tileSize },
             layer = 0
         },
@@ -105,8 +111,8 @@ function Game:createTile()
         "path"
         )
 
-    e.path:setOriginalDirections(Tiles[t].validDirections)
-    e.rotation = math.random(0,3) * 3.141592/2
+    e.path:setOriginalDirections(definition.validDirections)
+    e.rotation = definition.rotation or 0
 
     return e
 end
@@ -163,5 +169,7 @@ end
 
 
 function Game:moveTiles(i, j, d)
-    self.grid:moveTiles(i, j, d, self:createTile())
+    self.grid:moveTiles(i, j, d, self:createTile(self.nextPiece))
+
+    self.nextPiece = math.random(1,#Tiles)
 end
