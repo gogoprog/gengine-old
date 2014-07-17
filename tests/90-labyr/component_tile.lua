@@ -122,5 +122,5 @@ end
 function ComponentTile.onStateExit:rotating()
     self.entity.sprite.color = {x=1,y=1,z=1,w=1}
 
-    self.entity.path:findPath()
+    self.entity.path:findPath({self.entity}, self.entity)
 end

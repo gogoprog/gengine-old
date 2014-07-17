@@ -41,7 +41,9 @@ function ComponentPath:isValidDirection(i)
         i = i + 3
     end
 
-    i = ( i % 4 ) + 1
+    while i > 4 do
+        i = i - 4
+    end
 
     return self.validDirections[i]
 end
@@ -68,7 +70,6 @@ end
 
 function ComponentPath:get(direction)
     if self:isValidDirection(direction) then
-        print("dir valid")
         return self.gets[direction](self)
     end
 
@@ -79,13 +80,28 @@ function ComponentPath:findPath(path, previous)
     for d=1,4 do
         local e = self:get(d)
 
-        if e and e ~= previous then
+        if e and e ~= previous and e.path:isValidDirection(d+2) then
             path = path or {}
-            table.insert(path, self.entity)
 
-            print("path:")
+            print("found : " .. d )
+
+
+            if #path > 1 then
+                if path[1] == path[#path] then
+                    print("path complete:")
+                    for k,v in ipairs(path) do
+                        print(v.x .. ", " .. v.y)
+                        v.sprite.color = {x=0,y=0,z=1,w=1}
+
+                    end
+                    return
+                end
+            end
+
+            table.insert(path, e)
+
             for k,v in ipairs(path) do
-                print(path.x .. ", " .. path.y)
+                v.sprite.color = {x=0,y=0,z=1,w=1}
             end
 
             e.path:findPath(path, self.entity)

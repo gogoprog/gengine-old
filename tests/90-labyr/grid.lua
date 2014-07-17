@@ -88,16 +88,7 @@ function Grid:onTileArrived(tile, i, j)
     self.movingTiles = self.movingTiles - 1
 end
 
-function Grid:getTile(x, y)
-    local game = self.game
-    local origin = {
-        game.tileSize * ( self.width - 0.5 ) * -0.5,
-        game.tileSize * ( self.height - 0.5 ) * -0.5
-        }
-
-    i = ( x - origin[1] ) / game.tileSize
-    j = ( y - origin[2] ) / game.tileSize
-
+function Grid:getTile(i, j)
     if self.tiles[i] then
         return self.tiles[i][j]
     end
