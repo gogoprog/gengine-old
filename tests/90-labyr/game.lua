@@ -113,6 +113,13 @@ function Game:createTile(_t)
         "path"
         )
 
+    e:addComponent(
+        ComponentMouseable(),
+        {
+            extent = { x=self.tileSize, y=self.tileSize }
+        }
+        )
+
     e.path:setOriginalDirections(definition.validDirections)
     e.rotation = definition.rotation or 0
 
@@ -171,7 +178,7 @@ end
 
 
 function Game:moveTiles(i, j, d)
-    self.grid:moveTiles(i, j, d, self:createTile(self.nextPiece))
-
-    self.nextPiece = math.random(1,#Tiles)
+    if self.grid:moveTiles(i, j, d, self:createTile(self.nextPiece)) then
+        self.nextPiece = math.random(1,#Tiles)
+    end
 end

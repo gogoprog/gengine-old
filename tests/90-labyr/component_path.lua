@@ -1,4 +1,6 @@
-ComponentPath = {}
+ComponentPath = {
+    gets =  {}
+}
 
 function isRoughlyEqual(a,b)
     return a - 0.1 < b and a + 0.1 > b
@@ -42,4 +44,51 @@ function ComponentPath:isValidDirection(i)
     i = ( i % 4 ) + 1
 
     return self.validDirections[i]
+end
+
+ComponentPath.gets[1] = function(self)
+    local e = self.entity
+    return self.game.grid:getTile(e.x, e.y + 1)
+end
+
+ComponentPath.gets[2] = function(self)
+    local e = self.entity
+    return self.game.grid:getTile(e.x - 1, e.y)
+end
+
+ComponentPath.gets[3] = function(self)
+    local e = self.entity
+    return self.game.grid:getTile(e.x, e.y - 1)
+end
+
+ComponentPath.gets[4] = function(self)
+    local e = self.entity
+    return self.game.grid:getTile(e.x + 1, e.y)
+end
+
+function ComponentPath:get(direction)
+    if self:isValidDirection(direction) then
+        print("dir valid")
+        return self.gets[direction](self)
+    end
+
+    return nil
+end
+
+function ComponentPath:findPath(path, previous)
+    for d=1,4 do
+        local e = self:get(d)
+
+        if e and e ~= previous then
+            path = path or {}
+            table.insert(path, self.entity)
+
+            print("path:")
+            for k,v in ipairs(path) do
+                print(path.x .. ", " .. path.y)
+            end
+
+            e.path:findPath(path, self.entity)
+        end
+    end
 end

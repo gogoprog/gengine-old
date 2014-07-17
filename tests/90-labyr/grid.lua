@@ -32,7 +32,7 @@ end
 function Grid:moveTiles(i, j, d, ntile)
     if self.movingTiles > 0 then
         entity.destroy(ntile)
-        return
+        return false
     end
 
     local w = self.width -1
@@ -71,6 +71,8 @@ function Grid:moveTiles(i, j, d, ntile)
         ntile:insert()
         self.movingTiles = self.movingTiles + 1
     end
+
+    return true
 end
 
 function Grid:onTileArrived(tile, i, j)
@@ -96,5 +98,9 @@ function Grid:getTile(x, y)
     i = ( x - origin[1] ) / game.tileSize
     j = ( y - origin[2] ) / game.tileSize
 
-    return self.tiles[i][j]
+    if self.tiles[i] then
+        return self.tiles[i][j]
+    end
+
+    return nil
 end
