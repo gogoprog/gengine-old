@@ -54,6 +54,11 @@ def buildDeps():
     config = 'release' + ('64' if isPlatform64() else '32')
     os.system("premake4 gmake")
     os.system("make config=" + config + " -j" + str(multiprocessing.cpu_count()))
+    if platform.system() == "Linux":
+        directory = os.environ['GENGINE']+"/deps/linux/lib"+('64' if isPlatform64() else '32')
+        os.chdir(directory)
+        if not os.path.isfile(directory+"/libcef.so"):
+            os.system("./get-libs")
 
 def build(emscripten=False):
     current_dir = os.getcwd()
