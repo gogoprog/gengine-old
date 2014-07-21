@@ -48,12 +48,8 @@ def init():
     rootPath = os.environ['GENGINE']
     binaryPath = rootPath + "/build/gengine" + ('d' if debugMode else '')
 
-def buildDeps():
-    log("Building dependencies...")
-    os.chdir(os.environ['GENGINE']+"/deps/common/libluasocket")
-    config = 'release' + ('64' if isPlatform64() else '32')
-    os.system("premake4 gmake")
-    os.system("make config=" + config + " -j" + str(multiprocessing.cpu_count()))
+def getDeps():
+    log("Downloading dependencies...")
     if platform.system() == "Linux":
         directory = os.environ['GENGINE']+"/deps/linux/lib"+('64' if isPlatform64() else '32')
         os.chdir(directory)
@@ -63,7 +59,7 @@ def buildDeps():
 def build(emscripten=False):
     current_dir = os.getcwd()
     if not emscripten:
-        buildDeps()
+        getDeps()
 
     log("Building gengine...")
 
