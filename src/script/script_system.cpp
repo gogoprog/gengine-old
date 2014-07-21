@@ -45,6 +45,14 @@ void System::init()
     lua_setglobal(state,"stateMachine");
 
     application::luaRegister(state);
+
+    SCRIPT_DO(
+        function __init()
+            debug = debug or require("debug")
+            require("mobdebug").start()
+        end
+        pcall(__init)
+        );
 }
 
 void System::finalize()
