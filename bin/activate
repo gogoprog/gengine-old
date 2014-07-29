@@ -1,8 +1,10 @@
 #!/bin/bash
 
+BIN_DIR=$(dirname $(readlink -e $0))
+BASEDIR=${BIN_DIR%/*}
 
-export GENGINE=`pwd`/gengine
-export PATH=${PATH}:`pwd`/gengine/bin
+export PATH=${PATH}:${BASEDIR}/bin
+export GENGINE=${BASEDIR}
 
 PROMPT="[gengine]${PROMPT}"
 
