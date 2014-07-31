@@ -6,6 +6,7 @@
 #include "script_system.h"
 #include "debug.h"
 #include "vector2.h"
+#include "string.h"
 #include "entity.h"
 #include "entity_component_sprite.h"
 #include "entity_component_camera.h"
@@ -92,6 +93,37 @@ SCRIPT_CLASS_REGISTERER(System)
         );
 
     lua_setfield(state, -2, "registerCustomComponent");
+
+    lua_getglobal(state, "_G");
+    lua_pushnil(state);
+
+    while(lua_next(state, -2))
+    {
+        if(lua_type(state, -1) == LUA_TTABLE)
+        {
+            const char * name = lua_tostring(state, -2);
+
+            if(!strncmp("Component", name, 9))
+            {
+                if(!lua_getmetatable(state, -1))
+                {
+                    lua_getfield(state, -4, "registerCustomComponent");
+
+                    lua_getglobal(state, name);
+
+                    lua_call(state, 1, 0);
+                }
+                else
+                {
+                    lua_pop(state, 1);
+                }
+            }
+        }
+
+        lua_pop(state, 1);
+    }
+
+    lua_pop(state, 1);
 
     lua_setglobal(state,"entity");
 
