@@ -1,11 +1,21 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-BIN_DIR=$(dirname $(readlink -e $0))
+if [[ "$0" == "bash" ]]; then
+    SRC=${BASH_SOURCE}
+else
+    SRC=$0
+fi
+
+BIN_DIR=$(dirname $(readlink -e ${SRC}))
 BASEDIR=${BIN_DIR%/*}
 
 export PATH=${PATH}:${BASEDIR}/bin
 export GENGINE=${BASEDIR}
 
-PROMPT="[gengine]${PROMPT}"
+if [[ "$0" == "bash" ]]; then
+    export PS1="[gengine]${PS1}"
+else
+    export PROMPT="[gengine]${PROMPT}"
+fi
 
 echo "[gengine] Enabled with ${GENGINE}"
