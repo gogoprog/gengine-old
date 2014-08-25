@@ -168,9 +168,9 @@ void System::loadFile(const char *file_path)
             var guiDiv = document.getElementById('gui');
             );
 
-        js_code += "guiDiv.innerHTML='<object type=\"text/html\" data=\"";
+        js_code += "guiDiv.innerHTML='<object id=\"gui_object\" type=\"text/html\" data=\"";
         js_code += file_path;
-        js_code += "\" style=\"width:100%; height=100%;\"></object>';";
+        js_code += "\" style=\"width:100%; height=100%; pointer-events: none;\"></object>';";
 
         emscripten_run_script(js_code.c_str());
     }
@@ -186,7 +186,10 @@ void System::executeScript(const char *code)
     }
     #else
     {
-         emscripten_run_script(code);
+        std::string js_code;
+        js_code = "window.gui_object.";
+        js_code += code;
+        emscripten_run_script(js_code.c_str());
     }
     #endif
 }
