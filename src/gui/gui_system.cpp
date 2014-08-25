@@ -162,14 +162,17 @@ void System::loadFile(const char *file_path)
     }
     #else
     {
-        std::string inner_html;
+        std::string js_code;
 
-        emscripten_run_script(JAVASCRIPT(
+        js_code = JAVASCRIPT(
             var guiDiv = document.getElementById('gui');
-            guiDiv.style.position = "absolute";
-            guiDiv.innerHTML='<object type="text/html" data="menu.html" style="width:100%; height=100%;"></object>';
-            )
             );
+
+        js_code += "guiDiv.innerHTML='<object type=\"text/html\" data=\"";
+        js_code += file_path;
+        js_code += "\" style=\"width:100%; height=100%;\"></object>';";
+
+        emscripten_run_script(js_code.c_str());
     }
     #endif
 }
