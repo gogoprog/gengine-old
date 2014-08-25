@@ -162,12 +162,12 @@ void System::loadFile(const char *file_path)
     }
     #else
     {
+        std::string inner_html;
+
         emscripten_run_script(JAVASCRIPT(
-            var newdiv = document.createElement('div');
-            newdiv.style.position = "absolute";
-            newdiv.setAttribute("style","width:1024px; height:800px;");
-            newdiv.innerHTML='<object type="text/html" data="menu.html" ></object>';
-            document.getElementById("canvas").parentNode.appendChild(newdiv);
+            var guiDiv = document.getElementById('gui');
+            guiDiv.style.position = "absolute";
+            guiDiv.innerHTML='<object type="text/html" data="menu.html" style="width:100%; height=100%;"></object>';
             )
             );
     }
@@ -183,7 +183,7 @@ void System::executeScript(const char *code)
     }
     #else
     {
-        emscripten_run_script(code);
+         emscripten_run_script(code);
     }
     #endif
 }
