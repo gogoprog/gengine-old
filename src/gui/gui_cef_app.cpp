@@ -12,56 +12,32 @@ namespace gengine
 namespace gui
 {
 
-// Implementation of the resource handler for client requests.
-class LocalResourceHandler : public CefResourceHandler
-{
+class LocalV8Handler : public CefV8Handler {
 public:
-    LocalResourceHandler() {}
+    LocalV8Handler() {}
 
-    virtual bool ProcessRequest(CefRefPtr<CefRequest> request, CefRefPtr<CefCallback> callback) override
+    virtual bool Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception) OVERRIDE
     {
-        std::string
-            code;
+        if (name == "gengine_execute")
+        {
+            gui::System::getInstance().getHandler().addTextToExecute(arguments[0]->GetStringValue().ToString().c_str());
+            return true;
+        }
 
-        code = request->GetURL().ToString();
-
-        code = code.substr(10);
-
-        gui::System::getInstance().getHandler().addTextToExecute(code.c_str());
-
-        return true;
-    }
-
-    virtual void GetResponseHeaders(CefRefPtr<CefResponse> response, int64& response_length, CefString& redirectUrl) override
-    {
-        response->SetMimeType("text/html");
-        response->SetStatus(200);
-        response_length = 0;
-    }
-
-    virtual void Cancel() override
-    {
-    }
-
-    virtual bool ReadResponse(void* data_out, int bytes_to_read, int& bytes_read, CefRefPtr<CefCallback> callback) override
-    {
         return false;
     }
 
-private:
-    IMPLEMENT_REFCOUNTING(LocalResourceHandler);
+    IMPLEMENT_REFCOUNTING(LocalV8Handler);
 };
 
-class LocalSchemeHandlerFactory : public CefSchemeHandlerFactory
+void App::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-public:
-    virtual CefRefPtr<CefResourceHandler> Create(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& scheme_name, CefRefPtr<CefRequest> request) override
-    {
-        return new LocalResourceHandler();
-    }
+    CefRefPtr<CefV8Handler> v8handler = new LocalV8Handler();
+    CefRefPtr<CefV8Value> func = CefV8Value::CreateFunction("gengine_execute", v8handler);
 
-    IMPLEMENT_REFCOUNTING(LocalSchemeHandlerFactory);
-};
+    CefRefPtr<CefV8Value> object = context->GetGlobal();
+    object->SetValue("gengine_execute", func, V8_PROPERTY_ATTRIBUTE_NONE);
+}
 
 void App::OnContextInitialized()
 {
@@ -69,8 +45,6 @@ void App::OnContextInitialized()
 
     window_info.SetAsOffScreen(nullptr);
     window_info.SetTransparentPainting(true);
-
-    CefRegisterSchemeHandlerFactory("gengine", "gengine", new LocalSchemeHandlerFactory());
 
     CefRefPtr<Handler> handler(& System::getInstance().getHandler());
 

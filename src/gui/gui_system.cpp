@@ -11,11 +11,11 @@
     #include "unistd.h"
 #endif
 
+#define JAVASCRIPT(src) \
+    #src
+
 #ifdef EMSCRIPTEN
     #include <emscripten.h>
-
-    #define JAVASCRIPT(src) \
-        #src
 #endif
 
 namespace gengine
