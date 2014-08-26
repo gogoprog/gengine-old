@@ -62,10 +62,11 @@
           left:0;
           width:100%;
           height:100%;
-          pointer-events: none;
+          //pointer-events: none;
       }
 
     </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   </head>
   <body>
     <figure style="overflow:visible;" id="spinner"><div class="spinner"></div><center style="margin-top:0.5em"><strong>emscripten</strong></center></figure>
@@ -73,7 +74,7 @@
     <div class="emscripten">
       <progress value="0" max="100" id="progress" hidden=1></progress>  
     </div>
-    <div class="emscripten_border">
+    <div class="emscripten_border" id="canvas_holder">
       <div id="holder">
         <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
         <div id="gui"></div>
@@ -152,6 +153,14 @@
           if (text) Module.printErr('[post-exception status] ' + text);
         };
       };
+
+      function loadFile(filePath) {
+        $("#gui").load(filePath);
+        document.getElementById("gui").addEventListener("mousedown", SDL.receiveEvent, true);
+        document.getElementById("gui").addEventListener("mousemove", SDL.receiveEvent, true);
+        document.getElementById("gui").addEventListener("mouseup", SDL.receiveEvent, true);
+      }
+
     </script>
     {{{ SCRIPT }}}
   </body>
