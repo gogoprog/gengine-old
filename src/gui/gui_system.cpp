@@ -162,14 +162,13 @@ void System::loadFile(const char *file_path)
     }
     #else
     {
-        emscripten_run_script(JAVASCRIPT(
-            var newdiv = document.createElement('div');
-            newdiv.style.position = "absolute";
-            newdiv.setAttribute("style","width:1024px; height:800px;");
-            newdiv.innerHTML='<object type="text/html" data="menu.html" ></object>';
-            document.getElementById("canvas").parentNode.appendChild(newdiv);
-            )
-            );
+        std::string js_code;
+
+        js_code = "loadFile('";
+        js_code += file_path;
+        js_code += "');";
+
+        emscripten_run_script(js_code.c_str());
     }
     #endif
 }
