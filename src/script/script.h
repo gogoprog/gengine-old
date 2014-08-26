@@ -82,5 +82,7 @@ int getTableIntegerSafe(lua_State * state, const char * name, const int table_po
 float getTableFloat(lua_State * state, const char * name, const int table_position = -1);
 float getTableFloatSafe(lua_State * state, const char * name, const int table_position = -1, const float default_value = 0.0f);
 
+void executeText(const char * text);
+
 }
 }

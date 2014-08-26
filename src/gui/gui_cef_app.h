@@ -11,12 +11,14 @@ namespace gengine
 namespace gui
 {
 
-class App : public CefApp, public CefBrowserProcessHandler
+class App : public CefApp, public CefBrowserProcessHandler, public CefRenderProcessHandler
 {
 public:
     App() = default;
 
     virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override { return this; }
+    virtual CefRefPtr<CefRenderProcessHandler> GetRenderProcessHandler() override { return this; }
+    virtual void OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) override;
     virtual void OnContextInitialized() override;
     virtual void OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar) override;
 

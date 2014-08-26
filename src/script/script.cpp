@@ -1,6 +1,14 @@
 #include "script.h"
 
 #include "vector2.h"
+#include "script_system.h"
+#include <string>
+
+#ifdef EMSCRIPTEN
+    #include <emscripten/bind.h>
+
+    using namespace emscripten;
+#endif
 
 namespace gengine
 {
@@ -134,6 +142,18 @@ float getTableFloatSafe(lua_State * state, const char * name, const int table_po
 
     return result;
 }
+
+void executeText(std::string text)
+{
+    script::System::getInstance().executeText(text.c_str());
+}
+
+#ifdef EMSCRIPTEN
+    EMSCRIPTEN_BINDINGS(script_module)
+    {
+        function<void, std::string>("execute", &executeText);
+    }
+#endif
 
 }
 }
