@@ -65,7 +65,7 @@
       }
 
     </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
   </head>
   <body>
     <figure style="overflow:visible;" id="spinner"><div class="spinner"></div><center style="margin-top:0.5em"><strong>emscripten</strong></center></figure>
@@ -89,12 +89,23 @@
 
     <textarea class="emscripten" id="output" rows="16"></textarea>
     <script type='text/javascript'>
+
+      function setupListeners() {
+        document.getElementById("gui").addEventListener("mousedown", SDL.receiveEvent, true);
+        document.getElementById("gui").addEventListener("mousemove", SDL.receiveEvent, true);
+        document.getElementById("gui").addEventListener("mouseup", SDL.receiveEvent, true);
+      }
+
       var statusElement = document.getElementById('status');
       var progressElement = document.getElementById('progress');
       var spinnerElement = document.getElementById('spinner');
 
       var Module = {
-        preRun: [],
+        preRun: [
+          function() {
+            setupListeners();
+          }
+          ],
         postRun: [],
         print: (function() {
           var element = document.getElementById('output');
@@ -155,15 +166,11 @@
 
       function loadFile(filePath) {
         $("#gui").load(filePath);
-        document.getElementById("gui").addEventListener("mousedown", SDL.receiveEvent, true);
-        document.getElementById("gui").addEventListener("mousemove", SDL.receiveEvent, true);
-        document.getElementById("gui").addEventListener("mouseup", SDL.receiveEvent, true);
       }
 
       function gengine_execute(text) {
         Module.execute(text);
       }
-
     </script>
     {{{ SCRIPT }}}
   </body>
