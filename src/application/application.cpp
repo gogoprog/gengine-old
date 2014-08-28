@@ -40,7 +40,7 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_FUNCTION(setName);
     SCRIPT_TABLE_PUSH_FUNCTION(setExtent);
-    lua_setglobal(state,"application");
+    lua_setfield(state, -2, "application");
 }
 
 }

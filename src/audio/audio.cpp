@@ -19,7 +19,7 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_FUNCTION(playMusic);
 
-    lua_setglobal(state,"audio");
+    lua_setfield(state, -2, "audio");
 }
 
 }

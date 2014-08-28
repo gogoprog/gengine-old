@@ -50,7 +50,7 @@ SCRIPT_REGISTERER()
     AtlasManager::luaRegister(state);
     lua_setfield(state, -2, "atlas");
 
-    lua_setglobal(state,"graphics");
+    lua_setfield(state, -2, "graphics");
 }
 
 }
