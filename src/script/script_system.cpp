@@ -46,6 +46,49 @@ void System::init()
 
     lua_setfield(state, -2, "stateMachine");
 
+    SCRIPT_DO(
+        return function(key, value, t)
+            for i=1,t do io.write("    ") end
+            print(key)
+            for i=1,t+1 do io.write("    ") end
+            print("Functions:")
+            for k, v in pairs(value) do
+                if type(v) == "function" and k:sub(1,2) ~= "__" then
+                    for i=1,t+2 do io.write("    ") end
+                    print(k.."(...)")
+                end
+            end
+            local first = true
+            for k, v in pairs(value) do
+                if type(v) == "table" then
+                    if first then
+                        for i=1,t+1 do io.write("    ") end
+                        print("Subtables:")
+                        first = false
+                    end
+                    gengine.describeTable(k, v, t+2)
+                end
+            end
+        end
+        );
+
+    lua_setfield(state, -2, "describeTable");
+
+    SCRIPT_DO(
+        return function()
+            print("Help:")
+            print("    Components:")
+            for k, v in pairs(_G) do
+                if k:sub(1,9) == "Component" then
+                    gengine.describeTable(k, v, 2)
+                end
+            end
+            gengine.describeTable("gengine:", gengine, 1)
+        end
+        );
+
+    lua_setfield(state, -2, "help");
+
     application::luaRegister(state);
 
     lua_setglobal(state, "gengine");
