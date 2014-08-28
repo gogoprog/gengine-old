@@ -125,7 +125,7 @@ SCRIPT_CLASS_REGISTERER(System)
 
     lua_pop(state, 1);
 
-    lua_setglobal(state,"entity");
+    lua_setfield(state, -2, "entity");
 
     registerComponent<ComponentSprite>(state, "ComponentSprite");
     registerComponent<ComponentCamera>(state, "ComponentCamera");

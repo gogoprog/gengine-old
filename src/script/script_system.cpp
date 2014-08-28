@@ -21,6 +21,8 @@ void System::init()
     state = luaL_newstate();
     luaL_openlibs(state);
 
+    lua_newtable(state);
+
     SCRIPT_DO(
         return function(_class)
             _class.onStateEnter = {}
@@ -42,9 +44,11 @@ void System::init()
         end
         );
 
-    lua_setglobal(state,"stateMachine");
+    lua_setfield(state, -2, "stateMachine");
 
     application::luaRegister(state);
+
+    lua_setglobal(state, "gengine");
 
     SCRIPT_DO(
         function __init()
@@ -65,11 +69,15 @@ void System::finalize()
 
 void System::init2()
 {
+    lua_getglobal(state, "gengine");
+
     graphics::luaRegister(state);
     input::luaRegister(state);
     entity::luaRegister(state);
     gui::luaRegister(state);
     audio::luaRegister(state);
+
+    lua_pop(state, 1);
 }
 
 void System::executeFile(const char * file)

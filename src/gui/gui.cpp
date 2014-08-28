@@ -31,9 +31,9 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
 
     SCRIPT_TABLE_PUSH_FUNCTION(loadFile);
-    SCRIPT_TABLE_PUSH_FUNCTION(executeScript);    
+    SCRIPT_TABLE_PUSH_FUNCTION(executeScript);
 
-    lua_setglobal(state,"gui");
+    lua_setfield(state, -2, "gui");
 }
 
 }

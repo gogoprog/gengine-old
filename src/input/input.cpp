@@ -17,7 +17,7 @@ SCRIPT_REGISTERER()
     system.getMouse(0).luaRegister(state);
     lua_setfield(state, -2, "mouse");
 
-    lua_setglobal(state, "input");
+    lua_setfield(state, -2, "input");
 }
 
 }
