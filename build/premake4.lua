@@ -69,10 +69,8 @@ solution "gengine"
 
         configuration "not *Emscripten"
             if os.is("linux") then
-                includedirs { "../deps/common/libluasocket/" }
                 includedirs { "../deps/linux/include" }
                 includedirs { "../deps/linux/include/cef" }
-                libdirs  { "../deps/common/libluasocket/" }
                 links {
                     "SDL2",
                     "SDL2_image",
