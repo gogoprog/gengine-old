@@ -33,12 +33,45 @@ bool Texture::setFromFile(const char * filename)
 
     if(image)
     {
-
         if((image->w & (image->w - 1)) || (image->h & (image->h - 1)))
         {
             SDL_FreeSurface (image);
 
             geDebugRawLog("Failed! Non-power-of-2. " << image->w << "x" << image->h);
+
+            return false;
+        }
+
+        int bpp = image->format->BytesPerPixel;
+        GLenum texture_format;
+
+        if(bpp == 4)
+        {
+            if(image->format->Rmask == 0x000000ff)
+            {
+                texture_format = GL_RGBA;
+            }
+            else
+            {
+                texture_format = GL_BGRA;
+            }
+        }
+        else if(bpp == 3)
+        {
+            if(image->format->Rmask == 0x000000ff)
+            {
+                texture_format = GL_RGB;
+            }
+            else
+            {
+                texture_format = GL_BGR;
+            }
+        }
+        else
+        {
+            SDL_FreeSurface (image);
+
+            geDebugRawLog("Failed! Unsupported format");
 
             return false;
         }
@@ -51,7 +84,7 @@ bool Texture::setFromFile(const char * filename)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+        glTexImage2D(GL_TEXTURE_2D, 0, bpp, image->w, image->h, 0, texture_format, GL_UNSIGNED_BYTE, image->pixels);
 
         width = image->w;
         height = image->h;
