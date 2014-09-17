@@ -33,7 +33,9 @@ void System::init()
             setmetatable(_class.onStateExit, { __index = function(t,k) return function() end end })
 
             _class.changeState = function(s, state)
-                s.onStateExit[s.state](s)
+                local old_state = s.state
+                s.state = nil
+                s.onStateExit[old_state](s)
                 s.onStateEnter[state](s)
                 s.state = state
             end
