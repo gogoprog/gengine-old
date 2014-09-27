@@ -46,11 +46,9 @@ void App::OnContextInitialized()
     window_info.SetAsOffScreen(nullptr);
     window_info.SetTransparentPainting(true);
 
-    CefRefPtr<Handler> handler(& System::getInstance().getHandler());
-
     CefBrowserSettings browser_settings;
 
-    System::getInstance().browser = CefBrowserHost::CreateBrowserSync(window_info, handler.get(), "about:blank", browser_settings, nullptr);
+    System::getInstance().browser = CefBrowserHost::CreateBrowserSync(window_info, & System::getInstance().getHandler(), "about:blank", browser_settings, nullptr);
 }
 
 void App::OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar)

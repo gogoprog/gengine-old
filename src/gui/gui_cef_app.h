@@ -24,7 +24,7 @@ public:
 
 private:
 
-    IMPLEMENT_REFCOUNTING(SimpleApp);
+    IMPLEMENT_REFCOUNTING(App);
 };
 
 }

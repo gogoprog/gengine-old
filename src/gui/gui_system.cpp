@@ -113,10 +113,11 @@ void System::update(const float dt)
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
             }
 
-            if(mouse._isDown(3))
+            #ifdef _WINDOWS // note: required since there is a bug in CEF on Linux
             {
-                browser->GetHost()->SendMouseMoveEvent(mouse_event, true);
+                browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
             }
+            #endif
         }
 
         CefDoMessageLoopWork();

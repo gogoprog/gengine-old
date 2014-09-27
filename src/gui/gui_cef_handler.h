@@ -35,9 +35,9 @@ public:
     virtual bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
     virtual void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
 
-    CefRefPtr<CefRenderHandler> GetRenderHandler() { return this; }
+    virtual CefRefPtr<CefRenderHandler> GetRenderHandler() override { return this; }
 
-    IMPLEMENT_REFCOUNTING(BrowserClient);
+    IMPLEMENT_REFCOUNTING(Handler)
 
 private:
     graphics::Shader
