@@ -78,6 +78,21 @@ SCRIPT_REGISTERER()
 
     lua_setfield(state, -2, "addComponent");
 
+    SCRIPT_DO(
+        return function(self, name)
+            for k, v in ipairs(self.components) do
+                if v.name == name then
+                    table.remove(self.components, v)
+                    break
+                end
+            end
+
+            self[name] = nil
+        end
+        );
+
+    lua_setfield(state, -2, "removeComponent");
+
     metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
 
     lua_rawgeti(state, LUA_REGISTRYINDEX, metaTableRef);
