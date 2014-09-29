@@ -2,6 +2,7 @@
 
 #include "primitives.h"
 #include "script.h"
+#include "core.h"
 #include <string>
 
 namespace gengine
@@ -30,6 +31,12 @@ SCRIPT_FUNCTION(setExtent)
     return 0;
 }
 
+SCRIPT_FUNCTION(quit)
+{
+    core::setMustQuit(true);
+    return 0;
+}
+
 const char * getName() { return name.c_str(); }
 uint getWidth() { return width; }
 uint getHeight() { return height; }
@@ -40,6 +47,7 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_FUNCTION(setName);
     SCRIPT_TABLE_PUSH_FUNCTION(setExtent);
+    SCRIPT_TABLE_PUSH_FUNCTION(quit);
     lua_setfield(state, -2, "application");
 }
 

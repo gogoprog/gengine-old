@@ -120,6 +120,11 @@ void update()
     ++frameIndex;
 }
 
+void setMustQuit(const bool it_must_quit)
+{
+    itMustQuit = it_must_quit;
+}
+
 void handleEvents()
 {
     SDL_Event e;
