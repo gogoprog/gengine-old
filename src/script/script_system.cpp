@@ -134,7 +134,10 @@ void System::executeFile(const char * file)
 
 void System::executeText(const char * text)
 {
-    luaL_dostring(state, text);
+    static std::string before("return function() ");
+    static std::string after(" end");
+    luaL_dostring(state, (before + text + after).c_str());
+    call(0, 0);
 }
 
 void System::call(const char * name)
