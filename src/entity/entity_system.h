@@ -93,9 +93,9 @@ private:
     static void pushTransform(lua_State * state, const Transform & transform);
 
     Array<int>
-        refTable;
-    Array<int>
-        refToRemoveTable;
+        refTable,
+        refToRemoveTable,
+        refToUpdateTable;
     float
         currentDt;
 };

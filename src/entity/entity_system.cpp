@@ -31,15 +31,15 @@ void System::update(const float dt)
     lua_State * state = script::System::getInstance().getState();
     currentDt = dt;
 
-    for(int ref : refTable)
+    refToUpdateTable = refTable;
+
+    for(int ref : refToUpdateTable)
     {
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
-
         lua_getfield(state, -1, "update");
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
         lua_pushnumber(state, dt);
-        lua_call(state, 2, 0);
-
+        script::System::getInstance().call(2, 0);
         lua_pop(state, 1);
     }
 
