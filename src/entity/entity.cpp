@@ -65,7 +65,8 @@ SCRIPT_REGISTERER()
             if name ~= nil then
                 self[name] = comp
             end
-            rawset(comp,'entity',self)
+            rawset(comp, 'entity', self)
+            rawset(comp, 'name', name)
             table.insert(self.components, comp)
             if params ~= nil then
                 for k,v in pairs(params) do
@@ -82,7 +83,7 @@ SCRIPT_REGISTERER()
         return function(self, name)
             for k, v in ipairs(self.components) do
                 if v.name == name then
-                    table.remove(self.components, v)
+                    table.remove(self.components, k)
                     break
                 end
             end
