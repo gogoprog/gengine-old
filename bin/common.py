@@ -77,7 +77,7 @@ def packHtml():
     current_dir = os.getcwd()
     basename = os.path.basename(os.path.normpath(targetDir))
     os.chdir(os.environ['GENGINE']+"/build")
-    os.system("emcc --bind gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "@ -s TOTAL_MEMORY=64000000 --shell-file " + rootPath + "/src/template.html")
+    os.system("emcc " + ('' if debugMode else '-O3') + " --bind gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "@ -s TOTAL_MEMORY=8388608 --shell-file " + rootPath + "/src/template.html")
     os.chdir(current_dir)
 
     if itMustRun:
