@@ -75,11 +75,17 @@ def run():
 def packHtml():
     log("Packing html...")
     current_dir = os.getcwd()
+    os.system("rm -rf out")
     basename = os.path.basename(os.path.normpath(targetDir))
     os.chdir(os.environ['GENGINE']+"/build")
     os.system("emcc " + ('' if debugMode else '-O3') + " --bind gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "@ -s TOTAL_MEMORY=8388608 --shell-file " + rootPath + "/src/template.html")
     os.chdir(current_dir)
-
+    os.system("mkdir -p out/gui")
+    os.system("cp gui/* out/")
+    os.system("rm out/*.html")
+    os.system("mv *.js *.html *.data *.mem out/")
+    os.system("cp gui/*.html out/gui/")
     if itMustRun:
+        os.chdir(current_dir + "/out/")
         os.system("emrun " + basename + ".html")
 
