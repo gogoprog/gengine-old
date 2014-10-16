@@ -6,6 +6,8 @@
 
 #include "primitives.h"
 #include "include/cef_app.h"
+#include "include/cef_request_handler.h"
+
 namespace gengine
 {
 namespace gui

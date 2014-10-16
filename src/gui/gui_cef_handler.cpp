@@ -9,6 +9,12 @@
 #include "graphics_system.h"
 #include "script_system.h"
 
+#ifdef _WINDOWS
+    #include <direct.h>
+#else
+    #include "unistd.h"
+#endif
+
 namespace gengine
 {
 namespace gui
@@ -146,6 +152,33 @@ void Handler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, cons
     glBindTexture(GL_TEXTURE_2D, 0);
 
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+}
+
+bool Handler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request)
+{
+    std::string initial_url = request->GetURL().ToString().c_str();
+
+    if(initial_url.substr(0,12) == "file:///gui/")
+    {
+        char cwd[1024];
+        std::string file_path, final_url;
+
+        final_url = "file://";
+
+        #ifdef _WINDOWS
+            final_url += _getcwd(cwd, 1024);
+        #else
+            final_url += getcwd(cwd, 1024);
+        #endif
+
+        file_path = initial_url.substr(7);
+
+        final_url += file_path;
+
+        request->SetURL(final_url);
+    }
+
+    return false;
 }
 
 }
