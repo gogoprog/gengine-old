@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-if [[ "$0" == "bash" ]]; then
-    SRC=${BASH_SOURCE}
+if [[ ${SHELL} == "/bin/bash" ]]; then
+	SRC=${BASH_SOURCE}
 else
-    SRC=$0
+	SRC=$0
 fi
 
 BIN_DIR=$(dirname $(readlink -e ${SRC}))
