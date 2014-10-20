@@ -25,7 +25,8 @@ solution "gengine"
             }
 
         links {
-            "lua"
+            "lua",
+            "dl"
             }
 
         flags {
