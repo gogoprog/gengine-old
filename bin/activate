@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-if [[ "$0" == "bash" ]]; then
+if [[ ${SHELL} == "/bin/bash" ]]; then
     SRC=${BASH_SOURCE}
 else
     SRC=$0
@@ -12,7 +12,7 @@ BASEDIR=${BIN_DIR%/*}
 export PATH=${PATH}:${BASEDIR}/bin
 export GENGINE=${BASEDIR}
 
-if [[ "$0" == "bash" ]]; then
+if [[ ${SHELL} == "/bin/bash" ]]; then
     export PS1="[gengine]${PS1}"
 else
     export PROMPT="[gengine]${PROMPT}"
