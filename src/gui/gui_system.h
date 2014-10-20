@@ -24,10 +24,10 @@ public:
     void executeScript(const char *code);
 
 #ifndef EMSCRIPTEN
-    Handler & getHandler() { return handler; }
+    Handler & getHandler() { return * handler; }
 
 private:
-    Handler
+    CefRefPtr<Handler>
         handler;
     CefRefPtr<CefBrowser>
         browser;

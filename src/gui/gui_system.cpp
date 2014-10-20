@@ -65,7 +65,8 @@ void System::init(int argc, char *argv[])
 
         CefRefPtr<App> app(new App);
 
-        handler.init();
+        handler = new Handler();
+        handler->init();
 
         CefSettings settings;
         memset(&settings, 0, sizeof(CefSettings));
@@ -100,9 +101,12 @@ void System::finalize()
 {
     #ifndef EMSCRIPTEN
     {
-        handler.finalize();
-
         CefQuitMessageLoop();
+
+        handler->finalize();
+        handler = nullptr;
+        browser = nullptr;
+
         CefShutdown();
     }
     #endif
@@ -140,7 +144,7 @@ void System::update(const float dt)
 
         CefDoMessageLoopWork();
 
-        handler.update();
+        handler->update();
     }
     #endif
 }
@@ -149,7 +153,7 @@ void System::render()
 {
     #ifndef EMSCRIPTEN
     {
-        handler.render();
+        handler->render();
     }
     #endif
 }
