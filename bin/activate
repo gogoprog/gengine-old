@@ -6,7 +6,7 @@ else
     SRC=$0
 fi
 
-BIN_DIR=$(dirname $(readlink -e ${SRC}))
+BIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BASEDIR=${BIN_DIR%/*}
 
 export PATH=${PATH}:${BASEDIR}/bin
