@@ -40,6 +40,10 @@ void System::playMusic(const char *path)
     Mix_PlayMusic(music, 0);
 }
 
+void System::playSound(const Sound *sound)
+{
+    Mix_PlayChannel(-1, sound->chunk, 0);
+}
 
 }
 }
