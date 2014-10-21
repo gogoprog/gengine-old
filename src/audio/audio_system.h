@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "primitives.h"
+#include "audio_sound.h"
 
 namespace gengine
 {
@@ -17,6 +18,7 @@ public:
     void finalize();
 
     void playMusic(const char *path);
+    void playSound(const Sound *sound);
 
 private:
 
