@@ -8,6 +8,7 @@
 #include "entity.h"
 #include "gui.h"
 #include "audio.h"
+#include "core.h"
 
 namespace gengine
 {
@@ -169,9 +170,11 @@ void System::call(const uint nargs, const uint nresults)
     {
     case LUA_ERRRUN:
         geLog("script: runtime error");
+        core::setMustQuit(true);
         break;
     case LUA_ERRMEM:
         geLog("script: memory allocation error");
+        core::setMustQuit(true);
         break;
     default:
         break;
