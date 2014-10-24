@@ -41,9 +41,41 @@ Vector2
 SCRIPT_CLASS_REGISTERER(Vector2)
 {
     SCRIPT_DO(
+        vector2_mt = {
+            __tostring = function(t)
+                return "(" .. string.format("%0.2f", t.x) .. ", " .. string.format("%0.2f", t.y) .. ")"
+            end,
+            __index = {
+                set = function(t, x, y)
+                    if type(x) == "number" then
+                        t.x = x
+                        t.y = y
+                    else
+                        t.x = x[1]
+                        t.y = x[2]
+                    end
+                end
+            },
+            __unm = function(t)
+                return vector2(-t.x, -t.y)
+            end,
+            __add = function(a, b)
+                return vector2(a.x + b.x, a.y + b.y)
+            end,
+            __sub = function(a, b)
+                return vector2(a.x - b.x, a.y - b.y)
+            end,
+            __mul = function(a, b)
+                return vector2(a.x * b, a.y * b)
+            end,
+            __div = function(a, b)
+                return vector2(a.x / b, a.y / b)
+            end
+        }
+
         function vector2(_x, _y)
             local r = {x=_x or 0, y=_y or 0}
-
+            setmetatable(r, vector2_mt)
             return r
         end
         );
