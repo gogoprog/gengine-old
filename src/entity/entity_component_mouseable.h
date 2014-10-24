@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "primitives.h"
+#include "vector2.h"
 
 namespace gengine
 {
