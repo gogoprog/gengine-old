@@ -20,7 +20,49 @@ Vector4
 
 SCRIPT_CLASS_REGISTERER(Vector4)
 {
+    SCRIPT_DO(
+        vector2_mt = {
+            __tostring = function(t)
+                return "(" .. string.format("%0.2f", t.x) .. ", " .. string.format("%0.2f", t.y) .. ", " .. string.format("%0.2f", t.z) .. ", " .. string.format("%0.2f", t.w) .. ")"
+            end,
+            __index = {
+                set = function(t, x, y, z, w)
+                    if type(x) == "number" then
+                        t.x = x
+                        t.y = y
+                        t.z = z
+                        t.w = w
+                    else
+                        t.x = x[1]
+                        t.y = x[2]
+                        t.z = x[3]
+                        t.w = x[4]
+                    end
+                end
+            },
+            __unm = function(t)
+                return vector2(-t.x, -t.y, -t.z, -t.w)
+            end,
+            __add = function(a, b)
+                return vector2(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w)
+            end,
+            __sub = function(a, b)
+                return vector2(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w)
+            end,
+            __mul = function(a, b)
+                return vector2(a.x * b, a.y * b, a.w * b, a.z * b)
+            end,
+            __div = function(a, b)
+                return vector2(a.x / b, a.y / b, a.w / b, a.z / b)
+            end
+        }
 
+        function vector4(_x, _y, _z, _w)
+            local r = {x=_x or 0, y=_y or 0, z=_z or 0, w=_w or 0}
+            setmetatable(r, vector4_mt)
+            return r
+        end
+        );
 }
 
 void Vector4::fill(lua_State * state, Vector4 & result, int position)
