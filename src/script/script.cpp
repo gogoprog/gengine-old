@@ -15,33 +15,6 @@ namespace gengine
 namespace script
 {
 
-void fillVector2(lua_State * state, Vector2 & result, int position)
-{
-    lua_getfield(state, position, "x");
-    result.x = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-
-    lua_getfield(state, position, "y");
-    result.y = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-}
-
-void fillTableVector2Safe(lua_State * state, Vector2 & result, const char * name, int table_position, const Vector2 default_value)
-{
-    lua_getfield(state, table_position, name);
-
-    if(lua_isnil(state, -1))
-    {
-        result =  default_value;
-    }
-    else
-    {
-        fillVector2(state, result);
-    }
-
-    lua_pop(state, 1);
-}
-
 void fillVector4(lua_State * state, Vector4 & result, int position)
 {
     lua_getfield(state, position, "x");
@@ -61,7 +34,7 @@ void fillVector4(lua_State * state, Vector4 & result, int position)
     lua_pop(state, 1);
 }
 
-void fillTableVector4Safe(lua_State * state, Vector4 & result, const char * name, int table_position, const Vector4 default_value)
+void fillTableVector4Safe(lua_State * state, Vector4 & result, const char * name, int table_position, const Vector4 & default_value)
 {
     lua_getfield(state, table_position, name);
 

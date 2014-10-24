@@ -9,6 +9,7 @@
 #include "gui.h"
 #include "audio.h"
 #include "core.h"
+#include "kernel.h"
 
 namespace gengine
 {
@@ -117,6 +118,7 @@ void System::init2()
 {
     lua_getglobal(state, "gengine");
 
+    kernel::luaRegister(state);
     graphics::luaRegister(state);
     input::luaRegister(state);
     entity::luaRegister(state);

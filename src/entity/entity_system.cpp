@@ -142,10 +142,14 @@ SCRIPT_CLASS_FUNCTION(System, create)
 {
     lua_newtable(state);
 
-    lua_newtable(state);
+    /*lua_newtable(state);
 
     SCRIPT_TABLE_PUSH_NUMBER(x, 0);
-    SCRIPT_TABLE_PUSH_NUMBER(y, 0);
+    SCRIPT_TABLE_PUSH_NUMBER(y, 0);*/
+
+    SCRIPT_DO(
+        return vector2()
+        );
 
     lua_setfield(state, -2, "position");
 

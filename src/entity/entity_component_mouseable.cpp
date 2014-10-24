@@ -38,7 +38,7 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, newIndex)
 
     if(!strcmp(key, "extent"))
     {
-        script::fillVector2(state, self.extent, 3);
+        Vector2::fill(state, self.extent, 3);
     }
     else if(!strcmp(key, "world"))
     {

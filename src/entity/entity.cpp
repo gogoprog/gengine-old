@@ -121,7 +121,7 @@ SCRIPT_REGISTERER()
 void fillTransform(lua_State *state, Transform & transform, const int position)
 {
     lua_getfield(state, position, "position");
-    script::fillVector2(state, transform.position);
+    Vector2::fill(state, transform.position);
     lua_pop(state, 1);
 
     lua_getfield(state, position, "rotation");

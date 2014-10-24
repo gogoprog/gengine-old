@@ -38,7 +38,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, newIndex)
 
     if(!strcmp(key,"extent"))
     {
-        script::fillVector2(state, self.camera.getExtent(), 3);
+        Vector2::fill(state, self.camera.getExtent(), 3);
     }
     else if(!strcmp(key,"world"))
     {
