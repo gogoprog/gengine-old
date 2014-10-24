@@ -15,7 +15,8 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
 
     system.getMouse(0).luaRegister(state);
-    lua_setfield(state, -2, "mouse");
+
+    system.getKeyboard().luaRegister(state);
 
     lua_setfield(state, -2, "input");
 }
