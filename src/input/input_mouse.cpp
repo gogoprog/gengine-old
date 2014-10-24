@@ -1,7 +1,6 @@
 #include "input_mouse.h"
 
 #include "script.h"
-#include "debug.h"
 #include <string.h>
 
 namespace gengine
@@ -16,6 +15,11 @@ Mouse::Mouse()
 {
     memset(buttonStateTable, 0, sizeof(ButtonState) * BUTTON_COUNT);
     memset(previousButtonStateTable, 0, sizeof(ButtonState) * BUTTON_COUNT);
+}
+
+void Mouse::update()
+{
+    memcpy(previousButtonStateTable, buttonStateTable, sizeof(ButtonState) * BUTTON_COUNT );
 }
 
 bool Mouse::_isJustDown(const uint button_index) const
@@ -47,6 +51,8 @@ SCRIPT_CLASS_REGISTERER(Mouse) const
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Mouse, isJustDown);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Mouse, isJustUp);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Mouse, getPosition);
+
+    lua_setfield(state, -2, "mouse");
 }
 
 SCRIPT_CLASS_FUNCTION(Mouse, isDown)

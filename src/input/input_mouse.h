@@ -29,6 +29,8 @@ public:
     Mouse();
     SCRIPT_REGISTERER() const;
 
+    void update();
+
     uint getX() const { return x; }
     uint getY() const { return y; }
     bool _isJustDown(const uint button_index) const;

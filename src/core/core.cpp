@@ -162,6 +162,18 @@ void handleEvents()
                 input::System::getInstance().updateMouseButton(0, m->button, input::Mouse::UP);
             }
             break;
+
+            case SDL_KEYDOWN:
+            {
+                input::System::getInstance().updateKeyboardState(e.key.keysym.sym, true);
+            }
+            break;
+
+            case SDL_KEYUP:
+            {
+                input::System::getInstance().updateKeyboardState(e.key.keysym.sym, false);
+            }
+            break;
         }
     }
 }
