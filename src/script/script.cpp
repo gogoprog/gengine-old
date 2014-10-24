@@ -1,6 +1,5 @@
 #include "script.h"
 
-#include "vector2.h"
 #include "script_system.h"
 #include <string>
 
@@ -14,41 +13,6 @@ namespace gengine
 {
 namespace script
 {
-
-void fillVector4(lua_State * state, Vector4 & result, int position)
-{
-    lua_getfield(state, position, "x");
-    result.x = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-
-    lua_getfield(state, position, "y");
-    result.y = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-
-    lua_getfield(state, position, "z");
-    result.z = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-
-    lua_getfield(state, position, "w");
-    result.w = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-}
-
-void fillTableVector4Safe(lua_State * state, Vector4 & result, const char * name, int table_position, const Vector4 & default_value)
-{
-    lua_getfield(state, table_position, name);
-
-    if(lua_isnil(state, -1))
-    {
-        result =  default_value;
-    }
-    else
-    {
-        fillVector4(state, result);
-    }
-
-    lua_pop(state, 1);
-}
 
 int getTableInteger(lua_State * state, const char * name, const int table_position)
 {

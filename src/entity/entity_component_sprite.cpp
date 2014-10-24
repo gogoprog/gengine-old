@@ -55,7 +55,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
     }
     else if(!strcmp(key, "color"))
     {
-        script::fillVector4(state, self.sprite.getColor(), 3);
+        Vector4::fill(state, self.sprite.getColor(), 3);
     }
     else if(!strcmp(key, "alpha"))
     {
