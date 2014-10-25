@@ -16,7 +16,7 @@ public:
     Camera();
     void init();
     void finalize();
-    void update();
+    void update() const;
 
     const Matrix3 & getProjectionMatrix() const { return projectionMatrix; }
     const Vector2 & getPosition() const { return position; }
@@ -30,13 +30,14 @@ public:
     void getWorldPosition(Vector2 & result, const Vector2 & position) const;
 
 private:
-    Matrix3
+    mutable Matrix3
         projectionMatrix;
     Vector2
         position,
-        extent,
+        extent;
+    mutable Vector2
         screenRatio;
-    bool
+    mutable bool
         dirtyProjection,
         dirtyRatio;
 };

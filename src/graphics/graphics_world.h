@@ -17,23 +17,23 @@ class Sprite;
 class World
 {
 friend class System;
+friend class Renderer;
 
 public:
     World();
     void init();
     void finalize();
     void update();
-    void render();
     void addSprite(Sprite & sprite);
     void removeSprite(Sprite & sprite);
     void pushCamera(Camera & camera);
     void popCamera();
-    Camera & getCurrentCamera();
+    const Camera & getCurrentCamera() const;
 
 private:
     static bool compare(Sprite *a, Sprite *b);
 
-    Stack<Camera*>
+    Stack<const Camera*>
         cameraStack;
     Array<Sprite*>
         spriteTable;

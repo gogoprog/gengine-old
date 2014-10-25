@@ -27,7 +27,7 @@ void Camera::finalize()
 
 }
 
-void Camera::update()
+void Camera::update() const
 {
     if(dirtyProjection)
     {

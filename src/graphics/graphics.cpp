@@ -8,6 +8,7 @@
 #include "graphics_texture_manager.h"
 #include "graphics_atlas_manager.h"
 #include "graphics_animation_manager.h"
+#include "vector4.h"
 
 namespace gengine
 {

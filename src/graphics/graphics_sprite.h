@@ -14,6 +14,7 @@ class Texture;
 
 class Sprite
 {
+friend class Renderer;
 friend class World;
 
 public:
