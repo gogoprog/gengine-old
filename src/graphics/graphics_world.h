@@ -12,7 +12,7 @@ namespace graphics
 {
 
 class Camera;
-class Sprite;
+class Object;
 
 class World
 {
@@ -24,19 +24,19 @@ public:
     void init();
     void finalize();
     void update();
-    void addSprite(Sprite & sprite);
-    void removeSprite(Sprite & sprite);
+    void addObject(Object & object);
+    void removeObject(Object & object);
     void pushCamera(Camera & camera);
     void popCamera();
     const Camera & getCurrentCamera() const;
 
 private:
-    static bool compare(Sprite *a, Sprite *b);
+    static bool compare(Object *a, Object *b);
 
     Stack<const Camera*>
         cameraStack;
-    Array<Sprite*>
-        spriteTable;
+    Array<Object*>
+        objectTable;
     Uniform
         projectionMatrixUniform,
         transformMatrixUniform,

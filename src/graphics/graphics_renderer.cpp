@@ -116,27 +116,38 @@ void Renderer::render(const World & world)
 {
     Matrix3 transform_matrix;
 
-    for(Sprite * _sprite : world.spriteTable)
+    for(Object * object : world.objectTable)
     {
-        Sprite & sprite = * _sprite;
+        Type type = object->getRenderType();
+        enable(type, world);
 
-        enable(sprite.getRenderType(), world);
+        switch(type)
+        {
+            case Type::SPRITE:
+            {
+                Sprite & sprite = * dynamic_cast<Sprite *>(object);
 
-        transform_matrix.initIdentity();
-        transform_matrix.setTranslation(sprite.position);
-        transform_matrix.setRotation(sprite.rotation);
-        transform_matrix.preScale(sprite.extent);
+                transform_matrix.initIdentity();
+                transform_matrix.setTranslation(sprite.position);
+                transform_matrix.setRotation(sprite.rotation);
+                transform_matrix.preScale(sprite.extent);
 
-        transformMatrixUniform.apply(transform_matrix);
+                transformMatrixUniform.apply(transform_matrix);
 
-        colorUniform.apply(sprite.color);
+                colorUniform.apply(sprite.color);
 
-        samplerUniform.apply(* sprite.texture);
+                samplerUniform.apply(* sprite.texture);
 
-        uvScaleUniform.apply(sprite.uvScale);
-        uvOffsetUniform.apply(sprite.uvOffset);
+                uvScaleUniform.apply(sprite.uvScale);
+                uvOffsetUniform.apply(sprite.uvOffset);
 
-        indexBufferQuad.draw();
+                indexBufferQuad.draw();
+            }
+            break;
+
+            default:
+            break;
+        }
     }
 
     glUseProgram(0);

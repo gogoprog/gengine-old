@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "graphics_opengl.h"
 #include "graphics_system.h"
-#include "graphics_sprite.h"
+#include "graphics_object.h"
 #include <algorithm>
 
 namespace gengine
@@ -29,17 +29,17 @@ void World::update()
 {
     cameraStack.getTop()->update();
 
-    std::sort(spriteTable.begin(), spriteTable.end(), compare);
+    std::sort(objectTable.begin(), objectTable.end(), compare);
 }
 
-void World::addSprite(Sprite & sprite)
+void World::addObject(Object & object)
 {
-    spriteTable.add(&sprite);
+    objectTable.add(&object);
 }
 
-void World::removeSprite(Sprite & sprite)
+void World::removeObject(Object & object)
 {
-    spriteTable.remove(&sprite);
+    objectTable.remove(&object);
 }
 
 void World::pushCamera(Camera & camera)
@@ -57,7 +57,7 @@ const Camera & World::getCurrentCamera() const
     return * cameraStack.getTop();
 }
 
-bool World::compare(Sprite *a, Sprite *b)
+bool World::compare(Object *a, Object *b)
 {
     return a->layer < b->layer || ( a->layer == b->layer && a > b);
 }
