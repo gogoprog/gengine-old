@@ -40,6 +40,8 @@ const char fragment_shader_source[] = GL_GLSL(
 );
 
 Renderer::Renderer()
+    :
+    currentType(Type::NONE)
 {
 }
 
@@ -114,14 +116,11 @@ void Renderer::render(const World & world)
 {
     Matrix3 transform_matrix;
 
-    defaultProgram.use();
-    vertexBufferQuad.apply();
-
-    projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
-
     for(Sprite * _sprite : world.spriteTable)
     {
         Sprite & sprite = * _sprite;
+
+        enable(sprite.renderType, world);
 
         transform_matrix.initIdentity();
         transform_matrix.setTranslation(sprite.position);
@@ -141,6 +140,29 @@ void Renderer::render(const World & world)
     }
 
     glUseProgram(0);
+    currentType = Type::NONE;
+}
+
+void Renderer::enable(const Type type, const World & world)
+{
+    if(currentType != type)
+    {
+        switch(type)
+        {
+            case Type::SPRITE:
+            {
+                defaultProgram.use();
+                vertexBufferQuad.apply();
+                projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
+            }
+            break;
+
+            default:
+            break;
+        };
+
+        currentType = type;
+    }
 }
 
 }

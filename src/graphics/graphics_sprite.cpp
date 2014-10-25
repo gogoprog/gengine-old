@@ -15,8 +15,10 @@ Sprite::Sprite()
     texture(nullptr),
     layer(0)
 {
-
 }
+
+Renderer::Type
+    Sprite::renderType(Renderer::Type::SPRITE);
 
 }
 }

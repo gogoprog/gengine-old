@@ -29,12 +29,20 @@ public:
         float u, v;
     };
 
+    enum class Type
+    {
+        SPRITE,
+        NONE
+    };
+
     Renderer();
     void init();
     void finalize();
     void render(const World & world);
 
 private:
+    void enable(const Type type, const World & world);
+
     Shader
         defaultVertexShader,
         defaultFragmentShader;
@@ -51,6 +59,8 @@ private:
         colorUniform,
         uvScaleUniform,
         uvOffsetUniform;
+    Type
+        currentType;
 };
 
 }
