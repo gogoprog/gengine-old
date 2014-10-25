@@ -4,6 +4,7 @@
 #include "vector2.h"
 #include "vector4.h"
 #include "matrix3.h"
+#include "graphics_renderer.h"
 
 namespace gengine
 {
@@ -14,6 +15,7 @@ class Texture;
 
 class Sprite
 {
+friend class Renderer;
 friend class World;
 
 public:
@@ -54,6 +56,8 @@ private:
         * texture;
     int
         layer;
+    static Renderer::Type
+        renderType;
 };
 
 }
