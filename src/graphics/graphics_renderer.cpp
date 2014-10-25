@@ -120,7 +120,7 @@ void Renderer::render(const World & world)
     {
         Sprite & sprite = * _sprite;
 
-        enable(sprite.renderType, world);
+        enable(sprite.getRenderType(), world);
 
         transform_matrix.initIdentity();
         transform_matrix.setTranslation(sprite.position);
