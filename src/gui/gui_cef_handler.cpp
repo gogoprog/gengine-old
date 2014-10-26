@@ -103,7 +103,7 @@ void Handler::render()
 
     samplerUniform.apply(texture);
 
-    system.getIndexBufferQuad().draw();
+    system.getIndexBufferQuad().draw(6);
 
     glUseProgram(0);
 }

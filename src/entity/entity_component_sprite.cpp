@@ -105,7 +105,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, insert)
 {
     SCRIPT_GET_SELF(ComponentSprite);
 
-    graphics::System::getInstance().getWorld(self.worldIndex).addSprite(self.sprite);
+    graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.sprite);
 
     return 0;
 }
@@ -129,7 +129,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, remove)
 {
     SCRIPT_GET_SELF(ComponentSprite);
 
-    graphics::System::getInstance().getWorld(self.worldIndex).removeSprite(self.sprite);
+    graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.sprite);
 
     return 0;
 }

@@ -10,6 +10,7 @@
 #include "graphics_vertex_buffer.h"
 #include "graphics_index_buffer.h"
 #include "graphics_shader.h"
+#include "graphics_vertex.h"
 
 namespace gengine
 {
@@ -23,15 +24,10 @@ class Renderer
 public:
     friend class System;
 
-    struct Vertex
-    {
-        float x, y;
-        float u, v;
-    };
-
     enum class Type
     {
         SPRITE,
+        SPRITE_BATCH,
         NONE
     };
 

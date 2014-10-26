@@ -20,8 +20,7 @@ public:
 
 private:
     uint
-        id,
-        count;
+        id;
 };
 
 }

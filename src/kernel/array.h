@@ -30,6 +30,16 @@ public:
         array.erase(array.begin() + index);
     }
 
+    void reserve(const int size)
+    {
+        array.reserve(size);
+    }
+
+    void setSize(const int size)
+    {
+        array.resize(size);
+    }
+
     T & operator[](const int index)
     {
         return array[index];
@@ -38,6 +48,11 @@ public:
     const T & operator[](const int index) const
     {
         return array[index];
+    }
+
+    T & getLast()
+    {
+        return array[array.size() - 1];
     }
 
     uint getSize() const { return array.size(); }
