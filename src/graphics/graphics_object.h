@@ -23,7 +23,6 @@ public:
         position(Vector2(- 1000000.0f, - 1000000.0f)),
         color(1.0f, 1.0f, 1.0f, 1.0f),
         rotation(0.0f),
-        texture(nullptr),
         layer(0)
     {
     }
@@ -39,7 +38,6 @@ public:
     void setColor(const Vector4 & _color) { color = _color; }
     void setColorAlpha(const float alpha) { color.w = alpha; }
     void setRotation(const float angle) { rotation = angle; }
-    void setTexture(const Texture & _texture) { texture = & _texture; }
     void setLayer(const int _layer) { layer = _layer; }
 
 protected:
@@ -49,8 +47,6 @@ protected:
         color;
     float
         rotation;
-    const Texture
-        * texture;
     int
         layer;
 };

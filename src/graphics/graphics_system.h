@@ -7,6 +7,7 @@
 #include "graphics_renderer.h"
 #include "script.h"
 #include "array.h"
+#include "graphics_vertex.h"
 
 namespace gengine
 {
@@ -28,7 +29,7 @@ public:
 
     World & getWorld(const uint index);
 
-    VertexBuffer<Renderer::Vertex> & getVertexBufferQuad() { return renderer.vertexBufferQuad; }
+    VertexBuffer<Vertex> & getVertexBufferQuad() { return renderer.vertexBufferQuad; }
     IndexBuffer & getIndexBufferQuad() { return renderer.indexBufferQuad; }
 
     Camera & getDefaultCamera() { return defaultCamera; }

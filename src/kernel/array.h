@@ -30,6 +30,11 @@ public:
         array.erase(array.begin() + index);
     }
 
+    void reserve(const int size)
+    {
+        array.reserve(size);
+    }
+
     T & operator[](const int index)
     {
         return array[index];

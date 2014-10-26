@@ -11,12 +11,9 @@ namespace gengine
 namespace graphics
 {
 
-class Texture;
-
 class Sprite : public Object
 {
 friend class Renderer;
-friend class World;
 
 public:
     Sprite();
@@ -33,12 +30,15 @@ public:
     void setExtent(const Vector2 & _extent) { extent = _extent; }
     void setUvScale(const Vector2 & uv_scale) { uvScale = uv_scale; }
     void setUvOffset(const Vector2 & uv_offset) { uvOffset = uv_offset; }
+    void setTexture(const Texture & _texture) { texture = & _texture; }
 
 private:
     Vector2
         extent,
         uvScale,
         uvOffset;
+    const Texture
+        * texture;
 };
 
 }
