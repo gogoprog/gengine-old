@@ -1,7 +1,35 @@
 #include "vector2.h"
 
+#include <cmath>
+
 namespace gengine
 {
+
+SCRIPT_FUNCTION(localGetDistance)
+{
+    Vector2 a, b;
+
+    Vector2::fill(state, a, 1);
+    Vector2::fill(state, b, 2);
+
+    float d = Vector2::getDistance(a, b);
+    lua_pushnumber(state, d);
+
+    return 1;
+}
+
+SCRIPT_FUNCTION(localGetSquareDistance)
+{
+    Vector2 a, b;
+
+    Vector2::fill(state, a, 1);
+    Vector2::fill(state, b, 2);
+
+    float d = Vector2::getSquareDistance(a, b);
+    lua_pushnumber(state, d);
+
+    return 1;
+}
 
 Vector2::Vector2(const float _x, const float _y)
     :
@@ -79,6 +107,9 @@ SCRIPT_CLASS_REGISTERER(Vector2)
             return r
         end
         );
+
+    SCRIPT_TABLE_PUSH_FUNCTION2(localGetDistance, getDistance);
+    SCRIPT_TABLE_PUSH_FUNCTION2(localGetSquareDistance, getSquareDistance);
 }
 
 void Vector2::fill(lua_State * state, Vector2 & result, int position)
@@ -108,10 +139,19 @@ void Vector2::fillTableSafe(lua_State * state, Vector2 & result, const char * na
     lua_pop(state, 1);
 }
 
+float Vector2::getDistance(const Vector2 & a, const Vector2 & b)
+{
+    return sqrt((b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y));
+}
+
+float Vector2::getSquareDistance(const Vector2 & a, const Vector2 & b)
+{
+    return (b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y);
+}
+
 Vector2 operator*(const Vector2 & vector, const float multiplier)
 {
     return Vector2(vector.x * multiplier, vector.y * multiplier);
 }
-
 
 }
