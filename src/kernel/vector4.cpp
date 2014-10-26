@@ -21,7 +21,7 @@ Vector4
 SCRIPT_CLASS_REGISTERER(Vector4)
 {
     SCRIPT_DO(
-        vector2_mt = {
+        vector4_mt = {
             __tostring = function(t)
                 return "(" .. string.format("%0.2f", t.x) .. ", " .. string.format("%0.2f", t.y) .. ", " .. string.format("%0.2f", t.z) .. ", " .. string.format("%0.2f", t.w) .. ")"
             end,
