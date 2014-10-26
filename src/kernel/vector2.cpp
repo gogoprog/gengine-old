@@ -18,6 +18,19 @@ SCRIPT_FUNCTION(localGetDistance)
     return 1;
 }
 
+SCRIPT_FUNCTION(localGetSquareDistance)
+{
+    Vector2 a, b;
+
+    Vector2::fill(state, a, 1);
+    Vector2::fill(state, b, 2);
+
+    float d = Vector2::getSquareDistance(a, b);
+    lua_pushnumber(state, d);
+
+    return 1;
+}
+
 Vector2::Vector2(const float _x, const float _y)
     :
     x(_x),
@@ -96,6 +109,7 @@ SCRIPT_CLASS_REGISTERER(Vector2)
         );
 
     SCRIPT_TABLE_PUSH_FUNCTION2(localGetDistance, getDistance);
+    SCRIPT_TABLE_PUSH_FUNCTION2(localGetSquareDistance, getSquareDistance);
 }
 
 void Vector2::fill(lua_State * state, Vector2 & result, int position)
