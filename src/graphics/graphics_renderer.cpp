@@ -7,6 +7,8 @@
 #include "graphics_sprite_batch.h"
 #include "graphics_atlas.h"
 
+#define INDEX_BUFFER_SIZE 10200
+
 namespace gengine
 {
 namespace graphics
@@ -50,7 +52,7 @@ Renderer::Renderer()
 void Renderer::init()
 {
     Vertex vertices[4];
-    ushort indices[1020];
+    ushort indices[INDEX_BUFFER_SIZE];
 
     defaultVertexShader.init(GL_VERTEX_SHADER);
     defaultVertexShader.compile(vertex_shader_source);
@@ -83,7 +85,7 @@ void Renderer::init()
     vertices[3].texCoords.u = 0.0f;
     vertices[3].texCoords.v = 1.0f;
 
-    for(uint i=0; i<1020/6; ++i)
+    for(uint i=0; i<INDEX_BUFFER_SIZE/6; ++i)
     {
         indices[i*6 + 0] = i*4 + 0;
         indices[i*6 + 1] = i*4 + 1;
@@ -98,7 +100,7 @@ void Renderer::init()
     vertexBufferQuad.setData(vertices, 4);
 
     indexBufferQuad.init();
-    indexBufferQuad.setData(indices, 1020);
+    indexBufferQuad.setData(indices, INDEX_BUFFER_SIZE);
 
     projectionMatrixUniform.init(defaultProgram, "projectionMatrix");
     transformMatrixUniform.init(defaultProgram, "transformMatrix");

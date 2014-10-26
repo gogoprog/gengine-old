@@ -3,6 +3,7 @@
 #include "graphics_renderer.h"
 #include "graphics_atlas_item.h"
 #include "graphics_atlas.h"
+#include "graphics_texture.h"
 
 namespace gengine
 {
@@ -58,6 +59,20 @@ void SpriteBatch::addItem(const int index, const Vector2 & position, const Vecto
     {
         vertexData.add(vertices[i]);
     }
+}
+
+void SpriteBatch::addItem(const int index, const Vector2 & position)
+{
+    const AtlasItem & atlas_item = atlas->getItem(index);
+    const Vector2 & uv_scale = atlas_item.uvScale;
+    const Texture & texture = atlas->getTexture();
+
+    Vector2 extent;
+
+    extent.x = uv_scale.x * texture.getWidth();
+    extent.y = uv_scale.y * texture.getHeight();
+
+    addItem(index, position, extent);
 }
 
 void SpriteBatch::reserve(const int size)

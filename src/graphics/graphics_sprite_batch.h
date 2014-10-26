@@ -30,6 +30,7 @@ public:
 
     void init();
     void addItem(const int index, const Vector2 & position, const Vector2 & extent);
+    void addItem(const int index, const Vector2 & position);
     void reserve(const int size);
 
     void lock();

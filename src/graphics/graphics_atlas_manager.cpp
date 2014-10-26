@@ -12,10 +12,20 @@ namespace graphics
 bool AtlasManager::internalCreate(Atlas * atlas, script::State state)
 {
     const Texture * texture = reinterpret_cast<const Texture *>(lua_touserdata(state, 2));
-    uint x = lua_tonumber(state, 3);
-    uint y = lua_tonumber(state, 4);
 
-    return atlas->setFromTexture(texture, x, y);
+    if(lua_isnumber(state, 3))
+    {
+        uint x = lua_tonumber(state, 3);
+        uint y = lua_tonumber(state, 4);
+
+        return atlas->setFromTextureAndCellCount(texture, x, y);
+    }
+    else if(lua_istable(state, 3))
+    {
+        return atlas->setFromTextureAndTable(texture, state);
+    }
+
+    return false;
 }
 
 void AtlasManager::internalGetName(char * result, const char * name)

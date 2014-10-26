@@ -139,9 +139,16 @@ SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, addItem)
 
     atlas_item_index = lua_tonumber(state, 2);
     Vector2::fill(state, position, 3);
-    Vector2::fill(state, extent, 4);
 
-    self.spriteBatch.addItem(atlas_item_index, position, extent);
+    if(lua_istable(state, 4))
+    {
+        Vector2::fill(state, extent, 4);
+        self.spriteBatch.addItem(atlas_item_index, position, extent);
+    }
+    else
+    {
+        self.spriteBatch.addItem(atlas_item_index, position);
+    }
 
     return 0;
 }
