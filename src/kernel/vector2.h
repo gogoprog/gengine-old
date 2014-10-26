@@ -14,7 +14,16 @@ struct Vector2
     Vector2 & operator-=(const Vector2 & other);
     Vector2 & operator+=(const Vector2 & other);
 
-    float x,y;
+    union
+    {
+        float x;
+        float u;
+    };
+    union
+    {
+        float y;
+        float v;
+    };
 
     static Vector2
         zero,

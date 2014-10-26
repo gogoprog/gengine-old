@@ -4,6 +4,8 @@
 #include "graphics_opengl.h"
 #include "graphics_system.h"
 #include "graphics_sprite.h"
+#include "graphics_sprite_batch.h"
+#include "graphics_atlas.h"
 
 namespace gengine
 {
@@ -48,7 +50,7 @@ Renderer::Renderer()
 void Renderer::init()
 {
     Vertex vertices[4];
-    ushort indices[6];
+    ushort indices[1020];
 
     defaultVertexShader.init(GL_VERTEX_SHADER);
     defaultVertexShader.compile(vertex_shader_source);
@@ -61,39 +63,42 @@ void Renderer::init()
     defaultProgram.attachShader(defaultFragmentShader);
     defaultProgram.link();
 
-    vertices[0].x = -0.5f;
-    vertices[0].y = 0.5f;
-    vertices[0].u = 0.0f;
-    vertices[0].v = 0.0f;
+    vertices[0].position.x = -0.5f;
+    vertices[0].position.y = 0.5f;
+    vertices[0].texCoords.u = 0.0f;
+    vertices[0].texCoords.v = 0.0f;
 
-    vertices[1].x = 0.5f;
-    vertices[1].y = 0.5f;
-    vertices[1].u = 1.0f;
-    vertices[1].v = 0.0f;
+    vertices[1].position.x = 0.5f;
+    vertices[1].position.y = 0.5f;
+    vertices[1].texCoords.u = 1.0f;
+    vertices[1].texCoords.v = 0.0f;
 
-    vertices[2].x = 0.5f;
-    vertices[2].y = -0.5f;
-    vertices[2].u = 1.0f;
-    vertices[2].v = 1.0f;
+    vertices[2].position.x = 0.5f;
+    vertices[2].position.y = -0.5f;
+    vertices[2].texCoords.u = 1.0f;
+    vertices[2].texCoords.v = 1.0f;
 
-    vertices[3].x = -0.5f;
-    vertices[3].y = -0.5f;
-    vertices[3].u = 0.0f;
-    vertices[3].v = 1.0f;
+    vertices[3].position.x = -0.5f;
+    vertices[3].position.y = -0.5f;
+    vertices[3].texCoords.u = 0.0f;
+    vertices[3].texCoords.v = 1.0f;
 
-    indices[0] = 0;
-    indices[1] = 1;
-    indices[2] = 2;
+    for(uint i=0; i<1020/6; ++i)
+    {
+        indices[i*6 + 0] = i*4 + 0;
+        indices[i*6 + 1] = i*4 + 1;
+        indices[i*6 + 2] = i*4 + 2;
 
-    indices[3] = 2;
-    indices[4] = 3;
-    indices[5] = 0;
+        indices[i*6 + 3] = i*4 + 2;
+        indices[i*6 + 4] = i*4 + 3;
+        indices[i*6 + 5] = i*4 + 0;
+    }
 
     vertexBufferQuad.init();
     vertexBufferQuad.setData(vertices, 4);
 
     indexBufferQuad.init();
-    indexBufferQuad.setData(indices, 6);
+    indexBufferQuad.setData(indices, 1020);
 
     projectionMatrixUniform.init(defaultProgram, "projectionMatrix");
     transformMatrixUniform.init(defaultProgram, "transformMatrix");
@@ -115,6 +120,9 @@ void Renderer::finalize()
 void Renderer::render(const World & world)
 {
     Matrix3 transform_matrix;
+
+    defaultProgram.use();
+    projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
 
     for(Object * object : world.objectTable)
     {
@@ -141,7 +149,29 @@ void Renderer::render(const World & world)
                 uvScaleUniform.apply(sprite.uvScale);
                 uvOffsetUniform.apply(sprite.uvOffset);
 
-                indexBufferQuad.draw();
+                indexBufferQuad.draw(6);
+            }
+            break;
+
+            case Type::SPRITE_BATCH:
+            {
+                SpriteBatch & batch = * dynamic_cast<SpriteBatch *>(object);
+
+                batch.vertexBuffer.apply();
+
+                transform_matrix.initIdentity();
+                transform_matrix.setTranslation(batch.position);
+
+                transformMatrixUniform.apply(transform_matrix);
+
+                colorUniform.apply(batch.color);
+
+                samplerUniform.apply(batch.atlas->getTexture());
+
+                uvScaleUniform.apply(Vector2::one);
+                uvOffsetUniform.apply(Vector2::zero);
+
+                indexBufferQuad.draw(6 * batch.getItemCount());
             }
             break;
 
@@ -162,9 +192,12 @@ void Renderer::enable(const Type type, const World & world)
         {
             case Type::SPRITE:
             {
-                defaultProgram.use();
                 vertexBufferQuad.apply();
-                projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
+            }
+            break;
+
+            case Type::SPRITE_BATCH:
+            {
             }
             break;
 
