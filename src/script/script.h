@@ -37,6 +37,10 @@
     lua_pushcfunction(state, &_name_); \
     lua_setfield(state, -2, #_name_)
 
+#define SCRIPT_TABLE_PUSH_FUNCTION2(_function_, _name_) \
+    lua_pushcfunction(state, &_function_); \
+    lua_setfield(state, -2, #_name_)
+
 #define SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, _name_) \
     lua_pushcfunction(state, &_class_::_name_); \
     lua_setfield(state, -2, #_name_)
