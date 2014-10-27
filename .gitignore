@@ -1,4 +1,4 @@
-bin/__pycache__
+scripts/__pycache__
 build/Makefile
 build/obj
 build/gengine*

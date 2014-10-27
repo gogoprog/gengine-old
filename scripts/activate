@@ -9,7 +9,7 @@ fi
 BIN_DIR=$(dirname $(readlink -e ${SRC}))
 BASEDIR=${BIN_DIR%/*}
 
-export PATH=${PATH}:${BASEDIR}/bin
+export PATH=${PATH}:${BASEDIR}/scripts
 export GENGINE=${BASEDIR}
 
 if [[ ${SHELL} == *"/bash"* ]]; then
