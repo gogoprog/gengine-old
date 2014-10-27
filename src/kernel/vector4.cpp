@@ -41,19 +41,19 @@ SCRIPT_CLASS_REGISTERER(Vector4)
                 end
             },
             __unm = function(t)
-                return vector2(-t.x, -t.y, -t.z, -t.w)
+                return vector4(-t.x, -t.y, -t.z, -t.w)
             end,
             __add = function(a, b)
-                return vector2(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w)
+                return vector4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w)
             end,
             __sub = function(a, b)
-                return vector2(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w)
+                return vector4(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w)
             end,
             __mul = function(a, b)
-                return vector2(a.x * b, a.y * b, a.w * b, a.z * b)
+                return vector4(a.x * b, a.y * b, a.w * b, a.z * b)
             end,
             __div = function(a, b)
-                return vector2(a.x / b, a.y / b, a.w / b, a.z / b)
+                return vector4(a.x / b, a.y / b, a.w / b, a.z / b)
             end
         }
 

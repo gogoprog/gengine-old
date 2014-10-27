@@ -98,6 +98,9 @@ SCRIPT_CLASS_REGISTERER(Vector2)
             end,
             __div = function(a, b)
                 return vector2(a.x / b, a.y / b)
+            end,
+            __eq = function(a, b)
+                return a.x == b.x and a.y == b.y
             end
         }
 
