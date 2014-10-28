@@ -130,7 +130,26 @@ void System::init2()
 
 void System::executeFile(const char * file)
 {
-    luaL_loadfile(state, file);
+    geDebugLog("script::System::executeFile \"" << file << "\"");
+    int result = luaL_loadfile(state, file);
+
+    switch(result)
+    {
+        case LUA_ERRSYNTAX:
+        {
+            geLog("script: Syntax error while loading file \"" << file << "\"");
+            geLog(lua_tostring(state, -1));
+            kernel::breakExecution();
+        }
+        break;
+
+        case LUA_ERRMEM:
+        {
+            geLog("script: Cannot allocate memory while loading file \"" << file << "\"");
+            kernel::breakExecution();
+        }
+        break;
+    }
 
     call(0, LUA_MULTRET);
 }
@@ -170,15 +189,15 @@ void System::call(const uint nargs, const uint nresults)
 
     switch(status)
     {
-    case LUA_ERRRUN:
-        geLog("script: runtime error");
-        core::setMustQuit(true);
+        case LUA_ERRRUN:
+            geLog("script: runtime error");
+            kernel::breakExecution();
         break;
-    case LUA_ERRMEM:
-        geLog("script: memory allocation error");
-        core::setMustQuit(true);
+        case LUA_ERRMEM:
+            geLog("script: memory allocation error");
+            kernel::breakExecution();
         break;
-    default:
+        default:
         break;
     }
 }

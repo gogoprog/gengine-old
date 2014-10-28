@@ -7,6 +7,8 @@ namespace gengine
 namespace kernel
 {
 
+void breakExecution();
+
 SCRIPT_REGISTERER();
 
 }
