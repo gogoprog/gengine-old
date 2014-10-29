@@ -26,7 +26,8 @@ solution "gengine"
             }
 
         links {
-            "lua"
+            "lua",
+            "Box2D"
             }
 
         flags {
@@ -79,8 +80,7 @@ solution "gengine"
                     "GL",
                     "cef",
                     "cef_dll_wrapper",
-                    "pthread",
-                    "Box2D"
+                    "pthread"
                     }
 
             elseif os.is("windows") then
