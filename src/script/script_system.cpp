@@ -156,10 +156,26 @@ void System::executeFile(const char * file)
 
 void System::executeText(const char * text)
 {
-    static std::string before("return function() ");
-    static std::string after(" end");
+    int result = luaL_loadstring(state, text);
 
-    luaL_dostring(state, (before + text + after).c_str());
+    switch(result)
+    {
+        case LUA_ERRSYNTAX:
+        {
+            geLog("script: Syntax error while executing: " << text);
+            geLog(lua_tostring(state, -1));
+            kernel::breakExecution();
+        }
+        break;
+
+        case LUA_ERRMEM:
+        {
+            geLog("script: Cannot allocate memory while executing text: " << text);
+            kernel::breakExecution();
+        }
+        break;
+    }
+
     call(0, 0);
 }
 
