@@ -21,7 +21,8 @@ solution "gengine"
             "../src/input",
             "../src/script",
             "../src/entity",
-            "../src/gui"
+            "../src/gui",
+            "../src/physics"
             }
 
         links {
@@ -78,7 +79,8 @@ solution "gengine"
                     "GL",
                     "cef",
                     "cef_dll_wrapper",
-                    "pthread"
+                    "pthread",
+                    "Box2D"
                     }
 
             elseif os.is("windows") then

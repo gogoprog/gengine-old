@@ -13,9 +13,10 @@ int getMetaTableRef();
 SCRIPT_REGISTERER();
 
 void fillTransform(lua_State *state, Transform & transform, const int position = -1);
-
 void fillTransformFromComponent(lua_State *state, Transform & transform);
 
+void updateTransform(lua_State *state, const Transform & transform, const int position = -1);
+void updateTransformFromComponent(lua_State *state, const Transform & transform);
 
 }
 }
