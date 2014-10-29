@@ -39,7 +39,7 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
 
         Vector2::fill(state, extent, 3);
 
-        self.shape.SetAsBox(extent.x, extent.y);
+        self.shape.SetAsBox(extent.x * 0.5f, extent.y * 0.5f);
     }
     else if(!strcmp(key, "type"))
     {
@@ -53,10 +53,26 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
         {
             self.bodyDefinition.type = b2_staticBody;
         }
+        else if(!strcmp(type, "kinematic"))
+        {
+            self.bodyDefinition.type = b2_kinematicBody;
+        }
     }
     else if(!strcmp(key, "world"))
     {
-        self.worldIndex = lua_tonumber(state,3);
+        self.worldIndex = lua_tonumber(state, 3);
+    }
+    else if(!strcmp(key, "density"))
+    {
+        self.fixtureDefinition.density = lua_tonumber(state, 3);
+    }
+    else if(!strcmp(key, "restitution"))
+    {
+        self.fixtureDefinition.restitution = lua_tonumber(state, 3);
+    }
+    else if(!strcmp(key, "friction"))
+    {
+        self.fixtureDefinition.friction = lua_tonumber(state, 3);
     }
     else
     {
@@ -68,6 +84,20 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
 
 SCRIPT_CLASS_FUNCTION(ComponentPhysic, init)
 {
+    SCRIPT_GET_SELF(ComponentPhysic);
+
+    Transform transform;
+    fillTransformFromComponent(state, transform);
+
+    self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
+    self.body = physics::System::getInstance().getWorld(self.worldIndex).CreateBody(&self.bodyDefinition);
+
+    self.fixtureDefinition.shape = &self.shape;
+
+    self.body->CreateFixture(&self.fixtureDefinition);
+
+    self.body->SetActive(false);
+
     return 0;
 }
 
@@ -78,15 +108,9 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, insert)
     Transform transform;
     fillTransformFromComponent(state, transform);
 
-    self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
+    self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
 
-    self.body = physics::System::getInstance().getWorld(self.worldIndex).CreateBody(&self.bodyDefinition);
-
-    self.fixtureDefinition.shape = &self.shape;
-    self.fixtureDefinition.density = 1.0f;
-    self.fixtureDefinition.friction = 0.3f;
-
-    self.body->CreateFixture(&self.fixtureDefinition);
+    self.body->SetActive(true);
 
     return 0;
 }
@@ -96,21 +120,42 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, update)
     SCRIPT_GET_SELF(ComponentPhysic);
     Transform transform;
 
-    b2Vec2 position = self.body->GetPosition();
-    float32 angle = self.body->GetAngle();
+    switch(self.bodyDefinition.type)
+    {
+        case b2_dynamicBody:
+        {
+            b2Vec2 position = self.body->GetPosition();
+            float32 angle = self.body->GetAngle();
 
-    transform.position.x = position.x;
-    transform.position.y = position.y;
-    transform.rotation = angle;
+            transform.position.x = position.x;
+            transform.position.y = position.y;
+            transform.rotation = angle;
 
-    updateTransformFromComponent(state, transform);
+            updateTransformFromComponent(state, transform);
+        }
+        break;
+
+        case b2_staticBody:
+        {
+
+        }
+        break;
+
+        case b2_kinematicBody:
+        {
+
+        }
+        break;
+    }
 
     return 0;
 }
 
 SCRIPT_CLASS_FUNCTION(ComponentPhysic, remove)
 {
-    // :todo:
+    SCRIPT_GET_SELF(ComponentPhysic);
+
+    self.body->SetActive(false);
 
     return 0;
 }

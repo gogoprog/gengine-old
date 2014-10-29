@@ -2,6 +2,8 @@
 
 #include "debug.h"
 
+#define FIXED_TIME_STEP 0.01
+
 namespace gengine
 {
 namespace physics
@@ -12,6 +14,8 @@ void System::init()
     geDebugLog("physics::System::init()");
 
     createWorlds(1);
+
+    timeLeft = 0.0f;
 }
 
 void System::finalize()
@@ -26,9 +30,16 @@ void System::finalize()
 
 void System::update(const float dt)
 {
-    for(b2World * world : worldTable)
+    timeLeft += dt;
+
+    while(timeLeft > FIXED_TIME_STEP)
     {
-        world->Step(dt, 8, 3);
+        for(b2World * world : worldTable)
+        {
+            world->Step(FIXED_TIME_STEP, 8, 3);
+        }
+
+        timeLeft -= FIXED_TIME_STEP;
     }
 }
 

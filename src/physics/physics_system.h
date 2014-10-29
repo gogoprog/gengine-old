@@ -19,10 +19,12 @@ public:
     void createWorlds(const uint count);
 
     b2World & getWorld(const uint index);
-private:
 
+private:
     Array<b2World *>
         worldTable;
+    float
+        timeLeft;
 };
 
 }
