@@ -74,6 +74,22 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
     {
         self.fixtureDefinition.friction = lua_tonumber(state, 3);
     }
+    else if(!strcmp(key, "linearDamping"))
+    {
+        self.bodyDefinition.linearDamping = lua_tonumber(state, 3);
+    }
+    else if(!strcmp(key, "angularDamping"))
+    {
+        self.bodyDefinition.angularDamping = lua_tonumber(state, 3);
+    }
+    else if(!strcmp(key, "fixedRotation"))
+    {
+        self.bodyDefinition.fixedRotation = lua_toboolean(state, 3);
+    }
+    else if(!strcmp(key, "bullet"))
+    {
+        self.bodyDefinition.bullet = lua_toboolean(state, 3);
+    }
     else
     {
         geLog("Unknown attribute \"" << key << "\"");
