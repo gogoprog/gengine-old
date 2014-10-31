@@ -159,7 +159,9 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, update)
 
         case b2_kinematicBody:
         {
+            fillTransformFromComponent(state, transform);
 
+            self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
         }
         break;
     }
