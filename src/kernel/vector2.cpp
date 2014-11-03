@@ -115,6 +115,15 @@ SCRIPT_CLASS_REGISTERER(Vector2)
     SCRIPT_TABLE_PUSH_FUNCTION2(localGetSquareDistance, getSquareDistance);
 }
 
+void Vector2::push(lua_State * state, const Vector2 & value)
+{
+    lua_pushnumber(state, value.x);
+    lua_setfield(state, -2, "x");
+
+    lua_pushnumber(state, value.y);
+    lua_setfield(state, -2, "y");
+}
+
 void Vector2::fill(lua_State * state, Vector2 & result, int position)
 {
     lua_getfield(state, position, "x");

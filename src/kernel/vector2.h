@@ -31,6 +31,8 @@ struct Vector2
 
     static SCRIPT_REGISTERER();
 
+    static void push(lua_State * state, const Vector2 & value);
+
     static void fill(lua_State * state, Vector2 & result, int position = -1);
     static void fillTableSafe(lua_State * state, Vector2 & result, const char * name, int position = -1, const Vector2 & default_value = Vector2::zero);
 

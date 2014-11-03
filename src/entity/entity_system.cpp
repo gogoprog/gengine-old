@@ -13,6 +13,7 @@
 #include "entity_component_mouseable.h"
 #include "entity_component_animated_sprite.h"
 #include "entity_component_sprite_batch.h"
+#include "entity_component_physic.h"
 
 namespace gengine
 {
@@ -69,6 +70,7 @@ void System::update(const float dt)
 SCRIPT_CLASS_REGISTERER(System)
 {
     lua_newtable(state);
+
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, getCount);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, destroy);
@@ -133,6 +135,7 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");
     registerComponent<ComponentSpriteBatch>(state, "ComponentSpriteBatch");
+    registerComponent<ComponentPhysic>(state, "ComponentPhysic");
 }
 
 SCRIPT_CLASS_UNREGISTERER(System)
@@ -143,11 +146,6 @@ SCRIPT_CLASS_UNREGISTERER(System)
 SCRIPT_CLASS_FUNCTION(System, create)
 {
     lua_newtable(state);
-
-    /*lua_newtable(state);
-
-    SCRIPT_TABLE_PUSH_NUMBER(x, 0);
-    SCRIPT_TABLE_PUSH_NUMBER(y, 0);*/
 
     SCRIPT_DO(
         return vector2()

@@ -9,6 +9,7 @@
 #include "entity_system.h"
 #include "gui_system.h"
 #include "audio_system.h"
+#include "physics_system.h"
 #include "debug.h"
 
 namespace gengine
@@ -63,6 +64,8 @@ void init(int argc, char *argv[])
     entity::System::getInstance().init();
     gui::System::getInstance().init(argc,argv);
     audio::System::getInstance().init();
+    physics::System::getInstance().init();
+
 
     script_system.init2();
 
@@ -72,6 +75,8 @@ void init(int argc, char *argv[])
 void finalize()
 {
     geDebugLog("core::finalize()");
+
+    physics::System::getInstance().finalize();
 
     audio::System::getInstance().finalize();
 
@@ -100,6 +105,8 @@ void update()
     handleEvents();
 
     script::System::getInstance().call1("update", dt);
+
+    physics::System::getInstance().update(dt);
 
     entity::System::getInstance().update(dt);
 

@@ -21,11 +21,13 @@ solution "gengine"
             "../src/input",
             "../src/script",
             "../src/entity",
-            "../src/gui"
+            "../src/gui",
+            "../src/physics"
             }
 
         links {
-            "lua"
+            "lua",
+            "Box2D"
             }
 
         flags {

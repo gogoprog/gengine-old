@@ -11,7 +11,6 @@ namespace gengine
 namespace entity
 {
 
-
 struct Transform
 {
     Vector2
