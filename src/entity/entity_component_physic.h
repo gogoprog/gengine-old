@@ -32,8 +32,8 @@ protected:
         * fixture;
     b2BodyDef
         bodyDefinition;
-    b2PolygonShape
-        shape;
+    b2Shape
+        * shape;
     b2FixtureDef
         fixtureDefinition;
     bool

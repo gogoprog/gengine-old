@@ -37,11 +37,23 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
 
     if(!strcmp(key, "extent"))
     {
+        b2PolygonShape * shape = new b2PolygonShape();
+
         Vector2 extent;
 
         Vector2::fill(state, extent, 3);
 
-        self.shape.SetAsBox(extent.x * 0.5f, extent.y * 0.5f);
+        shape->SetAsBox(extent.x * 0.5f, extent.y * 0.5f);
+
+        self.shape = shape;
+    }
+    else if(!strcmp(key, "radius"))
+    {
+        b2CircleShape * shape = new b2CircleShape();
+
+        shape->m_radius = lua_tonumber(state, 3);
+
+        self.shape = shape;
     }
     else if(!strcmp(key, "type"))
     {
@@ -119,7 +131,7 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, init)
     self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
     self.body = physics::System::getInstance().getWorld(self.worldIndex).CreateBody(&self.bodyDefinition);
 
-    self.fixtureDefinition.shape = &self.shape;
+    self.fixtureDefinition.shape = self.shape;
 
     self.fixture = self.body->CreateFixture(&self.fixtureDefinition);
     self.fixture->SetSensor(self.itIsSensor);
