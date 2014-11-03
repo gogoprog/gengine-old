@@ -15,6 +15,8 @@ namespace entity
 ComponentPhysic::ComponentPhysic()
     :
     body(nullptr),
+    fixture(nullptr),
+    itIsSensor(false),
     worldIndex(0)
 {
 }
@@ -90,6 +92,15 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
     {
         self.bodyDefinition.bullet = lua_toboolean(state, 3);
     }
+    else if(!strcmp(key, "sensor"))
+    {
+        self.itIsSensor = lua_toboolean(state, 3);
+
+        if(self.fixture)
+        {
+            self.fixture->SetSensor(self.itIsSensor);
+        }
+    }
     else
     {
         geLog("Unknown attribute \"" << key << "\"");
@@ -110,7 +121,8 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, init)
 
     self.fixtureDefinition.shape = &self.shape;
 
-    self.body->CreateFixture(&self.fixtureDefinition);
+    self.fixture = self.body->CreateFixture(&self.fixtureDefinition);
+    self.fixture->SetSensor(self.itIsSensor);
 
     self.body->SetActive(false);
 

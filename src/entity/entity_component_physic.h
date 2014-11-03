@@ -28,12 +28,16 @@ public:
 protected:
     b2Body
         * body;
+    b2Fixture
+        * fixture;
     b2BodyDef
         bodyDefinition;
     b2PolygonShape
         shape;
     b2FixtureDef
         fixtureDefinition;
+    bool
+        itIsSensor;
     uint
         worldIndex;
 };
