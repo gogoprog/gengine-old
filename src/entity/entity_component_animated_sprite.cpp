@@ -33,22 +33,18 @@ SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, create)
     return System::getInstance().createComponent<ComponentAnimatedSprite>(state);
 }
 
-SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, newIndex)
+ENTITY_COMPONENT_SETTERS_START(ComponentAnimatedSprite)
 {
-    SCRIPT_GET_SELF(ComponentAnimatedSprite);
-    const char * key = lua_tostring(state, 2);
-
-    if(!strcmp(key, "animation"))
+    ENTITY_COMPONENT_SETTER(animation)
     {
         self.animation = static_cast<const graphics::Animation *>(lua_touserdata(state, 3));
     }
-    else
+    ENTITY_COMPONENT_SETTER_DEFAULT()
     {
         ComponentSprite::newIndex(state);
     }
-
-    return 0;
 }
+ENTITY_COMPONENT_SETTERS_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, update)
 {

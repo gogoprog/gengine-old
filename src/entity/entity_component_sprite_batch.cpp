@@ -33,43 +33,28 @@ SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, create)
     return System::getInstance().createComponent<ComponentSpriteBatch>(state);
 }
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, newIndex)
+ENTITY_COMPONENT_SETTERS_START(ComponentSpriteBatch)
 {
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-    const char * key = lua_tostring(state, 2);
-
-    if(!strcmp(key, "layer"))
+    ENTITY_COMPONENT_SETTER(layer)
     {
         self.spriteBatch.setLayer(lua_tonumber(state,3));
     }
-    else if(!strcmp(key, "color"))
-    {
-        //Vector4::fill(state, self.sprite.getColor(), 3);
-    }
-    else if(!strcmp(key, "alpha"))
-    {
-        //self.sprite.setColorAlpha(lua_tonumber(state,3));
-    }
-    else if(!strcmp(key, "atlas"))
+    ENTITY_COMPONENT_SETTER(atlas)
     {
         graphics::Atlas * atlas = static_cast<graphics::Atlas *>(lua_touserdata(state, 3));
         self.spriteBatch.setAtlas(* atlas);
     }
-    else if(!strcmp(key, "world"))
+    ENTITY_COMPONENT_SETTER(world)
     {
         self.worldIndex = lua_tonumber(state,3);
     }
-    else if(!strcmp(key, "size"))
+    ENTITY_COMPONENT_SETTER(size)
     {
         self.spriteBatch.reserve(lua_tonumber(state,3));
     }
-    else
-    {
-        geLog("Unknown attribute \"" << key << "\"");
-    }
-
-    return 0;
+    ENTITY_COMPONENT_SETTER_END()
 }
+ENTITY_COMPONENT_SETTERS_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, init)
 {

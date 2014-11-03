@@ -8,6 +8,7 @@
 #include <string.h>
 #include "application.h"
 #include "entity.h"
+#include "entity_macros.h"
 
 namespace gengine
 {
@@ -31,26 +32,19 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, create)
     return System::getInstance().createComponent<ComponentCamera>(state);
 }
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, newIndex)
+ENTITY_COMPONENT_SETTERS_START(ComponentCamera)
 {
-    SCRIPT_GET_SELF(ComponentCamera);
-    const char * key = lua_tostring(state, 2);
-
-    if(!strcmp(key,"extent"))
+    ENTITY_COMPONENT_SETTER(extent)
     {
         Vector2::fill(state, self.camera.getExtent(), 3);
     }
-    else if(!strcmp(key,"world"))
+    ENTITY_COMPONENT_SETTER(world)
     {
         self.worldIndex = lua_tonumber(state,3);
     }
-    else
-    {
-        geLog("Unknown attribute \"" << key << "\"");
-    }
-
-    return 0;
+    ENTITY_COMPONENT_SETTER_END()
 }
+ENTITY_COMPONENT_SETTERS_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentCamera, init)
 {

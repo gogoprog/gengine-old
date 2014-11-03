@@ -32,59 +32,52 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, create)
     return System::getInstance().createComponent<ComponentSprite>(state);
 }
 
-SCRIPT_CLASS_FUNCTION(ComponentSprite, newIndex)
+ENTITY_COMPONENT_SETTERS_START(ComponentSprite)
 {
-    SCRIPT_GET_SELF(ComponentSprite);
-    const char * key = lua_tostring(state, 2);
-
-    if(!strcmp(key, "layer"))
+    ENTITY_COMPONENT_SETTER(layer)
     {
         self.sprite.setLayer(lua_tonumber(state,3));
     }
-    else if(!strcmp(key, "extent"))
+    ENTITY_COMPONENT_SETTER(extent)
     {
         Vector2::fill(state, self.sprite.getExtent(), 3);
     }
-    else if(!strcmp(key, "uvScale"))
+    ENTITY_COMPONENT_SETTER(uvScale)
     {
         Vector2::fill(state, self.sprite.getUvScale(), 3);
     }
-    else if(!strcmp(key, "uvOffset"))
+    ENTITY_COMPONENT_SETTER(uvOffset)
     {
         Vector2::fill(state, self.sprite.getUvOffset(), 3);
     }
-    else if(!strcmp(key, "color"))
+    ENTITY_COMPONENT_SETTER(color)
     {
         Vector4::fill(state, self.sprite.getColor(), 3);
     }
-    else if(!strcmp(key, "alpha"))
+    ENTITY_COMPONENT_SETTER(alpha)
     {
         self.sprite.setColorAlpha(lua_tonumber(state,3));
     }
-    else if(!strcmp(key, "texture"))
+    ENTITY_COMPONENT_SETTER(texture)
     {
         graphics::Texture * texture = static_cast<graphics::Texture *>(lua_touserdata(state, 3));
         self.sprite.setTexture(*texture);
     }
-    else if(!strcmp(key, "atlas"))
+    ENTITY_COMPONENT_SETTER(atlas)
     {
         self.atlas = static_cast<graphics::Atlas *>(lua_touserdata(state, 3));
     }
-    else if(!strcmp(key, "atlasItem"))
+    ENTITY_COMPONENT_SETTER(atlasItem)
     {
         self.atlasItem = lua_tonumber(state,3);
     }
-    else if(!strcmp(key, "world"))
+    ENTITY_COMPONENT_SETTER(world)
     {
         self.worldIndex = lua_tonumber(state,3);
     }
-    else
-    {
-        geLog("Unknown attribute \"" << key << "\"");
-    }
-
-    return 0;
+    ENTITY_COMPONENT_SETTER_END()
 }
+ENTITY_COMPONENT_SETTERS_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
 {

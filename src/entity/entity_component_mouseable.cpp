@@ -31,26 +31,19 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, create)
     return System::getInstance().createComponent<ComponentMouseable>(state);
 }
 
-SCRIPT_CLASS_FUNCTION(ComponentMouseable, newIndex)
+ENTITY_COMPONENT_SETTERS_START(ComponentMouseable)
 {
-    SCRIPT_GET_SELF(ComponentMouseable);
-    const char * key = lua_tostring(state, 2);
-
-    if(!strcmp(key, "extent"))
+    ENTITY_COMPONENT_SETTER(extent)
     {
         Vector2::fill(state, self.extent, 3);
     }
-    else if(!strcmp(key, "world"))
+    ENTITY_COMPONENT_SETTER(world)
     {
         self.worldIndex = lua_tonumber(state,3);
     }
-    else
-    {
-        geLog("Unknown attribute \"" << key << "\"");
-    }
-
-    return 0;
+    ENTITY_COMPONENT_SETTER_END()
 }
+ENTITY_COMPONENT_SETTERS_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentMouseable, init)
 {

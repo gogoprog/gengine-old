@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "entity_transform.h"
+#include "entity_macros.h"
 
 namespace gengine
 {

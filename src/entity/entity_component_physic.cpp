@@ -30,12 +30,9 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, create)
     return System::getInstance().createComponent<ComponentPhysic>(state);
 }
 
-SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
+ENTITY_COMPONENT_SETTERS_START(ComponentPhysic)
 {
-    SCRIPT_GET_SELF(ComponentPhysic);
-    const char * key = lua_tostring(state, 2);
-
-    if(!strcmp(key, "extent"))
+    ENTITY_COMPONENT_SETTER(extent)
     {
         b2PolygonShape * shape = new b2PolygonShape();
 
@@ -47,7 +44,7 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
 
         self.shape = shape;
     }
-    else if(!strcmp(key, "radius"))
+    ENTITY_COMPONENT_SETTER(radius)
     {
         b2CircleShape * shape = new b2CircleShape();
 
@@ -55,7 +52,7 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
 
         self.shape = shape;
     }
-    else if(!strcmp(key, "type"))
+    ENTITY_COMPONENT_SETTER(type)
     {
         const char * type = lua_tostring(state, 3);
 
@@ -72,39 +69,39 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
             self.bodyDefinition.type = b2_kinematicBody;
         }
     }
-    else if(!strcmp(key, "world"))
+    ENTITY_COMPONENT_SETTER(world)
     {
         self.worldIndex = lua_tonumber(state, 3);
     }
-    else if(!strcmp(key, "density"))
+    ENTITY_COMPONENT_SETTER(density)
     {
         self.fixtureDefinition.density = lua_tonumber(state, 3);
     }
-    else if(!strcmp(key, "restitution"))
+    ENTITY_COMPONENT_SETTER(restitution)
     {
         self.fixtureDefinition.restitution = lua_tonumber(state, 3);
     }
-    else if(!strcmp(key, "friction"))
+    ENTITY_COMPONENT_SETTER(friction)
     {
         self.fixtureDefinition.friction = lua_tonumber(state, 3);
     }
-    else if(!strcmp(key, "linearDamping"))
+    ENTITY_COMPONENT_SETTER(linearDamping)
     {
         self.bodyDefinition.linearDamping = lua_tonumber(state, 3);
     }
-    else if(!strcmp(key, "angularDamping"))
+    ENTITY_COMPONENT_SETTER(angularDamping)
     {
         self.bodyDefinition.angularDamping = lua_tonumber(state, 3);
     }
-    else if(!strcmp(key, "fixedRotation"))
+    ENTITY_COMPONENT_SETTER(fixedRotation)
     {
         self.bodyDefinition.fixedRotation = lua_toboolean(state, 3);
     }
-    else if(!strcmp(key, "bullet"))
+    ENTITY_COMPONENT_SETTER(bullet)
     {
         self.bodyDefinition.bullet = lua_toboolean(state, 3);
     }
-    else if(!strcmp(key, "sensor"))
+    ENTITY_COMPONENT_SETTER(sensor)
     {
         self.itIsSensor = lua_toboolean(state, 3);
 
@@ -113,13 +110,9 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, newIndex)
             self.fixture->SetSensor(self.itIsSensor);
         }
     }
-    else
-    {
-        geLog("Unknown attribute \"" << key << "\"");
-    }
-
-    return 0;
+    ENTITY_COMPONENT_SETTER_END()
 }
+ENTITY_COMPONENT_SETTERS_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentPhysic, init)
 {
