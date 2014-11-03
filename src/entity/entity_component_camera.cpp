@@ -22,14 +22,11 @@ ComponentCamera::ComponentCamera()
 {
 }
 
+ENTITY_COMPONENT_IMPLEMENT(ComponentCamera);
+
 SCRIPT_CLASS_REGISTERER(ComponentCamera)
 {
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(ComponentCamera, getWorldPosition);
-}
-
-SCRIPT_CLASS_FUNCTION(ComponentCamera, create)
-{
-    return System::getInstance().createComponent<ComponentCamera>(state);
 }
 
 ENTITY_COMPONENT_SETTERS_START(ComponentCamera)
@@ -124,9 +121,6 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, getWorldPosition)
 
     return 2;
 }
-
-uint
-    ComponentCamera::metaTableRef;
 
 }
 }
