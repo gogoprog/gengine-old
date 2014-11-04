@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "physics_system.h"
+#include "physics_world.h"
 #include "entity_macros.h"
 
 namespace gengine

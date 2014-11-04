@@ -120,7 +120,7 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
     fillTransformFromComponent(state, transform);
 
     self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
-    self.body = physics::System::getInstance().getWorld(self.worldIndex).CreateBody(&self.bodyDefinition);
+    self.body = physics::System::getInstance().getWorld(self.worldIndex).getBox2dWorld().CreateBody(&self.bodyDefinition);
 
     self.fixtureDefinition.shape = self.shape;
 
