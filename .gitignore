@@ -3,7 +3,7 @@ build/Makefile
 build/obj
 build/gengine*
 libcef.so
-deps/*/lib*/*.so
+deps/*/lib*/*.so*
 deps/*/lib*/*.dll
 deps/*/lib*/*.lib
 deps/*/lib*/*.txt
