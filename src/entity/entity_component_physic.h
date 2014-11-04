@@ -16,6 +16,12 @@ public:
 
     ENTITY_COMPONENT_DECLARE();
 
+    ENTITY_COMPONENT_METHOD_DECLARE(applyAngularImpulse);
+    ENTITY_COMPONENT_METHOD_DECLARE(applyForce);
+    ENTITY_COMPONENT_METHOD_DECLARE(applyForceToCenter);
+    ENTITY_COMPONENT_METHOD_DECLARE(applyLinearImpulse);
+    ENTITY_COMPONENT_METHOD_DECLARE(applyTorque);
+
 protected:
     b2Body
         * body;

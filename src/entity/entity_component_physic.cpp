@@ -23,6 +23,11 @@ ComponentPhysic::ComponentPhysic()
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
 {
+    ENTITY_COMPONENT_PUSH_FUNCTION(applyAngularImpulse);
+    ENTITY_COMPONENT_PUSH_FUNCTION(applyForce);
+    ENTITY_COMPONENT_PUSH_FUNCTION(applyForceToCenter);
+    ENTITY_COMPONENT_PUSH_FUNCTION(applyLinearImpulse);
+    ENTITY_COMPONENT_PUSH_FUNCTION(applyTorque);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentPhysic)
@@ -158,7 +163,6 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, update)
 
         case b2_staticBody:
         {
-
         }
         break;
 
@@ -176,6 +180,54 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentPhysic, remove)
 {
     self.body->SetActive(false);
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentPhysic, applyAngularImpulse)
+{
+    float impulse = lua_tonumber(state, 2);
+
+    self.body->ApplyAngularImpulse(impulse);
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForce)
+{
+    Vector2 force, point;
+
+    Vector2::fill(state, force, 2);
+    Vector2::fill(state, point, 3);
+
+    self.body->ApplyForce(b2Vec2(force.x, force.y), b2Vec2(point.x, point.y));
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForceToCenter)
+{
+    Vector2 force;
+
+    Vector2::fill(state, force, 2);
+
+    self.body->ApplyForceToCenter(b2Vec2(force.x, force.y));
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentPhysic, applyLinearImpulse)
+{
+    Vector2 impulse, point;
+
+    Vector2::fill(state, impulse, 2);
+    Vector2::fill(state, point, 3);
+
+    self.body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(point.x, point.y));
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentPhysic, applyTorque)
+{
+    float torque = lua_tonumber(state, 2);
+
+    self.body->ApplyTorque(torque);
 }
 ENTITY_COMPONENT_END()
 
