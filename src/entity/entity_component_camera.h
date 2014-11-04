@@ -16,9 +16,9 @@ public:
 
     ENTITY_COMPONENT_DECLARE();
 
-    static SCRIPT_FUNCTION(push);
-    static SCRIPT_FUNCTION(pop);
-    static SCRIPT_FUNCTION(getWorldPosition);
+    ENTITY_COMPONENT_METHOD_DECLARE(push);
+    ENTITY_COMPONENT_METHOD_DECLARE(pop);
+    ENTITY_COMPONENT_METHOD_DECLARE(getWorldPosition);
 
 private:
     graphics::Camera

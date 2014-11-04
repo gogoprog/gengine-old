@@ -74,30 +74,24 @@ ENTITY_COMPONENT_METHOD(ComponentCamera, remove)
 }
 ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, push)
+ENTITY_COMPONENT_METHOD(ComponentCamera, push)
 {
-    SCRIPT_GET_SELF(ComponentCamera);
-
     graphics::System::getInstance().getWorld(self.worldIndex).pushCamera(self.camera);
     self.itIsPushed = true;
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, pop)
+ENTITY_COMPONENT_METHOD(ComponentCamera, pop)
 {
-    SCRIPT_GET_SELF(ComponentCamera);
-
     if(self.itIsPushed && & graphics::System::getInstance().getWorld(self.worldIndex).getCurrentCamera() == & self.camera)
     {
         graphics::System::getInstance().getWorld(self.worldIndex).popCamera();
         self.itIsPushed = false;
     }
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, getWorldPosition)
+ENTITY_COMPONENT_METHOD(ComponentCamera, getWorldPosition)
 {
     SCRIPT_GET_SELF(ComponentCamera);
 
@@ -110,6 +104,7 @@ SCRIPT_CLASS_FUNCTION(ComponentCamera, getWorldPosition)
 
     return 2;
 }
+ENTITY_COMPONENT_END()
 
 }
 }

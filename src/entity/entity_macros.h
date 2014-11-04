@@ -30,10 +30,6 @@
         SCRIPT_GET_SELF(_CLASS_); \
         const char * key = lua_tostring(state, 2);
 
-#define ENTITY_COMPONENT_END() \
-        return 0; \
-    }
-
 #define ENTITY_COMPONENT_SETTER(_NAME_) \
      if(!strcmp(key, #_NAME_))
 
@@ -51,4 +47,11 @@
     { \
         SCRIPT_GET_SELF(ComponentCamera); \
         (void)self; (void)state;
+
+#define ENTITY_COMPONENT_METHOD_DECLARE(_METHOD_) \
+     static SCRIPT_FUNCTION(_METHOD_);
+
+#define ENTITY_COMPONENT_END() \
+        return 0; \
+    }
 
