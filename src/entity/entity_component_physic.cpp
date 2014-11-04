@@ -21,13 +21,8 @@ ComponentPhysic::ComponentPhysic()
 {
 }
 
-SCRIPT_CLASS_REGISTERER(ComponentPhysic)
+ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
 {
-}
-
-SCRIPT_CLASS_FUNCTION(ComponentPhysic, create)
-{
-    return System::getInstance().createComponent<ComponentPhysic>(state);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentPhysic)
@@ -114,10 +109,8 @@ ENTITY_COMPONENT_SETTERS(ComponentPhysic)
 }
 ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentPhysic, init)
+ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
 {
-    SCRIPT_GET_SELF(ComponentPhysic);
-
     Transform transform;
     fillTransformFromComponent(state, transform);
 
@@ -130,27 +123,22 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, init)
     self.fixture->SetSensor(self.itIsSensor);
 
     self.body->SetActive(false);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentPhysic, insert)
+ENTITY_COMPONENT_METHOD(ComponentPhysic, insert)
 {
-    SCRIPT_GET_SELF(ComponentPhysic);
-
     Transform transform;
     fillTransformFromComponent(state, transform);
 
     self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
 
     self.body->SetActive(true);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentPhysic, update)
+ENTITY_COMPONENT_METHOD(ComponentPhysic, update)
 {
-    SCRIPT_GET_SELF(ComponentPhysic);
     Transform transform;
 
     switch(self.bodyDefinition.type)
@@ -182,21 +170,14 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, update)
         }
         break;
     }
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentPhysic, remove)
+ENTITY_COMPONENT_METHOD(ComponentPhysic, remove)
 {
-    SCRIPT_GET_SELF(ComponentPhysic);
-
     self.body->SetActive(false);
-
-    return 0;
 }
-
-uint
-    ComponentPhysic::metaTableRef;
+ENTITY_COMPONENT_END()
 
 }
 }

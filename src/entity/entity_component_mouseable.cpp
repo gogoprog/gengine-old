@@ -22,13 +22,8 @@ ComponentMouseable::ComponentMouseable()
 {
 }
 
-SCRIPT_CLASS_REGISTERER(ComponentMouseable)
+ENTITY_COMPONENT_IMPLEMENT(ComponentMouseable)
 {
-}
-
-SCRIPT_CLASS_FUNCTION(ComponentMouseable, create)
-{
-    return System::getInstance().createComponent<ComponentMouseable>(state);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentMouseable)
@@ -45,20 +40,18 @@ ENTITY_COMPONENT_SETTERS(ComponentMouseable)
 }
 ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentMouseable, init)
+ENTITY_COMPONENT_METHOD(ComponentMouseable, init)
 {
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentMouseable, insert)
+ENTITY_COMPONENT_METHOD(ComponentMouseable, insert)
 {
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentMouseable, update)
+ENTITY_COMPONENT_METHOD(ComponentMouseable, update)
 {
-    SCRIPT_GET_SELF(ComponentMouseable);
-
     const input::Mouse & mouse = input::System::getInstance().getMouse(0);
     const Vector2 & extent = self.extent;
     uint x,y;
@@ -114,17 +107,13 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, update)
             self.itIsHovered = false;
         }
     }
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentMouseable, remove)
+ENTITY_COMPONENT_METHOD(ComponentMouseable, remove)
 {
-    return 0;
 }
-
-uint
-    ComponentMouseable::metaTableRef;
+ENTITY_COMPONENT_END()
 
 }
 }

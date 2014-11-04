@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "graphics_sprite_batch.h"
+#include "entity_macros.h"
 
 namespace gengine
 {
@@ -13,21 +14,11 @@ class ComponentSpriteBatch
 public:
     ComponentSpriteBatch();
 
-    static SCRIPT_REGISTERER();
-
-    static SCRIPT_FUNCTION(create);
-    static SCRIPT_FUNCTION(newIndex);
-    static SCRIPT_FUNCTION(init);
-    static SCRIPT_FUNCTION(insert);
-    static SCRIPT_FUNCTION(update);
-    static SCRIPT_FUNCTION(remove);
+    ENTITY_COMPONENT_DECLARE();
 
     static SCRIPT_FUNCTION(lock);
     static SCRIPT_FUNCTION(unlock);
     static SCRIPT_FUNCTION(addItem);
-
-    static uint
-        metaTableRef;
 
 protected:
     graphics::SpriteBatch

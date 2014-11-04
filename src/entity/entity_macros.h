@@ -46,9 +46,9 @@
     }
 
 #define ENTITY_COMPONENT_METHOD(_CLASS_, _METHOD_) \
-    SCRIPT_CLASS_FUNCTION(ComponentCamera, _METHOD_) \
+    SCRIPT_CLASS_FUNCTION(_CLASS_, _METHOD_) \
     { \
-        SCRIPT_GET_SELF(ComponentCamera); \
+        SCRIPT_GET_SELF(_CLASS_); \
         (void)self; (void)state;
 
 #define ENTITY_COMPONENT_METHOD_DECLARE(_METHOD_) \

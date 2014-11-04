@@ -24,13 +24,8 @@ ComponentAnimatedSprite::ComponentAnimatedSprite()
 {
 }
 
-SCRIPT_CLASS_REGISTERER(ComponentAnimatedSprite)
+ENTITY_COMPONENT_IMPLEMENT(ComponentAnimatedSprite)
 {
-}
-
-SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, create)
-{
-    return System::getInstance().createComponent<ComponentAnimatedSprite>(state);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
@@ -46,10 +41,8 @@ ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
 }
 ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, update)
+ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, update)
 {
-    SCRIPT_GET_SELF(ComponentAnimatedSprite);
-
     if(self.animation)
     {
         self.currentTime += System::getInstance().getCurrentDt();
@@ -63,9 +56,7 @@ SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, update)
 
     return ComponentSprite::update(state);
 }
-
-uint
-    ComponentAnimatedSprite::metaTableRef;
+ENTITY_COMPONENT_END()
 
 }
 }

@@ -23,13 +23,8 @@ ComponentSprite::ComponentSprite()
 {
 }
 
-SCRIPT_CLASS_REGISTERER(ComponentSprite)
+ENTITY_COMPONENT_IMPLEMENT(ComponentSprite)
 {
-}
-
-SCRIPT_CLASS_FUNCTION(ComponentSprite, create)
-{
-    return System::getInstance().createComponent<ComponentSprite>(state);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentSprite)
@@ -79,10 +74,8 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
 }
 ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
+ENTITY_COMPONENT_METHOD(ComponentSprite, init)
 {
-    SCRIPT_GET_SELF(ComponentSprite);
-
     if(self.atlas)
     {
         self.sprite.setTexture(self.atlas->getTexture());
@@ -90,23 +83,17 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
         self.sprite.setUvOffset(item.uvOffset);
         self.sprite.setUvScale(item.uvScale);
     }
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSprite, insert)
+ENTITY_COMPONENT_METHOD(ComponentSprite, insert)
 {
-    SCRIPT_GET_SELF(ComponentSprite);
-
     graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.sprite);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSprite, update)
+ENTITY_COMPONENT_METHOD(ComponentSprite, update)
 {
-    SCRIPT_GET_SELF(ComponentSprite);
-
     graphics::Sprite & sprite = self.sprite;
 
     Transform transform;
@@ -114,21 +101,14 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, update)
 
     sprite.setPosition(transform.position);
     sprite.setRotation(transform.rotation);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSprite, remove)
+ENTITY_COMPONENT_METHOD(ComponentSprite, remove)
 {
-    SCRIPT_GET_SELF(ComponentSprite);
-
     graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.sprite);
-
-    return 0;
 }
-
-uint
-    ComponentSprite::metaTableRef;
+ENTITY_COMPONENT_END()
 
 }
 }

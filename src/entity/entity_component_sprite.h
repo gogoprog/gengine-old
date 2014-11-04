@@ -3,6 +3,7 @@
 #include "script.h"
 #include "graphics_sprite.h"
 #include "graphics_atlas.h"
+#include "entity_macros.h"
 
 namespace gengine
 {
@@ -14,17 +15,7 @@ class ComponentSprite
 public:
     ComponentSprite();
 
-    static SCRIPT_REGISTERER();
-
-    static SCRIPT_FUNCTION(create);
-    static SCRIPT_FUNCTION(newIndex);
-    static SCRIPT_FUNCTION(init);
-    static SCRIPT_FUNCTION(insert);
-    static SCRIPT_FUNCTION(update);
-    static SCRIPT_FUNCTION(remove);
-
-    static uint
-        metaTableRef;
+    ENTITY_COMPONENT_DECLARE();
 
 protected:
     graphics::Sprite

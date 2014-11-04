@@ -21,16 +21,11 @@ ComponentSpriteBatch::ComponentSpriteBatch()
 {
 }
 
-SCRIPT_CLASS_REGISTERER(ComponentSpriteBatch)
+ENTITY_COMPONENT_IMPLEMENT(ComponentSpriteBatch)
 {
-    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(ComponentSpriteBatch, lock);
-    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(ComponentSpriteBatch, unlock);
-    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(ComponentSpriteBatch, addItem);
-}
-
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, create)
-{
-    return System::getInstance().createComponent<ComponentSpriteBatch>(state);
+    ENTITY_COMPONENT_PUSH_FUNCTION(lock);
+    ENTITY_COMPONENT_PUSH_FUNCTION(unlock);
+    ENTITY_COMPONENT_PUSH_FUNCTION(addItem);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
@@ -56,69 +51,53 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
 }
 ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, init)
+ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, init)
 {
     SCRIPT_GET_SELF(ComponentSpriteBatch);
 
     self.spriteBatch.init();
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, insert)
+ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, insert)
 {
     SCRIPT_GET_SELF(ComponentSpriteBatch);
 
     graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.spriteBatch);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, update)
+ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, update)
 {
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-
     graphics::SpriteBatch & spriteBatch = self.spriteBatch;
 
     Transform transform;
     fillTransformFromComponent(state, transform);
 
     spriteBatch.setPosition(transform.position);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, remove)
+ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, remove)
 {
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-
     graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.spriteBatch);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, lock)
+ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, lock)
 {
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-
     self.spriteBatch.lock();
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, unlock)
+ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, unlock)
 {
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-
     self.spriteBatch.unlock();
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, addItem)
+ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, addItem)
 {
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-
     Vector2 position, extent;
     int atlas_item_index;
 
@@ -134,11 +113,8 @@ SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, addItem)
     {
         self.spriteBatch.addItem(atlas_item_index, position);
     }
-
-    return 0;
 }
-uint
-    ComponentSpriteBatch::metaTableRef;
+ENTITY_COMPONENT_END()
 
 }
 }

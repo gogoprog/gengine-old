@@ -3,6 +3,7 @@
 #include "entity_component_sprite.h"
 #include "script.h"
 #include "graphics_animation.h"
+#include "entity_macros.h"
 
 namespace gengine
 {
