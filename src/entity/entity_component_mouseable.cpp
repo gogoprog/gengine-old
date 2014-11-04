@@ -31,7 +31,7 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, create)
     return System::getInstance().createComponent<ComponentMouseable>(state);
 }
 
-ENTITY_COMPONENT_SETTERS_START(ComponentMouseable)
+ENTITY_COMPONENT_SETTERS(ComponentMouseable)
 {
     ENTITY_COMPONENT_SETTER(extent)
     {
@@ -43,7 +43,7 @@ ENTITY_COMPONENT_SETTERS_START(ComponentMouseable)
     }
     ENTITY_COMPONENT_SETTER_END()
 }
-ENTITY_COMPONENT_SETTERS_END()
+ENTITY_COMPONENT_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentMouseable, init)
 {

@@ -22,14 +22,12 @@ ComponentCamera::ComponentCamera()
 {
 }
 
-ENTITY_COMPONENT_IMPLEMENT(ComponentCamera);
-
-SCRIPT_CLASS_REGISTERER(ComponentCamera)
+ENTITY_COMPONENT_IMPLEMENT(ComponentCamera)
 {
-    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(ComponentCamera, getWorldPosition);
+    ENTITY_COMPONENT_PUSH_FUNCTION(getWorldPosition);
 }
 
-ENTITY_COMPONENT_SETTERS_START(ComponentCamera)
+ENTITY_COMPONENT_SETTERS(ComponentCamera)
 {
     ENTITY_COMPONENT_SETTER(extent)
     {
@@ -41,49 +39,40 @@ ENTITY_COMPONENT_SETTERS_START(ComponentCamera)
     }
     ENTITY_COMPONENT_SETTER_END()
 }
-ENTITY_COMPONENT_SETTERS_END()
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, init)
+ENTITY_COMPONENT_METHOD(ComponentCamera, init)
 {
-    (void)state;
-    return 0;
+
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, insert)
+ENTITY_COMPONENT_METHOD(ComponentCamera, insert)
 {
-    SCRIPT_GET_SELF(ComponentCamera);
-
     graphics::System::getInstance().getWorld(self.worldIndex).pushCamera(self.camera);
     self.itIsPushed = true;
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, update)
+ENTITY_COMPONENT_METHOD(ComponentCamera, update)
 {
-    SCRIPT_GET_SELF(ComponentCamera);
-
     graphics::Camera & camera = self.camera;
 
     Transform transform;
     fillTransformFromComponent(state, transform);
 
     camera.setPosition(transform.position);
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
-SCRIPT_CLASS_FUNCTION(ComponentCamera, remove)
+ENTITY_COMPONENT_METHOD(ComponentCamera, remove)
 {
-    SCRIPT_GET_SELF(ComponentCamera);
-
     if(self.itIsPushed)
     {
         graphics::System::getInstance().getWorld(self.worldIndex).popCamera();
     }
-
-    return 0;
 }
+ENTITY_COMPONENT_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentCamera, push)
 {

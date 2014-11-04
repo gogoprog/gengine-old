@@ -33,7 +33,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, create)
     return System::getInstance().createComponent<ComponentSpriteBatch>(state);
 }
 
-ENTITY_COMPONENT_SETTERS_START(ComponentSpriteBatch)
+ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
 {
     ENTITY_COMPONENT_SETTER(layer)
     {
@@ -54,7 +54,7 @@ ENTITY_COMPONENT_SETTERS_START(ComponentSpriteBatch)
     }
     ENTITY_COMPONENT_SETTER_END()
 }
-ENTITY_COMPONENT_SETTERS_END()
+ENTITY_COMPONENT_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, init)
 {

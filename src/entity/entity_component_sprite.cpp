@@ -32,7 +32,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSprite, create)
     return System::getInstance().createComponent<ComponentSprite>(state);
 }
 
-ENTITY_COMPONENT_SETTERS_START(ComponentSprite)
+ENTITY_COMPONENT_SETTERS(ComponentSprite)
 {
     ENTITY_COMPONENT_SETTER(layer)
     {
@@ -77,7 +77,7 @@ ENTITY_COMPONENT_SETTERS_START(ComponentSprite)
     }
     ENTITY_COMPONENT_SETTER_END()
 }
-ENTITY_COMPONENT_SETTERS_END()
+ENTITY_COMPONENT_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentSprite, init)
 {

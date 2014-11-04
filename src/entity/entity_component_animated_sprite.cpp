@@ -33,7 +33,7 @@ SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, create)
     return System::getInstance().createComponent<ComponentAnimatedSprite>(state);
 }
 
-ENTITY_COMPONENT_SETTERS_START(ComponentAnimatedSprite)
+ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
 {
     ENTITY_COMPONENT_SETTER(animation)
     {
@@ -44,7 +44,7 @@ ENTITY_COMPONENT_SETTERS_START(ComponentAnimatedSprite)
         ComponentSprite::newIndex(state);
     }
 }
-ENTITY_COMPONENT_SETTERS_END()
+ENTITY_COMPONENT_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, update)
 {

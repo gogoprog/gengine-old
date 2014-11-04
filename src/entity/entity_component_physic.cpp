@@ -30,7 +30,7 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, create)
     return System::getInstance().createComponent<ComponentPhysic>(state);
 }
 
-ENTITY_COMPONENT_SETTERS_START(ComponentPhysic)
+ENTITY_COMPONENT_SETTERS(ComponentPhysic)
 {
     ENTITY_COMPONENT_SETTER(extent)
     {
@@ -112,7 +112,7 @@ ENTITY_COMPONENT_SETTERS_START(ComponentPhysic)
     }
     ENTITY_COMPONENT_SETTER_END()
 }
-ENTITY_COMPONENT_SETTERS_END()
+ENTITY_COMPONENT_END()
 
 SCRIPT_CLASS_FUNCTION(ComponentPhysic, init)
 {
