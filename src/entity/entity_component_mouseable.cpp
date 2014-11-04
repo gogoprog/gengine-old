@@ -33,7 +33,7 @@ SCRIPT_CLASS_FUNCTION(ComponentMouseable, create)
 
 ENTITY_COMPONENT_SETTERS(ComponentMouseable)
 {
-    ENTITY_COMPONENT_SETTER(extent)
+    ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
         Vector2::fill(state, self.extent, 3);
     }

@@ -35,7 +35,7 @@ SCRIPT_CLASS_FUNCTION(ComponentSpriteBatch, create)
 
 ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
 {
-    ENTITY_COMPONENT_SETTER(layer)
+    ENTITY_COMPONENT_SETTER_FIRST(layer)
     {
         self.spriteBatch.setLayer(lua_tonumber(state,3));
     }

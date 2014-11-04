@@ -32,7 +32,7 @@ SCRIPT_CLASS_FUNCTION(ComponentPhysic, create)
 
 ENTITY_COMPONENT_SETTERS(ComponentPhysic)
 {
-    ENTITY_COMPONENT_SETTER(extent)
+    ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
         b2PolygonShape * shape = new b2PolygonShape();
 

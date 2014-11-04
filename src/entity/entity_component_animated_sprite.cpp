@@ -35,7 +35,7 @@ SCRIPT_CLASS_FUNCTION(ComponentAnimatedSprite, create)
 
 ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
 {
-    ENTITY_COMPONENT_SETTER(animation)
+    ENTITY_COMPONENT_SETTER_FIRST(animation)
     {
         self.animation = static_cast<const graphics::Animation *>(lua_touserdata(state, 3));
     }

@@ -29,7 +29,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentCamera)
 
 ENTITY_COMPONENT_SETTERS(ComponentCamera)
 {
-    ENTITY_COMPONENT_SETTER(extent)
+    ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
         Vector2::fill(state, self.camera.getExtent(), 3);
     }
@@ -93,8 +93,6 @@ ENTITY_COMPONENT_END()
 
 ENTITY_COMPONENT_METHOD(ComponentCamera, getWorldPosition)
 {
-    SCRIPT_GET_SELF(ComponentCamera);
-
     Vector2 result;
 
     self.camera.getWorldPosition(result, Vector2(lua_tonumber(state, 2), lua_tonumber(state, 3)));

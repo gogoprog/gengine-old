@@ -30,8 +30,11 @@
         SCRIPT_GET_SELF(_CLASS_); \
         const char * key = lua_tostring(state, 2);
 
-#define ENTITY_COMPONENT_SETTER(_NAME_) \
+#define ENTITY_COMPONENT_SETTER_FIRST(_NAME_) \
      if(!strcmp(key, #_NAME_))
+
+#define ENTITY_COMPONENT_SETTER(_NAME_) \
+     else if(!strcmp(key, #_NAME_))
 
 #define ENTITY_COMPONENT_SETTER_DEFAULT() \
     else
