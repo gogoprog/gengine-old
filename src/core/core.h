@@ -10,7 +10,7 @@ namespace core
 bool mustQuit();
 application::Window getMainWindow();
 
-void init(int argc, char *argv[]);
+bool init(int argc, char *argv[]);
 void finalize();
 void update();
 void setMustQuit(const bool it_must_quit);
