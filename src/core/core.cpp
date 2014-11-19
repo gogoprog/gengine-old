@@ -178,13 +178,13 @@ void handleEvents()
 
             case SDL_KEYDOWN:
             {
-                input::System::getInstance().updateKeyboardState(e.key.keysym.sym, true);
+                input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, true);
             }
             break;
 
             case SDL_KEYUP:
             {
-                input::System::getInstance().updateKeyboardState(e.key.keysym.sym, false);
+                input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, false);
             }
             break;
         }
