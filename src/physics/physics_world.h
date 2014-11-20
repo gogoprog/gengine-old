@@ -23,6 +23,7 @@ public:
     b2World & getBox2dWorld() { return b2world; }
 
     static SCRIPT_FUNCTION(setGravity);
+    static SCRIPT_FUNCTION(rayCast);
 
 private:
     b2World

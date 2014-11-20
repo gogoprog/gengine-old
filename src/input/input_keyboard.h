@@ -32,7 +32,6 @@ public:
     static SCRIPT_FUNCTION(isUp);
     static SCRIPT_FUNCTION(isJustDown);
     static SCRIPT_FUNCTION(isJustUp);
-    static SCRIPT_FUNCTION(getPosition);
 
 private:
     bool

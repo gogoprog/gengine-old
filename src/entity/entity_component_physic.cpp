@@ -128,6 +128,12 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
     self.fixture->SetSensor(self.itIsSensor);
 
     self.body->SetActive(false);
+
+    lua_getfield(state, 1, "entity");
+    lua_getfield(state, -1, "_ref");
+    int ref = lua_tonumber(state, -1);
+    self.fixture->SetUserData(reinterpret_cast<void *>(ref));
+    lua_pop(state, 2);
 }
 ENTITY_COMPONENT_END()
 
