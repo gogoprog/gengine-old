@@ -3,6 +3,7 @@
 #include "primitives.h"
 #include "array.h"
 #include "Box2D/Box2D.h"
+#include "script.h"
 
 namespace gengine
 {
@@ -14,6 +15,8 @@ class World
 public:
     World();
     ~World();
+
+    void luaRegister(lua_State * state, const uint index) const;
 
     void update(const float dt);
 

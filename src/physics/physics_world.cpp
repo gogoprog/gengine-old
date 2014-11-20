@@ -28,6 +28,15 @@ World::~World()
 {
 }
 
+void World::luaRegister(lua_State * state, const uint index) const
+{
+    lua_pushnumber(state, index);
+    lua_newtable(state);
+    SCRIPT_TABLE_PUSH_THIS();
+
+    lua_settable(state, -3);
+}
+
 void World::update(const float dt)
 {
     timeLeft += dt;

@@ -11,8 +11,6 @@ namespace physics
 void System::init()
 {
     geDebugLog("physics::System::init()");
-
-    createWorlds(1);
 }
 
 void System::finalize()
