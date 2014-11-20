@@ -45,6 +45,10 @@ bool Animation::set(lua_State * state)
     frameDuration = ( 1.0f / frameRate );
     duration = frameDuration * frameTable.getSize();
 
+    lua_getfield(state, 2, "loop");
+    looping = lua_toboolean(state, -1);
+    lua_pop(state, 1);
+
     return true;
 }
 
