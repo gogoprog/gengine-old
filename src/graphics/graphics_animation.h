@@ -21,6 +21,7 @@ public:
     bool set(lua_State * state);
 
     float getDuration() const { return duration; }
+    bool isLooping() const { return looping; }
     const AnimationFrame & getFrame(const float time) const;
 
 private:
@@ -30,6 +31,8 @@ private:
         frameRate,
         frameDuration,
         duration;
+    bool
+        looping;
 };
 
 }

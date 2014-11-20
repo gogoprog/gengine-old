@@ -21,12 +21,17 @@ public:
     static SCRIPT_FUNCTION(newIndex);
     static SCRIPT_FUNCTION(update);
 
+    ENTITY_COMPONENT_METHOD_DECLARE(pushAnimation);
+    ENTITY_COMPONENT_METHOD_DECLARE(removeAnimations);
+
     static uint
         metaTableRef;
 
 protected:
     const graphics::Animation
         * animation;
+    Array<const graphics::Animation *>
+        animationStack;
     float
         currentTime;
 };
