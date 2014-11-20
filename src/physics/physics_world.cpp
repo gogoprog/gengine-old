@@ -1,6 +1,7 @@
 #include "physics_world.h"
 
 #include "debug.h"
+#include "vector2.h"
 
 #define FIXED_TIME_STEP 0.01
 
@@ -34,6 +35,8 @@ void World::luaRegister(lua_State * state, const uint index) const
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_THIS();
 
+    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(World, setGravity);
+
     lua_settable(state, -3);
 }
 
@@ -47,6 +50,19 @@ void World::update(const float dt)
 
         timeLeft -= FIXED_TIME_STEP;
     }
+}
+
+SCRIPT_CLASS_FUNCTION(World, setGravity)
+{
+    SCRIPT_GET_SELF(World);
+
+    Vector2 gravity;
+
+    Vector2::fill(state, gravity, 2);
+
+    self.b2world.SetGravity(b2Vec2(gravity.x, gravity.y));
+
+    return 0;
 }
 
 }
