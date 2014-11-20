@@ -181,6 +181,12 @@ bool Handler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefF
     return false;
 }
 
+void Handler::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode)
+{
+    static std::string script_text = "if gengine.gui.onPageLoaded then gengine.gui.onPageLoaded() end";
+    addTextToExecute(script_text.c_str());
+}
+
 }
 }
 #endif

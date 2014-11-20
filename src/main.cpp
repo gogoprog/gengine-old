@@ -9,18 +9,19 @@ using namespace gengine;
 
 int main(int argc, char *argv[])
 {
-    core::init(argc, argv);
+    if(core::init(argc, argv))
+    {
+        #ifndef EMSCRIPTEN
+            while(!core::mustQuit())
+            {
+                core::update();
+            }
 
-    #ifndef EMSCRIPTEN
-        while(!core::mustQuit())
-        {
-            core::update();
-        }
-
-        core::finalize();
-    #else
-        emscripten_set_main_loop(core::update, 0, 0);
-    #endif
+            core::finalize();
+        #else
+            emscripten_set_main_loop(core::update, 0, 0);
+        #endif
+    }
 
     return 0;
 }

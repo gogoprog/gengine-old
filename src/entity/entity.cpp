@@ -45,6 +45,7 @@ SCRIPT_REGISTERER()
             for k,v in ipairs(self.components) do
                 v:insert()
             end
+            self._isInserted = true
         end
         );
 
@@ -55,10 +56,19 @@ SCRIPT_REGISTERER()
             for k,v in ipairs(self.components) do
                 v:remove()
             end
+            self._isInserted = false
         end
         );
 
     lua_setfield(state, -2, "remove");
+
+    SCRIPT_DO(
+        return function(self)
+            return self.isInserted == true
+        end
+        );
+
+    lua_setfield(state, -2, "isInserted");
 
     SCRIPT_DO(
         return function(self, comp, params, name)

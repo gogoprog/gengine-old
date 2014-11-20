@@ -128,7 +128,7 @@ void System::init2()
     lua_pop(state, 1);
 }
 
-void System::executeFile(const char * file)
+bool System::executeFile(const char * file)
 {
     geDebugLog("script::System::executeFile \"" << file << "\"");
     int result = luaL_loadfile(state, file);
@@ -140,6 +140,7 @@ void System::executeFile(const char * file)
             geLog("script: Syntax error while loading file \"" << file << "\"");
             geLog(lua_tostring(state, -1));
             kernel::breakExecution();
+            return false;
         }
         break;
 
@@ -147,14 +148,22 @@ void System::executeFile(const char * file)
         {
             geLog("script: Cannot allocate memory while loading file \"" << file << "\"");
             kernel::breakExecution();
+            return false;
+        }
+        break;
+
+        case  LUA_ERRFILE:
+        {
+            geLog("script: Cannot open/read file \"" << file << "\"");
+            return false;
         }
         break;
     }
 
-    call(0, LUA_MULTRET);
+    return call(0, LUA_MULTRET);
 }
 
-void System::executeText(const char * text)
+bool System::executeText(const char * text)
 {
     int result = luaL_loadstring(state, text);
 
@@ -165,6 +174,7 @@ void System::executeText(const char * text)
             geLog("script: Syntax error while executing: " << text);
             geLog(lua_tostring(state, -1));
             kernel::breakExecution();
+            return false;
         }
         break;
 
@@ -172,29 +182,30 @@ void System::executeText(const char * text)
         {
             geLog("script: Cannot allocate memory while executing text: " << text);
             kernel::breakExecution();
+            return false;
         }
         break;
     }
 
-    call(0, 0);
+    return call(0, 0);
 }
 
-void System::call(const char * name)
+bool System::call(const char * name)
 {
     lua_getglobal(state, name);
 
-    call(0, 0);
+    return call(0, 0);
 }
 
-void System::call1(const char * name, const float arg)
+bool System::call1(const char * name, const float arg)
 {
     lua_getglobal(state, name);
     lua_pushnumber(state, arg);
 
-    call(1, 0);
+    return call(1, 0);
 }
 
-void System::call(const uint nargs, const uint nresults)
+bool System::call(const uint nargs, const uint nresults)
 {
     int status;
     int base = lua_gettop(state) - nargs;
@@ -206,14 +217,23 @@ void System::call(const uint nargs, const uint nresults)
     switch(status)
     {
         case LUA_ERRRUN:
+        {
             geLog("script: runtime error");
             kernel::breakExecution();
+            return false;
+        }
         break;
         case LUA_ERRMEM:
+        {
             geLog("script: memory allocation error");
             kernel::breakExecution();
+            return false;
+        }
         break;
         default:
+        {
+            return true;
+        }
         break;
     }
 }

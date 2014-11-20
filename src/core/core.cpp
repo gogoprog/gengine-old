@@ -38,7 +38,7 @@ application::Window getMainWindow()
     return mainWindow;
 }
 
-void init(int argc, char *argv[])
+bool init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
 
@@ -49,7 +49,12 @@ void init(int argc, char *argv[])
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
     script_system.init();
-    script_system.executeFile("main.lua");
+
+    if(!script_system.executeFile("main.lua"))
+    {
+        geLog("Cannot load \"main.lua\". Exiting.");
+        return false;
+    }
 
     script_system.call("init");
 
@@ -66,10 +71,11 @@ void init(int argc, char *argv[])
     audio::System::getInstance().init();
     physics::System::getInstance().init();
 
-
     script_system.init2();
 
     script_system.call("start");
+
+    return true;
 }
 
 void finalize()
@@ -172,13 +178,13 @@ void handleEvents()
 
             case SDL_KEYDOWN:
             {
-                input::System::getInstance().updateKeyboardState(e.key.keysym.sym, true);
+                input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, true);
             }
             break;
 
             case SDL_KEYUP:
             {
-                input::System::getInstance().updateKeyboardState(e.key.keysym.sym, false);
+                input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, false);
             }
             break;
         }
