@@ -2,12 +2,13 @@
 
 #include "primitives.h"
 #include "array.h"
-#include "Box2D/Box2D.h"
 
 namespace gengine
 {
 namespace physics
 {
+
+class World;
 
 class System
 {
@@ -18,13 +19,11 @@ public:
     void update(const float dt);
     void createWorlds(const uint count);
 
-    b2World & getWorld(const uint index);
+    World & getWorld(const uint index);
 
 private:
-    Array<b2World *>
+    Array<World *>
         worldTable;
-    float
-        timeLeft;
 };
 
 }

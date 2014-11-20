@@ -10,6 +10,7 @@
 #include "audio.h"
 #include "core.h"
 #include "kernel.h"
+#include "physics.h"
 
 namespace gengine
 {
@@ -124,6 +125,7 @@ void System::init2()
     entity::luaRegister(state);
     gui::luaRegister(state);
     audio::luaRegister(state);
+    physics::luaRegister(state);
 
     lua_pop(state, 1);
 }

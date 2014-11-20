@@ -120,7 +120,7 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
     fillTransformFromComponent(state, transform);
 
     self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
-    self.body = physics::System::getInstance().getWorld(self.worldIndex).CreateBody(&self.bodyDefinition);
+    self.body = physics::System::getInstance().getWorld(self.worldIndex).getBox2dWorld().CreateBody(&self.bodyDefinition);
 
     self.fixtureDefinition.shape = self.shape;
 
@@ -128,6 +128,12 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
     self.fixture->SetSensor(self.itIsSensor);
 
     self.body->SetActive(false);
+
+    lua_getfield(state, 1, "entity");
+    lua_getfield(state, -1, "_ref");
+    int ref = lua_tonumber(state, -1);
+    self.fixture->SetUserData(reinterpret_cast<void *>(ref));
+    lua_pop(state, 2);
 }
 ENTITY_COMPONENT_END()
 
