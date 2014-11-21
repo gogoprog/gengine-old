@@ -45,7 +45,7 @@ solution "gengine"
         if os.is("linux") then
             defines { "_LINUX" }
         elseif os.is("windows") then
-            defines { "_WINDOWS" }
+            defines { "_WINDOWS", "NOMINMAX" }
             flags { "StaticRuntime" }
         end
 

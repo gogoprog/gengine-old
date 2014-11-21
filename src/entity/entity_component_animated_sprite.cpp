@@ -10,6 +10,7 @@
 #include "debug.h"
 #include <string.h>
 #include "entity.h"
+#include <algorithm>
 
 namespace gengine
 {

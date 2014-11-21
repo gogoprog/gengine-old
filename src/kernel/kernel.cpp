@@ -18,7 +18,9 @@ namespace kernel
 void breakExecution()
 {
     #ifndef EMSCRIPTEN
-        raise(SIGTRAP);
+        #ifdef _LINUX
+            raise(SIGTRAP);
+        #endif
     #else
         emscripten_debugger();
     #endif
