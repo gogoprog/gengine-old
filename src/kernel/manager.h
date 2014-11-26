@@ -72,8 +72,11 @@ protected:
         }
         else
         {
-            internalGetName(name, arg);
-            itemMap.add(defaultItem, name);
+            if(defaultItem)
+            {
+                internalGetName(name, arg);
+                itemMap.add(defaultItem, name);
+            }
 
             t->finalize();
             delete t;
