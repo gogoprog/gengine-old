@@ -21,6 +21,7 @@
         lua_newtable(state); \
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, create); \
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, get); \
+        internalLuaRegister(state); \
     } \
     SINGLETON(_class_);
 
@@ -50,21 +51,22 @@ public:
     }
 
 protected:
-    virtual bool internalCreate(T * t, script::State state) = 0;
+    virtual bool internalCreate(T * t, script::State state, const int parameter_position) = 0;
     virtual void internalGetName(char * name, const char * arg) = 0;
     virtual void internalInit() {}
     virtual void internalFinalize() {}
+    static void internalLuaRegister(script::State /*state*/) {}
 
-    int createItem(script::State state)
+    int createItem(script::State state, const int parameter_position = 1)
     {
-        const char * arg = lua_tostring(state, 1);
+        const char * arg = lua_tostring(state, parameter_position);
         char name[128];
 
         T * t = new T();
 
         t->init();
 
-        if(internalCreate(t, state))
+        if(internalCreate(t, state, parameter_position))
         {
             internalGetName(name, arg);
             itemMap.add(t, name);

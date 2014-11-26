@@ -22,7 +22,7 @@ public:
     MANAGER_DECLARE(AtlasManager);
 
 private:
-    virtual bool internalCreate(Atlas * atlas, script::State state) override;
+    virtual bool internalCreate(Atlas * atlas, script::State state, const int parameter_position) override;
     virtual void internalGetName(char * name, const char * arg) override;
 };
 

@@ -21,7 +21,7 @@ public:
     MANAGER_DECLARE(AnimationManager);
 
 private:
-    virtual bool internalCreate(Animation * animation, script::State state) override;
+    virtual bool internalCreate(Animation * animation, script::State state, const int parameter_position) override;
     virtual void internalGetName(char * name, const char * arg) override;
 };
 
