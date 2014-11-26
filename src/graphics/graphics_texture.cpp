@@ -3,6 +3,7 @@
 #include "core_sdl.h"
 #include "graphics_opengl.h"
 #include "debug.h"
+#include "graphics_texture_manager.h"
 
 namespace gengine
 {
@@ -100,6 +101,29 @@ bool Texture::setFromFile(const char * filename)
 
         return false;
     }
+}
+
+void Texture::setDefault()
+{
+    float pixels[] = {
+        1.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 0.0f
+    };
+
+    width = 2;
+    height = 2;
+
+    glBindTexture(GL_TEXTURE_2D, id);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_FLOAT, pixels);
 }
 
 }

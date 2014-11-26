@@ -23,6 +23,8 @@ public:
 private:
     virtual bool internalCreate(Texture * texture, script::State state) override;
     virtual void internalGetName(char * name, const char * arg) override;
+    virtual void internalInit() override;
+    virtual void internalFinalize() override;
 };
 
 }
