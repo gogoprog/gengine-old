@@ -40,8 +40,6 @@ bool Texture::setFromFile(const char * filename)
 
             geDebugRawLog("Failed! Non-power-of-2. " << image->w << "x" << image->h);
 
-            id = TextureManager::getInstance().getDefaultTexture().id;
-
             return false;
         }
 
@@ -101,32 +99,21 @@ bool Texture::setFromFile(const char * filename)
     {
         geDebugRawLog("Failed! " << IMG_GetError());
 
-        id = TextureManager::getInstance().getDefaultTexture().id;
-
         return false;
     }
 }
 
 void Texture::setDefault()
 {
-    unsigned char
-        pixels[2 * 2 * 3];
+    float pixels[] = {
+        1.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 0.0f
+    };
 
-    width = 4;
-    height = 4;
-
-    pixels[0] = 0;
-    pixels[1] = 255;
-    pixels[2] = 255;
-    pixels[3] = 0;
-    pixels[4] = 0;
-    pixels[5] = 0;
-    pixels[6] = 0;
-    pixels[7] = 0;
-    pixels[8] = 0;
-    pixels[9] = 0;
-    pixels[10] = 0;
-    pixels[11] = 0;
+    width = 2;
+    height = 2;
 
     glBindTexture(GL_TEXTURE_2D, id);
 
@@ -136,7 +123,7 @@ void Texture::setDefault()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_FLOAT, pixels);
 }
 
 }

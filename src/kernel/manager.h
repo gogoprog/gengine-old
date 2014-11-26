@@ -5,6 +5,7 @@
 #include <cstring>
 #include "map.h"
 #include "script.h"
+#include "pointer.h"
 
 #define MANAGER_DECLARE(_class_) \
     static SCRIPT_FUNCTION(create) \
@@ -44,12 +45,15 @@ public:
             kv.second->finalize();
             delete kv.second;
         }
+
+        internalFinalize();
     }
 
 protected:
     virtual bool internalCreate(T * t, script::State state) = 0;
     virtual void internalGetName(char * name, const char * arg) = 0;
     virtual void internalInit() {}
+    virtual void internalFinalize() {}
 
     int createItem(script::State state)
     {
@@ -68,6 +72,9 @@ protected:
         }
         else
         {
+            internalGetName(name, arg);
+            itemMap.add(defaultItem, name);
+
             t->finalize();
             delete t;
             lua_pushnil(state);
@@ -95,6 +102,8 @@ protected:
 
     Map<std::string, T*>
         itemMap;
+    Pointer<T>
+        defaultItem;
 };
 
 }
