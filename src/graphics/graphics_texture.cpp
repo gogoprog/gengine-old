@@ -3,6 +3,7 @@
 #include "core_sdl.h"
 #include "graphics_opengl.h"
 #include "debug.h"
+#include "graphics_texture_manager.h"
 
 namespace gengine
 {
@@ -38,6 +39,8 @@ bool Texture::setFromFile(const char * filename)
             SDL_FreeSurface (image);
 
             geDebugRawLog("Failed! Non-power-of-2. " << image->w << "x" << image->h);
+
+            id = TextureManager::getInstance().getDefaultTexture().id;
 
             return false;
         }
@@ -98,8 +101,42 @@ bool Texture::setFromFile(const char * filename)
     {
         geDebugRawLog("Failed! " << IMG_GetError());
 
+        id = TextureManager::getInstance().getDefaultTexture().id;
+
         return false;
     }
+}
+
+void Texture::setDefault()
+{
+    unsigned char
+        pixels[2 * 2 * 3];
+
+    width = 4;
+    height = 4;
+
+    pixels[0] = 0;
+    pixels[1] = 255;
+    pixels[2] = 255;
+    pixels[3] = 0;
+    pixels[4] = 0;
+    pixels[5] = 0;
+    pixels[6] = 0;
+    pixels[7] = 0;
+    pixels[8] = 0;
+    pixels[9] = 0;
+    pixels[10] = 0;
+    pixels[11] = 0;
+
+    glBindTexture(GL_TEXTURE_2D, id);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 }
 
 }

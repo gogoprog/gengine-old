@@ -39,5 +39,10 @@ void TextureManager::internalGetName(char * result, const char * file_path)
     result[length] = 0;
 }
 
+void TextureManager::internalInit()
+{
+    defaultTexture.setDefault();
+}
+
 }
 }

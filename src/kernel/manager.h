@@ -34,6 +34,7 @@ public:
 
     void init()
     {
+        internalInit();
     }
 
     void finalize()
@@ -48,6 +49,7 @@ public:
 protected:
     virtual bool internalCreate(T * t, script::State state) = 0;
     virtual void internalGetName(char * name, const char * arg) = 0;
+    virtual void internalInit() {}
 
     int createItem(script::State state)
     {

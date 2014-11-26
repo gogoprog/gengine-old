@@ -20,9 +20,15 @@ public:
 
     MANAGER_DECLARE(TextureManager);
 
+    const Texture & getDefaultTexture() const { return defaultTexture; }
+
 private:
     virtual bool internalCreate(Texture * texture, script::State state) override;
     virtual void internalGetName(char * name, const char * arg) override;
+    virtual void internalInit() override;
+
+    Texture
+        defaultTexture;
 };
 
 }
