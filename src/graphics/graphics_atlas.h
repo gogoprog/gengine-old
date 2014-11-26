@@ -4,6 +4,7 @@
 #include "graphics_atlas_item.h"
 #include "script.h"
 #include "array.h"
+#include "pointer.h"
 
 namespace gengine
 {
@@ -27,13 +28,13 @@ public:
     AtlasItem & getItem(const uint index) { return itemTable[index]; }
     const AtlasItem & getItem(const uint index) const { return itemTable[index]; }
     const Texture & getTexture() const { return *texture; }
-    bool hasTexture() const { return texture != nullptr; }
+    bool hasTexture() const { return !texture.isNull(); }
 
 private:
     Array<AtlasItem>
         itemTable;
-    const Texture
-        * texture;
+    Pointer<const Texture>
+        texture;
 };
 
 }

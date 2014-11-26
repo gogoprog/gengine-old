@@ -5,6 +5,7 @@
 #include "vector4.h"
 #include "matrix3.h"
 #include "graphics_object.h"
+#include "pointer.h"
 
 namespace gengine
 {
@@ -37,8 +38,8 @@ private:
         extent,
         uvScale,
         uvOffset;
-    const Texture
-        * texture;
+    Pointer<const Texture>
+        texture;
 };
 
 }

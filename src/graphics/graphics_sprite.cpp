@@ -12,7 +12,7 @@ Sprite::Sprite()
     Object(),
     uvScale(Vector2::one),
     uvOffset(Vector2::zero),
-    texture(nullptr)
+    texture()
 {
 }
 
