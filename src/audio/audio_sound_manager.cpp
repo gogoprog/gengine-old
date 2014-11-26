@@ -9,7 +9,7 @@ namespace gengine
 namespace audio
 {
 
-bool SoundManager::internalCreate(Sound * sound, script::State state)
+bool SoundManager::internalCreate(Sound * sound, script::State state, const int parameter_position)
 {
     const char * path = lua_tostring(state, 1);
     return sound->setFromFile(path);

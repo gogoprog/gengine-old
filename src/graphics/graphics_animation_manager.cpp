@@ -8,7 +8,7 @@ namespace gengine
 namespace graphics
 {
 
-bool AnimationManager::internalCreate(Animation * animation, script::State state)
+bool AnimationManager::internalCreate(Animation * animation, script::State state, const int parameter_position)
 {
     return animation->set(state);
 }

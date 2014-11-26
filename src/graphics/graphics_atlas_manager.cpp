@@ -9,7 +9,7 @@ namespace gengine
 namespace graphics
 {
 
-bool AtlasManager::internalCreate(Atlas * atlas, script::State state)
+bool AtlasManager::internalCreate(Atlas * atlas, script::State state, const int parameter_position)
 {
     const Texture * texture = reinterpret_cast<const Texture *>(lua_touserdata(state, 2));
 
