@@ -137,21 +137,24 @@ void Renderer::render(const World & world)
             {
                 Sprite & sprite = * dynamic_cast<Sprite *>(object);
 
-                transform_matrix.initIdentity();
-                transform_matrix.setTranslation(sprite.position);
-                transform_matrix.setRotation(sprite.rotation);
-                transform_matrix.preScale(sprite.extent);
+                if(sprite.texture)
+                {
+                    transform_matrix.initIdentity();
+                    transform_matrix.setTranslation(sprite.position);
+                    transform_matrix.setRotation(sprite.rotation);
+                    transform_matrix.preScale(sprite.extent);
 
-                transformMatrixUniform.apply(transform_matrix);
+                    transformMatrixUniform.apply(transform_matrix);
 
-                colorUniform.apply(sprite.color);
+                    colorUniform.apply(sprite.color);
 
-                samplerUniform.apply(* sprite.texture);
+                    samplerUniform.apply(* sprite.texture);
 
-                uvScaleUniform.apply(sprite.uvScale);
-                uvOffsetUniform.apply(sprite.uvOffset);
+                    uvScaleUniform.apply(sprite.uvScale);
+                    uvOffsetUniform.apply(sprite.uvOffset);
 
-                indexBufferQuad.draw(6);
+                    indexBufferQuad.draw(6);
+                }
             }
             break;
 
@@ -159,21 +162,24 @@ void Renderer::render(const World & world)
             {
                 SpriteBatch & batch = * dynamic_cast<SpriteBatch *>(object);
 
-                batch.vertexBuffer.apply();
+                if(batch.atlas && batch.atlas->hasTexture())
+                {
+                    batch.vertexBuffer.apply();
 
-                transform_matrix.initIdentity();
-                transform_matrix.setTranslation(batch.position);
+                    transform_matrix.initIdentity();
+                    transform_matrix.setTranslation(batch.position);
 
-                transformMatrixUniform.apply(transform_matrix);
+                    transformMatrixUniform.apply(transform_matrix);
 
-                colorUniform.apply(batch.color);
+                    colorUniform.apply(batch.color);
 
-                samplerUniform.apply(batch.atlas->getTexture());
+                    samplerUniform.apply(batch.atlas->getTexture());
 
-                uvScaleUniform.apply(Vector2::one);
-                uvOffsetUniform.apply(Vector2::zero);
+                    uvScaleUniform.apply(Vector2::one);
+                    uvOffsetUniform.apply(Vector2::zero);
 
-                indexBufferQuad.draw(6 * batch.getItemCount());
+                    indexBufferQuad.draw(6 * batch.getItemCount());
+                }
             }
             break;
 

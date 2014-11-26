@@ -27,6 +27,7 @@ public:
     AtlasItem & getItem(const uint index) { return itemTable[index]; }
     const AtlasItem & getItem(const uint index) const { return itemTable[index]; }
     const Texture & getTexture() const { return *texture; }
+    bool hasTexture() const { return texture != nullptr; }
 
 private:
     Array<AtlasItem>
