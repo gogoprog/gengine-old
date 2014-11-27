@@ -99,7 +99,14 @@ protected:
         }
         else
         {
-            lua_pushnil(state);
+            if(defaultItem)
+            {
+                lua_pushlightuserdata(state, defaultItem);
+            }
+            else
+            {
+                lua_pushnil(state);
+            }
         }
 
         return 1;
