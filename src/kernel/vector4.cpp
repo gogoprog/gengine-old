@@ -32,11 +32,16 @@ SCRIPT_CLASS_REGISTERER(Vector4)
                         t.y = y
                         t.z = z
                         t.w = w
-                    else
+                    elseif x.x == nil then
                         t.x = x[1]
                         t.y = x[2]
                         t.z = x[3]
                         t.w = x[4]
+                    else
+                        t.x = x.x
+                        t.y = x.y
+                        t.z = x.z
+                        t.w = x.w
                     end
                 end
             },

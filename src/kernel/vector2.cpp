@@ -78,9 +78,12 @@ SCRIPT_CLASS_REGISTERER(Vector2)
                     if type(x) == "number" then
                         t.x = x
                         t.y = y
-                    else
+                    elseif x.x == nil then
                         t.x = x[1]
                         t.y = x[2]
+                    else
+                        t.x = x.x
+                        t.y = x.y
                     end
                 end
             },

@@ -67,6 +67,10 @@ function checkRoughly(expected, actual)
     end
 end
 
+-------------------------------------------------------------------------------------------------
+-- TESTS
+-------------------------------------------------------------------------------------------------
+
 function testMath()
     local v1, v2 = vector2(1, 2), vector2(3, 4)
     local av, lv = v1 + v2, v1 - v2
@@ -78,4 +82,8 @@ function testMath()
 
     checkRoughly(2.828427, gengine.math.getDistance(v1, v2))
     checkRoughly(8, gengine.math.getSquareDistance(v1, v2))
+
+    v1:set(mv)
+
+    check(vector2(3, 6), v1)
 end
