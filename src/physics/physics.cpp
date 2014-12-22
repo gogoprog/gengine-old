@@ -36,6 +36,13 @@ SCRIPT_REGISTERER()
 
     SCRIPT_TABLE_PUSH_FUNCTION(createWorlds);
 
+    SCRIPT_DO(
+        return function(t, i) return t.worlds[i] end
+        );
+
+    lua_setfield(state, -2, "getWorld");
+
+
     lua_setfield(state, -2, "physics");
 }
 
