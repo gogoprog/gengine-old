@@ -77,12 +77,12 @@ void SpriteBatch::addItem(const int index, const Vector2 & position)
 
 void SpriteBatch::reserve(const int size)
 {
-    vertexData.reserve(size);
+    vertexData.reserve(size * 4);
 }
-
 
 void SpriteBatch::lock()
 {
+
     vertexData.setSize(0);
 }
 

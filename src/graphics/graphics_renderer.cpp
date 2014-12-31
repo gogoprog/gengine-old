@@ -7,7 +7,7 @@
 #include "graphics_sprite_batch.h"
 #include "graphics_atlas.h"
 
-#define INDEX_BUFFER_SIZE 10200
+#define INDEX_BUFFER_SIZE 102400
 
 namespace gengine
 {
