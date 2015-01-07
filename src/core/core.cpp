@@ -46,7 +46,7 @@ bool init(int argc, char *argv[])
 
     script::System & script_system = script::System::getInstance();
 
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 
     script_system.init();
 
@@ -185,6 +185,18 @@ void handleEvents()
             case SDL_KEYUP:
             {
                 input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, false);
+            }
+            break;
+
+            case SDL_JOYBUTTONDOWN:
+            {
+                input::System::getInstance().updateJoypadButton(e.jbutton.which, e.jbutton.button, true);
+            }
+            break;
+
+            case SDL_JOYBUTTONUP:
+            {
+                input::System::getInstance().updateJoypadButton(e.jbutton.which, e.jbutton.button, false);
             }
             break;
         }
