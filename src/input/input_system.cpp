@@ -64,6 +64,11 @@ void System::update()
         mouse.update();
     }
 
+    for(Joypad * joypad : joypadTable)
+    {
+        joypad->update();
+    }
+
     keyboard.update();
 }
 
