@@ -19,6 +19,7 @@ public:
     const Keyboard & getKeyboard() const { return keyboard; }
 
     void init();
+    void finalize();
     void updateMouseCoordinates(const int index, const int x, const int y);
     void updateMouseButton(const int index, const int button_index, const Mouse::ButtonState state);
     void updateKeyboardState(const int key_index, const bool state);
@@ -28,7 +29,7 @@ public:
 private:
     Array<Mouse>
         mouseTable;
-    Array<Joypad>
+    Array<Joypad *>
         joypadTable;
     Keyboard
         keyboard;

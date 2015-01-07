@@ -18,8 +18,14 @@ void System::init()
 
     for(uint i=0; i<joypad_count; ++i)
     {
-        joypadTable.add(Joypad(i));
+        joypadTable.add(new Joypad(i));
     }
+}
+
+void System::finalize()
+{
+    mouseTable.setSize(0);
+    joypadTable.setSize(0);
 }
 
 void System::updateMouseCoordinates(const int index, const int x, const int y)
@@ -47,7 +53,7 @@ void System::updateJoypadButton(const int index, const uint button_index, const 
 {
     if(button_index < Joypad::BUTTON_COUNT)
     {
-        joypadTable[index].buttonStateTable[button_index] = state;
+        joypadTable[index]->buttonStateTable[button_index] = state;
     }
 }
 

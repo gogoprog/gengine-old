@@ -82,6 +82,8 @@ void finalize()
 {
     geDebugLog("core::finalize()");
 
+    input::System::getInstance().finalize();
+
     physics::System::getInstance().finalize();
 
     audio::System::getInstance().finalize();

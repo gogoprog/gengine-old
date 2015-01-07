@@ -19,6 +19,7 @@ public:
         BUTTON_COUNT = 16
     };
 
+    Joypad() = default;
     Joypad(const uint _index);
     ~Joypad();
     SCRIPT_REGISTERER() const;
