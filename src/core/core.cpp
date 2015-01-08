@@ -201,6 +201,18 @@ void handleEvents()
                 input::System::getInstance().updateJoypadButton(e.jbutton.which, e.jbutton.button, false);
             }
             break;
+
+            case SDL_JOYDEVICEADDED:
+            {
+                input::System::getInstance().onJoypadConnected(e.jdevice.which);
+            }
+            break;
+
+            case SDL_JOYDEVICEREMOVED:
+            {
+                input::System::getInstance().onJoypadDisconnected(e.jdevice.which);
+            }
+            break;
         }
     }
 }

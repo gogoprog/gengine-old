@@ -14,17 +14,26 @@ void System::init()
 
     mouseTable.add(Mouse());
 
-    uint joypad_count = SDL_NumJoysticks();
+    //uint joypad_count = SDL_NumJoysticks();
 
-    for(uint i=0; i<joypad_count; ++i)
+    for(uint i=0; i<JOYPAD_COUNT; ++i)
     {
-        joypadTable.add(new Joypad(i));
+        joypadTable.add(Joypad(i));
     }
 }
 
 void System::finalize()
 {
     mouseTable.setSize(0);
+
+    for(Joypad & joypad : joypadTable)
+    {
+        if(joypad.isConnected())
+        {
+            joypad.disconnect();
+        }
+    }
+
     joypadTable.setSize(0);
 }
 
@@ -53,8 +62,18 @@ void System::updateJoypadButton(const int index, const uint button_index, const 
 {
     if(button_index < Joypad::BUTTON_COUNT)
     {
-        joypadTable[index]->buttonStateTable[button_index] = state;
+        joypadTable[index].buttonStateTable[button_index] = state;
     }
+}
+
+void System::onJoypadConnected(const int index)
+{
+    joypadTable[index].connect();
+}
+
+void System::onJoypadDisconnected(const int index)
+{
+    joypadTable[index].disconnect();
 }
 
 void System::update()
@@ -64,9 +83,9 @@ void System::update()
         mouse.update();
     }
 
-    for(Joypad * joypad : joypadTable)
+    for(Joypad & joypad : joypadTable)
     {
-        joypad->update();
+        joypad.update();
     }
 
     keyboard.update();

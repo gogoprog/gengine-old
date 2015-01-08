@@ -13,18 +13,28 @@ Joypad::Joypad(const uint _index)
     memset(buttonStateTable, false, sizeof(bool) * BUTTON_COUNT);
     memset(previousButtonStateTable, false, sizeof(bool) * BUTTON_COUNT);
     index = _index;
-
-    joystick = SDL_JoystickOpen(index);
 }
 
 Joypad::~Joypad()
 {
-    SDL_JoystickClose(joystick);
 }
 
 void Joypad::update()
 {
-    memcpy(previousButtonStateTable, buttonStateTable, sizeof(bool) * BUTTON_COUNT);
+    if(joystick)
+    {
+        memcpy(previousButtonStateTable, buttonStateTable, sizeof(bool) * BUTTON_COUNT);
+    }
+}
+
+void Joypad::connect()
+{
+    joystick = SDL_JoystickOpen(index);
+}
+
+void Joypad::disconnect()
+{
+    SDL_JoystickClose(joystick);
 }
 
 bool Joypad::_isJustDown(const uint button_index) const
@@ -56,7 +66,7 @@ SCRIPT_CLASS_REGISTERER(Joypad) const
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Joypad, isJustDown);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Joypad, isJustUp);
 
-    lua_setfield(state, -2, "joypad");
+    lua_rawseti(state, -2, index);
 }
 
 SCRIPT_CLASS_FUNCTION(Joypad, isDown)

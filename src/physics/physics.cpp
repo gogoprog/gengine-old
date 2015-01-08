@@ -42,7 +42,6 @@ SCRIPT_REGISTERER()
 
     lua_setfield(state, -2, "getWorld");
 
-
     lua_setfield(state, -2, "physics");
 }
 
