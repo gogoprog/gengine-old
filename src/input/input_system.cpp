@@ -56,21 +56,23 @@ void System::updateKeyboardState(const int key_index, const bool state)
     }
 }
 
-void System::updateJoypadButton(const int index, const uint button_index, const bool state)
+void System::updateJoypadButton(const int id, const uint button_index, const bool state)
 {
     if(button_index < Joypad::BUTTON_COUNT)
     {
-        joypadTable[index].buttonStateTable[button_index] = state;
+        joypadTable[joypadIdMap[id]].buttonStateTable[button_index] = state;
     }
 }
 
 void System::onJoypadConnected(const int index)
 {
     joypadTable[index].connect();
+    joypadIdMap.add(index, joypadTable[index].joystickId);
 }
 
 void System::onJoypadDisconnected(const int index)
 {
+    joypadIdMap.remove(joypadTable[index].joystickId);
     joypadTable[index].disconnect();
 }
 

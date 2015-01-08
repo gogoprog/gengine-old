@@ -30,7 +30,7 @@ public:
     void updateMouseCoordinates(const int index, const int x, const int y);
     void updateMouseButton(const int index, const int button_index, const Mouse::ButtonState state);
     void updateKeyboardState(const int key_index, const bool state);
-    void updateJoypadButton(const int index, const uint button_index, const bool state);
+    void updateJoypadButton(const int id, const uint button_index, const bool state);
     void onJoypadConnected(const int index);
     void onJoypadDisconnected(const int index);
     void update();
@@ -40,6 +40,8 @@ private:
         mouseTable;
     Array<Joypad>
         joypadTable;
+    Map<SDL_JoystickID, uint>
+        joypadIdMap;
     Keyboard
         keyboard;
 };

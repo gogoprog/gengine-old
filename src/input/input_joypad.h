@@ -49,6 +49,8 @@ private:
         index;
     Pointer<SDL_Joystick>
         joystick;
+    SDL_JoystickID
+        joystickId;
 };
 
 }

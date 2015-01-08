@@ -30,6 +30,7 @@ void Joypad::update()
 void Joypad::connect()
 {
     joystick = SDL_JoystickOpen(index);
+    joystickId = SDL_JoystickInstanceID(joystick);
 }
 
 void Joypad::disconnect()
