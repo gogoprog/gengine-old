@@ -14,8 +14,6 @@ void System::init()
 
     mouseTable.add(Mouse());
 
-    //uint joypad_count = SDL_NumJoysticks();
-
     for(uint i=0; i<JOYPAD_COUNT; ++i)
     {
         joypadTable.add(Joypad(i));

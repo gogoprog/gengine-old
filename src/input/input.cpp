@@ -18,7 +18,6 @@ SCRIPT_REGISTERER()
 
     system.getKeyboard().luaRegister(state);
 
-
     lua_newtable(state);
 
     for(uint i=0; i<System::JOYPAD_COUNT; ++i)
