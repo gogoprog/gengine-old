@@ -75,7 +75,7 @@ SCRIPT_CLASS_FUNCTION(Joypad, isDown)
 {
     SCRIPT_TABLE_GET_THIS(Joypad);
 
-    uint button_index = lua_tonumber(state,2);
+    uint button_index = lua_tonumber(state, 2);
 
     SCRIPT_PUSH_BOOL(self.buttonStateTable[button_index] == true);
 
@@ -86,7 +86,7 @@ SCRIPT_CLASS_FUNCTION(Joypad, isUp)
 {
     SCRIPT_TABLE_GET_THIS(Joypad);
 
-    uint button_index = lua_tonumber(state,2);
+    uint button_index = lua_tonumber(state, 2);
 
     SCRIPT_PUSH_BOOL(self.buttonStateTable[button_index] == false);
 
@@ -97,7 +97,7 @@ SCRIPT_CLASS_FUNCTION(Joypad, isJustDown)
 {
     SCRIPT_TABLE_GET_THIS(Joypad);
 
-    uint button_index = lua_tonumber(state,2);
+    uint button_index = lua_tonumber(state, 2);
 
     SCRIPT_PUSH_BOOL(self.buttonStateTable[button_index] == true && self.previousButtonStateTable[button_index] == false);
 
@@ -108,9 +108,29 @@ SCRIPT_CLASS_FUNCTION(Joypad, isJustUp)
 {
     SCRIPT_TABLE_GET_THIS(Joypad);
 
-    uint button_index = lua_tonumber(state,2);
+    uint button_index = lua_tonumber(state, 2);
 
     SCRIPT_PUSH_BOOL(self.buttonStateTable[button_index] == false && self.previousButtonStateTable[button_index] == true);
+
+    return 1;
+}
+
+SCRIPT_CLASS_FUNCTION(Joypad, isConnected)
+{
+    SCRIPT_TABLE_GET_THIS(Joypad);
+
+    SCRIPT_PUSH_BOOL(self.isConnected());
+
+    return 1;
+}
+
+SCRIPT_CLASS_FUNCTION(Joypad, getAxis)
+{
+    SCRIPT_TABLE_GET_THIS(Joypad);
+
+    uint axis_index = lua_tonumber(state, 2);
+
+    SCRIPT_PUSH_NUMBER(self.axisValueTable[axis_index]);
 
     return 1;
 }

@@ -31,6 +31,7 @@ public:
     void updateMouseButton(const int index, const int button_index, const Mouse::ButtonState state);
     void updateKeyboardState(const int key_index, const bool state);
     void updateJoypadButton(const int id, const uint button_index, const bool state);
+    void updateJoypadAxis(const int id, const uint axis, const float value);
     void onJoypadConnected(const int index);
     void onJoypadDisconnected(const int index);
     void update();

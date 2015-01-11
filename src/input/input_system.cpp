@@ -64,6 +64,11 @@ void System::updateJoypadButton(const int id, const uint button_index, const boo
     }
 }
 
+void System::updateJoypadAxis(const int id, const uint axis, const float value)
+{
+     joypadTable[joypadIdMap[id]].axisValueTable[axis] = value;
+}
+
 void System::onJoypadConnected(const int index)
 {
     joypadTable[index].connect();

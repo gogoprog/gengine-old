@@ -40,11 +40,15 @@ public:
     static SCRIPT_FUNCTION(isUp);
     static SCRIPT_FUNCTION(isJustDown);
     static SCRIPT_FUNCTION(isJustUp);
+    static SCRIPT_FUNCTION(isConnected);
+    static SCRIPT_FUNCTION(getAxis);
 
 private:
     bool
         buttonStateTable[BUTTON_COUNT],
         previousButtonStateTable[BUTTON_COUNT];
+    float
+        axisValueTable[2];
     uint
         index;
     Pointer<SDL_Joystick>

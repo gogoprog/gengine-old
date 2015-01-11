@@ -18,13 +18,13 @@
     void _name_::luaUnregister(lua_State * state)
 
 #define SCRIPT_FUNCTION(_name_) \
-    int _name_(lua_State * state)
+    int _##_name_(lua_State * state)
 
 #define SCRIPT_CLASS_FUNCTION(_class_, _name_) \
-    int _class_::_name_(lua_State * state)
+    int _class_::_##_name_(lua_State * state)
 
 #define SCRIPT_REGISTER(_name_) \
-    lua_register(state, #_name_, &_name_)
+    lua_register(state, #_name_, &_##_name_)
 
 #define SCRIPT_GET_SELF(_class_) \
     SCRIPT_TABLE_GET_THIS(_class_)
@@ -34,19 +34,19 @@
     _class_ & self = * static_cast<_class_*>(lua_touserdata(state, -1))
 
 #define SCRIPT_TABLE_PUSH_FUNCTION(_name_) \
-    lua_pushcfunction(state, &_name_); \
+    lua_pushcfunction(state, &_##_name_); \
     lua_setfield(state, -2, #_name_)
 
 #define SCRIPT_TABLE_PUSH_FUNCTION2(_function_, _name_) \
-    lua_pushcfunction(state, &_function_); \
+    lua_pushcfunction(state, &_##_function_); \
     lua_setfield(state, -2, #_name_)
 
 #define SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, _name_) \
-    lua_pushcfunction(state, &_class_::_name_); \
+    lua_pushcfunction(state, &_class_::_##_name_); \
     lua_setfield(state, -2, #_name_)
 
 #define SCRIPT_TABLE_PUSH_INTERNAL_FUNCTION(_name_) \
-    lua_pushcfunction(state, &_name_); \
+    lua_pushcfunction(state, &_##_name_); \
     lua_setfield(state, -2, #_name_)
 
 #define SCRIPT_TABLE_PUSH_NUMBER(_name_, _value_) \

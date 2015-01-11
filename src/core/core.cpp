@@ -213,6 +213,12 @@ void handleEvents()
                 input::System::getInstance().onJoypadDisconnected(e.jdevice.which);
             }
             break;
+
+            case SDL_JOYAXISMOTION:
+            {
+                input::System::getInstance().updateJoypadAxis(e.jaxis.which, e.jaxis.axis, e.jaxis.value);
+            }
+            break;
         }
     }
 }
