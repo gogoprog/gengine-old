@@ -11,4 +11,6 @@
 
 typedef unsigned int uint;
 
+typedef unsigned char uint8;
+
 typedef unsigned short ushort;

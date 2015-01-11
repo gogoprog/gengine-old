@@ -32,6 +32,7 @@ public:
     void updateKeyboardState(const int key_index, const bool state);
     void updateJoypadButton(const int id, const uint button_index, const bool state);
     void updateJoypadAxis(const int id, const uint axis, const float value);
+    void updateJoypadHat(const int id, const uint hat, const uint value);
     void onJoypadConnected(const int index);
     void onJoypadDisconnected(const int index);
     void update();

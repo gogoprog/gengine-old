@@ -216,7 +216,13 @@ void handleEvents()
 
             case SDL_JOYAXISMOTION:
             {
-                input::System::getInstance().updateJoypadAxis(e.jaxis.which, e.jaxis.axis, e.jaxis.value);
+                input::System::getInstance().updateJoypadAxis(e.jaxis.which, e.jaxis.axis, e.jaxis.value / 32767.0f);
+            }
+            break;
+
+            case SDL_JOYHATMOTION:
+            {
+                input::System::getInstance().updateJoypadHat(e.jhat.which, e.jhat.hat, e.jhat.value);
             }
             break;
         }

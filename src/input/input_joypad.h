@@ -17,7 +17,8 @@ class Joypad
 public:
     enum
     {
-        BUTTON_COUNT = 16
+        BUTTON_COUNT = 16,
+        HAT_COUNT = 1
     };
 
     Joypad() = default;
@@ -42,14 +43,17 @@ public:
     static SCRIPT_FUNCTION(isJustUp);
     static SCRIPT_FUNCTION(isConnected);
     static SCRIPT_FUNCTION(getAxis);
+    static SCRIPT_FUNCTION(getHat);
 
 private:
     bool
         buttonStateTable[BUTTON_COUNT],
         previousButtonStateTable[BUTTON_COUNT];
+    uint8
+        hatValueTable[HAT_COUNT];
     float
         axisValueTable[2];
-    uint
+    uint8
         index;
     Pointer<SDL_Joystick>
         joystick;

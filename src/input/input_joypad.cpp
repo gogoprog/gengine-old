@@ -135,5 +135,16 @@ SCRIPT_CLASS_FUNCTION(Joypad, getAxis)
     return 1;
 }
 
+SCRIPT_CLASS_FUNCTION(Joypad, getHat)
+{
+    SCRIPT_TABLE_GET_THIS(Joypad);
+
+    uint hat_index = lua_tonumber(state, 2);
+
+    SCRIPT_PUSH_NUMBER(self.hatValueTable[hat_index]);
+
+    return 1;
+}
+
 }
 }
