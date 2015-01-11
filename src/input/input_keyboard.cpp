@@ -19,22 +19,22 @@ void Keyboard::update()
     memcpy(previousKeyStateTable, keyStateTable, sizeof(bool) * KEY_COUNT );
 }
 
-bool Keyboard::_isJustDown(const uint key_index) const
+bool Keyboard::isJustDown(const uint key_index) const
 {
     return keyStateTable[key_index] == true && previousKeyStateTable[key_index] == false;
 }
 
-bool Keyboard::_isDown(const uint key_index) const
+bool Keyboard::isDown(const uint key_index) const
 {
     return keyStateTable[key_index] == true;
 }
 
-bool Keyboard::_isJustUp(const uint key_index) const
+bool Keyboard::isJustUp(const uint key_index) const
 {
     return keyStateTable[key_index] == false && previousKeyStateTable[key_index] == true;
 }
 
-bool Keyboard::_isUp(const uint key_index) const
+bool Keyboard::isUp(const uint key_index) const
 {
     return keyStateTable[key_index] == false;
 }

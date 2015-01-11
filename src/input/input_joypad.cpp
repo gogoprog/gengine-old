@@ -39,22 +39,22 @@ void Joypad::disconnect()
     joystick = nullptr;
 }
 
-bool Joypad::_isJustDown(const uint button_index) const
+bool Joypad::isJustDown(const uint button_index) const
 {
     return buttonStateTable[button_index] == true && previousButtonStateTable[button_index] == false;
 }
 
-bool Joypad::_isDown(const uint button_index) const
+bool Joypad::isDown(const uint button_index) const
 {
     return buttonStateTable[button_index] == true;
 }
 
-bool Joypad::_isJustUp(const uint button_index) const
+bool Joypad::isJustUp(const uint button_index) const
 {
     return buttonStateTable[button_index] == false && previousButtonStateTable[button_index] == true;
 }
 
-bool Joypad::_isUp(const uint button_index) const
+bool Joypad::isUp(const uint button_index) const
 {
     return buttonStateTable[button_index] == false;
 }

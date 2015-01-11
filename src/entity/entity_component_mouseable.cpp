@@ -84,7 +84,7 @@ ENTITY_COMPONENT_METHOD(ComponentMouseable, update)
 
         for(uint i = input::Mouse::BUTTON_FIRST; i <= input::Mouse::BUTTON_LAST; ++i )
         {
-            if(mouse._isJustDown(i))
+            if(mouse.isJustDown(i))
             {
                 lua_getfield(state, 1, "entity");
                 lua_getfield(state, -1, "onMouseJustDown");

@@ -22,22 +22,22 @@ void Mouse::update()
     memcpy(previousButtonStateTable, buttonStateTable, sizeof(ButtonState) * BUTTON_COUNT );
 }
 
-bool Mouse::_isJustDown(const uint button_index) const
+bool Mouse::isJustDown(const uint button_index) const
 {
     return buttonStateTable[button_index] == DOWN && previousButtonStateTable[button_index] == UP;
 }
 
-bool Mouse::_isDown(const uint button_index) const
+bool Mouse::isDown(const uint button_index) const
 {
     return buttonStateTable[button_index] == DOWN;
 }
 
-bool Mouse::_isJustUp(const uint button_index) const
+bool Mouse::isJustUp(const uint button_index) const
 {
     return buttonStateTable[button_index] == UP && previousButtonStateTable[button_index] == DOWN;
 }
 
-bool Mouse::_isUp(const uint button_index) const
+bool Mouse::isUp(const uint button_index) const
 {
     return buttonStateTable[button_index] == UP;
 }

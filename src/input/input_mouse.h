@@ -33,10 +33,10 @@ public:
 
     uint getX() const { return x; }
     uint getY() const { return y; }
-    bool _isJustDown(const uint button_index) const;
-    bool _isDown(const uint button_index) const;
-    bool _isJustUp(const uint button_index) const;
-    bool _isUp(const uint button_index) const;
+    bool isJustDown(const uint button_index) const;
+    bool isDown(const uint button_index) const;
+    bool isJustUp(const uint button_index) const;
+    bool isUp(const uint button_index) const;
 
     static SCRIPT_FUNCTION(isDown);
     static SCRIPT_FUNCTION(isUp);
