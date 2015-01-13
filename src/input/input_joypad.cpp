@@ -35,8 +35,9 @@ void Joypad::connect()
 
 void Joypad::disconnect()
 {
-    SDL_JoystickClose(joystick);
+    // SDL_JoystickClose(joystick); // :todo: figure out what to do.
     joystick = nullptr;
+    joystickId = -1;
 }
 
 bool Joypad::isJustDown(const uint button_index) const

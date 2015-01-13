@@ -77,13 +77,15 @@ void System::updateJoypadHat(const int id, const uint hat, const uint value)
 void System::onJoypadConnected(const int index)
 {
     joypadTable[index].connect();
-    joypadIdMap.add(index, joypadTable[index].joystickId);
+    int jid = joypadTable[index].joystickId;
+    joypadIdMap.add(index, jid);
 }
 
-void System::onJoypadDisconnected(const int index)
+void System::onJoypadDisconnected(const int id)
 {
-    joypadIdMap.remove(joypadTable[index].joystickId);
+    uint index = joypadIdMap[id];
     joypadTable[index].disconnect();
+    joypadIdMap.remove(id);
 }
 
 void System::update()
