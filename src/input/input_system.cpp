@@ -58,7 +58,7 @@ void System::updateKeyboardState(const int key_index, const bool state)
 
 void System::updateJoypadButton(const int id, const uint button_index, const bool state)
 {
-    if(button_index < Joypad::BUTTON_COUNT)
+    if(button_index < Joypad::MAXIMUM_BUTTON_COUNT)
     {
         joypadTable[joypadIdMap[id]].buttonStateTable[button_index] = state;
     }
@@ -66,12 +66,18 @@ void System::updateJoypadButton(const int id, const uint button_index, const boo
 
 void System::updateJoypadAxis(const int id, const uint axis, const float value)
 {
-     joypadTable[joypadIdMap[id]].axisValueTable[axis] = value;
+    if(axis < Joypad::MAXIMUM_AXIS_COUNT)
+    {
+        joypadTable[joypadIdMap[id]].axisValueTable[axis] = value;
+    }
 }
 
 void System::updateJoypadHat(const int id, const uint hat, const uint value)
 {
-     joypadTable[joypadIdMap[id]].axisValueTable[hat] = value;
+    if(hat < Joypad::MAXIMUM_HAT_COUNT)
+    {
+        joypadTable[joypadIdMap[id]].hatValueTable[hat] = value;
+    }
 }
 
 void System::onJoypadConnected(const int index)

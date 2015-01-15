@@ -17,8 +17,9 @@ class Joypad
 public:
     enum
     {
-        BUTTON_COUNT = 16,
-        HAT_COUNT = 1
+        MAXIMUM_BUTTON_COUNT = 16,
+        MAXIMUM_AXIS_COUNT = 6,
+        MAXIMUM_HAT_COUNT = 2
     };
 
     Joypad() = default;
@@ -44,21 +45,28 @@ public:
     static SCRIPT_FUNCTION(isConnected);
     static SCRIPT_FUNCTION(getAxis);
     static SCRIPT_FUNCTION(getHat);
+    static SCRIPT_FUNCTION(getButtonCount);
+    static SCRIPT_FUNCTION(getAxisCount);
+    static SCRIPT_FUNCTION(getHatCount);
 
 private:
     bool
-        buttonStateTable[BUTTON_COUNT],
-        previousButtonStateTable[BUTTON_COUNT];
+        buttonStateTable[MAXIMUM_BUTTON_COUNT],
+        previousButtonStateTable[MAXIMUM_BUTTON_COUNT];
     uint8
-        hatValueTable[HAT_COUNT];
+        hatValueTable[MAXIMUM_HAT_COUNT];
     float
-        axisValueTable[2];
+        axisValueTable[MAXIMUM_AXIS_COUNT];
     uint8
         index;
     Pointer<SDL_Joystick>
         joystick;
     SDL_JoystickID
         joystickId;
+    uint
+        buttonCount,
+        axisCount,
+        hatCount;
 };
 
 }
