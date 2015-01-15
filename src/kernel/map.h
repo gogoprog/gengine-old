@@ -14,6 +14,11 @@ public:
         data[key] = v;
     }
 
+    void remove(const K & key)
+    {
+        data.erase(key);
+    }
+
     V & operator[](const K & key)
     {
         return data[key];
@@ -21,7 +26,7 @@ public:
 
     const V & operator[](const K & key) const
     {
-        return data[key];
+        return data.at(key);
     }
 
     bool find(V & result, const K & k) const
@@ -37,6 +42,21 @@ public:
         }
 
         return false;
+    }
+
+    bool contains(const K & k) const
+    {
+        return data.find(k) != data.end();
+    }
+
+    void clear()
+    {
+        data.clear();
+    }
+
+    uint getSize() const
+    {
+        return data.size();
     }
 
     typedef typename std::map<K,V>::iterator iterator;

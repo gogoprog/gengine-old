@@ -42,7 +42,7 @@ ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
     }
     ENTITY_COMPONENT_SETTER_DEFAULT()
     {
-        ComponentSprite::newIndex(state);
+        ComponentSprite::_newIndex(state);
     }
 }
 ENTITY_COMPONENT_END()
@@ -90,7 +90,7 @@ ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, update)
         }
     }
 
-    return ComponentSprite::update(state);
+    return ComponentSprite::_update(state);
 }
 ENTITY_COMPONENT_END()
 

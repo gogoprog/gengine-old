@@ -18,6 +18,21 @@ SCRIPT_REGISTERER()
 
     system.getKeyboard().luaRegister(state);
 
+    lua_newtable(state);
+
+    for(uint i=0; i<System::JOYPAD_COUNT; ++i)
+    {
+        system.getJoypad(i).luaRegister(state);
+    }
+
+    lua_setfield(state, -2, "joypads");
+
+    SCRIPT_DO(
+        return function(t, i) return t.joypads[i] end
+        );
+
+    lua_setfield(state, -2, "getJoypad");
+
     lua_setfield(state, -2, "input");
 }
 

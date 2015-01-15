@@ -46,7 +46,7 @@ bool init(int argc, char *argv[])
 
     script::System & script_system = script::System::getInstance();
 
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 
     script_system.init();
 
@@ -81,6 +81,8 @@ bool init(int argc, char *argv[])
 void finalize()
 {
     geDebugLog("core::finalize()");
+
+    input::System::getInstance().finalize();
 
     physics::System::getInstance().finalize();
 
@@ -185,6 +187,42 @@ void handleEvents()
             case SDL_KEYUP:
             {
                 input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, false);
+            }
+            break;
+
+            case SDL_JOYBUTTONDOWN:
+            {
+                input::System::getInstance().updateJoypadButton(e.jbutton.which, e.jbutton.button, true);
+            }
+            break;
+
+            case SDL_JOYBUTTONUP:
+            {
+                input::System::getInstance().updateJoypadButton(e.jbutton.which, e.jbutton.button, false);
+            }
+            break;
+
+            case SDL_JOYDEVICEADDED:
+            {
+                input::System::getInstance().onJoypadConnected(e.jdevice.which);
+            }
+            break;
+
+            case SDL_JOYDEVICEREMOVED:
+            {
+                input::System::getInstance().onJoypadDisconnected(e.jdevice.which);
+            }
+            break;
+
+            case SDL_JOYAXISMOTION:
+            {
+                input::System::getInstance().updateJoypadAxis(e.jaxis.which, e.jaxis.axis, e.jaxis.value / 32767.0f);
+            }
+            break;
+
+            case SDL_JOYHATMOTION:
+            {
+                input::System::getInstance().updateJoypadHat(e.jhat.which, e.jhat.hat, e.jhat.value);
             }
             break;
         }

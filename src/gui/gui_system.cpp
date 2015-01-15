@@ -125,12 +125,12 @@ void System::update(const float dt)
             mouse_event.x = mouse.getX();
             mouse_event.y = mouse.getY();
 
-            if(mouse._isJustDown(1))
+            if(mouse.isJustDown(1))
             {
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
             }
 
-            if(mouse._isJustUp(1))
+            if(mouse.isJustUp(1))
             {
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
             }

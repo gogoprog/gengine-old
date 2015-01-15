@@ -63,7 +63,7 @@ private:
 
         COMPONENT::luaRegister(state);
 
-        lua_pushcfunction(state, &COMPONENT::create);
+        lua_pushcfunction(state, &COMPONENT::_create);
         lua_setfield(state, -2, "__call");
 
         COMPONENT::metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
@@ -74,7 +74,7 @@ private:
         lua_setmetatable(state, -2);
 
         lua_pushstring(state, "__newindex");
-        lua_pushcfunction(state, &COMPONENT::newIndex);
+        lua_pushcfunction(state, &COMPONENT::_newIndex);
         lua_rawset(state, -3);
 
         lua_pushstring(state, "__index");
