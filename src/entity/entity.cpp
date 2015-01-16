@@ -64,7 +64,7 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(self)
-            return self.isInserted == true
+            return self._isInserted == true
         end
         );
 
