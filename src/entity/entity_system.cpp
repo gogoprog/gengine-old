@@ -14,6 +14,7 @@
 #include "entity_component_animated_sprite.h"
 #include "entity_component_sprite_batch.h"
 #include "entity_component_physic.h"
+#include "entity_component_navigation_agent.h"
 
 namespace gengine
 {
@@ -136,6 +137,7 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");
     registerComponent<ComponentSpriteBatch>(state, "ComponentSpriteBatch");
     registerComponent<ComponentPhysic>(state, "ComponentPhysic");
+    registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
 }
 
 SCRIPT_CLASS_UNREGISTERER(System)

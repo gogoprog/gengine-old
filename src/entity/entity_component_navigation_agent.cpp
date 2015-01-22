@@ -16,24 +16,26 @@ namespace entity
 ComponentNavigationAgent::ComponentNavigationAgent()
     :
     agent(nullptr),
-    worldIndex(0)
+    worldIndex(0),
+    radius(10.0f),
+    speed(100.0f)
 {
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentNavigationAgent)
 {
-
+    ENTITY_COMPONENT_PUSH_FUNCTION(moveTo);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentNavigationAgent)
 {
     ENTITY_COMPONENT_SETTER_FIRST(radius)
     {
-        self.agent->radius = lua_tonumber(state, 3);
+        self.radius = lua_tonumber(state, 3);
     }
     ENTITY_COMPONENT_SETTER(speed)
     {
-        self.agent->speed = lua_tonumber(state, 3);
+        self.speed = lua_tonumber(state, 3);
     }
     ENTITY_COMPONENT_SETTER_END()
 }
@@ -50,6 +52,8 @@ ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, insert)
     fillTransformFromComponent(state, transform);
 
     self.agent = & navigation::System::getInstance().getWorld(self.worldIndex).getWorld().createAgent(*(tilemover2d::Vector2 *) & transform.position);
+    self.agent->radius = self.radius;
+    self.agent->speed = self.speed;
 }
 ENTITY_COMPONENT_END()
 
@@ -67,6 +71,16 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, remove)
 {
 
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, moveTo)
+{
+    Vector2 position;
+
+    Vector2::fill(state, position, 2);
+
+    self.agent->moveTo(*(tilemover2d::Vector2 *) & position);
 }
 ENTITY_COMPONENT_END()
 

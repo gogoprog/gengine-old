@@ -16,11 +16,16 @@ public:
 
     ENTITY_COMPONENT_DECLARE();
 
+    ENTITY_COMPONENT_METHOD_DECLARE(moveTo);
+
 protected:
     tilemover2d::Agent
         * agent;
     uint
         worldIndex;
+    float
+        radius,
+        speed;
 };
 
 }
