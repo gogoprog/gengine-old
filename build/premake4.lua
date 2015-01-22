@@ -22,7 +22,8 @@ solution "gengine"
             "../src/script",
             "../src/entity",
             "../src/gui",
-            "../src/physics"
+            "../src/physics",
+            "../src/navigation"
             }
 
         links {

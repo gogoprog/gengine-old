@@ -10,6 +10,7 @@
 #include "gui_system.h"
 #include "audio_system.h"
 #include "physics_system.h"
+#include "navigation_system.h"
 #include "debug.h"
 
 namespace gengine
@@ -70,6 +71,7 @@ bool init(int argc, char *argv[])
     gui::System::getInstance().init(argc,argv);
     audio::System::getInstance().init();
     physics::System::getInstance().init();
+    navigation::System::getInstance().init();
 
     script_system.init2();
 
@@ -83,11 +85,9 @@ void finalize()
     geDebugLog("core::finalize()");
 
     input::System::getInstance().finalize();
-
+    navigation::System::getInstance().finalize();
     physics::System::getInstance().finalize();
-
     audio::System::getInstance().finalize();
-
     gui::System::getInstance().finalize();
 
     script::System::getInstance().call("stop");
