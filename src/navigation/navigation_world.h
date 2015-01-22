@@ -3,6 +3,7 @@
 #include "primitives.h"
 #include "array.h"
 #include "script.h"
+#include "tilemover2d.h"
 
 namespace gengine
 {
@@ -19,8 +20,14 @@ public:
 
     void update(const float dt);
 
-private:
+    tilemover2d::World & getWorld() { return world; }
 
+    static SCRIPT_FUNCTION(init);
+    static SCRIPT_FUNCTION(setTileBlocking);
+
+private:
+    tilemover2d::World
+        world;
 };
 
 }

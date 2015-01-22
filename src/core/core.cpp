@@ -115,15 +115,12 @@ void update()
     script::System::getInstance().call1("update", dt);
 
     physics::System::getInstance().update(dt);
-
+    navigation::System::getInstance().update(dt);
     entity::System::getInstance().update(dt);
-
     graphics::System::getInstance().update();
-
     gui::System::getInstance().update(dt);
 
     graphics::System::getInstance().render();
-
     gui::System::getInstance().render();
 
     input::System::getInstance().update();
