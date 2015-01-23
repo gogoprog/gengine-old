@@ -31,7 +31,11 @@ ENTITY_COMPONENT_SETTERS(ComponentCamera)
 {
     ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
-        Vector2::fill(state, self.camera.getExtent(), 3);
+        Vector2 extent;
+
+        Vector2::fill(state, extent, 3);
+
+        self.camera.setExtent(extent);
     }
     ENTITY_COMPONENT_SETTER(world)
     {
