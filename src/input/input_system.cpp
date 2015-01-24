@@ -48,6 +48,12 @@ void System::updateMouseButton(const int index, const int button_index, const Mo
     mouse.buttonStateTable[button_index] = state;
 }
 
+void System::updateMouseWheel(const int index, const int wheel)
+{
+    Mouse & mouse = mouseTable[index];
+    mouse.wheelY = wheel;
+}
+
 void System::updateKeyboardState(const int key_index, const bool state)
 {
     if(key_index < Keyboard::KEY_COUNT)

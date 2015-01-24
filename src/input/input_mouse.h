@@ -43,11 +43,14 @@ public:
     static SCRIPT_FUNCTION(isJustDown);
     static SCRIPT_FUNCTION(isJustUp);
     static SCRIPT_FUNCTION(getPosition);
+    static SCRIPT_FUNCTION(getWheelY);
 
 private:
     uint
         x,
         y;
+    int
+        wheelY;
     ButtonState
         buttonStateTable[BUTTON_COUNT],
         previousButtonStateTable[BUTTON_COUNT];

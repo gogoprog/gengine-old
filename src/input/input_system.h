@@ -29,6 +29,7 @@ public:
     void finalize();
     void updateMouseCoordinates(const int index, const int x, const int y);
     void updateMouseButton(const int index, const int button_index, const Mouse::ButtonState state);
+    void updateMouseWheel(const int index, const int wheel);
     void updateKeyboardState(const int key_index, const bool state);
     void updateJoypadButton(const int id, const uint button_index, const bool state);
     void updateJoypadAxis(const int id, const uint axis, const float value);

@@ -11,7 +11,8 @@ namespace input
 Mouse::Mouse()
     :
     x(0),
-    y(0)
+    y(0),
+    wheelY(0)
 {
     memset(buttonStateTable, 0, sizeof(ButtonState) * BUTTON_COUNT);
     memset(previousButtonStateTable, 0, sizeof(ButtonState) * BUTTON_COUNT);
@@ -20,6 +21,7 @@ Mouse::Mouse()
 void Mouse::update()
 {
     memcpy(previousButtonStateTable, buttonStateTable, sizeof(ButtonState) * BUTTON_COUNT );
+    wheelY = 0;
 }
 
 bool Mouse::isJustDown(const uint button_index) const
@@ -51,6 +53,7 @@ SCRIPT_CLASS_REGISTERER(Mouse) const
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Mouse, isJustDown);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Mouse, isJustUp);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Mouse, getPosition);
+    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(Mouse, getWheelY);
 
     lua_setfield(state, -2, "mouse");
 }
@@ -107,6 +110,15 @@ SCRIPT_CLASS_FUNCTION(Mouse, getPosition)
     SCRIPT_PUSH_NUMBER(self.y);
 
     return 2;
+}
+
+SCRIPT_CLASS_FUNCTION(Mouse, getWheelY)
+{
+    SCRIPT_TABLE_GET_THIS(Mouse);
+
+    SCRIPT_PUSH_NUMBER(self.wheelY);
+
+    return 1;
 }
 
 }

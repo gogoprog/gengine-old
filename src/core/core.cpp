@@ -178,6 +178,13 @@ void handleEvents()
             }
             break;
 
+            case SDL_MOUSEWHEEL:
+            {
+                SDL_MouseWheelEvent *w = (SDL_MouseWheelEvent*)&e;
+                input::System::getInstance().updateMouseWheel(0, w->y);
+            }
+            break;
+
             case SDL_KEYDOWN:
             {
                 input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, true);
