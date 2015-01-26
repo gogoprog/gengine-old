@@ -68,7 +68,7 @@
   <body>
     <figure style="overflow:visible;" id="spinner"><div class="spinner"></div><center style="margin-top:0.5em"><strong>Loading...</strong></center></figure>
     <div class="emscripten">
-      <progress value="0" max="100" id="progress" hidden=1></progress>  
+      <progress value="0" max="100" id="progress" hidden=1></progress>
     </div>
     <div class="emscripten_border" id="canvas_holder">
       <div id="holder">
@@ -83,6 +83,7 @@
         document.getElementById("gui").addEventListener("mousedown", SDL.receiveEvent, true);
         document.getElementById("gui").addEventListener("mousemove", SDL.receiveEvent, true);
         document.getElementById("gui").addEventListener("mouseup", SDL.receiveEvent, true);
+        document.getElementById("gui").addEventListener("mousewheel", SDL.receiveEvent, true);
       }
 
       var spinnerElement = document.getElementById('spinner');

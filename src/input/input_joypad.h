@@ -5,6 +5,11 @@
 #include "core_sdl.h"
 #include "pointer.h"
 
+#ifdef EMSCRIPTEN
+    typedef uint SDL_JoystickID;
+    #define SDL_JoystickInstanceID SDL_JoystickIndex
+#endif
+
 namespace gengine
 {
 namespace input

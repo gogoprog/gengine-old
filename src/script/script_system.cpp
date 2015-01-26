@@ -24,6 +24,8 @@ void System::init()
     state = luaL_newstate();
     luaL_openlibs(state);
 
+    lua_checkstack(state, 50);
+
     lua_newtable(state);
 
     SCRIPT_DO(

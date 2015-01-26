@@ -181,7 +181,13 @@ void handleEvents()
             case SDL_MOUSEWHEEL:
             {
                 SDL_MouseWheelEvent *w = (SDL_MouseWheelEvent*)&e;
-                input::System::getInstance().updateMouseWheel(0, w->y);
+                int value = w->y;
+
+                #ifdef EMSCRIPTEN
+                    value /= std::abs(value) * -1.0f;
+                #endif
+
+                input::System::getInstance().updateMouseWheel(0, value);
             }
             break;
 
@@ -209,17 +215,19 @@ void handleEvents()
             }
             break;
 
-            case SDL_JOYDEVICEADDED:
-            {
-                input::System::getInstance().onJoypadConnected(e.jdevice.which);
-            }
-            break;
+            #ifndef EMSCRIPTEN
+                case SDL_JOYDEVICEADDED:
+                {
+                    input::System::getInstance().onJoypadConnected(e.jdevice.which);
+                }
+                break;
 
-            case SDL_JOYDEVICEREMOVED:
-            {
-                input::System::getInstance().onJoypadDisconnected(e.jdevice.which);
-            }
-            break;
+                case SDL_JOYDEVICEREMOVED:
+                {
+                    input::System::getInstance().onJoypadDisconnected(e.jdevice.which);
+                }
+                break;
+            #endif
 
             case SDL_JOYAXISMOTION:
             {
