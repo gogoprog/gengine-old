@@ -22,9 +22,11 @@ void handleEvents();
 bool
     itMustQuit = false;
 unsigned long long
-    last_ticks = 0,
-    current_ticks,
+    lastTicks = 0,
+    currentTicks,
     frameIndex = 0;
+float
+    updateFactor = 1.0f;
 application::Window
     mainWindow;
 
@@ -105,8 +107,8 @@ void update()
 {
     float dt;
 
-    current_ticks = SDL_GetTicks();
-    dt = ( current_ticks - last_ticks ) / 1000.0f;
+    currentTicks = SDL_GetTicks();
+    dt = ( ( currentTicks - lastTicks ) * updateFactor )/ 1000.0f;
 
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -130,7 +132,7 @@ void update()
 
     mainWindow.swap();
 
-    last_ticks = current_ticks;
+    lastTicks = currentTicks;
 
     ++frameIndex;
 }
@@ -138,6 +140,11 @@ void update()
 void setMustQuit(const bool it_must_quit)
 {
     itMustQuit = it_must_quit;
+}
+
+void setUpdateFactor(const float factor)
+{
+    updateFactor = factor;
 }
 
 void handleEvents()

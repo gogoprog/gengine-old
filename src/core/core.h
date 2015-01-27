@@ -14,6 +14,7 @@ bool init(int argc, char *argv[]);
 void finalize();
 void update();
 void setMustQuit(const bool it_must_quit);
+void setUpdateFactor(const float factor);
 
 }
 }

@@ -31,6 +31,15 @@ SCRIPT_FUNCTION(setExtent)
     return 0;
 }
 
+SCRIPT_FUNCTION(setUpdateFactor)
+{
+    float factor = uint(lua_tonumber(state, 1));
+
+    core::setUpdateFactor(factor);
+
+    return 0;
+}
+
 SCRIPT_FUNCTION(quit)
 {
     core::setMustQuit(true);
@@ -47,6 +56,7 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
     SCRIPT_TABLE_PUSH_FUNCTION(setName);
     SCRIPT_TABLE_PUSH_FUNCTION(setExtent);
+    SCRIPT_TABLE_PUSH_FUNCTION(setUpdateFactor);
     SCRIPT_TABLE_PUSH_FUNCTION(quit);
     lua_setfield(state, -2, "application");
 }
