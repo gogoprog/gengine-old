@@ -10,7 +10,13 @@ namespace audio
 
 SCRIPT_FUNCTION(playMusic)
 {
-    System::getInstance().playMusic(lua_tostring(state,1));
+    bool looping;
+    float volume;
+
+    volume = lua_tonumber(state, 2);
+    looping = lua_toboolean(state, 3);
+
+    System::getInstance().playMusic(lua_tostring(state, 1), volume, looping);
 
     return 0;
 }
@@ -18,7 +24,11 @@ SCRIPT_FUNCTION(playMusic)
 SCRIPT_FUNCTION(playSound)
 {
     Sound * sound = static_cast<Sound *>(lua_touserdata(state, 1));
-    System::getInstance().playSound(sound);
+    float volume;
+
+    volume = lua_tonumber(state, 2);
+
+    System::getInstance().playSound(sound, volume);
 
     return 0;
 }

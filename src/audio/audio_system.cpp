@@ -31,18 +31,21 @@ void System::finalize()
     Mix_CloseAudio();
 }
 
-void System::playMusic(const char *path)
+void System::playMusic(const char *path, const float volume, const bool looping)
 {
     Mix_Music * music;
 
     music = Mix_LoadMUS(path);
 
-    Mix_PlayMusic(music, 0);
+    Mix_PlayMusic(music, looping ? -1 : 0);
+    Mix_VolumeMusic(int(MIX_MAX_VOLUME * volume));
 }
 
-void System::playSound(const Sound *sound)
+void System::playSound(const Sound *sound, const float volume)
 {
-    Mix_PlayChannel(-1, sound->chunk, 0);
+    int channel = Mix_PlayChannel(-1, sound->chunk, 0);
+
+    Mix_Volume(channel, int(MIX_MAX_VOLUME * volume));
 }
 
 }

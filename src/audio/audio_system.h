@@ -17,8 +17,8 @@ public:
     void init();
     void finalize();
 
-    void playMusic(const char *path);
-    void playSound(const Sound *sound);
+    void playMusic(const char *path, const float volume, const bool looping);
+    void playSound(const Sound *sound, const float volume);
 
 private:
 
