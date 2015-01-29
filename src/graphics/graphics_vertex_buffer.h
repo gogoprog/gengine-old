@@ -27,9 +27,11 @@ public:
         }
     }
 
-    void init()
+    void init(const uint count, const bool use_as_stream)
     {
         glGenBuffers(1, &id);
+        glBindBuffer(GL_ARRAY_BUFFER, id);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(VERTEX) * count, nullptr, use_as_stream ? GL_STREAM_DRAW : GL_STATIC_DRAW);
     }
 
     void finalize()
@@ -52,6 +54,18 @@ public:
 
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_TEXCOORDS);
         glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), (char*)0 + 8);
+    }
+
+    VERTEX * map()
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, id);
+
+        return reinterpret_cast<VERTEX *>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY_ARB));
+    }
+
+    void unMap()
+    {
+        glUnmapBuffer(GL_ARRAY_BUFFER);
     }
 
 private:

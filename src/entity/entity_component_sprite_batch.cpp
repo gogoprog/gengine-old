@@ -17,7 +17,8 @@ namespace entity
 
 ComponentSpriteBatch::ComponentSpriteBatch()
     :
-    worldIndex(0)
+    worldIndex(0),
+    size(128)
 {
 }
 
@@ -45,7 +46,7 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
     }
     ENTITY_COMPONENT_SETTER(size)
     {
-        self.spriteBatch.reserve(lua_tonumber(state,3));
+        self.size = uint(lua_tonumber(state,3));
     }
     ENTITY_COMPONENT_SETTER_END()
 }
@@ -55,7 +56,7 @@ ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, init)
 {
     SCRIPT_GET_SELF(ComponentSpriteBatch);
 
-    self.spriteBatch.init();
+    self.spriteBatch.init(self.size);
 }
 ENTITY_COMPONENT_END()
 

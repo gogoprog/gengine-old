@@ -104,7 +104,7 @@ Renderer::Renderer()
 
 void Renderer::init()
 {
-    Vertex vertices[4];
+    Vertex * vertices;
     ushort indices[INDEX_BUFFER_SIZE];
 
     defaultVertexShader.init(GL_VERTEX_SHADER);
@@ -117,6 +117,21 @@ void Renderer::init()
     defaultProgram.attachShader(defaultVertexShader);
     defaultProgram.attachShader(defaultFragmentShader);
     defaultProgram.link();
+
+    for(uint i=0; i<INDEX_BUFFER_SIZE/6; ++i)
+    {
+        indices[i*6 + 0] = i*4 + 0;
+        indices[i*6 + 1] = i*4 + 1;
+        indices[i*6 + 2] = i*4 + 2;
+
+        indices[i*6 + 3] = i*4 + 2;
+        indices[i*6 + 4] = i*4 + 3;
+        indices[i*6 + 5] = i*4 + 0;
+    }
+
+    vertexBufferQuad.init(4, false);
+
+    vertices = vertexBufferQuad.map();
 
     vertices[0].position.x = -0.5f;
     vertices[0].position.y = 0.5f;
@@ -137,20 +152,6 @@ void Renderer::init()
     vertices[3].position.y = -0.5f;
     vertices[3].texCoords.u = 0.0f;
     vertices[3].texCoords.v = 1.0f;
-
-    for(uint i=0; i<INDEX_BUFFER_SIZE/6; ++i)
-    {
-        indices[i*6 + 0] = i*4 + 0;
-        indices[i*6 + 1] = i*4 + 1;
-        indices[i*6 + 2] = i*4 + 2;
-
-        indices[i*6 + 3] = i*4 + 2;
-        indices[i*6 + 4] = i*4 + 3;
-        indices[i*6 + 5] = i*4 + 0;
-    }
-
-    vertexBufferQuad.init();
-    vertexBufferQuad.setData(vertices, 4);
 
     indexBufferQuad.init();
     indexBufferQuad.setData(indices, INDEX_BUFFER_SIZE);

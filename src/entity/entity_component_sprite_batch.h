@@ -24,7 +24,8 @@ protected:
     graphics::SpriteBatch
         spriteBatch;
     uint
-        worldIndex;
+        worldIndex,
+        size;
 };
 
 }
