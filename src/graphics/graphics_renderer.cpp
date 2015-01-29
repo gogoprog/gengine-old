@@ -153,6 +153,8 @@ void Renderer::init()
     vertices[3].texCoords.u = 0.0f;
     vertices[3].texCoords.v = 1.0f;
 
+    vertexBufferQuad.unMap();
+
     indexBufferQuad.init();
     indexBufferQuad.setData(indices, INDEX_BUFFER_SIZE);
 
@@ -176,9 +178,6 @@ void Renderer::finalize()
 void Renderer::render(const World & world)
 {
     Matrix3 transform_matrix;
-
-    defaultProgram.use();
-    projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
 
     for(Object * object : world.objectTable)
     {
@@ -244,6 +243,7 @@ void Renderer::render(const World & world)
 
     glUseProgram(0);
     currentType = Type::NONE;
+    currentProgram = nullptr;
 }
 
 void Renderer::enable(const Type type, const World & world)
@@ -254,12 +254,26 @@ void Renderer::enable(const Type type, const World & world)
         {
             case Type::SPRITE:
             {
+                if(currentProgram != & defaultProgram)
+                {
+                    defaultProgram.use();
+                    currentProgram = & defaultProgram;
+                }
+
+                projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
                 vertexBufferQuad.apply();
             }
             break;
 
             case Type::SPRITE_BATCH:
             {
+                if(currentProgram != & defaultProgram)
+                {
+                    defaultProgram.use();
+                    currentProgram = & defaultProgram;
+                }
+
+                projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
             }
             break;
 

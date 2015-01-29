@@ -4,6 +4,7 @@
 #include "vector2.h"
 #include "stack.h"
 #include "array.h"
+#include "pointer.h"
 #include "graphics_uniform.h"
 #include "graphics_world.h"
 #include "graphics_program.h"
@@ -58,6 +59,8 @@ private:
         uvOffsetUniform;
     Type
         currentType;
+    Pointer<Program>
+        currentProgram;
 };
 
 }
