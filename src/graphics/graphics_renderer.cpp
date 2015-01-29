@@ -5,6 +5,7 @@
 #include "graphics_system.h"
 #include "graphics_sprite.h"
 #include "graphics_sprite_batch.h"
+#include "graphics_particle_system.h"
 #include "graphics_atlas.h"
 
 #define INDEX_BUFFER_SIZE 102400
@@ -177,6 +178,11 @@ void Renderer::init()
     colorUniform.init(defaultProgram, "color");
     uvScaleUniform.init(defaultProgram, "uvScale");
     uvOffsetUniform.init(defaultProgram, "uvOffset");
+
+    particleProjectionMatrixUniform.init(particleProgram, "projectionMatrix");
+    particleTransformMatrixUniform.init(particleProgram, "transformMatrix");
+    particleSamplerUniform.init(particleProgram, "tex0");
+    particleColorUniform.init(particleProgram, "color");
 }
 
 void Renderer::finalize()
@@ -186,6 +192,10 @@ void Renderer::finalize()
     defaultVertexShader.finalize();
     vertexBufferQuad.finalize();
     indexBufferQuad.finalize();
+
+    particleProgram.finalize();
+    particleFragmentShader.finalize();
+    particleVertexShader.finalize();
 }
 
 void Renderer::render(const World & world)
@@ -249,6 +259,28 @@ void Renderer::render(const World & world)
             }
             break;
 
+            case Type::PARTICLE_SYSTEM:
+            {
+                ParticleSystem & particle_system = * dynamic_cast<ParticleSystem *>(object);
+
+                if(particle_system.particleCount)
+                {
+                    particle_system.vertexBuffer.apply();
+
+                    transform_matrix.initIdentity();
+                    transform_matrix.setTranslation(particle_system.position);
+
+                    particleTransformMatrixUniform.apply(transform_matrix);
+
+                    particleColorUniform.apply(particle_system.color);
+
+                    particleSamplerUniform.apply(* particle_system.texture);
+
+                    indexBufferQuad.draw(6 * particle_system.particleCount);
+                }
+            }
+            break;
+
             default:
             break;
         }
@@ -287,6 +319,18 @@ void Renderer::enable(const Type type, const World & world)
                 }
 
                 projectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
+            }
+            break;
+
+            case Type::PARTICLE_SYSTEM:
+            {
+                if(currentProgram != & particleProgram)
+                {
+                    particleProgram.use();
+                    currentProgram = & particleProgram;
+                }
+
+                particleProjectionMatrixUniform.apply(world.getCurrentCamera().getProjectionMatrix());
             }
             break;
 

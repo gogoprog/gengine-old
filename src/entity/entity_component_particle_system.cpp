@@ -69,6 +69,8 @@ ENTITY_COMPONENT_METHOD(ComponentParticleSystem, update)
 {
     graphics::ParticleSystem & particleSystem = self.particleSystem;
 
+    particleSystem.update(System::getInstance().getCurrentDt());
+
     Transform transform;
     fillTransformFromComponent(state, transform);
 

@@ -26,7 +26,10 @@ public:
     void update(const float dt);
     void finalize();
 
+    void setEmitterLifeTime(const float value) { emitterLifeTime = value; }
+    void setEmitterRate(const float value) { emitterRate = value; }
     void setTexture(const Texture & _texture) { texture = & _texture; }
+    void setLifeTimeRange(const Vector2 & value) { lifeTimeRange = value; }
 
 private:
     struct ParticleTable
