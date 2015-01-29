@@ -38,12 +38,14 @@ private:
             * maxLifeTimes;
     };
 
+    void addParticle();
     void removeParticle(const uint index);
 
     float
-        lifeTime,
-        rate,
-        currentTime;
+        emitterLifeTime,
+        emitterRate,
+        currentTime,
+        particleToEmitSum;
     uint
         particleCount,
         maximumParticleCount;
@@ -51,6 +53,8 @@ private:
         texture;
     ParticleTable
         particles;
+    Vector2
+        lifeTimeRange;
 };
 
 }

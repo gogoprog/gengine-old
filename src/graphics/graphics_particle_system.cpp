@@ -10,6 +10,8 @@ namespace graphics
 ParticleSystem::ParticleSystem()
     :
     Object(),
+    currentTime(0.0f),
+    particleToEmitSum(0.0f),
     texture()
 {
 }
@@ -38,6 +40,27 @@ void ParticleSystem::update(const float dt)
         * lifeTimes = particles.lifeTimes,
         * maxLifeTimes = particles.maxLifeTimes;
 
+    if(currentTime<emitterLifeTime)
+    {
+        uint count;
+
+        particleToEmitSum += emitterRate * dt;
+
+        count = uint(particleToEmitSum);
+
+        if(count > 0)
+        {
+            if(particleCount < maximumParticleCount)
+            {
+                addParticle();
+            }
+
+            particleToEmitSum -= count;
+        }
+    }
+
+    currentTime += dt;
+
     for(uint i=0; i<particleCount;++i)
     {
         lifeTimes[i] += dt;
@@ -60,6 +83,15 @@ void ParticleSystem::finalize()
     delete particles.velocities;
     delete particles.lifeTimes;
     delete particles.maxLifeTimes;
+}
+
+void ParticleSystem::addParticle()
+{
+    particleCount++;
+    particles.positions[particleCount].set(0.0f, 0.0f);
+    particles.velocities[particleCount].set(0.0f, 0.0f);
+    particles.lifeTimes[particleCount] = 0.0f;
+    particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandomInRange();
 }
 
 void ParticleSystem::removeParticle(const uint index)

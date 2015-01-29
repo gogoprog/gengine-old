@@ -1,6 +1,7 @@
 #include "vector2.h"
 
 #include <cmath>
+#include <cstdlib>
 
 namespace gengine
 {
@@ -60,6 +61,17 @@ Vector2 & Vector2::operator+=(const Vector2 & other)
     y += other.y;
 
     return * this;
+}
+
+float Vector2::getRandomInRange() const
+{
+    return x + (y - x) * (std::rand()/ static_cast<float>(RAND_MAX));
+}
+
+void Vector2::set(const float _x, const float _y)
+{
+    x = _x;
+    y = _y;
 }
 
 Vector2
