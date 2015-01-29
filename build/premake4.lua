@@ -22,7 +22,8 @@ solution "gengine"
             "../src/script",
             "../src/entity",
             "../src/gui",
-            "../src/physics"
+            "../src/physics",
+            "../src/navigation"
             }
 
         links {
@@ -49,7 +50,15 @@ solution "gengine"
             flags { "StaticRuntime" }
         end
 
-        includedirs { "../deps/common/include" }
+        includedirs {
+            "../deps/common/include",
+            "../deps/common/tilemover2d/src/"
+            }
+
+        files {
+            "../deps/common/tilemover2d/src/micropather.*",
+            "../deps/common/tilemover2d/src/tilemover2d.*"
+            }
 
         configuration "Debug*"
             defines { "DEBUG" }
