@@ -28,6 +28,7 @@ public:
     {
         SPRITE,
         SPRITE_BATCH,
+        PARTICLE_SYSTEM,
         NONE
     };
 
