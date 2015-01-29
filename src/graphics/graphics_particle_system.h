@@ -55,6 +55,10 @@ private:
         particles;
     Vector2
         lifeTimeRange;
+    VertexBuffer<Vertex>
+        vertexBuffer;
+    Array<Vertex>
+        vertexData;
 };
 
 }

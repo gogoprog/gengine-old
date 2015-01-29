@@ -14,7 +14,7 @@ public:
     ~IndexBuffer();
     void init();
     void finalize();
-    void setData(const ushort * indices, const uint _count);
+    void setData(const ushort * indices, const uint _count, const bool stream = false);
     void draw(const uint _count);
     void draw();
 

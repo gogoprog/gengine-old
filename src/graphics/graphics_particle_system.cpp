@@ -88,6 +88,7 @@ void ParticleSystem::finalize()
 void ParticleSystem::addParticle()
 {
     particleCount++;
+
     particles.positions[particleCount].set(0.0f, 0.0f);
     particles.velocities[particleCount].set(0.0f, 0.0f);
     particles.lifeTimes[particleCount] = 0.0f;

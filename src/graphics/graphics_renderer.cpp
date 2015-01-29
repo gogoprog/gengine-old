@@ -25,7 +25,7 @@ const char vertex_shader_source[] = GL_GLSL(
 
     void main()
     {
-        vec3 res = transformMatrix * vec3(position,1.0 ) * projectionMatrix;
+        vec3 res = transformMatrix * vec3(position, 1.0) * projectionMatrix;
         v_texCoords.x = texCoords.x * uvScale.x + uvOffset.x;
         v_texCoords.y = texCoords.y * uvScale.y + uvOffset.y;
         gl_Position = vec4(res,1.0);
@@ -33,6 +33,59 @@ const char vertex_shader_source[] = GL_GLSL(
 );
 
 const char fragment_shader_source[] = GL_GLSL(
+    varying highp vec2 v_texCoords;
+    uniform sampler2D tex0;
+    uniform highp vec4 color;
+
+    void main()
+    {
+        gl_FragColor = texture2D(tex0, v_texCoords) * color;
+    }
+);
+
+const char particle_vertex_shader_source[] = GL_GLSL(
+    attribute vec2 position;
+    attribute vec4 color;
+    attribute uint index;
+    attribute float rotation;
+    varying highp vec2 v_texCoords;
+    uniform highp mat3 projectionMatrix;
+    uniform highp mat3 transformMatrix;
+    uniform highp vec2 halfParticleSize;
+
+    void main()
+    {
+        vec3 finalPosition;
+
+        if(index == 0)
+        {
+            finalPosition.x = position.x - halfParticleSize.x;
+            finalPosition.y = position.y - halfParticleSize.y;
+        }
+        else if(index == 1)
+        {
+            finalPosition.x = position.x + halfParticleSize.x;
+            finalPosition.y = position.y - halfParticleSize.y;
+        }
+        else if(index == 2)
+        {
+            finalPosition.x = position.x + halfParticleSize.x;
+            finalPosition.y = position.y + halfParticleSize.y;
+        }
+        else if(index == 3)
+        {
+            finalPosition.x = position.x - halfParticleSize.x;
+            finalPosition.y = position.y + halfParticleSize.y;
+        }
+
+        vec3 res = transformMatrix * vec3(finalPosition, 1.0) * projectionMatrix;
+        v_texCoords.x = texCoords.x * uvScale.x + uvOffset.x;
+        v_texCoords.y = texCoords.y * uvScale.y + uvOffset.y;
+        gl_Position = vec4(res,1.0);
+    }
+);
+
+const char particle_fragment_shader_source[] = GL_GLSL(
     varying highp vec2 v_texCoords;
     uniform sampler2D tex0;
     uniform highp vec4 color;
