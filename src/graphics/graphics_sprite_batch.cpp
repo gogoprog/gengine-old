@@ -72,10 +72,6 @@ void SpriteBatch::addItem(const int index, const Vector2 & position)
     addItem(index, position, extent);
 }
 
-void SpriteBatch::reserve(const int size)
-{
-}
-
 void SpriteBatch::lock()
 {
     vertices = vertexBuffer.map();
