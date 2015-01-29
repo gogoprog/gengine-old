@@ -6,6 +6,7 @@
 #include "matrix3.h"
 #include "graphics_object.h"
 #include "pointer.h"
+#include "graphics_particle_vertex.h"
 
 namespace gengine
 {
@@ -55,10 +56,8 @@ private:
         particles;
     Vector2
         lifeTimeRange;
-    VertexBuffer<Vertex>
+    VertexBuffer<ParticleVertex>
         vertexBuffer;
-    Array<Vertex>
-        vertexData;
 };
 
 }

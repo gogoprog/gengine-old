@@ -46,41 +46,43 @@ const char fragment_shader_source[] = GL_GLSL(
 const char particle_vertex_shader_source[] = GL_GLSL(
     attribute vec2 position;
     attribute vec4 color;
+    attribute vec2 extent;
     attribute uint index;
     attribute float rotation;
     varying highp vec2 v_texCoords;
     uniform highp mat3 projectionMatrix;
     uniform highp mat3 transformMatrix;
-    uniform highp vec2 halfParticleSize;
 
     void main()
     {
-        vec3 finalPosition;
+        vec2 finalPosition;
 
         if(index == 0)
         {
-            finalPosition.x = position.x - halfParticleSize.x;
-            finalPosition.y = position.y - halfParticleSize.y;
+            finalPosition.x = position.x - extent.x * 0.5;
+            finalPosition.y = position.y + extent.y * 0.5;
+            v_texCoords = vec2(0, 0);
         }
         else if(index == 1)
         {
-            finalPosition.x = position.x + halfParticleSize.x;
-            finalPosition.y = position.y - halfParticleSize.y;
+            finalPosition.x = position.x + extent.x * 0.5;
+            finalPosition.y = position.y + extent.y * 0.5;
+            v_texCoords = vec2(1, 0);
         }
         else if(index == 2)
         {
-            finalPosition.x = position.x + halfParticleSize.x;
-            finalPosition.y = position.y + halfParticleSize.y;
+            finalPosition.x = position.x + extent.x * 0.5;
+            finalPosition.y = position.y - extent.y * 0.5;
+            v_texCoords = vec2(1, 1);
         }
         else if(index == 3)
         {
-            finalPosition.x = position.x - halfParticleSize.x;
-            finalPosition.y = position.y + halfParticleSize.y;
+            finalPosition.x = position.x - extent.x * 0.5;
+            finalPosition.y = position.y - extent.y * 0.5;
+            v_texCoords = vec2(0, 1);
         }
 
         vec3 res = transformMatrix * vec3(finalPosition, 1.0) * projectionMatrix;
-        v_texCoords.x = texCoords.x * uvScale.x + uvOffset.x;
-        v_texCoords.y = texCoords.y * uvScale.y + uvOffset.y;
         gl_Position = vec4(res,1.0);
     }
 );
@@ -117,6 +119,17 @@ void Renderer::init()
     defaultProgram.attachShader(defaultVertexShader);
     defaultProgram.attachShader(defaultFragmentShader);
     defaultProgram.link();
+
+    particleVertexShader.init(GL_VERTEX_SHADER);
+    particleVertexShader.compile(particle_vertex_shader_source);
+
+    particleFragmentShader.init(GL_FRAGMENT_SHADER);
+    particleFragmentShader.compile(particle_fragment_shader_source);
+
+    particleProgram.init();
+    particleProgram.attachShader(particleVertexShader);
+    particleProgram.attachShader(particleFragmentShader);
+    particleProgram.link();
 
     for(uint i=0; i<INDEX_BUFFER_SIZE/6; ++i)
     {

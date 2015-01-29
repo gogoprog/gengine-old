@@ -43,9 +43,12 @@ private:
 
     Shader
         defaultVertexShader,
-        defaultFragmentShader;
+        defaultFragmentShader,
+        particleVertexShader,
+        particleFragmentShader;
     Program
-        defaultProgram;
+        defaultProgram,
+        particleProgram;
     VertexBuffer<Vertex>
         vertexBufferQuad;
     IndexBuffer
@@ -56,7 +59,11 @@ private:
         samplerUniform,
         colorUniform,
         uvScaleUniform,
-        uvOffsetUniform;
+        uvOffsetUniform,
+        particleProjectionMatrixUniform,
+        particleTransformMatrixUniform,
+        particleSamplerUniform,
+        particleColorUniform;
     Type
         currentType;
     Pointer<Program>

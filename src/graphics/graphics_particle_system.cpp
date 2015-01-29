@@ -29,6 +29,8 @@ void ParticleSystem::init(const uint maximum_particle_count)
     particles.velocities = new Vector2[maximumParticleCount];
     particles.lifeTimes = new float[maximumParticleCount];
     particles.maxLifeTimes = new float[maximumParticleCount];
+
+    vertexBuffer.init(maximumParticleCount, true);
 }
 
 void ParticleSystem::update(const float dt)
@@ -39,6 +41,8 @@ void ParticleSystem::update(const float dt)
     float
         * lifeTimes = particles.lifeTimes,
         * maxLifeTimes = particles.maxLifeTimes;
+    ParticleVertex
+        * vertices;
 
     if(currentTime<emitterLifeTime)
     {
@@ -75,6 +79,22 @@ void ParticleSystem::update(const float dt)
     {
         positions[i] += velocities[i] * dt;
     }
+
+
+    vertices = vertexBuffer.map();
+
+    for(uint p=0; p<particleCount;++p)
+    {
+        for(uint i=0; i<particleCount;++i)
+        {
+            vertices[p*4 + i].index = i;
+            vertices[p*4 + i].position = positions[p];
+
+        }
+
+    }
+
+    vertexBuffer.unMap();
 }
 
 void ParticleSystem::finalize()

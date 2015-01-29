@@ -10,7 +10,8 @@ namespace graphics
 struct ParticleVertex
 {
     Vector2
-        position;
+        position,
+        extent;
     Vector4
         color;
     float
