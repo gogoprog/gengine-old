@@ -57,26 +57,27 @@ const char particle_vertex_shader_source[] = GL_GLSL(
     void main()
     {
         vec2 finalPosition;
+        int i = int(index);
 
-        if(index == 0.0)
+        if(i == 0)
         {
             finalPosition.x = position.x - extent.x * 0.5;
             finalPosition.y = position.y + extent.y * 0.5;
             v_texCoords = vec2(0, 0);
         }
-        else if(index == 1.0)
+        else if(i == 1)
         {
             finalPosition.x = position.x + extent.x * 0.5;
             finalPosition.y = position.y + extent.y * 0.5;
             v_texCoords = vec2(1, 0);
         }
-        else if(index == 2.0)
+        else if(i == 2)
         {
             finalPosition.x = position.x + extent.x * 0.5;
             finalPosition.y = position.y - extent.y * 0.5;
             v_texCoords = vec2(1, 1);
         }
-        else if(index == 3.0)
+        else if(i == 3)
         {
             finalPosition.x = position.x - extent.x * 0.5;
             finalPosition.y = position.y - extent.y * 0.5;

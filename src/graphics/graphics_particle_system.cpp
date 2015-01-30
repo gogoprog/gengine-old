@@ -97,7 +97,7 @@ void ParticleSystem::update(const float dt)
             vertices[p*4 + i].index = float(i);
             vertices[p*4 + i].position = positions[p];
             vertices[p*4 + i].color = Vector4::one;
-            vertices[p*4 + i].extent = Vector2(1280, 64);
+            vertices[p*4 + i].extent = Vector2(128, 64);
             vertices[p*4 + i].rotation = 0.0f;
         }
     }

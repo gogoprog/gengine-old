@@ -39,12 +39,6 @@ public:
         glDeleteBuffers(1, &id);
     }
 
-    void setData(const VERTEX * vertices, const uint count)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, id);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(VERTEX) * count, vertices, GL_STATIC_DRAW);
-    }
-
     void apply()
     {
         glBindBuffer(GL_ARRAY_BUFFER, id);
