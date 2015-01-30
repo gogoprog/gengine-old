@@ -10,101 +10,23 @@
 
 #define INDEX_BUFFER_SIZE 102400
 
+
 namespace gengine
 {
 namespace graphics
 {
 
-const char vertex_shader_source[] = GL_GLSL(
-    attribute vec2 position;
-    attribute vec2 texCoords;
-    varying highp vec2 v_texCoords;
-    uniform highp mat3 projectionMatrix;
-    uniform highp mat3 transformMatrix;
-    uniform highp vec2 uvScale;
-    uniform highp vec2 uvOffset;
+const char default_vs_source[] =
+    #include "shaders/default.vs"
 
-    void main()
-    {
-        vec3 res = transformMatrix * vec3(position, 1.0) * projectionMatrix;
-        v_texCoords.x = texCoords.x * uvScale.x + uvOffset.x;
-        v_texCoords.y = texCoords.y * uvScale.y + uvOffset.y;
-        gl_Position = vec4(res, 1.0);
-    }
-);
+const char default_fs_source[] =
+    #include "shaders/default.fs"
 
-const char fragment_shader_source[] = GL_GLSL(
-    varying highp vec2 v_texCoords;
-    uniform sampler2D tex0;
-    uniform highp vec4 color;
+const char particle_vs_source[] =
+    #include "shaders/particle.vs"
 
-    void main()
-    {
-        gl_FragColor = texture2D(tex0, v_texCoords) * color;
-    }
-);
-
-const char particle_vertex_shader_source[] = GL_GLSL(
-    attribute vec2 position;
-    attribute vec2 extent;
-    attribute vec4 color;
-    attribute float rotation;
-    attribute float index;
-    attribute float life;
-    varying highp vec2 v_texCoords;
-    varying highp vec4 v_color;
-    uniform highp mat3 projectionMatrix;
-    uniform highp mat3 transformMatrix;
-
-    void main()
-    {
-        vec2 finalPosition;
-        int i = int(index);
-
-        if(i == 0)
-        {
-            finalPosition.x = position.x - extent.x * 0.5;
-            finalPosition.y = position.y + extent.y * 0.5;
-            v_texCoords = vec2(0, 0);
-        }
-        else if(i == 1)
-        {
-            finalPosition.x = position.x + extent.x * 0.5;
-            finalPosition.y = position.y + extent.y * 0.5;
-            v_texCoords = vec2(1, 0);
-        }
-        else if(i == 2)
-        {
-            finalPosition.x = position.x + extent.x * 0.5;
-            finalPosition.y = position.y - extent.y * 0.5;
-            v_texCoords = vec2(1, 1);
-        }
-        else if(i == 3)
-        {
-            finalPosition.x = position.x - extent.x * 0.5;
-            finalPosition.y = position.y - extent.y * 0.5;
-            v_texCoords = vec2(0, 1);
-        }
-
-        v_color = color;
-        v_color.a = 1.0 - life;
-
-        vec3 res = transformMatrix * vec3(finalPosition, 1.0) * projectionMatrix;
-        gl_Position = vec4(res, 1.0);
-    }
-);
-
-const char particle_fragment_shader_source[] = GL_GLSL(
-    varying highp vec2 v_texCoords;
-    varying highp vec4 v_color;
-    uniform sampler2D tex0;
-    uniform highp vec4 color;
-
-    void main()
-    {
-        gl_FragColor = texture2D(tex0, v_texCoords) * color * v_color;
-    }
-);
+const char particle_fs_source[] =
+    #include "shaders/particle.fs"
 
 Renderer::Renderer()
     :
@@ -118,10 +40,10 @@ void Renderer::init()
     ushort indices[INDEX_BUFFER_SIZE];
 
     defaultVertexShader.init(GL_VERTEX_SHADER);
-    defaultVertexShader.compile(vertex_shader_source);
+    defaultVertexShader.compile(default_vs_source);
 
     defaultFragmentShader.init(GL_FRAGMENT_SHADER);
-    defaultFragmentShader.compile(fragment_shader_source);
+    defaultFragmentShader.compile(default_fs_source);
 
     defaultProgram.init();
     defaultProgram.attachShader(defaultVertexShader);
@@ -129,10 +51,10 @@ void Renderer::init()
     defaultProgram.link();
 
     particleVertexShader.init(GL_VERTEX_SHADER);
-    particleVertexShader.compile(particle_vertex_shader_source);
+    particleVertexShader.compile(particle_vs_source);
 
     particleFragmentShader.init(GL_FRAGMENT_SHADER);
-    particleFragmentShader.compile(particle_fragment_shader_source);
+    particleFragmentShader.compile(particle_fs_source);
 
     particleProgram.init();
     particleProgram.attachShader(particleVertexShader);
