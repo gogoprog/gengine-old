@@ -29,7 +29,7 @@ const char vertex_shader_source[] = GL_GLSL(
         vec3 res = transformMatrix * vec3(position, 1.0) * projectionMatrix;
         v_texCoords.x = texCoords.x * uvScale.x + uvOffset.x;
         v_texCoords.y = texCoords.y * uvScale.y + uvOffset.y;
-        gl_Position = vec4(res,1.0);
+        gl_Position = vec4(res, 1.0);
     }
 );
 
@@ -46,10 +46,10 @@ const char fragment_shader_source[] = GL_GLSL(
 
 const char particle_vertex_shader_source[] = GL_GLSL(
     attribute vec2 position;
-    attribute vec4 color;
     attribute vec2 extent;
-    attribute uint index;
+    attribute vec4 color;
     attribute float rotation;
+    attribute float index;
     varying highp vec2 v_texCoords;
     uniform highp mat3 projectionMatrix;
     uniform highp mat3 transformMatrix;
@@ -58,25 +58,25 @@ const char particle_vertex_shader_source[] = GL_GLSL(
     {
         vec2 finalPosition;
 
-        if(index == 0)
+        if(index == 0.0)
         {
             finalPosition.x = position.x - extent.x * 0.5;
             finalPosition.y = position.y + extent.y * 0.5;
             v_texCoords = vec2(0, 0);
         }
-        else if(index == 1)
+        else if(index == 1.0)
         {
             finalPosition.x = position.x + extent.x * 0.5;
             finalPosition.y = position.y + extent.y * 0.5;
             v_texCoords = vec2(1, 0);
         }
-        else if(index == 2)
+        else if(index == 2.0)
         {
             finalPosition.x = position.x + extent.x * 0.5;
             finalPosition.y = position.y - extent.y * 0.5;
             v_texCoords = vec2(1, 1);
         }
-        else if(index == 3)
+        else if(index == 3.0)
         {
             finalPosition.x = position.x - extent.x * 0.5;
             finalPosition.y = position.y - extent.y * 0.5;
@@ -84,7 +84,7 @@ const char particle_vertex_shader_source[] = GL_GLSL(
         }
 
         vec3 res = transformMatrix * vec3(finalPosition, 1.0) * projectionMatrix;
-        gl_Position = vec4(res,1.0);
+        gl_Position = vec4(res, 1.0);
     }
 );
 

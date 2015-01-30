@@ -1,6 +1,7 @@
 #include "graphics_particle_system.h"
 
 #include "graphics_renderer.h"
+#include "debug.h"
 
 namespace gengine
 {
@@ -30,11 +31,11 @@ void ParticleSystem::init(const uint maximum_particle_count)
     particles.lifeTimes = new float[maximumParticleCount];
     particles.maxLifeTimes = new float[maximumParticleCount];
 
-    vertexBuffer.init(maximumParticleCount, true);
+    vertexBuffer.init(maximumParticleCount * 4, true);
 
     emitterLifeTime = 5.0f;
-    emitterRate = 30;
-    lifeTimeRange.set(1, 3);
+    emitterRate = 1;
+    lifeTimeRange.set(10, 30);
 }
 
 void ParticleSystem::update(const float dt)
@@ -58,9 +59,12 @@ void ParticleSystem::update(const float dt)
 
         if(count > 0)
         {
-            if(particleCount < maximumParticleCount)
+            for(uint i=0; i<count; ++i)
             {
-                addParticle();
+                if(particleCount < maximumParticleCount)
+                {
+                    addParticle();
+                }
             }
 
             particleToEmitSum -= count;
@@ -69,7 +73,7 @@ void ParticleSystem::update(const float dt)
 
     currentTime += dt;
 
-    for(uint i=0; i<particleCount;++i)
+    for(uint i=0; i<particleCount; ++i)
     {
         lifeTimes[i] += dt;
 
@@ -79,25 +83,23 @@ void ParticleSystem::update(const float dt)
         }
     }
 
-    for(uint i=0; i<particleCount;++i)
+    for(uint i=0; i<particleCount; ++i)
     {
         positions[i] += velocities[i] * dt;
     }
 
-
     vertices = vertexBuffer.map();
 
-    for(uint p=0; p<particleCount;++p)
+    for(uint p=0; p<particleCount; ++p)
     {
-        for(uint i=0; i<particleCount;++i)
+        for(uint i=0; i<4; ++i)
         {
-            vertices[p*4 + i].index = i;
+            vertices[p*4 + i].index = float(i);
             vertices[p*4 + i].position = positions[p];
             vertices[p*4 + i].color = Vector4::one;
-            vertices[p*4 + i].extent = Vector2(32, 32);
-            vertices[p*4 + i].rotation = 0;
+            vertices[p*4 + i].extent = Vector2(1280, 64);
+            vertices[p*4 + i].rotation = 0.0f;
         }
-
     }
 
     vertexBuffer.unMap();
@@ -113,12 +115,12 @@ void ParticleSystem::finalize()
 
 void ParticleSystem::addParticle()
 {
-    particleCount++;
-
     particles.positions[particleCount].set(0.0f, 0.0f);
     particles.velocities[particleCount].set(0.0f, 0.0f);
     particles.lifeTimes[particleCount] = 0.0f;
     particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandomInRange();
+
+    particleCount++;
 }
 
 void ParticleSystem::removeParticle(const uint index)
