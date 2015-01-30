@@ -39,5 +39,15 @@ void Uniform::apply(const Vector2 & vector2)
     glUniform2fv(location, 1, reinterpret_cast<const float *>(&vector2));
 }
 
+void Uniform::apply(const Array<Vector2> & vector2_table)
+{
+    glUniform2fv(location, vector2_table.getSize(), reinterpret_cast<const float *>(&vector2_table[0]));
+}
+
+void Uniform::apply(const Array<float> & float_table)
+{
+    glUniform1fv(location, float_table.getSize(), reinterpret_cast<const float *>(&float_table[0]));
+}
+
 }
 }

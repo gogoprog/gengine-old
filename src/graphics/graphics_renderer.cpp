@@ -50,7 +50,9 @@ const char particle_vertex_shader_source[] = GL_GLSL(
     attribute vec4 color;
     attribute float rotation;
     attribute float index;
+    attribute float life;
     varying highp vec2 v_texCoords;
+    varying highp vec4 v_color;
     uniform highp mat3 projectionMatrix;
     uniform highp mat3 transformMatrix;
 
@@ -84,6 +86,9 @@ const char particle_vertex_shader_source[] = GL_GLSL(
             v_texCoords = vec2(0, 1);
         }
 
+        v_color = color;
+        v_color.a = 1.0 - life;
+
         vec3 res = transformMatrix * vec3(finalPosition, 1.0) * projectionMatrix;
         gl_Position = vec4(res, 1.0);
     }
@@ -91,12 +96,13 @@ const char particle_vertex_shader_source[] = GL_GLSL(
 
 const char particle_fragment_shader_source[] = GL_GLSL(
     varying highp vec2 v_texCoords;
+    varying highp vec4 v_color;
     uniform sampler2D tex0;
     uniform highp vec4 color;
 
     void main()
     {
-        gl_FragColor = texture2D(tex0, v_texCoords) * color;
+        gl_FragColor = texture2D(tex0, v_texCoords) * color * v_color;
     }
 );
 

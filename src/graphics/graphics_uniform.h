@@ -1,6 +1,7 @@
 #pragma once
 
 #include "primitives.h"
+#include "array.h"
 
 namespace gengine
 {
@@ -25,6 +26,8 @@ public:
     void apply(const Texture & texture);
     void apply(const Vector4 & vector4);
     void apply(const Vector2 & vector2);
+    void apply(const Array<Vector2> & vector2_table);
+    void apply(const Array<float> & float_table);
 
     uint getLocation() const { return location; }
 

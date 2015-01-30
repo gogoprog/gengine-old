@@ -7,6 +7,7 @@
 #include "graphics_object.h"
 #include "pointer.h"
 #include "graphics_particle_vertex.h"
+#include <cmath>
 
 namespace gengine
 {
@@ -61,6 +62,8 @@ private:
         lifeTimeRange;
     VertexBuffer<ParticleVertex>
         vertexBuffer;
+    Array<Vector2>
+        sizeTable;
 };
 
 }

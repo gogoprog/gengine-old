@@ -16,9 +16,9 @@ struct ParticleVertex
     Vector4
         color;
     float
-        rotation;
-    float
-        index;
+        rotation,
+        index,
+        life;
 
     static void enableAttributes()
     {
@@ -36,6 +36,9 @@ struct ParticleVertex
 
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_INDEX);
         glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_INDEX, 1, GL_FLOAT, GL_FALSE, sizeof(ParticleVertex), (void*)offsetof(ParticleVertex, index));
+
+        glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_LIFE);
+        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_LIFE, 1, GL_FLOAT, GL_FALSE, sizeof(ParticleVertex), (void*)offsetof(ParticleVertex, life));
     }
 };
 
