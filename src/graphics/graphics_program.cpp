@@ -62,17 +62,12 @@ void Program::link()
     }
 
     GL_CHECK();
-
-    int indexloc = glGetAttribLocation(id, "index");
-
-    geDebugLog(indexloc);
 }
 
 void Program::use()
 {
     glUseProgram(id);
 }
-
 
 }
 }
