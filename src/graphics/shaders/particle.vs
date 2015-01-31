@@ -6,10 +6,18 @@ attribute vec4 color;
 attribute float rotation;
 attribute float index;
 attribute float life;
+
 varying highp vec2 v_texCoords;
 varying highp vec4 v_color;
+
 uniform highp mat3 projectionMatrix;
 uniform highp mat3 transformMatrix;
+
+uniform highp vec2 extentTable[8];
+uniform highp int extentCount;
+
+uniform highp vec4 colorTable[8];
+uniform highp int colorCount;
 
 void main()
 {

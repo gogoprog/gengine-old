@@ -10,7 +10,6 @@
 
 #define INDEX_BUFFER_SIZE 102400
 
-
 namespace gengine
 {
 namespace graphics
@@ -40,10 +39,10 @@ void Renderer::init()
     ushort indices[INDEX_BUFFER_SIZE];
 
     defaultVertexShader.init(GL_VERTEX_SHADER);
-    defaultVertexShader.compile(default_vs_source);
+    defaultVertexShader.compile(default_vs_source, "default.vs");
 
     defaultFragmentShader.init(GL_FRAGMENT_SHADER);
-    defaultFragmentShader.compile(default_fs_source);
+    defaultFragmentShader.compile(default_fs_source, "default.fs");
 
     defaultProgram.init();
     defaultProgram.attachShader(defaultVertexShader);
@@ -51,10 +50,10 @@ void Renderer::init()
     defaultProgram.link();
 
     particleVertexShader.init(GL_VERTEX_SHADER);
-    particleVertexShader.compile(particle_vs_source);
+    particleVertexShader.compile(particle_vs_source, "particle.vs");
 
     particleFragmentShader.init(GL_FRAGMENT_SHADER);
-    particleFragmentShader.compile(particle_fs_source);
+    particleFragmentShader.compile(particle_fs_source, "particle.fs");
 
     particleProgram.init();
     particleProgram.attachShader(particleVertexShader);
@@ -112,6 +111,9 @@ void Renderer::init()
     particleTransformMatrixUniform.init(particleProgram, "transformMatrix");
     particleSamplerUniform.init(particleProgram, "tex0");
     particleColorUniform.init(particleProgram, "color");
+
+    particleColorUniforms.init(particleProgram, "color");
+    particleExtentUniforms.init(particleProgram, "extent");
 }
 
 void Renderer::finalize()
@@ -200,10 +202,11 @@ void Renderer::render(const World & world)
                     transform_matrix.setTranslation(particle_system.position);
 
                     particleTransformMatrixUniform.apply(transform_matrix);
-
                     particleColorUniform.apply(particle_system.color);
-
                     particleSamplerUniform.apply(* particle_system.texture);
+
+                    particleColorUniforms.apply(particle_system.colorTable);
+                    particleExtentUniforms.apply(particle_system.extentTable);
 
                     indexBufferQuad.draw(6 * particle_system.particleCount);
                 }

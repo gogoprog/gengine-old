@@ -20,7 +20,7 @@ void Shader::finalize()
     glDeleteShader(id);
 }
 
-void Shader::compile(const char * source)
+void Shader::compile(const char * source, const char * name)
 {
     GLint status;
 
@@ -39,7 +39,7 @@ void Shader::compile(const char * source)
 
         if(length > 0)
         {
-            geDebugLog("Error while compiling " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader :" );
+            geDebugLog("Error while compiling " << name << " " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader :" );
             puts(log);
         }
     }

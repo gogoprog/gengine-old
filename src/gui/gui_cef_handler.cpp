@@ -63,10 +63,10 @@ void Handler::init()
     glBindTexture(GL_TEXTURE_2D, 0);
 
     vertexShader.init(GL_VERTEX_SHADER);
-    vertexShader.compile(vertex_shader_source);
+    vertexShader.compile(vertex_shader_source, "gui");
 
     fragmentShader.init(GL_FRAGMENT_SHADER);
-    fragmentShader.compile(fragment_shader_source);
+    fragmentShader.compile(fragment_shader_source, "gui");
 
     program.init();
     program.attachShader(vertexShader);

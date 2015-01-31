@@ -12,6 +12,7 @@
 #include "graphics_index_buffer.h"
 #include "graphics_shader.h"
 #include "graphics_vertex.h"
+#include "graphics_particle_modifier_uniforms.h"
 
 namespace gengine
 {
@@ -64,6 +65,9 @@ private:
         particleTransformMatrixUniform,
         particleSamplerUniform,
         particleColorUniform;
+    ParticleModifierUniforms
+        particleColorUniforms,
+        particleExtentUniforms;
     Type
         currentType;
     Pointer<Program>

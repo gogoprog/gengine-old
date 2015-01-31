@@ -19,6 +19,11 @@ class ParticleSystem : public Object
 friend class Renderer;
 
 public:
+    enum
+    {
+        MAXIMUM_STEP_COUNT = 8
+    };
+
     ParticleSystem();
 
     virtual Renderer::Type getRenderType() override;
@@ -63,7 +68,9 @@ private:
     VertexBuffer<ParticleVertex>
         vertexBuffer;
     Array<Vector2>
-        sizeTable;
+        extentTable;
+    Array<Vector4>
+        colorTable;
 };
 
 }
