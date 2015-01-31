@@ -11,8 +11,7 @@ namespace graphics
 struct ParticleVertex
 {
     Vector2
-        position,
-        extent;
+        position;
     Vector4
         color;
     float
@@ -24,9 +23,6 @@ struct ParticleVertex
     {
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_POSITION);
         glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(ParticleVertex), (void*)offsetof(ParticleVertex, position));
-
-        glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_EXTENT);
-        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_EXTENT, 2, GL_FLOAT, GL_FALSE, sizeof(ParticleVertex), (void*)offsetof(ParticleVertex, extent));
 
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_COLOR);
         glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(ParticleVertex), (void*)offsetof(ParticleVertex, color));

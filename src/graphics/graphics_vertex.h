@@ -16,10 +16,10 @@ struct Vertex
     static void enableAttributes()
     {
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_POSITION);
-        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 
         glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_TEXCOORDS);
-        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)0 + 8);
+        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
     }
 };
 

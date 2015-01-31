@@ -1,7 +1,6 @@
 GL_GLSL(
 
 attribute vec2 position;
-attribute vec2 extent;
 attribute vec4 color;
 attribute float rotation;
 attribute float index;
@@ -19,10 +18,40 @@ uniform highp int extentCount;
 uniform highp vec4 colorTable[8];
 uniform highp int colorCount;
 
+vec2 getExtent(float factor)
+{
+    if(extentCount==1)
+    {
+        return extentTable[0];
+    }
+
+    int lower;
+    int upper;
+    float f = factor * float(extentCount - 1);
+
+    lower = int(floor(f));
+    upper = int(ceil(f));
+
+    if(lower==upper)
+    {
+        return extentTable[lower];
+    }
+
+    f = f - float(lower);
+
+    vec2 result;
+
+    result = extentTable[lower] + (extentTable[upper] - extentTable[lower]) * f;
+
+    return result;
+}
+
 void main()
 {
     vec2 finalPosition;
     int i = int(index);
+
+    vec2 extent = getExtent(life);
 
     if(i == 0)
     {

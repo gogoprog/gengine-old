@@ -33,9 +33,14 @@ void ParticleSystem::init(const uint maximum_particle_count)
 
     vertexBuffer.init(maximumParticleCount * 4, true);
 
-    emitterLifeTime = 5.0f;
-    emitterRate = 10;
-    lifeTimeRange.set(0.1f, 1.0f);
+    // Test
+
+    emitterLifeTime = 50.0f;
+    emitterRate = 1;
+    lifeTimeRange.set(5.1f, 5.2f);
+    extentTable.add(Vector2(128, 64));
+    extentTable.add(Vector2(256, 64));
+    extentTable.add(Vector2(128, 64));
 }
 
 void ParticleSystem::update(const float dt)
@@ -99,7 +104,6 @@ void ParticleSystem::update(const float dt)
             vertices[p*4 + i].index = float(i);
             vertices[p*4 + i].position = positions[p];
             vertices[p*4 + i].color = Vector4::one;
-            vertices[p*4 + i].extent = Vector2(128, 64);
             vertices[p*4 + i].rotation = 0.0f;
             vertices[p*4 + i].life = life;
         }
@@ -119,7 +123,7 @@ void ParticleSystem::finalize()
 void ParticleSystem::addParticle()
 {
     particles.positions[particleCount].set(0.0f, 0.0f);
-    particles.velocities[particleCount].set(0.0f, 100.0f);
+    particles.velocities[particleCount].set(0.0f, 20.0f);
     particles.lifeTimes[particleCount] = 0.0f;
     particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandomInRange();
 
