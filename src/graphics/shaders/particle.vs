@@ -1,7 +1,7 @@
 GL_GLSL(
 
 attribute vec2 position;
-attribute vec4 color;
+attribute vec2 extent;
 attribute float rotation;
 attribute float index;
 attribute float life;
@@ -12,36 +12,64 @@ varying highp vec4 v_color;
 uniform highp mat3 projectionMatrix;
 uniform highp mat3 transformMatrix;
 
-uniform highp vec2 extentTable[8];
-uniform highp int extentCount;
+uniform highp vec2 scaleTable[8];
+uniform highp int scaleCount;
 
 uniform highp vec4 colorTable[8];
 uniform highp int colorCount;
 
-vec2 getExtent(float factor)
+vec2 getInterpolatedVec2(in vec2 table[8], in int count, in float factor)
 {
-    if(extentCount==1)
+    if(count==1)
     {
-        return extentTable[0];
+        return table[0];
     }
 
     int lower;
     int upper;
-    float f = factor * float(extentCount - 1);
+    float f = factor * float(count - 1);
 
     lower = int(floor(f));
     upper = int(ceil(f));
 
     if(lower==upper)
     {
-        return extentTable[lower];
+        return table[lower];
     }
 
     f = f - float(lower);
 
     vec2 result;
 
-    result = extentTable[lower] + (extentTable[upper] - extentTable[lower]) * f;
+    result = table[lower] + (table[upper] - table[lower]) * f;
+
+    return result;
+}
+
+vec4 getInterpolatedVec4(in vec4 table[8], in int count, in float factor)
+{
+    if(count==1)
+    {
+        return table[0];
+    }
+
+    int lower;
+    int upper;
+    float f = factor * float(count - 1);
+
+    lower = int(floor(f));
+    upper = int(ceil(f));
+
+    if(lower==upper)
+    {
+        return table[lower];
+    }
+
+    f = f - float(lower);
+
+    vec4 result;
+
+    result = table[lower] + (table[upper] - table[lower]) * f;
 
     return result;
 }
@@ -51,35 +79,35 @@ void main()
     vec2 finalPosition;
     int i = int(index);
 
-    vec2 extent = getExtent(life);
+    vec2 finalExtent = extent * getInterpolatedVec2(scaleTable, scaleCount, life);
+    vec4 color = getInterpolatedVec4(colorTable, colorCount, life);
 
     if(i == 0)
     {
-        finalPosition.x = position.x - extent.x * 0.5;
-        finalPosition.y = position.y + extent.y * 0.5;
+        finalPosition.x = position.x - finalExtent.x * 0.5;
+        finalPosition.y = position.y + finalExtent.y * 0.5;
         v_texCoords = vec2(0, 0);
     }
     else if(i == 1)
     {
-        finalPosition.x = position.x + extent.x * 0.5;
-        finalPosition.y = position.y + extent.y * 0.5;
+        finalPosition.x = position.x + finalExtent.x * 0.5;
+        finalPosition.y = position.y + finalExtent.y * 0.5;
         v_texCoords = vec2(1, 0);
     }
     else if(i == 2)
     {
-        finalPosition.x = position.x + extent.x * 0.5;
-        finalPosition.y = position.y - extent.y * 0.5;
+        finalPosition.x = position.x + finalExtent.x * 0.5;
+        finalPosition.y = position.y - finalExtent.y * 0.5;
         v_texCoords = vec2(1, 1);
     }
     else if(i == 3)
     {
-        finalPosition.x = position.x - extent.x * 0.5;
-        finalPosition.y = position.y - extent.y * 0.5;
+        finalPosition.x = position.x - finalExtent.x * 0.5;
+        finalPosition.y = position.y - finalExtent.y * 0.5;
         v_texCoords = vec2(0, 1);
     }
 
     v_color = color;
-    v_color.a = 1.0 - life;
 
     vec3 res = transformMatrix * vec3(finalPosition, 1.0) * projectionMatrix;
     gl_Position = vec4(res, 1.0);

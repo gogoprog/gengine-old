@@ -16,7 +16,7 @@ void Program::init()
 {
     id = glCreateProgram();
     glBindAttribLocation(id, ATTRIBUTE_LOCATION_POSITION, "position");
-    glBindAttribLocation(id, ATTRIBUTE_LOCATION_COLOR, "color");
+    glBindAttribLocation(id, ATTRIBUTE_LOCATION_EXTENT, "extent");
     glBindAttribLocation(id, ATTRIBUTE_LOCATION_TEXCOORDS, "texCoords");
     glBindAttribLocation(id, ATTRIBUTE_LOCATION_ROTATION, "rotation");
     glBindAttribLocation(id, ATTRIBUTE_LOCATION_INDEX, "index");

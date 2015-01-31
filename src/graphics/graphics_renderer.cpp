@@ -113,7 +113,7 @@ void Renderer::init()
     particleColorUniform.init(particleProgram, "color");
 
     particleColorUniforms.init(particleProgram, "color");
-    particleExtentUniforms.init(particleProgram, "extent");
+    particleScaleUniforms.init(particleProgram, "scale");
 }
 
 void Renderer::finalize()
@@ -206,7 +206,7 @@ void Renderer::render(const World & world)
                     particleSamplerUniform.apply(* particle_system.texture);
 
                     particleColorUniforms.apply(particle_system.colorTable);
-                    particleExtentUniforms.apply(particle_system.extentTable);
+                    particleScaleUniforms.apply(particle_system.scaleTable);
 
                     indexBufferQuad.draw(6 * particle_system.particleCount);
                 }

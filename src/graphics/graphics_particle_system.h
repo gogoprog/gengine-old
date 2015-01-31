@@ -42,7 +42,8 @@ private:
     {
         Vector2
             * positions,
-            * velocities;
+            * velocities,
+            * extents;
         float
             * lifeTimes,
             * maxLifeTimes;
@@ -68,7 +69,7 @@ private:
     VertexBuffer<ParticleVertex>
         vertexBuffer;
     Array<Vector2>
-        extentTable;
+        scaleTable;
     Array<Vector4>
         colorTable;
 };

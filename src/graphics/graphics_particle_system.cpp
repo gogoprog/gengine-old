@@ -28,6 +28,7 @@ void ParticleSystem::init(const uint maximum_particle_count)
 
     particles.positions = new Vector2[maximumParticleCount];
     particles.velocities = new Vector2[maximumParticleCount];
+    particles.extents = new Vector2[maximumParticleCount];
     particles.lifeTimes = new float[maximumParticleCount];
     particles.maxLifeTimes = new float[maximumParticleCount];
 
@@ -38,15 +39,19 @@ void ParticleSystem::init(const uint maximum_particle_count)
     emitterLifeTime = 50.0f;
     emitterRate = 1;
     lifeTimeRange.set(5.1f, 5.2f);
-    extentTable.add(Vector2(128, 64));
-    extentTable.add(Vector2(256, 64));
-    extentTable.add(Vector2(128, 64));
+    scaleTable.add(Vector2(1.0f, 1.0f));
+    scaleTable.add(Vector2(2.0f, 1.0f));
+    scaleTable.add(Vector2(1.0f, 1.0f));
+    colorTable.add(Vector4(1,0,0,1));
+    colorTable.add(Vector4(0,1,0,1));
+    colorTable.add(Vector4(0,1,0,0));
 }
 
 void ParticleSystem::update(const float dt)
 {
     Vector2
         * positions = particles.positions,
+        * extents = particles.extents,
         * velocities = particles.velocities;
     float
         * lifeTimes = particles.lifeTimes,
@@ -103,7 +108,7 @@ void ParticleSystem::update(const float dt)
         {
             vertices[p*4 + i].index = float(i);
             vertices[p*4 + i].position = positions[p];
-            vertices[p*4 + i].color = Vector4::one;
+            vertices[p*4 + i].extent = extents[p];
             vertices[p*4 + i].rotation = 0.0f;
             vertices[p*4 + i].life = life;
         }
@@ -115,6 +120,7 @@ void ParticleSystem::update(const float dt)
 void ParticleSystem::finalize()
 {
     delete particles.positions;
+    delete particles.extents;
     delete particles.velocities;
     delete particles.lifeTimes;
     delete particles.maxLifeTimes;
@@ -123,6 +129,7 @@ void ParticleSystem::finalize()
 void ParticleSystem::addParticle()
 {
     particles.positions[particleCount].set(0.0f, 0.0f);
+    particles.extents[particleCount].set(128.0f, 64.0f);
     particles.velocities[particleCount].set(0.0f, 20.0f);
     particles.lifeTimes[particleCount] = 0.0f;
     particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandomInRange();
@@ -135,6 +142,7 @@ void ParticleSystem::removeParticle(const uint index)
     particleCount--;
 
     particles.positions[index] = particles.positions[particleCount];
+    particles.extents[index] = particles.extents[particleCount];
     particles.velocities[index] = particles.velocities[particleCount];
     particles.lifeTimes[index] = particles.lifeTimes[particleCount];
     particles.maxLifeTimes[index] = particles.maxLifeTimes[particleCount];

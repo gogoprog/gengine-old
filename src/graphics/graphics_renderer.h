@@ -67,7 +67,7 @@ private:
         particleColorUniform;
     ParticleModifierUniforms
         particleColorUniforms,
-        particleExtentUniforms;
+        particleScaleUniforms;
     Type
         currentType;
     Pointer<Program>
