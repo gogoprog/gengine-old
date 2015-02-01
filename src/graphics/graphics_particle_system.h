@@ -7,7 +7,7 @@
 #include "graphics_object.h"
 #include "pointer.h"
 #include "graphics_particle_vertex.h"
-#include <cmath>
+#include "range.h"
 
 namespace gengine
 {
@@ -35,7 +35,7 @@ public:
     void setEmitterLifeTime(const float value) { emitterLifeTime = value; }
     void setEmitterRate(const float value) { emitterRate = value; }
     void setTexture(const Texture & _texture) { texture = & _texture; }
-    void setLifeTimeRange(const Vector2 & value) { lifeTimeRange = value; }
+    void setLifeTimeRange(const Range<float> & value) { lifeTimeRange = value; }
 
 private:
     struct ParticleTable
@@ -64,8 +64,9 @@ private:
         texture;
     ParticleTable
         particles;
-    Vector2
-        lifeTimeRange;
+    Range<float>
+        lifeTimeRange,
+        directionRange;
     VertexBuffer<ParticleVertex>
         vertexBuffer;
     Array<Vector2>

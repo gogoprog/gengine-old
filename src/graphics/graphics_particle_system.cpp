@@ -132,7 +132,7 @@ void ParticleSystem::addParticle()
     particles.extents[particleCount].set(128.0f, 64.0f);
     particles.velocities[particleCount].set(0.0f, 20.0f);
     particles.lifeTimes[particleCount] = 0.0f;
-    particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandomInRange();
+    particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandom();
 
     particleCount++;
 }

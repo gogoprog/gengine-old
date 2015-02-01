@@ -14,20 +14,17 @@ struct Vector2
     Vector2 & operator-=(const Vector2 & other);
     Vector2 & operator+=(const Vector2 & other);
 
-    float getRandomInRange() const;
     void set(const float _x, const float _y);
 
     union
     {
         float x;
         float u;
-        float min;
     };
     union
     {
         float y;
         float v;
-        float max;
     };
 
     static Vector2

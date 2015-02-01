@@ -63,11 +63,6 @@ Vector2 & Vector2::operator+=(const Vector2 & other)
     return * this;
 }
 
-float Vector2::getRandomInRange() const
-{
-    return x + (y - x) * (std::rand()/ static_cast<float>(RAND_MAX));
-}
-
 void Vector2::set(const float _x, const float _y)
 {
     x = _x;
