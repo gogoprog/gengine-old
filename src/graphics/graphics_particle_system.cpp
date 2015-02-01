@@ -13,6 +13,7 @@ ParticleSystem::ParticleSystem()
     Object(),
     currentTime(0.0f),
     particleToEmitSum(0.0f),
+    particleCount(0),
     texture()
 {
 }
@@ -39,11 +40,10 @@ void ParticleSystem::init(const uint maximum_particle_count)
     emitterLifeTime = 50.0f;
     lifeTimeRange.set(5.1f, 5.2f);
     scaleTable.add(Vector2(1.0f, 1.0f));
-    scaleTable.add(Vector2(2.0f, 1.0f));
-    scaleTable.add(Vector2(1.0f, 1.0f));
-    colorTable.add(Vector4(1,0,0,1));
-    colorTable.add(Vector4(0,1,0,1));
-    colorTable.add(Vector4(0,1,0,0));
+    //scaleTable.add(Vector2(2.0f, 1.0f));
+    //scaleTable.add(Vector2(1.0f, 1.0f));
+    colorTable.add(Vector4(1,1,1,1));
+    colorTable.add(Vector4(1,1,1,0));
 }
 
 void ParticleSystem::update(const float dt)
@@ -128,8 +128,8 @@ void ParticleSystem::finalize()
 void ParticleSystem::addParticle()
 {
     particles.positions[particleCount].set(0.0f, 0.0f);
-    particles.extents[particleCount].set(128.0f, 64.0f);
-    particles.velocities[particleCount].set(0.0f, 20.0f);
+    particles.extents[particleCount] = extentRange.getRandom();
+    particles.velocities[particleCount].set(0.0f, 40.0f);
     particles.lifeTimes[particleCount] = 0.0f;
     particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandom();
 

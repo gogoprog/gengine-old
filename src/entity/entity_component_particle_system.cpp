@@ -49,6 +49,14 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         self.particleSystem.setEmitterRate(lua_tonumber(state,3));
     }
+    ENTITY_COMPONENT_SETTER(extentRange)
+    {
+        Range<Vector2> range;
+
+        Range<Vector2>::fill(state, range, 3);
+
+        self.particleSystem.setExtentRange(range);
+    }
     ENTITY_COMPONENT_SETTER_END()
 }
 ENTITY_COMPONENT_END()

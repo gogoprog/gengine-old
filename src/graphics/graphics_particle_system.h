@@ -36,6 +36,7 @@ public:
     void setEmitterRate(const float value) { emitterRate = value; }
     void setTexture(const Texture & _texture) { texture = & _texture; }
     void setLifeTimeRange(const Range<float> & value) { lifeTimeRange = value; }
+    void setExtentRange(const Range<Vector2> & value) { extentRange = value; }
 
 private:
     struct ParticleTable

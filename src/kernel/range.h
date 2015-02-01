@@ -26,6 +26,17 @@ struct Range
         maximum = max;
     }
 
+    static void fill(lua_State * state, Range<T> & result, int position = -1)
+    {
+        lua_rawgeti(state, position, 1);
+        T::fill(state, result.minimum, -1);
+        lua_pop(state, 1);
+
+        lua_rawgeti(state, position, 2);
+        T::fill(state, result.maximum, -1);
+        lua_pop(state, 1);
+    }
+
     T
         minimum,
         maximum;
