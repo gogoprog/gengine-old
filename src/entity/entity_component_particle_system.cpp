@@ -49,6 +49,10 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         self.particleSystem.setEmitterRate(lua_tonumber(state,3));
     }
+    ENTITY_COMPONENT_SETTER(emitterLifeTime)
+    {
+        self.particleSystem.setEmitterLifeTime(lua_tonumber(state,3));
+    }
     ENTITY_COMPONENT_SETTER(extentRange)
     {
         Range<Vector2> range;
@@ -56,6 +60,50 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
         Range<Vector2>::fill(state, range, 3);
 
         self.particleSystem.setExtentRange(range);
+    }
+    ENTITY_COMPONENT_SETTER(lifeTimeRange)
+    {
+        Range<float> range;
+
+        lua_rawgeti(state, 3, 1);
+        range.minimum = lua_tonumber(state, -1);
+        lua_pop(state, 1);
+
+        lua_rawgeti(state, 3, 2);
+        range.minimum = lua_tonumber(state, -1);
+        lua_pop(state, 1);
+
+        self.particleSystem.setLifeTimeRange(range);
+    }
+    ENTITY_COMPONENT_SETTER(scales)
+    {
+        Vector2 value;
+
+        lua_pushnil(state);
+
+        while (lua_next(state, 3) != 0)
+        {
+            Vector2::fill(state, value, -1);
+            self.particleSystem.getScaleTable().add(value);
+            lua_pop(state, 1);
+        }
+
+        lua_pop(state, 1);
+    }
+    ENTITY_COMPONENT_SETTER(colors)
+    {
+        Vector4 value;
+
+        lua_pushnil(state);
+
+        while (lua_next(state, 3) != 0)
+        {
+            Vector4::fill(state, value, -1);
+            self.particleSystem.getColorTable().add(value);
+            lua_pop(state, 1);
+        }
+
+        lua_pop(state, 1);
     }
     ENTITY_COMPONENT_SETTER_END()
 }

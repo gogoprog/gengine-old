@@ -38,6 +38,9 @@ public:
     void setLifeTimeRange(const Range<float> & value) { lifeTimeRange = value; }
     void setExtentRange(const Range<Vector2> & value) { extentRange = value; }
 
+    Array<Vector2> & getScaleTable() { return scaleTable; }
+    Array<Vector4> & getColorTable() { return colorTable; }
+
 private:
     struct ParticleTable
     {
