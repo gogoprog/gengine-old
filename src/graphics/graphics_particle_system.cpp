@@ -37,7 +37,6 @@ void ParticleSystem::init(const uint maximum_particle_count)
     // Test
 
     emitterLifeTime = 50.0f;
-    emitterRate = 1;
     lifeTimeRange.set(5.1f, 5.2f);
     scaleTable.add(Vector2(1.0f, 1.0f));
     scaleTable.add(Vector2(2.0f, 1.0f));

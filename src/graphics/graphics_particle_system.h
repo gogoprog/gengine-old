@@ -67,6 +67,8 @@ private:
     Range<float>
         lifeTimeRange,
         directionRange;
+    Range<Vector2>
+        extentRange;
     VertexBuffer<ParticleVertex>
         vertexBuffer;
     Array<Vector2>
