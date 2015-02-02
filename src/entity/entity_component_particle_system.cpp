@@ -65,13 +65,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        lua_rawgeti(state, 3, 1);
-        range.minimum = lua_tonumber(state, -1);
-        lua_pop(state, 1);
-
-        lua_rawgeti(state, 3, 2);
-        range.minimum = lua_tonumber(state, -1);
-        lua_pop(state, 1);
+        Range<float>::fill(state, range, 3);
 
         self.particleSystem.setLifeTimeRange(range);
     }
@@ -79,13 +73,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        lua_rawgeti(state, 3, 1);
-        range.minimum = lua_tonumber(state, -1);
-        lua_pop(state, 1);
-
-        lua_rawgeti(state, 3, 2);
-        range.minimum = lua_tonumber(state, -1);
-        lua_pop(state, 1);
+        Range<float>::fill(state, range, 3);
 
         self.particleSystem.setDirectionRange(range);
     }
@@ -93,13 +81,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        lua_rawgeti(state, 3, 1);
-        range.minimum = lua_tonumber(state, -1);
-        lua_pop(state, 1);
-
-        lua_rawgeti(state, 3, 2);
-        range.minimum = lua_tonumber(state, -1);
-        lua_pop(state, 1);
+        Range<float>::fill(state, range, 3);
 
         self.particleSystem.setSpeedRange(range);
     }
