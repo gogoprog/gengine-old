@@ -86,29 +86,23 @@ void main()
     float c = cos(angle);
     float s = sin(angle);
     float l = length(halfExtent);
+    finalPosition.x = position.x + l * c;
+    finalPosition.y = position.y + l * s;
 
     if(i == 0)
     {
-        finalPosition.x = position.x + l * c;
-        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(0, 0);
     }
     else if(i == 1)
     {
-        finalPosition.x = position.x + l * c;
-        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(1, 0);
     }
     else if(i == 2)
     {
-        finalPosition.x = position.x + l * c;
-        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(1, 1);
     }
     else if(i == 3)
     {
-        finalPosition.x = position.x + l * c;
-        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(0, 1);
     }
 
