@@ -117,9 +117,12 @@ void ParticleSystem::finalize()
 
 void ParticleSystem::addParticle()
 {
+    float direction = directionRange.getRandom();
+    float speed = speedRange.getRandom();
+
     particles.positions[particleCount].set(0.0f, 0.0f);
     particles.extents[particleCount] = extentRange.getRandom();
-    particles.velocities[particleCount].set(0.0f, 40.0f);
+    particles.velocities[particleCount].set(- std::cos(direction) * speed, std::sin(direction) * speed);
     particles.lifeTimes[particleCount] = 0.0f;
     particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandom();
 

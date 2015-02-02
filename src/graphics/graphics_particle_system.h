@@ -36,6 +36,8 @@ public:
     void setEmitterRate(const float value) { emitterRate = value; }
     void setTexture(const Texture & _texture) { texture = & _texture; }
     void setLifeTimeRange(const Range<float> & value) { lifeTimeRange = value; }
+    void setDirectionRange(const Range<float> & value) { directionRange = value; }
+    void setSpeedRange(const Range<float> & value) { speedRange = value; }
     void setExtentRange(const Range<Vector2> & value) { extentRange = value; }
 
     Array<Vector2> & getScaleTable() { return scaleTable; }
@@ -70,7 +72,8 @@ private:
         particles;
     Range<float>
         lifeTimeRange,
-        directionRange;
+        directionRange,
+        speedRange;
     Range<Vector2>
         extentRange;
     VertexBuffer<ParticleVertex>
