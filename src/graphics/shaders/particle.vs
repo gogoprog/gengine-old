@@ -82,32 +82,33 @@ void main()
     vec2 halfExtent = extent * getInterpolatedVec2(scaleTable, scaleCount, life) * 0.5;
     vec4 color = getInterpolatedVec4(colorTable, colorCount, life);
 
-    float c = cos(rotation);
-    float s = sin(rotation);
-    float l = length(halfExtent) * -2.0;
+    float angle = rotation + index * 3.1415926535 * 0.5;
+    float c = cos(angle);
+    float s = sin(angle);
+    float l = length(halfExtent);
 
     if(i == 0)
     {
-        finalPosition.x = position.x - halfExtent.x + l * c;
-        finalPosition.y = position.y + halfExtent.y + l * s;
+        finalPosition.x = position.x + l * c;
+        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(0, 0);
     }
     else if(i == 1)
     {
-        finalPosition.x = position.x + halfExtent.x + l * c;
-        finalPosition.y = position.y + halfExtent.y + l * s;
+        finalPosition.x = position.x + l * c;
+        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(1, 0);
     }
     else if(i == 2)
     {
-        finalPosition.x = position.x + halfExtent.x + l * c;
-        finalPosition.y = position.y - halfExtent.y + l * s;
+        finalPosition.x = position.x + l * c;
+        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(1, 1);
     }
     else if(i == 3)
     {
-        finalPosition.x = position.x - halfExtent.x + l * c;
-        finalPosition.y = position.y - halfExtent.y + l * s;
+        finalPosition.x = position.x + l * c;
+        finalPosition.y = position.y + l * s;
         v_texCoords = vec2(0, 1);
     }
 
