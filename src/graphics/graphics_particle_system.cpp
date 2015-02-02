@@ -32,6 +32,8 @@ void ParticleSystem::init(const uint maximum_particle_count)
     particles.extents = new Vector2[maximumParticleCount];
     particles.lifeTimes = new float[maximumParticleCount];
     particles.maxLifeTimes = new float[maximumParticleCount];
+    particles.rotations = new float[maximumParticleCount];
+    particles.spins = new float[maximumParticleCount];
 
     vertexBuffer.init(maximumParticleCount * 4, true);
 }
@@ -44,7 +46,9 @@ void ParticleSystem::update(const float dt)
         * velocities = particles.velocities;
     float
         * lifeTimes = particles.lifeTimes,
-        * maxLifeTimes = particles.maxLifeTimes;
+        * maxLifeTimes = particles.maxLifeTimes,
+        * rotations = particles.rotations,
+        * spins = particles.spins;
     ParticleVertex
         * vertices;
 
@@ -72,19 +76,24 @@ void ParticleSystem::update(const float dt)
 
     currentTime += dt;
 
-    for(uint i=0; i<particleCount; ++i)
+    for(uint p=0; p<particleCount; ++p)
     {
-        lifeTimes[i] += dt;
+        lifeTimes[p] += dt;
 
-        if(lifeTimes[i] >= maxLifeTimes[i])
+        if(lifeTimes[p] >= maxLifeTimes[p])
         {
-            removeParticle(i);
+            removeParticle(p);
         }
     }
 
-    for(uint i=0; i<particleCount; ++i)
+    for(uint p=0; p<particleCount; ++p)
     {
-        positions[i] += velocities[i] * dt;
+        positions[p] += velocities[p] * dt;
+    }
+
+    for(uint p=0; p<particleCount; ++p)
+    {
+        rotations[p] += spins[p] * dt;
     }
 
     vertices = vertexBuffer.map();
@@ -98,7 +107,7 @@ void ParticleSystem::update(const float dt)
             vertices[p*4 + i].index = float(i);
             vertices[p*4 + i].position = positions[p];
             vertices[p*4 + i].extent = extents[p];
-            vertices[p*4 + i].rotation = 0.0f;
+            vertices[p*4 + i].rotation = rotations[p];
             vertices[p*4 + i].life = life;
         }
     }
@@ -125,6 +134,8 @@ void ParticleSystem::addParticle()
     particles.velocities[particleCount].set(- std::cos(direction) * speed, std::sin(direction) * speed);
     particles.lifeTimes[particleCount] = 0.0f;
     particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandom();
+    particles.rotations[particleCount] = rotationRange.getRandom();
+    particles.spins[particleCount] = spinRange.getRandom();
 
     particleCount++;
 }
@@ -138,6 +149,8 @@ void ParticleSystem::removeParticle(const uint index)
     particles.velocities[index] = particles.velocities[particleCount];
     particles.lifeTimes[index] = particles.lifeTimes[particleCount];
     particles.maxLifeTimes[index] = particles.maxLifeTimes[particleCount];
+    particles.rotations[index] = particles.rotations[particleCount];
+    particles.spins[index] = particles.spins[particleCount];
 }
 
 }

@@ -38,6 +38,8 @@ public:
     void setLifeTimeRange(const Range<float> & value) { lifeTimeRange = value; }
     void setDirectionRange(const Range<float> & value) { directionRange = value; }
     void setSpeedRange(const Range<float> & value) { speedRange = value; }
+    void setRotationRange(const Range<float> & value) { rotationRange = value; }
+    void setSpinRange(const Range<float> & value) { spinRange = value; }
     void setExtentRange(const Range<Vector2> & value) { extentRange = value; }
 
     Array<Vector2> & getScaleTable() { return scaleTable; }
@@ -52,7 +54,9 @@ private:
             * extents;
         float
             * lifeTimes,
-            * maxLifeTimes;
+            * maxLifeTimes,
+            * rotations,
+            * spins;
     };
 
     void addParticle();
@@ -73,7 +77,9 @@ private:
     Range<float>
         lifeTimeRange,
         directionRange,
-        speedRange;
+        speedRange,
+        rotationRange,
+        spinRange;
     Range<Vector2>
         extentRange;
     VertexBuffer<ParticleVertex>

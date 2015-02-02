@@ -85,6 +85,22 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
 
         self.particleSystem.setSpeedRange(range);
     }
+    ENTITY_COMPONENT_SETTER(rotationRange)
+    {
+        Range<float> range;
+
+        Range<float>::fill(state, range, 3);
+
+        self.particleSystem.setRotationRange(range);
+    }
+    ENTITY_COMPONENT_SETTER(spinRange)
+    {
+        Range<float> range;
+
+        Range<float>::fill(state, range, 3);
+
+        self.particleSystem.setSpinRange(range);
+    }
     ENTITY_COMPONENT_SETTER(scales)
     {
         Vector2 value;
