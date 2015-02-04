@@ -135,11 +135,7 @@ void System::update(const float dt)
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
             }
 
-            #ifdef _WINDOWS // note: required since there is a bug in CEF on Linux
-            {
-                browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
-            }
-            #endif
+            browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
         }
 
         CefDoMessageLoopWork();
@@ -182,6 +178,8 @@ void System::loadFile(const char *file_path)
         url += file_path;
 
         browser->GetMainFrame()->LoadURL(url);
+        browser->GetHost()->SetFocus(true);
+        browser->GetHost()->SendFocusEvent(true);
     }
     #else
     {
