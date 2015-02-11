@@ -105,6 +105,8 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Vector2 value;
 
+        self.particleSystem.getScaleTable().setSize(0);
+
         lua_pushnil(state);
 
         while (lua_next(state, 3) != 0)
@@ -119,6 +121,8 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     ENTITY_COMPONENT_SETTER(colors)
     {
         Vector4 value;
+
+        self.particleSystem.getColorTable().setSize(0);
 
         lua_pushnil(state);
 
