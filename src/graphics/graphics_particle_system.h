@@ -32,6 +32,9 @@ public:
     void update(const float dt);
     void finalize();
 
+    bool keepsLocal() const { return itKeepsLocal; }
+    void setKeepsLocal(const bool value) { itKeepsLocal = value; }
+
     void setEmitterLifeTime(const float value) { emitterLifeTime = value; }
     void setEmitterRate(const float value) { emitterRate = value; }
     void setTexture(const Texture & _texture) { texture = & _texture; }
@@ -70,6 +73,8 @@ private:
     uint
         particleCount,
         maximumParticleCount;
+    bool
+        itKeepsLocal;
     Pointer<const Texture>
         texture;
     ParticleTable

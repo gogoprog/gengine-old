@@ -14,6 +14,7 @@ ParticleSystem::ParticleSystem()
     currentTime(0.0f),
     particleToEmitSum(0.0f),
     particleCount(0),
+    itKeepsLocal(true),
     texture()
 {
 }
@@ -130,6 +131,12 @@ void ParticleSystem::addParticle()
     float speed = speedRange.getRandom();
 
     particles.positions[particleCount].set(0.0f, 0.0f);
+
+    if(!itKeepsLocal)
+    {
+        particles.positions[particleCount] += position;
+    }
+
     particles.extents[particleCount] = extentRange.getRandom();
     particles.velocities[particleCount].set(- std::cos(direction) * speed, std::sin(direction) * speed);
     particles.lifeTimes[particleCount] = 0.0f;

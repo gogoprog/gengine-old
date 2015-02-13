@@ -199,7 +199,11 @@ void Renderer::render(const World & world)
                     particle_system.vertexBuffer.apply();
 
                     transform_matrix.initIdentity();
-                    transform_matrix.setTranslation(particle_system.position);
+
+                    if(particle_system.keepsLocal())
+                    {
+                        transform_matrix.setTranslation(particle_system.position);
+                    }
 
                     particleTransformMatrixUniform.apply(transform_matrix);
                     particleColorUniform.apply(particle_system.color);

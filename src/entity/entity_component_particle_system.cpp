@@ -45,6 +45,10 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         self.size = uint(lua_tonumber(state,3));
     }
+    ENTITY_COMPONENT_SETTER(keepLocal)
+    {
+        self.particleSystem.setKeepsLocal(lua_toboolean(state,3));
+    }
     ENTITY_COMPONENT_SETTER(emitterRate)
     {
         self.particleSystem.setEmitterRate(lua_tonumber(state,3));
