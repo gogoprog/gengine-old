@@ -65,6 +65,14 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
 
         self.particleSystem.setExtentRange(range);
     }
+    ENTITY_COMPONENT_SETTER(linearAccelerationRange)
+    {
+        Range<Vector2> range;
+
+        Range<Vector2>::fill(state, range, 3);
+
+        self.particleSystem.setLinearAccelerationRange(range);
+    }
     ENTITY_COMPONENT_SETTER(lifeTimeRange)
     {
         Range<float> range;

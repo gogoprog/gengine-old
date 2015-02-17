@@ -44,6 +44,7 @@ public:
     void setRotationRange(const Range<float> & value) { rotationRange = value; }
     void setSpinRange(const Range<float> & value) { spinRange = value; }
     void setExtentRange(const Range<Vector2> & value) { extentRange = value; }
+    void setLinearAccelerationRange(const Range<Vector2> & value) { linearAccelerationRange = value; }
 
     Array<Vector2> & getScaleTable() { return scaleTable; }
     Array<Vector4> & getColorTable() { return colorTable; }
@@ -54,7 +55,8 @@ private:
         Vector2
             * positions,
             * velocities,
-            * extents;
+            * extents,
+            * linearAccelerations;
         float
             * lifeTimes,
             * maxLifeTimes,
@@ -86,7 +88,8 @@ private:
         rotationRange,
         spinRange;
     Range<Vector2>
-        extentRange;
+        extentRange,
+        linearAccelerationRange;
     VertexBuffer<ParticleVertex>
         vertexBuffer;
     Array<Vector2>

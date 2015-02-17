@@ -31,6 +31,7 @@ void ParticleSystem::init(const uint maximum_particle_count)
     particles.positions = new Vector2[maximumParticleCount];
     particles.velocities = new Vector2[maximumParticleCount];
     particles.extents = new Vector2[maximumParticleCount];
+    particles.linearAccelerations = new Vector2[maximumParticleCount];
     particles.lifeTimes = new float[maximumParticleCount];
     particles.maxLifeTimes = new float[maximumParticleCount];
     particles.rotations = new float[maximumParticleCount];
@@ -44,7 +45,8 @@ void ParticleSystem::update(const float dt)
     Vector2
         * positions = particles.positions,
         * extents = particles.extents,
-        * velocities = particles.velocities;
+        * velocities = particles.velocities,
+        * linearAccelerations = particles.linearAccelerations;
     float
         * lifeTimes = particles.lifeTimes,
         * maxLifeTimes = particles.maxLifeTimes,
@@ -94,6 +96,11 @@ void ParticleSystem::update(const float dt)
 
     for(uint p=0; p<particleCount; ++p)
     {
+        velocities[p] += linearAccelerations[p] * dt;
+    }
+
+    for(uint p=0; p<particleCount; ++p)
+    {
         rotations[p] += spins[p] * dt;
     }
 
@@ -121,6 +128,7 @@ void ParticleSystem::finalize()
     delete particles.positions;
     delete particles.extents;
     delete particles.velocities;
+    delete particles.linearAccelerations;
     delete particles.lifeTimes;
     delete particles.maxLifeTimes;
 }
@@ -139,6 +147,7 @@ void ParticleSystem::addParticle()
 
     particles.extents[particleCount] = extentRange.getRandom();
     particles.velocities[particleCount].set(- std::cos(direction) * speed, std::sin(direction) * speed);
+    particles.linearAccelerations[particleCount] = linearAccelerationRange.getRandom();
     particles.lifeTimes[particleCount] = 0.0f;
     particles.maxLifeTimes[particleCount] = lifeTimeRange.getRandom();
     particles.rotations[particleCount] = rotationRange.getRandom();
@@ -154,6 +163,7 @@ void ParticleSystem::removeParticle(const uint index)
     particles.positions[index] = particles.positions[particleCount];
     particles.extents[index] = particles.extents[particleCount];
     particles.velocities[index] = particles.velocities[particleCount];
+    particles.linearAccelerations[index] = particles.linearAccelerations[particleCount];
     particles.lifeTimes[index] = particles.lifeTimes[particleCount];
     particles.maxLifeTimes[index] = particles.maxLifeTimes[particleCount];
     particles.rotations[index] = particles.rotations[particleCount];
