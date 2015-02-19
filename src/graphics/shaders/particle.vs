@@ -12,7 +12,9 @@ varying highp vec4 v_color;
 uniform highp mat3 projectionMatrix;
 uniform highp mat3 transformMatrix;
 
-uniform highp vec2 scaleTable[8]; // :todo: use sampler to be functional in WebGL
+// :todo: use samplers for the modifiers.
+
+uniform highp vec2 scaleTable[8]; 
 uniform highp int scaleCount;
 
 uniform highp vec4 colorTable[8];
@@ -20,11 +22,6 @@ uniform highp int colorCount;
 
 vec2 getInterpolatedVec2(in vec2 table[8], in int count, in float factor)
 {
-    if(count==1)
-    {
-        return table[0];
-    }
-
     int lower;
     int upper;
     float f = factor * float(count - 1);
@@ -32,27 +29,22 @@ vec2 getInterpolatedVec2(in vec2 table[8], in int count, in float factor)
     lower = int(floor(f));
     upper = int(ceil(f));
 
-    if(lower==upper)
-    {
-        return table[lower];
-    }
-
     f = f - float(lower);
 
     vec2 result;
+    vec2 upper_value;
+    vec2 lower_value;
 
-    result = table[lower] + (table[upper] - table[lower]) * f;
+    for (int i = 0; i < 8; i++) { if (i == lower) { lower_value = table[i]; } }
+    for (int i = 0; i < 8; i++) { if (i == upper) { upper_value = table[i]; } }
+
+    result = mix(lower_value, upper_value, f);
 
     return result;
 }
 
 vec4 getInterpolatedVec4(in vec4 table[8], in int count, in float factor)
 {
-    if(count==1)
-    {
-        return table[0];
-    }
-
     int lower;
     int upper;
     float f = factor * float(count - 1);
@@ -60,16 +52,16 @@ vec4 getInterpolatedVec4(in vec4 table[8], in int count, in float factor)
     lower = int(floor(f));
     upper = int(ceil(f));
 
-    if(lower==upper)
-    {
-        return table[lower];
-    }
-
     f = f - float(lower);
 
     vec4 result;
+    vec4 upper_value;
+    vec4 lower_value;
 
-    result = table[lower] + (table[upper] - table[lower]) * f;
+    for (int i = 0; i < 8; i++) { if (i == lower) { lower_value = table[i]; } }
+    for (int i = 0; i < 8; i++) { if (i == upper) { upper_value = table[i]; } }
+
+    result = mix(lower_value, upper_value, f);
 
     return result;
 }

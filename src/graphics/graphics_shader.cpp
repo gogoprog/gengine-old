@@ -23,8 +23,17 @@ void Shader::finalize()
 void Shader::compile(const char * source, const char * name)
 {
     GLint status;
+    const char *sources[3];
 
-    glShaderSource(id, 1, &source, nullptr);
+    #ifdef EMSCRIPTEN
+        sources[0] = "#define WEBGL\n";
+    #else
+        sources[0] = "";
+    #endif
+
+    sources[1] = source;
+
+    glShaderSource(id, 2, sources, nullptr);
     glCompileShader(id);
     glGetShaderiv(id, GL_COMPILE_STATUS, &status);
 
