@@ -12,7 +12,7 @@ varying highp vec4 v_color;
 uniform highp mat3 projectionMatrix;
 uniform highp mat3 transformMatrix;
 
-uniform highp vec2 scaleTable[8];
+uniform highp vec2 scaleTable[8]; // :todo: use sampler to be functional in WebGL
 uniform highp int scaleCount;
 
 uniform highp vec4 colorTable[8];
