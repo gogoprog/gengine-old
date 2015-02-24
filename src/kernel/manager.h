@@ -16,11 +16,16 @@
     { \
         return getInstance().getItem(state); \
     } \
+    static SCRIPT_FUNCTION(getKeys) \
+    { \
+        return getInstance().getKeys(state); \
+    } \
     static SCRIPT_REGISTERER() \
     { \
         lua_newtable(state); \
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, create); \
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, get); \
+        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, getKeys); \
         internalLuaRegister(state); \
     } \
     SINGLETON(_class_);
@@ -107,6 +112,21 @@ protected:
             {
                 lua_pushnil(state);
             }
+        }
+
+        return 1;
+    }
+
+    int getKeys(script::State state) const
+    {
+        int i = 0;
+
+        lua_newtable(state);
+
+        for(auto & item : itemMap)
+        {
+            lua_pushstring(state, item.first.c_str());
+            lua_rawseti(state, -2, ++i);
         }
 
         return 1;
