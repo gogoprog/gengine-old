@@ -16,6 +16,8 @@ public:
 
     ENTITY_COMPONENT_DECLARE();
 
+    ENTITY_COMPONENT_METHOD_DECLARE(reset);
+
 protected:
     graphics::ParticleSystem
         particleSystem;

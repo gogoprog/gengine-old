@@ -31,6 +31,7 @@ public:
     void init(const uint maximum_particle_count);
     void update(const float dt);
     void finalize();
+    void reset();
 
     bool keepsLocal() const { return itKeepsLocal; }
     void setKeepsLocal(const bool value) { itKeepsLocal = value; }

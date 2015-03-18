@@ -133,6 +133,13 @@ void ParticleSystem::finalize()
     delete particles.maxLifeTimes;
 }
 
+void ParticleSystem::reset()
+{
+    particleCount = 0;
+    currentTime = 0;
+    particleToEmitSum = 0;
+}
+
 void ParticleSystem::addParticle()
 {
     float direction = directionRange.getRandom();

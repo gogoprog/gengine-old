@@ -24,6 +24,7 @@ ComponentParticleSystem::ComponentParticleSystem()
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentParticleSystem)
 {
+    ENTITY_COMPONENT_PUSH_FUNCTION(reset);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
@@ -184,6 +185,12 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentParticleSystem, remove)
 {
     graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.particleSystem);
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentParticleSystem, reset)
+{
+    self.particleSystem.reset();
 }
 ENTITY_COMPONENT_END()
 
