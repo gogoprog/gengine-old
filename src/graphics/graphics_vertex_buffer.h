@@ -13,6 +13,12 @@ template<typename VERTEX>
 class VertexBuffer
 {
 public:
+
+    enum
+    {
+        MAXIMUM_VERTEX_COUNT = 20480
+    };
+
     VertexBuffer()
         :
         id(GL_NULL_ID)
@@ -78,7 +84,7 @@ private:
         id;
     #ifdef EMSCRIPTEN
         VERTEX
-            data[10240];
+            data[MAXIMUM_VERTEX_COUNT];
         uint
             dataCount;
         bool

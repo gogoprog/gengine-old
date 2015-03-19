@@ -2,6 +2,7 @@
 
 #include "graphics_renderer.h"
 #include "debug.h"
+#include <algorithm>
 
 namespace gengine
 {
@@ -26,7 +27,7 @@ Renderer::Type ParticleSystem::getRenderType()
 
 void ParticleSystem::init(const uint maximum_particle_count)
 {
-    maximumParticleCount = maximum_particle_count;
+    maximumParticleCount = std::min(maximum_particle_count, uint(MAXIMUM_PARTICLE_COUNT));
 
     particles.positions = new Vector2[maximumParticleCount];
     particles.velocities = new Vector2[maximumParticleCount];

@@ -4,10 +4,11 @@
 #include "vector2.h"
 #include "vector4.h"
 #include "matrix3.h"
-#include "graphics_object.h"
 #include "pointer.h"
-#include "graphics_particle_vertex.h"
 #include "range.h"
+#include "graphics_object.h"
+#include "graphics_particle_vertex.h"
+#include "graphics_vertex_buffer.h"
 
 namespace gengine
 {
@@ -21,7 +22,8 @@ friend class Renderer;
 public:
     enum
     {
-        MAXIMUM_STEP_COUNT = 8
+        MAXIMUM_STEP_COUNT = 8,
+        MAXIMUM_PARTICLE_COUNT = VertexBuffer<ParticleVertex>::MAXIMUM_VERTEX_COUNT / 4
     };
 
     ParticleSystem();
