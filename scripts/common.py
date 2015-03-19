@@ -76,6 +76,7 @@ def packHtml():
     log("Packing html...")
     current_dir = os.getcwd()
     os.system("rm -rf out/*")
+    os.system("mkdir -p out")
     os.system("rm -rf tmp/*")
     os.system("mkdir -p tmp")
     os.system("cp -rf *.png data *.lua tmp/")

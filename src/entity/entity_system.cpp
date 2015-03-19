@@ -15,6 +15,7 @@
 #include "entity_component_sprite_batch.h"
 #include "entity_component_physic.h"
 #include "entity_component_navigation_agent.h"
+#include "entity_component_particle_system.h"
 
 namespace gengine
 {
@@ -31,6 +32,7 @@ void System::finalize()
 
 void System::update(const float dt)
 {
+    bool isInserted;
     lua_State * state = script::System::getInstance().getState();
     currentDt = dt;
 
@@ -39,11 +41,19 @@ void System::update(const float dt)
     for(int ref : refToUpdateTable)
     {
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
-        lua_getfield(state, -1, "update");
-        lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
-        lua_pushnumber(state, dt);
-        script::System::getInstance().call(2, 0);
+
+        lua_getfield(state, -1, "_isInserted");
+        isInserted = lua_toboolean(state, -1);
         lua_pop(state, 1);
+
+        if(isInserted)
+        {
+            lua_getfield(state, -1, "update");
+            lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
+            lua_pushnumber(state, dt);
+            script::System::getInstance().call(2, 0);
+            lua_pop(state, 1);
+        }
     }
 
     if(refToRemoveTable.getSize() > 0 && refTable.getSize() > 0)
@@ -138,6 +148,7 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentSpriteBatch>(state, "ComponentSpriteBatch");
     registerComponent<ComponentPhysic>(state, "ComponentPhysic");
     registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
+    registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
 }
 
 SCRIPT_CLASS_UNREGISTERER(System)

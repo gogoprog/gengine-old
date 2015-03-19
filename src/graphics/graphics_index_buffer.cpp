@@ -31,10 +31,10 @@ void IndexBuffer::finalize()
     glDeleteBuffers(1, &id);
 }
 
-void IndexBuffer::setData(const ushort * indices, const uint count)
+void IndexBuffer::setData(const ushort * indices, const uint count, const bool stream)
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ushort) * count, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ushort) * count, indices, stream ? GL_STREAM_DRAW : GL_STATIC_DRAW);
 }
 
 void IndexBuffer::draw(const uint count)

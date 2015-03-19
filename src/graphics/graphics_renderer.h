@@ -4,6 +4,7 @@
 #include "vector2.h"
 #include "stack.h"
 #include "array.h"
+#include "pointer.h"
 #include "graphics_uniform.h"
 #include "graphics_world.h"
 #include "graphics_program.h"
@@ -11,6 +12,7 @@
 #include "graphics_index_buffer.h"
 #include "graphics_shader.h"
 #include "graphics_vertex.h"
+#include "graphics_particle_modifier_uniforms.h"
 
 namespace gengine
 {
@@ -28,6 +30,7 @@ public:
     {
         SPRITE,
         SPRITE_BATCH,
+        PARTICLE_SYSTEM,
         NONE
     };
 
@@ -41,9 +44,12 @@ private:
 
     Shader
         defaultVertexShader,
-        defaultFragmentShader;
+        defaultFragmentShader,
+        particleVertexShader,
+        particleFragmentShader;
     Program
-        defaultProgram;
+        defaultProgram,
+        particleProgram;
     VertexBuffer<Vertex>
         vertexBufferQuad;
     IndexBuffer
@@ -54,9 +60,18 @@ private:
         samplerUniform,
         colorUniform,
         uvScaleUniform,
-        uvOffsetUniform;
+        uvOffsetUniform,
+        particleProjectionMatrixUniform,
+        particleTransformMatrixUniform,
+        particleSamplerUniform,
+        particleColorUniform;
+    ParticleModifierUniforms
+        particleColorUniforms,
+        particleScaleUniforms;
     Type
         currentType;
+    Pointer<Program>
+        currentProgram;
 };
 
 }

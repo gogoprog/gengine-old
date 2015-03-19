@@ -14,7 +14,7 @@ public:
     uint getId() const { return id; }
     void init(const GLenum _type);
     void finalize();
-    void compile(const char *source);
+    void compile(const char *source, const char *name);
 
 private:
     uint

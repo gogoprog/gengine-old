@@ -86,5 +86,16 @@ float getTableFloatSafe(lua_State * state, const char * name, const int table_po
 
 void executeText(const char * text);
 
+template<class T>
+void fill(lua_State * state, T & result, const int position = -1)
+{
+    T::fill(state, result, position);
+}
+
+inline void fill(lua_State * state, float & result, const int position = -1)
+{
+    result = lua_tonumber(state, position);
+}
+
 }
 }

@@ -1,6 +1,7 @@
 #include "vector2.h"
 
 #include <cmath>
+#include <cstdlib>
 
 namespace gengine
 {
@@ -60,6 +61,12 @@ Vector2 & Vector2::operator+=(const Vector2 & other)
     y += other.y;
 
     return * this;
+}
+
+void Vector2::set(const float _x, const float _y)
+{
+    x = _x;
+    y = _y;
 }
 
 Vector2
@@ -167,6 +174,16 @@ float Vector2::getSquareDistance(const Vector2 & a, const Vector2 & b)
 Vector2 operator*(const Vector2 & vector, const float multiplier)
 {
     return Vector2(vector.x * multiplier, vector.y * multiplier);
+}
+
+Vector2 operator-(const Vector2 & a, const Vector2 & b)
+{
+    return Vector2(a.x - b.x, a.y - b.y);
+}
+
+Vector2 operator+(const Vector2 & a, const Vector2 & b)
+{
+    return Vector2(a.x + b.x, a.y + b.y);
 }
 
 }

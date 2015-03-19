@@ -26,12 +26,11 @@ public:
         atlas = & _atlas;
     }
 
-    const uint getItemCount() const { return vertexData.getSize() / 4; }
+    const uint getItemCount() const { return itemCount; }
 
-    void init();
+    void init(const uint size);
     void addItem(const int index, const Vector2 & position, const Vector2 & extent);
     void addItem(const int index, const Vector2 & position);
-    void reserve(const int size);
 
     void lock();
     void unlock();
@@ -39,8 +38,11 @@ public:
 private:
     VertexBuffer<Vertex>
         vertexBuffer;
-    Array<Vertex>
-        vertexData;
+    Vertex
+        * vertices;
+    uint
+        itemCount,
+        maximumItemCount;
     const Atlas
         * atlas;
 };

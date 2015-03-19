@@ -13,6 +13,12 @@ template<typename VERTEX>
 class VertexBuffer
 {
 public:
+
+    enum
+    {
+        MAXIMUM_VERTEX_COUNT = 20480
+    };
+
     VertexBuffer()
         :
         id(GL_NULL_ID)
@@ -27,9 +33,17 @@ public:
         }
     }
 
-    void init()
+    void init(const uint count, const bool use_as_stream)
     {
         glGenBuffers(1, &id);
+        glBindBuffer(GL_ARRAY_BUFFER, id);
+
+        #ifndef EMSCRIPTEN
+            glBufferData(GL_ARRAY_BUFFER, sizeof(VERTEX) * count, nullptr, use_as_stream ? GL_STREAM_DRAW : GL_STATIC_DRAW);
+        #else
+            streamUsage = use_as_stream;
+            dataCount = count;
+        #endif
     }
 
     void finalize()
@@ -37,26 +51,45 @@ public:
         glDeleteBuffers(1, &id);
     }
 
-    void setData(const VERTEX * vertices, const uint count)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, id);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(VERTEX) * count, vertices, GL_STATIC_DRAW);
-    }
-
     void apply()
     {
         glBindBuffer(GL_ARRAY_BUFFER, id);
 
-        glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_POSITION);
-        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), 0);
+        VERTEX::enableAttributes();
+    }
 
-        glEnableVertexAttribArray(Program::ATTRIBUTE_LOCATION_TEXCOORDS);
-        glVertexAttribPointer(Program::ATTRIBUTE_LOCATION_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), (char*)0 + 8);
+    VERTEX * map()
+    {
+        #ifndef EMSCRIPTEN
+            glBindBuffer(GL_ARRAY_BUFFER, id);
+
+            return reinterpret_cast<VERTEX *>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY_ARB));
+        #else
+            return data;
+        #endif
+    }
+
+    void unMap()
+    {
+        #ifndef EMSCRIPTEN
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+        #else
+            glBindBuffer(GL_ARRAY_BUFFER, id);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(VERTEX) * dataCount, data, streamUsage ? GL_STREAM_DRAW : GL_STATIC_DRAW);
+        #endif
     }
 
 private:
     uint
         id;
+    #ifdef EMSCRIPTEN
+        VERTEX
+            data[MAXIMUM_VERTEX_COUNT];
+        uint
+            dataCount;
+        bool
+            streamUsage;
+    #endif
 };
 
 }
