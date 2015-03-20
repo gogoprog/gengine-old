@@ -32,7 +32,7 @@ void Window::init()
 
         pRenderer = SDL_CreateRenderer(
             pWindow,
-            -1, 
+            -1,
             SDL_RENDERER_ACCELERATED //| SDL_RENDERER_PRESENTVSYNC
             );
 
@@ -44,6 +44,22 @@ void Window::init()
             16,
             SDL_OPENGL
             );
+
+        std::stringstream
+            text;
+
+        if(!application::isFullscreen())
+        {
+            text << "document.getElementById('canvas_holder').style.width = '" << application::getWidth() << "px'; ";
+            text << "document.getElementById('canvas_holder').style.height = '" << application::getHeight() << "px';";
+        }
+        else
+        {
+            text << "document.getElementById('canvas_holder').style.width = '100%';";
+            text << "document.getElementById('canvas_holder').style.height = '100%';";
+        }
+
+        emscripten_run_script(text.str().c_str());
     #endif
 }
 
