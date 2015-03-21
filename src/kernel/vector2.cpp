@@ -6,6 +6,30 @@
 namespace gengine
 {
 
+SCRIPT_FUNCTION(getLength)
+{
+    Vector2 a;
+
+    Vector2::fill(state, a, 1);
+
+    float l = Vector2::getLength(a);
+    lua_pushnumber(state, l);
+
+    return 1;
+}
+
+SCRIPT_FUNCTION(getSquareLength)
+{
+    Vector2 a;
+
+    Vector2::fill(state, a, 1);
+
+    float sl = Vector2::getSquareLength(a);
+    lua_pushnumber(state, sl);
+
+    return 1;
+}
+
 SCRIPT_FUNCTION(getDistance)
 {
     Vector2 a, b;
@@ -45,6 +69,19 @@ SCRIPT_FUNCTION(getAngle)
     return 1;
 }
 
+SCRIPT_FUNCTION(getNormalized)
+{
+    Vector2 a;
+
+    Vector2::fill(state, a, 1);
+
+    a.normalize();
+
+    Vector2::push(state, a);
+
+    return 1;
+}
+
 Vector2::Vector2(const float _x, const float _y)
     :
     x(_x),
@@ -80,6 +117,14 @@ void Vector2::set(const float _x, const float _y)
 {
     x = _x;
     y = _y;
+}
+
+void Vector2::normalize()
+{
+    float length = getLength(*this);
+
+    x /= length;
+    y /= length;
 }
 
 Vector2
@@ -134,9 +179,15 @@ SCRIPT_CLASS_REGISTERER(Vector2)
         end
         );
 
+    lua_getglobal(state, "vector2_mt");
+    metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
+
+    SCRIPT_TABLE_PUSH_FUNCTION(getLength);
+    SCRIPT_TABLE_PUSH_FUNCTION(getSquareLength);
     SCRIPT_TABLE_PUSH_FUNCTION(getDistance);
     SCRIPT_TABLE_PUSH_FUNCTION(getSquareDistance);
     SCRIPT_TABLE_PUSH_FUNCTION(getAngle);
+    SCRIPT_TABLE_PUSH_FUNCTION(getNormalized);
 }
 
 void Vector2::push(lua_State * state, const Vector2 & value)
@@ -147,6 +198,9 @@ void Vector2::push(lua_State * state, const Vector2 & value)
 
     lua_pushnumber(state, value.y);
     lua_setfield(state, -2, "y");
+
+    lua_rawgeti(state, LUA_REGISTRYINDEX, metaTableRef);
+    lua_setmetatable(state, -2);
 }
 
 void Vector2::replace(lua_State * state, const Vector2 & value)
@@ -185,6 +239,16 @@ void Vector2::fillTableSafe(lua_State * state, Vector2 & result, const char * na
     lua_pop(state, 1);
 }
 
+float Vector2::getLength(const Vector2 & a)
+{
+    return sqrt(a.x*a.x + a.y*a.y);
+}
+
+float Vector2::getSquareLength(const Vector2 & a)
+{
+    return (a.x*a.x + a.y*a.y);
+}
+
 float Vector2::getDistance(const Vector2 & a, const Vector2 & b)
 {
     return sqrt((b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y));
@@ -199,6 +263,9 @@ float Vector2::getAngle(const Vector2 & a, const Vector2 & b)
 {
     return atan2(b.y - a.y, b.x - a.x);
 }
+
+int
+    Vector2::metaTableRef;
 
 Vector2 operator*(const Vector2 & vector, const float multiplier)
 {
