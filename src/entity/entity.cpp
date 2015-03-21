@@ -149,7 +149,7 @@ void fillTransformFromComponent(lua_State *state, Transform & transform)
 void updateTransform(lua_State *state, const Transform & transform, const int position)
 {
     lua_getfield(state, position, "position");
-    Vector2::push(state, transform.position);
+    Vector2::replace(state, transform.position);
     lua_pop(state, 1);
 
     lua_pushnumber(state, transform.rotation);

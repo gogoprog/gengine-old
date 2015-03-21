@@ -6,7 +6,7 @@
 namespace gengine
 {
 
-SCRIPT_FUNCTION(localGetDistance)
+SCRIPT_FUNCTION(getDistance)
 {
     Vector2 a, b;
 
@@ -19,7 +19,7 @@ SCRIPT_FUNCTION(localGetDistance)
     return 1;
 }
 
-SCRIPT_FUNCTION(localGetSquareDistance)
+SCRIPT_FUNCTION(getSquareDistance)
 {
     Vector2 a, b;
 
@@ -28,6 +28,19 @@ SCRIPT_FUNCTION(localGetSquareDistance)
 
     float d = Vector2::getSquareDistance(a, b);
     lua_pushnumber(state, d);
+
+    return 1;
+}
+
+SCRIPT_FUNCTION(getAngle)
+{
+    Vector2 a, b;
+
+    Vector2::fill(state, a, 1);
+    Vector2::fill(state, b, 2);
+
+    float angle = Vector2::getAngle(a, b);
+    lua_pushnumber(state, angle);
 
     return 1;
 }
@@ -121,11 +134,22 @@ SCRIPT_CLASS_REGISTERER(Vector2)
         end
         );
 
-    SCRIPT_TABLE_PUSH_FUNCTION2(localGetDistance, getDistance);
-    SCRIPT_TABLE_PUSH_FUNCTION2(localGetSquareDistance, getSquareDistance);
+    SCRIPT_TABLE_PUSH_FUNCTION(getDistance);
+    SCRIPT_TABLE_PUSH_FUNCTION(getSquareDistance);
+    SCRIPT_TABLE_PUSH_FUNCTION(getAngle);
 }
 
 void Vector2::push(lua_State * state, const Vector2 & value)
+{
+    lua_newtable(state);
+    lua_pushnumber(state, value.x);
+    lua_setfield(state, -2, "x");
+
+    lua_pushnumber(state, value.y);
+    lua_setfield(state, -2, "y");
+}
+
+void Vector2::replace(lua_State * state, const Vector2 & value)
 {
     lua_pushnumber(state, value.x);
     lua_setfield(state, -2, "x");
@@ -169,6 +193,11 @@ float Vector2::getDistance(const Vector2 & a, const Vector2 & b)
 float Vector2::getSquareDistance(const Vector2 & a, const Vector2 & b)
 {
     return (b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y);
+}
+
+float Vector2::getAngle(const Vector2 & a, const Vector2 & b)
+{
+    return atan2(b.y - a.y, b.x - a.x);
 }
 
 Vector2 operator*(const Vector2 & vector, const float multiplier)

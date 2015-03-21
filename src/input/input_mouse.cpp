@@ -1,5 +1,6 @@
 #include "input_mouse.h"
 
+#include "vector2.h"
 #include "script.h"
 #include <string.h>
 
@@ -106,10 +107,11 @@ SCRIPT_CLASS_FUNCTION(Mouse, getPosition)
 {
     SCRIPT_TABLE_GET_THIS(Mouse);
 
-    SCRIPT_PUSH_NUMBER(self.x);
-    SCRIPT_PUSH_NUMBER(self.y);
+    Vector2 position(self.x, self.y);
 
-    return 2;
+    Vector2::push(state, position);
+
+    return 1;
 }
 
 SCRIPT_CLASS_FUNCTION(Mouse, getWheelY)

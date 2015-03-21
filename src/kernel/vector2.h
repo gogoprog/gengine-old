@@ -27,6 +27,7 @@ struct Vector2
         float v;
     };
 
+
     static Vector2
         zero,
         one;
@@ -34,12 +35,14 @@ struct Vector2
     static SCRIPT_REGISTERER();
 
     static void push(lua_State * state, const Vector2 & value);
+    static void replace(lua_State * state, const Vector2 & value);
 
     static void fill(lua_State * state, Vector2 & result, int position = -1);
     static void fillTableSafe(lua_State * state, Vector2 & result, const char * name, int position = -1, const Vector2 & default_value = Vector2::zero);
 
     static float getDistance(const Vector2 & a, const Vector2 & b);
     static float getSquareDistance(const Vector2 & a, const Vector2 & b);
+    static float getAngle(const Vector2 & a, const Vector2 & b);
 };
 
 Vector2 operator*(const Vector2 & vector, const float multiplier);

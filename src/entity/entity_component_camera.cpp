@@ -96,14 +96,15 @@ ENTITY_COMPONENT_END()
 
 ENTITY_COMPONENT_METHOD(ComponentCamera, getWorldPosition)
 {
-    Vector2 result;
+    Vector2 result, input;
 
-    self.camera.getWorldPosition(result, Vector2(lua_tonumber(state, 2), lua_tonumber(state, 3)));
+    Vector2::fill(state, input, 2);
 
-    SCRIPT_PUSH_NUMBER(result.x);
-    SCRIPT_PUSH_NUMBER(result.y);
+    self.camera.getWorldPosition(result, input);
 
-    return 2;
+    Vector2::push(state, result);
+
+    return 1;
 }
 ENTITY_COMPONENT_END()
 
