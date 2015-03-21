@@ -16,6 +16,7 @@ struct Vector2
 
     void set(const float _x, const float _y);
     void normalize();
+    void rotate(const float angle);
 
     union
     {

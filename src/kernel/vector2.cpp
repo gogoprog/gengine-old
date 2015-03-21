@@ -82,6 +82,21 @@ SCRIPT_FUNCTION(getNormalized)
     return 1;
 }
 
+SCRIPT_FUNCTION(getRotated)
+{
+    Vector2 v;
+    float a;
+
+    Vector2::fill(state, v, 1);
+    a = lua_tonumber(state, 2);
+
+    v.rotate(a);
+
+    Vector2::push(state, v);
+
+    return 1;
+}
+
 Vector2::Vector2(const float _x, const float _y)
     :
     x(_x),
@@ -125,6 +140,19 @@ void Vector2::normalize()
 
     x /= length;
     y /= length;
+}
+
+void Vector2::rotate(const float angle)
+{
+    float c, s, nx, ny;
+    c = cos(angle);
+    s = sin(angle);
+
+    nx = x * c - y * s;
+    ny = x * s + y * c;
+
+    x = nx;
+    y = ny;
 }
 
 Vector2
@@ -188,6 +216,7 @@ SCRIPT_CLASS_REGISTERER(Vector2)
     SCRIPT_TABLE_PUSH_FUNCTION(getSquareDistance);
     SCRIPT_TABLE_PUSH_FUNCTION(getAngle);
     SCRIPT_TABLE_PUSH_FUNCTION(getNormalized);
+    SCRIPT_TABLE_PUSH_FUNCTION(getRotated);
 }
 
 void Vector2::push(lua_State * state, const Vector2 & value)
