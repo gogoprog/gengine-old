@@ -52,8 +52,9 @@ void System::update(const float dt)
             lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
             lua_pushnumber(state, dt);
             script::System::getInstance().call(2, 0);
-            lua_pop(state, 1);
         }
+
+        lua_pop(state, 1);
     }
 
     if(refToRemoveTable.getSize() > 0 && refTable.getSize() > 0)

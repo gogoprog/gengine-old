@@ -79,21 +79,6 @@ void System::init(int argc, char *argv[])
 
         timeSinceLastUpdate = 0.0f;
     }
-    #else
-    {
-        std::stringstream
-            text;
-
-        text << "document.getElementById('canvas_holder').style.width = '";
-        text << application::getWidth();
-        text << "px'; ";
-
-        text << "document.getElementById('canvas_holder').style.height = '";
-        text << application::getHeight();
-        text << "px';";
-
-        emscripten_run_script(text.str().c_str());
-    }
     #endif
 }
 

@@ -2,6 +2,11 @@
 
 #include "core_sdl.h"
 #include "application.h"
+#include <sstream>
+
+#ifdef EMSCRIPTEN
+    #include <emscripten.h>
+#endif
 
 namespace gengine
 {
@@ -21,19 +26,28 @@ Window::~Window()
 void Window::init()
 {
     #ifndef EMSCRIPTEN
+        Uint32 flags = 0;
+
+        flags |= SDL_WINDOW_OPENGL;
+
+        if(application::isFullscreen())
+        {
+            flags |= SDL_WINDOW_FULLSCREEN;
+        }
+
         pWindow = SDL_CreateWindow(
             getName(),
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
             getWidth(),
             getHeight(),
-            SDL_WINDOW_OPENGL
+            flags
             );
 
         pRenderer = SDL_CreateRenderer(
             pWindow,
-            -1, 
-            SDL_RENDERER_ACCELERATED //| SDL_RENDERER_PRESENTVSYNC
+            -1,
+            SDL_RENDERER_ACCELERATED
             );
 
         context = SDL_GL_CreateContext(pWindow);
@@ -44,6 +58,13 @@ void Window::init()
             16,
             SDL_OPENGL
             );
+
+        std::stringstream
+            text;
+
+        text << "gengineInitialize(" << application::getWidth() << ", " << application::getHeight() << ", " << application::isFullscreen() << ");";
+
+        emscripten_run_script(text.str().c_str());
     #endif
 }
 

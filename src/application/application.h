@@ -15,6 +15,7 @@ const char * getName();
 uint getWidth();
 uint getHeight();
 Vector2 getExtent();
+bool isFullscreen();
 
 SCRIPT_REGISTERER();
 

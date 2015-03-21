@@ -146,7 +146,26 @@
       };
 
       function loadFile(filePath) {
-        $("#gui").load(filePath);
+          $("#gui").load(filePath);
+      }
+
+      function gengineInitialize(width, height, fullscreen)
+      {
+          if(fullscreen)
+          {
+              document.getElementById('canvas_holder').style.width = '100%';
+              document.getElementById('canvas_holder').style.height = '100%';
+              document.getElementById('canvas').style.width = '100%';
+              document.getElementById('canvas').style.height = '100%';
+              document.getElementById('canvas').style.position = 'absolute';
+              document.getElementById('holder').style.position = 'static';
+              document.getElementsByTagName('BODY')[0].style.margin = '0';
+          }
+          else
+          {
+              document.getElementById('canvas_holder').style.width = "'" + width + "px'";
+              document.getElementById('canvas_holder').style.height = "'" + height + "px'";
+          }
       }
 
       function gengine_execute(text) {
