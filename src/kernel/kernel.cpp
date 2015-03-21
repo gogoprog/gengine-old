@@ -3,6 +3,7 @@
 #include "script.h"
 #include "vector2.h"
 #include "vector4.h"
+#include "maths.h"
 
 #ifndef EMSCRIPTEN
     #include <signal.h>
@@ -28,12 +29,7 @@ void breakExecution()
 
 SCRIPT_REGISTERER()
 {
-    lua_newtable(state);
-
-    Vector2::luaRegister(state);
-    Vector4::luaRegister(state);
-
-    lua_setfield(state, -2, "math");
+    math::luaRegister(state);
 }
 
 }
