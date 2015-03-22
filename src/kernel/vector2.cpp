@@ -104,6 +104,14 @@ Vector2::Vector2(const float _x, const float _y)
 {
 }
 
+Vector2 & Vector2::operator*=(const float value)
+{
+    x *= value;
+    y *= value;
+
+    return * this;
+}
+
 Vector2 & Vector2::operator/=(const Vector2 & other)
 {
     x /= other.x;
