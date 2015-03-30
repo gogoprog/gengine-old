@@ -25,6 +25,8 @@ protected:
     uint
         worldIndex,
         atlasItem;
+    bool
+        extentHasBeenSet;
 };
 
 }

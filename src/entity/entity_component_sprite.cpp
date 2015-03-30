@@ -19,7 +19,8 @@ ComponentSprite::ComponentSprite()
     :
     atlas(nullptr),
     worldIndex(0),
-    atlasItem(0)
+    atlasItem(0),
+    extentHasBeenSet(false)
 {
 }
 
@@ -36,6 +37,7 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     ENTITY_COMPONENT_SETTER(extent)
     {
         Vector2::fill(state, self.sprite.getExtent(), 3);
+        self.extentHasBeenSet = true;
     }
     ENTITY_COMPONENT_SETTER(uvScale)
     {
@@ -82,6 +84,19 @@ ENTITY_COMPONENT_METHOD(ComponentSprite, init)
         const graphics::AtlasItem & item = self.atlas->getItem(self.atlasItem);
         self.sprite.setUvOffset(item.uvOffset);
         self.sprite.setUvScale(item.uvScale);
+    }
+    else
+    {
+        if(!self.extentHasBeenSet)
+        {
+            const Pointer<const graphics::Texture> texture = self.sprite.getTexture();
+
+            if(!texture.isNull())
+            {
+                self.sprite.getExtent().x = texture->getWidth();
+                self.sprite.getExtent().y = texture->getHeight();
+            }
+        }
     }
 }
 ENTITY_COMPONENT_END()
