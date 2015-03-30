@@ -6,7 +6,31 @@
 namespace gengine
 {
 
-SCRIPT_FUNCTION(localGetDistance)
+SCRIPT_FUNCTION(getLength)
+{
+    Vector2 a;
+
+    Vector2::fill(state, a, 1);
+
+    float l = Vector2::getLength(a);
+    lua_pushnumber(state, l);
+
+    return 1;
+}
+
+SCRIPT_FUNCTION(getSquareLength)
+{
+    Vector2 a;
+
+    Vector2::fill(state, a, 1);
+
+    float sl = Vector2::getSquareLength(a);
+    lua_pushnumber(state, sl);
+
+    return 1;
+}
+
+SCRIPT_FUNCTION(getDistance)
 {
     Vector2 a, b;
 
@@ -19,7 +43,7 @@ SCRIPT_FUNCTION(localGetDistance)
     return 1;
 }
 
-SCRIPT_FUNCTION(localGetSquareDistance)
+SCRIPT_FUNCTION(getSquareDistance)
 {
     Vector2 a, b;
 
@@ -32,11 +56,60 @@ SCRIPT_FUNCTION(localGetSquareDistance)
     return 1;
 }
 
+SCRIPT_FUNCTION(getAngle)
+{
+    Vector2 a, b;
+
+    Vector2::fill(state, a, 1);
+    Vector2::fill(state, b, 2);
+
+    float angle = Vector2::getAngle(a, b);
+    lua_pushnumber(state, angle);
+
+    return 1;
+}
+
+SCRIPT_FUNCTION(getNormalized)
+{
+    Vector2 a;
+
+    Vector2::fill(state, a, 1);
+
+    a.normalize();
+
+    Vector2::push(state, a);
+
+    return 1;
+}
+
+SCRIPT_FUNCTION(getRotated)
+{
+    Vector2 v;
+    float a;
+
+    Vector2::fill(state, v, 1);
+    a = lua_tonumber(state, 2);
+
+    v.rotate(a);
+
+    Vector2::push(state, v);
+
+    return 1;
+}
+
 Vector2::Vector2(const float _x, const float _y)
     :
     x(_x),
     y(_y)
 {
+}
+
+Vector2 & Vector2::operator*=(const float value)
+{
+    x *= value;
+    y *= value;
+
+    return * this;
 }
 
 Vector2 & Vector2::operator/=(const Vector2 & other)
@@ -67,6 +140,27 @@ void Vector2::set(const float _x, const float _y)
 {
     x = _x;
     y = _y;
+}
+
+void Vector2::normalize()
+{
+    float length = getLength(*this);
+
+    x /= length;
+    y /= length;
+}
+
+void Vector2::rotate(const float angle)
+{
+    float c, s, nx, ny;
+    c = cos(angle);
+    s = sin(angle);
+
+    nx = x * c - y * s;
+    ny = x * s + y * c;
+
+    x = nx;
+    y = ny;
 }
 
 Vector2
@@ -121,11 +215,32 @@ SCRIPT_CLASS_REGISTERER(Vector2)
         end
         );
 
-    SCRIPT_TABLE_PUSH_FUNCTION2(localGetDistance, getDistance);
-    SCRIPT_TABLE_PUSH_FUNCTION2(localGetSquareDistance, getSquareDistance);
+    lua_getglobal(state, "vector2_mt");
+    metaTableRef = luaL_ref(state, LUA_REGISTRYINDEX);
+
+    SCRIPT_TABLE_PUSH_FUNCTION(getLength);
+    SCRIPT_TABLE_PUSH_FUNCTION(getSquareLength);
+    SCRIPT_TABLE_PUSH_FUNCTION(getDistance);
+    SCRIPT_TABLE_PUSH_FUNCTION(getSquareDistance);
+    SCRIPT_TABLE_PUSH_FUNCTION(getAngle);
+    SCRIPT_TABLE_PUSH_FUNCTION(getNormalized);
+    SCRIPT_TABLE_PUSH_FUNCTION(getRotated);
 }
 
 void Vector2::push(lua_State * state, const Vector2 & value)
+{
+    lua_newtable(state);
+    lua_pushnumber(state, value.x);
+    lua_setfield(state, -2, "x");
+
+    lua_pushnumber(state, value.y);
+    lua_setfield(state, -2, "y");
+
+    lua_rawgeti(state, LUA_REGISTRYINDEX, metaTableRef);
+    lua_setmetatable(state, -2);
+}
+
+void Vector2::replace(lua_State * state, const Vector2 & value)
 {
     lua_pushnumber(state, value.x);
     lua_setfield(state, -2, "x");
@@ -161,6 +276,16 @@ void Vector2::fillTableSafe(lua_State * state, Vector2 & result, const char * na
     lua_pop(state, 1);
 }
 
+float Vector2::getLength(const Vector2 & a)
+{
+    return sqrt(a.x*a.x + a.y*a.y);
+}
+
+float Vector2::getSquareLength(const Vector2 & a)
+{
+    return (a.x*a.x + a.y*a.y);
+}
+
 float Vector2::getDistance(const Vector2 & a, const Vector2 & b)
 {
     return sqrt((b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y));
@@ -170,6 +295,14 @@ float Vector2::getSquareDistance(const Vector2 & a, const Vector2 & b)
 {
     return (b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y);
 }
+
+float Vector2::getAngle(const Vector2 & a, const Vector2 & b)
+{
+    return atan2(b.y - a.y, b.x - a.x);
+}
+
+int
+    Vector2::metaTableRef;
 
 Vector2 operator*(const Vector2 & vector, const float multiplier)
 {
