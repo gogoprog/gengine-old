@@ -30,6 +30,8 @@ public:
     const Texture & getTexture() const { return *texture; }
     bool hasTexture() const { return !texture.isNull(); }
 
+    void getDefaultExtent(Vector2 & result, const uint index) const;
+
 private:
     Array<AtlasItem>
         itemTable;

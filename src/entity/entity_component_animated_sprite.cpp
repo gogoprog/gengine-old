@@ -37,8 +37,7 @@ ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
     {
         self.animationStack.setSize(1);
         self.animationStack[0] = static_cast<const graphics::Animation *>(lua_touserdata(state, 3));
-        self.animation = self.animationStack[0];
-        self.currentTime = 0.0f;
+        self.setAnimation(self.animationStack.getLastItem());
     }
     ENTITY_COMPONENT_SETTER_DEFAULT()
     {
@@ -76,11 +75,10 @@ ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, update)
             else
             {
                 self.animationStack.removeLastItem();
-                self.currentTime = 0.0f;
 
                 if(self.animationStack.getSize() > 0)
                 {
-                    self.animation = self.animationStack.getLastItem();
+                    self.setAnimation(self.animationStack.getLastItem());
                 }
                 else
                 {
@@ -97,8 +95,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, pushAnimation)
 {
     self.animationStack.add(static_cast<const graphics::Animation *>(lua_touserdata(state, 2)));
-    self.animation = self.animationStack.getLastItem();
-    self.currentTime = 0.0f;
+    self.setAnimation(self.animationStack.getLastItem());
 }
 ENTITY_COMPONENT_END()
 
@@ -108,6 +105,17 @@ ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, removeAnimations)
     self.animation = nullptr;
 }
 ENTITY_COMPONENT_END()
+
+void ComponentAnimatedSprite::setAnimation(const graphics::Animation * _animation)
+{
+    animation = _animation;
+    currentTime = 0.0f;
+
+    if(!extentHasBeenSet)
+    {
+        animation->getFrame(0.0f).atlas->getDefaultExtent(sprite.getExtent(), 0);
+    }
+}
 
 }
 }

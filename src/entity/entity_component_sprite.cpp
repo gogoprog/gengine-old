@@ -84,6 +84,11 @@ ENTITY_COMPONENT_METHOD(ComponentSprite, init)
         const graphics::AtlasItem & item = self.atlas->getItem(self.atlasItem);
         self.sprite.setUvOffset(item.uvOffset);
         self.sprite.setUvScale(item.uvScale);
+
+        if(!self.extentHasBeenSet)
+        {
+            self.atlas->getDefaultExtent(self.sprite.getExtent(), self.atlasItem);
+        }
     }
     else
     {
