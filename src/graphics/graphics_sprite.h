@@ -27,6 +27,7 @@ public:
     Vector2 & getUvScale() { return uvScale; }
     const Vector2 & getUvOffset() const { return uvOffset; }
     Vector2 & getUvOffset() { return uvOffset; }
+    const Pointer<const Texture> getTexture() const { return texture; }
 
     void setExtent(const Vector2 & _extent) { extent = _extent; }
     void setUvScale(const Vector2 & uv_scale) { uvScale = uv_scale; }

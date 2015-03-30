@@ -28,6 +28,9 @@ public:
         metaTableRef;
 
 protected:
+
+    void setAnimation(const graphics::Animation * animation);
+
     const graphics::Animation
         * animation;
     Array<const graphics::Animation *>

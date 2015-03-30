@@ -73,5 +73,13 @@ bool Atlas::setFromTextureAndTable(const Texture *_texture, lua_State * state)
     return true;
 }
 
+void Atlas::getDefaultExtent(Vector2 & result, const uint index) const
+{
+    const Vector2 & scale = getItem(index).uvScale;
+
+    result.x = texture->getWidth() * scale.x;
+    result.y = texture->getHeight() * scale.y;
+}
+
 }
 }
