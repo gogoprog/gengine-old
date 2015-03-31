@@ -74,6 +74,57 @@ SCRIPT_FUNCTION(doRectanglesIntersect)
     return 1;
 }
 
+SCRIPT_FUNCTION(doesCircleIntersectRectangle)
+{
+    Vector2
+        circle_position,
+        rect_position,
+        half_extent,
+        minimum_point,
+        maximum_point;
+    float
+        radius,
+        square_distance;
+    bool
+        result;
+
+    Vector2::fill(state, circle_position, 1);
+    radius = lua_tonumber(state, 2);
+    Vector2::fill(state, rect_position, 3);
+    Vector2::fill(state, half_extent, 4);
+
+    half_extent *= 0.5f;
+
+    minimum_point = rect_position - half_extent;
+    maximum_point = rect_position + half_extent;
+
+    square_distance = 0.0f;
+
+    if(circle_position.x < minimum_point.x)
+    {
+        square_distance += (circle_position.x - minimum_point.x) * (circle_position.x - minimum_point.x);
+    }
+    else if(circle_position.x > maximum_point.x)
+    {
+        square_distance += (circle_position.x - maximum_point.x) * (circle_position.x - maximum_point.x);
+    }
+
+    if(circle_position.y < minimum_point.y)
+    {
+        square_distance += (circle_position.y - minimum_point.y) * (circle_position.y - minimum_point.y);
+    }
+    else if(circle_position.y > maximum_point.y)
+    {
+        square_distance += (circle_position.y - maximum_point.y) * (circle_position.y - maximum_point.y);
+    }
+
+    result = square_distance < radius * radius;
+
+    lua_pushboolean(state, result);
+
+    return 1;
+}
+
 SCRIPT_REGISTERER()
 {
     lua_newtable(state);
@@ -83,6 +134,7 @@ SCRIPT_REGISTERER()
 
     SCRIPT_TABLE_PUSH_FUNCTION(getClosestAngle);
     SCRIPT_TABLE_PUSH_FUNCTION(doRectanglesIntersect);
+    SCRIPT_TABLE_PUSH_FUNCTION(doesCircleIntersectRectangle);
 
     lua_setfield(state, -2, "math");
 }
