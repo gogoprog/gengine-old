@@ -79,11 +79,7 @@ private:
 
         lua_pushstring(state, "__index");
 
-        SCRIPT_DO(
-            return function(_t, _key)
-                return rawget(getmetatable(_t),_key)
-            end
-            );
+        lua_pushcfunction(state, &System::componentIndex<COMPONENT>);
 
         lua_rawset(state, -3);
 
@@ -91,6 +87,23 @@ private:
     }
 
     static void pushTransform(lua_State * state, const Transform & transform);
+
+    template<typename COMPONENT>
+    static int componentIndex(lua_State * state)
+    {
+        if(COMPONENT::getterMap.contains(lua_tostring(state, 2)))
+        {
+            return COMPONENT::_index(state);
+        }
+        else
+        {
+            lua_getmetatable(state, 1);
+            lua_pushvalue(state, 2);
+            lua_rawget(state, -2);
+
+            return 1;
+        }
+    }
 
     Array<int>
         refTable,

@@ -15,7 +15,7 @@ class ComponentPhysic
 public:
     ComponentPhysic();
 
-    ENTITY_COMPONENT_DECLARE();
+    ENTITY_COMPONENT_DECLARE(ComponentPhysic);
 
     ENTITY_COMPONENT_METHOD_DECLARE(applyAngularImpulse);
     ENTITY_COMPONENT_METHOD_DECLARE(applyForce);

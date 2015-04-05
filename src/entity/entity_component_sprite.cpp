@@ -26,6 +26,7 @@ ComponentSprite::ComponentSprite()
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentSprite)
 {
+    ENTITY_ADD_GETTER(ComponentSprite, "extent", { Vector2::push(state, self.sprite.getExtent()); });
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentSprite)
