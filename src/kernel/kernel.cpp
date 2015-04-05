@@ -23,7 +23,9 @@ void breakExecution()
             raise(SIGTRAP);
         #endif
     #else
-        emscripten_debugger();
+        #ifndef NDEBUG
+            emscripten_debugger();
+        #endif
     #endif
 }
 
