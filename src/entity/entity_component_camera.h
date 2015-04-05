@@ -14,7 +14,7 @@ class ComponentCamera
 public:
     ComponentCamera();
 
-    ENTITY_COMPONENT_DECLARE();
+    ENTITY_COMPONENT_DECLARE(ComponentCamera);
 
     ENTITY_COMPONENT_METHOD_DECLARE(push);
     ENTITY_COMPONENT_METHOD_DECLARE(pop);

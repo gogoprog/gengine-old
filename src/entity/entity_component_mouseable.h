@@ -15,7 +15,7 @@ class ComponentMouseable
 public:
     ComponentMouseable();
 
-    ENTITY_COMPONENT_DECLARE();
+    ENTITY_COMPONENT_DECLARE(ComponentMouseable);
 
 private:
     Vector2

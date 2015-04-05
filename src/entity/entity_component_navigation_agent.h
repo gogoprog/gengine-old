@@ -14,7 +14,7 @@ class ComponentNavigationAgent
 public:
     ComponentNavigationAgent();
 
-    ENTITY_COMPONENT_DECLARE();
+    ENTITY_COMPONENT_DECLARE(ComponentNavigationAgent);
 
     ENTITY_COMPONENT_METHOD_DECLARE(moveTo);
 

@@ -15,7 +15,7 @@ class ComponentSprite
 public:
     ComponentSprite();
 
-    ENTITY_COMPONENT_DECLARE();
+    ENTITY_COMPONENT_DECLARE(ComponentSprite);
 
 protected:
     graphics::Sprite
