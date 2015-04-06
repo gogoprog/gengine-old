@@ -6,6 +6,8 @@
 #include "graphics_shader.h"
 #include "graphics_vertex_buffer.h"
 #include "graphics_texture_manager.h"
+#include "graphics_animation_manager.h"
+#include "graphics_atlas_manager.h"
 #include "graphics_world.h"
 #include "vector4.h"
 #include "application.h"
@@ -22,7 +24,9 @@ void System::init()
 
     renderer.init();
 
-    TextureManager::getInstance().init();
+    TextureManager::getInstance().init("texture");
+    AtlasManager::getInstance().init("atlas");
+    AnimationManager::getInstance().init("animation");
 
     defaultCamera.setExtent(application::getExtent());
 
@@ -43,6 +47,8 @@ void System::finalize()
         world->finalize();
     }
 
+    AnimationManager::getInstance().finalize();
+    AtlasManager::getInstance().finalize();
     TextureManager::getInstance().finalize();
 
     renderer.finalize();

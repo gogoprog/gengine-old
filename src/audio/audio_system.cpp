@@ -3,6 +3,7 @@
 #include "script.h"
 #include "core_sdl.h"
 #include "debug.h"
+#include "audio_sound_manager.h"
 
 namespace gengine
 {
@@ -22,11 +23,15 @@ void System::init()
     {
         geDebugLog("audio::System Unable to open audio!");
     }
+
+    SoundManager::getInstance().init("sound");
 }
 
 void System::finalize()
 {
     geDebugLog("audio::System::finalize()");
+
+    SoundManager::getInstance().finalize();
 
     Mix_CloseAudio();
 }

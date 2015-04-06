@@ -6,6 +6,7 @@
 #include "map.h"
 #include "script.h"
 #include "pointer.h"
+#include "debug.h"
 
 #define MANAGER_DECLARE(_class_) \
     static SCRIPT_FUNCTION(create) \
@@ -39,8 +40,9 @@ class Manager
 public:
     Manager() = default;
 
-    void init()
+    void init(const char * item_type_name)
     {
+        itemTypeName = item_type_name;
         internalInit();
     }
 
@@ -104,6 +106,8 @@ protected:
         }
         else
         {
+            geLog("Cannot find " << itemTypeName << " \"" << name << "\"");
+
             if(defaultItem)
             {
                 lua_pushlightuserdata(state, defaultItem);
@@ -136,6 +140,8 @@ protected:
         itemMap;
     Pointer<T>
         defaultItem;
+    std::string
+        itemTypeName;
 };
 
 }
