@@ -20,7 +20,18 @@ def log(*args):
     print(*args)
 
 def isPlatform64():
+    if platform.system() == "Windows":
+        return False
     return "_64" in platform.machine()
+
+def isLinux():
+    return platform.system() == "Linux"
+
+def getPlatformName():
+    system = platform.system()
+    if "CYGWIN" in system:
+        return "Windows"
+    return system
 
 def sanityCheck():
     printn("Sanity check... ")
@@ -50,10 +61,13 @@ def init():
 
 def getDeps():
     log("Downloading dependencies...")
-    if platform.system() == "Linux":
-        directory = os.environ['GENGINE']+"/deps/linux/lib"+('64' if isPlatform64() else '32')
-        os.chdir(directory)
+    directory = os.environ['GENGINE']+"/deps/"+getPlatformName().lower()+"/lib"+('64' if isPlatform64() else ('32' if isLinux() else ''))
+    os.chdir(directory)
+    if getPlatformName() == "Linux":
         if not os.path.isfile(directory+"/libcef.so"):
+            os.system("./get-libs")
+    if getPlatformName() == "Windows":
+        if not os.path.isfile(directory+"/windows-32.tar.gz"):
             os.system("./get-libs")
 
 def build(emscripten=False):
