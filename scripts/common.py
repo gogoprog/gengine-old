@@ -83,7 +83,12 @@ def build(emscripten=False):
         os.system("premake4 gmake")
         os.system(('emmake ' if emscripten else '') + "make config=" + config + " -j" + str(multiprocessing.cpu_count()))
     else:
-        msbuild = "/cygdrive/c/Program\ Files\ \(x86\)/MSBuild/12.0/Bin/MSBuild.exe"
+        msbuild = None
+        if "_64" in platform.machine():
+            msbuild = "/cygdrive/c/Program\ Files\ \(x86\)/MSBuild/12.0/Bin/MSBuild.exe"
+        else:
+            msbuild = "/cygdrive/c/Program\ Files/MSBuild/12.0/Bin/MSBuild.exe"
+
         os.system("./premake4.exe vs2012")
         os.system("sed -i 's/v110/v120/g' *.vcxproj")
         os.system(msbuild + " /p:Configuration=Release")
