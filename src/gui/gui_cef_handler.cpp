@@ -176,7 +176,28 @@ bool Handler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefF
         final_url += file_path;
 
         request->SetURL(final_url);
+
+        return false;
     }
+
+    #ifdef _WINDOWS
+        if(initial_url.substr(0,15) == "file:///C:/gui/")
+        {
+            char cwd[1024];
+            std::string file_path, final_url;
+
+            final_url = "file://";
+            final_url += _getcwd(cwd, 1024);
+            file_path = initial_url.substr(10);
+
+            final_url += file_path;
+
+            request->SetURL(final_url);
+
+            return false;
+        }
+    #endif
+
 
     return false;
 }
