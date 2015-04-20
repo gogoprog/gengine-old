@@ -5,6 +5,7 @@ import os
 import sys
 import argparse
 import multiprocessing
+import os.path
 
 debugMode = False
 targetDir = None
@@ -61,7 +62,7 @@ def init():
 
 def getDeps():
     log("Downloading dependencies...")
-    directory = os.environ['GENGINE']+"/deps/"+getPlatformName().lower()+"/lib"+('64' if isPlatform64() else ('32' if isLinux() else ''))
+    directory = rootPath+"/deps/"+getPlatformName().lower()+"/lib"+('64' if isPlatform64() else ('32' if isLinux() else ''))
     os.chdir(directory)
     if getPlatformName() == "Linux":
         if not os.path.isfile(directory+"/libcef.so"):
@@ -69,6 +70,7 @@ def getDeps():
     if getPlatformName() == "Windows":
         if not os.path.isfile(directory+"/windows-32.tar.gz"):
             os.system("./get-libs")
+            os.system("cp *.dll " + rootPath + "/build/")
 
 def build(emscripten=False):
     current_dir = os.getcwd()
@@ -83,11 +85,14 @@ def build(emscripten=False):
         os.system("premake4 gmake")
         os.system(('emmake ' if emscripten else '') + "make config=" + config + " -j" + str(multiprocessing.cpu_count()))
     else:
-        msbuild = None
-        if "_64" in platform.machine():
-            msbuild = "/cygdrive/c/Program\ Files\ \(x86\)/MSBuild/12.0/Bin/MSBuild.exe"
-        else:
-            msbuild = "/cygdrive/c/Program\ Files/MSBuild/12.0/Bin/MSBuild.exe"
+        msbuild = "/cygdrive/c/Program Files (x86)/MSBuild/12.0/Bin/MSBuild.exe"
+
+        if not os.path.exists(msbuild):
+            msbuild = "/cygdrive/c/Program Files/MSBuild/12.0/Bin/MSBuild.exe"
+
+        msbuild = msbuild.replace(" ", "\\ ")
+        msbuild = msbuild.replace("(", "\\(")
+        msbuild = msbuild.replace(")", "\\)")
 
         os.system("./premake4.exe vs2012")
         os.system("sed -i 's/v110/v120/g' *.vcxproj")
