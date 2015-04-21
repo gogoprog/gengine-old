@@ -1,9 +1,0 @@
-#!/usr/bin/python3
-
-from common import *
-
-sanityCheck()
-init()
-build(True)
-
-packHtml()

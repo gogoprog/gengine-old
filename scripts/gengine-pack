@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+
+import os
+import common
+
+def packHtml():
+    log("Packing html...")
+    current_dir = os.getcwd()
+    os.system("rm -rf out/*")
+    os.system("mkdir -p out")
+    os.system("rm -rf tmp/*")
+    os.system("mkdir -p tmp")
+    os.system("cp -rf *.png data *.lua tmp/")
+    basename = os.path.basename(os.path.normpath(common.targetDir))
+    os.chdir(os.environ['GENGINE']+"/build")
+    os.system("emcc " + ('' if common.debugMode else '-O3') + " --bind gengine" + ('d' if common.debugMode else '') + ".bc -o " + common.targetDir + "/" + basename + ".html --preload-file " + common.targetDir + "/tmp@ -s TOTAL_MEMORY=67108864 -s TOTAL_STACK=1048576 --shell-file " + common.rootPath + "/src/template.html")
+    os.chdir(current_dir)
+    os.system("mv " + basename + ".html index.html")
+    os.system("cp -rf gui out/gui")
+    os.system("mv *.js *.html *.data *.mem out/")
+    os.system("rm -rf tmp")
+
+common.sanityCheck()
+common.init()
+common.build(True)
+
+packHtml()

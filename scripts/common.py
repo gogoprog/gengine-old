@@ -100,26 +100,3 @@ def build(emscripten=False):
 
     os.chdir(current_dir)
 
-def run():
-    os.system("LD_LIBRARY_PATH=" + rootPath + "/deps/linux/lib" + ('64' if isPlatform64() else '32') + " " + rootPath + "/build/gengine" + ('d' if debugMode else ''))
-
-def packHtml():
-    log("Packing html...")
-    current_dir = os.getcwd()
-    os.system("rm -rf out/*")
-    os.system("mkdir -p out")
-    os.system("rm -rf tmp/*")
-    os.system("mkdir -p tmp")
-    os.system("cp -rf *.png data *.lua tmp/")
-    basename = os.path.basename(os.path.normpath(targetDir))
-    os.chdir(os.environ['GENGINE']+"/build")
-    os.system("emcc " + ('' if debugMode else '-O3') + " --bind gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "/tmp@ -s TOTAL_MEMORY=67108864 -s TOTAL_STACK=1048576 --shell-file " + rootPath + "/src/template.html")
-    os.chdir(current_dir)
-    os.system("mv " + basename + ".html index.html")
-    os.system("cp -rf gui out/gui")
-    os.system("mv *.js *.html *.data *.mem out/")
-    os.system("rm -rf tmp")
-    if itMustRun:
-        os.chdir(current_dir + "/out/")
-        os.system("emrun " + basename + ".html")
-
