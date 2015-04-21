@@ -10,8 +10,10 @@ import os.path
 debugMode = False
 targetDir = None
 rootPath = None
+buildPath = None
 binaryPath = None
 itMustRun = False
+html5Mode = False
 
 def printn(*args):
     sys.stdout.write(*args)
@@ -48,16 +50,23 @@ def init():
     global debugMode
     global targetDir
     global rootPath
+    global buildPath
     global itMustRun
+    global html5Mode
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', help='Debug mode', default=False, action='store_true')
     parser.add_argument('-r', help='It must run', default=False, action='store_true')
+    parser.add_argument('--html5', help='HTML5 mode', default=False, action='store_true')
     parser.add_argument('dir', help='Target directory', default='.', nargs='?')
     args = parser.parse_args()
+
     debugMode = args.d
     itMustRun = args.r
+    html5Mode = args.html5
     targetDir = os.getcwd() + "/" + args.dir + "/"
     rootPath = os.environ['GENGINE']
+    buildPath = rootPath + "/build/"
     binaryPath = rootPath + "/build/gengine" + ('d' if debugMode else '')
 
 def getDeps():

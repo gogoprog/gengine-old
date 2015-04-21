@@ -4,10 +4,10 @@ import os
 import common
 
 def packHtml():
-    log("Packing html...")
+    common.log("Packing in HTML5 mode...")
     current_dir = os.getcwd()
-    os.system("rm -rf out/*")
-    os.system("mkdir -p out")
+    os.system("rm -rf packed-html5/*")
+    os.system("mkdir -p packed-html5")
     os.system("rm -rf tmp/*")
     os.system("mkdir -p tmp")
     os.system("cp -rf *.png data *.lua tmp/")
@@ -16,12 +16,35 @@ def packHtml():
     os.system("emcc " + ('' if common.debugMode else '-O3') + " --bind gengine" + ('d' if common.debugMode else '') + ".bc -o " + common.targetDir + "/" + basename + ".html --preload-file " + common.targetDir + "/tmp@ -s TOTAL_MEMORY=67108864 -s TOTAL_STACK=1048576 --shell-file " + common.rootPath + "/src/template.html")
     os.chdir(current_dir)
     os.system("mv " + basename + ".html index.html")
-    os.system("cp -rf gui out/gui")
-    os.system("mv *.js *.html *.data *.mem out/")
+    os.system("cp -rf gui packed-html5/gui")
+    os.system("mv *.js *.html *.data *.mem packed-html5/")
     os.system("rm -rf tmp")
+
+def packNative():
+    common.log("Packing in native mode...")
+    packedDir = "packed-" + ( 'linux' if common.isLinux() else 'win' )
+    os.system("rm -rf " + packedDir + "/*")
+    os.system("mkdir -p " + packedDir + "/content")
+    os.system("mkdir -p " + packedDir + "/bin")
+    os.system("cp -rf " + common.targetDir + "/* " + packedDir + "/content/")
+    os.system("cp -rf " + common.binaryPath + " " + packedDir + "/bin/")
+    os.system("cp -rf " + common.buildPath + "/*.dll " + packedDir + "/bin/")
+    os.system("cp -rf " + common.buildPath + "/locales " + packedDir + "/bin/")
+    startName =  "start" + ( '' if common.isLinux() else '.bat' )
+    os.chdir(packedDir)
+    fo = open(startName, "w")
+
+    if not common.isLinux():
+        fo.write("cd content && ..\\bin\\gengine.exe\n")
+
+    fo.close()
+    os.system("chmod +x " + startName)
 
 common.sanityCheck()
 common.init()
-common.build(True)
+common.build(common.html5Mode)
 
-packHtml()
+if common.html5Mode:
+    packHtml()
+else:
+    packNative()
