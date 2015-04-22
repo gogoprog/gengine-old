@@ -10,8 +10,10 @@ import os.path
 debugMode = False
 targetDir = None
 rootPath = None
+buildPath = None
 binaryPath = None
 itMustRun = False
+html5Mode = False
 
 def printn(*args):
     sys.stdout.write(*args)
@@ -48,16 +50,23 @@ def init():
     global debugMode
     global targetDir
     global rootPath
+    global buildPath
     global itMustRun
+    global html5Mode
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', help='Debug mode', default=False, action='store_true')
     parser.add_argument('-r', help='It must run', default=False, action='store_true')
+    parser.add_argument('--html5', help='HTML5 mode', default=False, action='store_true')
     parser.add_argument('dir', help='Target directory', default='.', nargs='?')
     args = parser.parse_args()
+
     debugMode = args.d
     itMustRun = args.r
+    html5Mode = args.html5
     targetDir = os.getcwd() + "/" + args.dir + "/"
     rootPath = os.environ['GENGINE']
+    buildPath = rootPath + "/build/"
     binaryPath = rootPath + "/build/gengine" + ('d' if debugMode else '')
 
 def getDeps():
@@ -99,27 +108,4 @@ def build(emscripten=False):
         os.system(msbuild + " /p:Configuration=Release")
 
     os.chdir(current_dir)
-
-def run():
-    os.system("LD_LIBRARY_PATH=" + rootPath + "/deps/linux/lib" + ('64' if isPlatform64() else '32') + " " + rootPath + "/build/gengine" + ('d' if debugMode else ''))
-
-def packHtml():
-    log("Packing html...")
-    current_dir = os.getcwd()
-    os.system("rm -rf out/*")
-    os.system("mkdir -p out")
-    os.system("rm -rf tmp/*")
-    os.system("mkdir -p tmp")
-    os.system("cp -rf *.png data *.lua tmp/")
-    basename = os.path.basename(os.path.normpath(targetDir))
-    os.chdir(os.environ['GENGINE']+"/build")
-    os.system("emcc " + ('' if debugMode else '-O3') + " --bind gengine" + ('d' if debugMode else '') + ".bc -o " + targetDir + "/" + basename + ".html --preload-file " + targetDir + "/tmp@ -s TOTAL_MEMORY=67108864 -s TOTAL_STACK=1048576 --shell-file " + rootPath + "/src/template.html")
-    os.chdir(current_dir)
-    os.system("mv " + basename + ".html index.html")
-    os.system("cp -rf gui out/gui")
-    os.system("mv *.js *.html *.data *.mem out/")
-    os.system("rm -rf tmp")
-    if itMustRun:
-        os.chdir(current_dir + "/out/")
-        os.system("emrun " + basename + ".html")
 
