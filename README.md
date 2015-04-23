@@ -1,7 +1,7 @@
 gengine
 =======
 
-An experimental game engine
+A C++ game engine with Lua scripting that supports HTML5
 
 ## Status
 [![Build Status](https://drone.io/github.com/gogoprog/gengine/status.png)](https://drone.io/github.com/gogoprog/gengine/latest)
@@ -9,8 +9,13 @@ An experimental game engine
 ## Features
  * Emscripten/WebGL support
  * Lua scripting
- * Gameplay components
+ * Entities system with native components:
    * Sprite
    * Camera
    * Mouseable
    * Animated sprite
+   * Navigation agent
+   * Particle system
+   * Sprite batch
+   * Physic
+
