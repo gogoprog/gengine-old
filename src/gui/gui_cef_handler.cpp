@@ -181,7 +181,9 @@ bool Handler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefF
     }
 
     #ifdef _WINDOWS
-        if(initial_url.substr(0,15) == "file:///C:/gui/")
+        if(initial_url.substr(0,8) == "file:///"
+            && initial_url.substr(9,6) == ":/gui/"
+            )
         {
             char cwd[1024];
             std::string file_path, final_url;
