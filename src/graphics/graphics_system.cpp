@@ -36,6 +36,9 @@ void System::init()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     createWorlds(1);
+
+    whiteTexture.init();
+    whiteTexture.setWhite();
 }
 
 void System::finalize()
