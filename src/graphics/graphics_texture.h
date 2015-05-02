@@ -17,6 +17,7 @@ public:
     void finalize();
     bool setFromFile(const char * filename);
     void setDefault();
+    void setWhite();
 
     uint getId() const { return id; }
     uint getWidth() const { return width; }

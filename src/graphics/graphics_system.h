@@ -8,6 +8,7 @@
 #include "script.h"
 #include "array.h"
 #include "graphics_vertex.h"
+#include "graphics_texture.h"
 
 namespace gengine
 {
@@ -33,6 +34,7 @@ public:
     IndexBuffer & getIndexBufferQuad() { return renderer.indexBufferQuad; }
 
     Camera & getDefaultCamera() { return defaultCamera; }
+    const Texture & getWhiteTexture() const { return whiteTexture; }
 
 private:
     Camera
@@ -41,6 +43,8 @@ private:
         worldTable;
     Renderer
         renderer;
+    Texture
+        whiteTexture;
 };
 
 }
