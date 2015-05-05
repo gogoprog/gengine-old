@@ -146,7 +146,9 @@
       };
 
       function loadFile(filePath) {
-          $("#gui").load(filePath);
+          $("#gui").load(filePath, function() {
+            gengine_execute("if gengine.gui.onPageLoaded then gengine.gui.onPageLoaded() end");
+            });
       }
 
       function gengineInitialize(width, height, fullscreen)
