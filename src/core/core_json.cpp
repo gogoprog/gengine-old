@@ -32,7 +32,7 @@ Json Json::operator[](const char *name) const
     return jvalue->object_value_->kv_map().at(name);
 }
 
-Json Json::operator[](const uint index) const
+Json Json::operator[](const int index) const
 {
     return jvalue->array_value_->values().at(index);
 }
