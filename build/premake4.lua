@@ -17,6 +17,7 @@ solution "gengine"
             "../src/core",
             "../src/application",
             "../src/graphics",
+            "../src/graphics/spriter",
             "../src/audio",
             "../src/input",
             "../src/script",
@@ -52,12 +53,14 @@ solution "gengine"
 
         includedirs {
             "../deps/common/include",
-            "../deps/common/tilemover2d/src/"
+            "../deps/common/tilemover2d/src/",
+            "../deps/common/jsonxx/"
             }
 
         files {
             "../deps/common/tilemover2d/src/micropather.*",
-            "../deps/common/tilemover2d/src/tilemover2d.*"
+            "../deps/common/tilemover2d/src/tilemover2d.*",
+            "../deps/common/jsonxx/*.*"
             }
 
         configuration "Debug*"
