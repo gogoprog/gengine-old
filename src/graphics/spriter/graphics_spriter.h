@@ -3,8 +3,10 @@
 #include "primitives.h"
 #include "script.h"
 #include "array.h"
+#include "map.h"
 #include "pointer.h"
 #include "vector2.h"
+#include "core_json.h"
 #include <string>
 
 namespace gengine
@@ -12,8 +14,14 @@ namespace gengine
 namespace graphics
 {
 
+struct SpriterFile;
+struct SpriterEntity;
+struct SpriterAnimation;
+
 struct SpriterAsset
 {
+    void load(const core::Json & json);
+
     uint
         width,
         height;
@@ -25,6 +33,8 @@ struct SpriterAsset
 
 struct SpriterTimelineKey
 {
+    void load(const core::Json & json, const SpriterFile & file);
+
     float
         angle,
         alpha;
@@ -51,6 +61,8 @@ struct SpriterMainlineKeyItem
 
 struct SpriterMainlineKey
 {
+    void load(const core::Json & json, const SpriterAnimation & animation);
+
     Array<SpriterTimelineKey>
         keys;
     std::string
@@ -59,21 +71,28 @@ struct SpriterMainlineKey
 
 struct SpriterTimeline
 {
+    void load(const core::Json & json, const SpriterFile & file);
+
     Array<SpriterTimelineKey>
         keys;
     std::string
         name;
 };
 
-class SpriterAnimation
+struct SpriterCharacterMap
 {
-    friend class SpriterManager;
+    void load(const core::Json & json, const SpriterFile & file);
 
-public:
-    void init();
-    void finalize();
+    std::string
+        name;
+    Map<Pointer<SpriterAsset>, Pointer<SpriterAsset>>
+        assetMap;
+};
 
-private:
+struct SpriterAnimation
+{
+    void load(const core::Json & json, const SpriterFile & file, const SpriterEntity & entity);
+
     std::string
         name;
     uint
@@ -84,6 +103,28 @@ private:
         mainlineKeys;
     Array<SpriterTimeline>
         timelines;
+};
+
+struct SpriterEntity
+{
+    void load(const core::Json & json, const SpriterFile & file);
+
+    std::string
+        name;
+    Array<SpriterAnimation>
+        animations;
+    Array<SpriterCharacterMap>
+        characterMaps;
+};
+
+struct SpriterFile
+{
+    void load(const core::Json & json);
+
+    Array<SpriterEntity>
+        entities;
+    Array<Array<SpriterAsset>>
+        assets;
 };
 
 }

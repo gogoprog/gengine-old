@@ -37,7 +37,7 @@ Json Json::operator[](const int index) const
     return jvalue->array_value_->values().at(index);
 }
 
-uint Json::getItemCount() const
+uint Json::getSize() const
 {
     return jvalue->array_value_->values().size();
 }

@@ -24,26 +24,18 @@ SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
 
         if(json.parse(istream))
         {
-            const core::Json
-                & entity_json = json["entity"],
-                & folder_json = json["folder"];
+            SpriterFile & file = * new SpriterFile();
 
-            for(uint i=0; i<entity_json.getItemCount();++i)
-            {
-                const core::Json
-                    & current_entity_json = entity_json[i],
-                    & animation_json = current_entity_json[ "animation" ],
-                    & character_map_json = current_entity_json[ "character_map" ];
+            file.load(json);
 
-                geLog(current_entity_json["name"].value<core::Json::String>());
-            }
+            getInstance().files.add( & file );
         }
     }
 
     return 0;
 }
 
-bool SpriterManager::internalCreate(SpriterAnimation * animation, script::State state, const int parameter_position)
+bool SpriterManager::internalCreate(SpriterManagerItem * item, script::State state, const int parameter_position)
 {
     return false;
 }

@@ -25,7 +25,7 @@ public:
     Json operator[](const char *name) const;
     Json operator[](const int index) const;
 
-    uint getItemCount() const;
+    uint getSize() const;
 
     bool parse(const std::string & str);
     bool parse(std::istream & istream);
