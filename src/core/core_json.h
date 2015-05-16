@@ -25,8 +25,10 @@ public:
     Json operator[](const char *name) const;
     Json operator[](const int index) const;
 
-    void parse(const std::string & str);
-    void parse(std::istream & istream);
+    uint getItemCount() const;
+
+    bool parse(const std::string & str);
+    bool parse(std::istream & istream);
 
     template<typename T>
     const T& value() const
@@ -41,6 +43,8 @@ public:
     }
 
 private:
+    void reset();
+
     jsonxx::Value
         * jvalue;
     bool

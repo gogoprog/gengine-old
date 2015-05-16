@@ -37,20 +37,41 @@ Json Json::operator[](const int index) const
     return jvalue->array_value_->values().at(index);
 }
 
-void Json::parse(const std::string & str)
+uint Json::getItemCount() const
 {
-    jvalue = new jsonxx::Value();
-    itOwnsMemory = true;
-
-    jvalue->parse(str);
+    return jvalue->array_value_->values().size();
 }
 
-void Json::parse(std::istream & istream)
+bool Json::parse(const std::string & str)
 {
+    reset();
+
     jvalue = new jsonxx::Value();
     itOwnsMemory = true;
 
-    jvalue->parse(istream);
+    return jvalue->parse(str);
+}
+
+bool Json::parse(std::istream & istream)
+{
+    reset();
+
+    jvalue = new jsonxx::Value();
+    itOwnsMemory = true;
+
+    return jvalue->parse(istream);
+}
+
+
+void Json::reset()
+{
+    if(itOwnsMemory)
+    {
+        delete jvalue;
+        itOwnsMemory = false;
+    }
+
+    jvalue = nullptr;
 }
 
 }
