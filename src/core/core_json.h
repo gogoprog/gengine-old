@@ -25,13 +25,15 @@ public:
     Json operator[](const char *name) const;
     Json operator[](const int index) const;
 
+    bool has(const char *name) const;
+
     uint getSize() const;
 
     bool parse(const std::string & str);
     bool parse(std::istream & istream);
 
     template<typename T>
-    const T& value() const
+    const T& get() const
     {
         return jvalue->get<T>();
     }
@@ -40,6 +42,31 @@ public:
     bool is() const
     {
         return jvalue->is<T>();
+    }
+
+    String getString() const
+    {
+        return jvalue->get<String>();
+    }
+
+    float getFloat() const
+    {
+        return float(jvalue->get<Number>());
+    }
+
+    uint getUint() const
+    {
+        return uint(jvalue->get<Number>());
+    }
+
+    int getInt() const
+    {
+        return int(jvalue->get<Number>());
+    }
+
+    bool getBool() const
+    {
+        return jvalue->get<Boolean>();
     }
 
 private:

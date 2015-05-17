@@ -37,6 +37,13 @@ Json Json::operator[](const int index) const
     return jvalue->array_value_->values().at(index);
 }
 
+bool Json::has(const char *name) const
+{
+    const std::map<std::string, jsonxx::Value*> & kv_map = jvalue->object_value_->kv_map();
+
+    return kv_map.find(name) != kv_map.end();
+}
+
 uint Json::getSize() const
 {
     return jvalue->array_value_->values().size();
