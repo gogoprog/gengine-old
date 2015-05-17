@@ -29,6 +29,26 @@ SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
             file.load(json);
 
             getInstance().files.add( & file );
+
+            for(const SpriterEntity & entity : file.entities)
+            {
+                for(const SpriterAnimation & animation : entity.animations)
+                {
+                    std::string final_key;
+
+                    final_key = entity.name + "-" + animation.name;
+
+                    SpriterManagerItem * item = new SpriterManagerItem();
+
+                    item->init();
+                    item->entity = & entity;
+                    item->animation = & animation;
+
+                    getInstance().itemMap.add(item, final_key);
+
+                    geDebugLog("graphics::SpriterManager loaded \"" << final_key << "\" ... ");
+                }
+            }
         }
     }
 

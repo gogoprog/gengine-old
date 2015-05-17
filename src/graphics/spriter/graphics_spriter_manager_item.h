@@ -24,9 +24,9 @@ public:
     void finalize();
 
 private:
-    Pointer<SpriterEntity>
+    Pointer<const SpriterEntity>
         entity;
-    Pointer<SpriterAnimation>
+    Pointer<const SpriterAnimation>
         animation;
     mutable Map<std::string, Pointer<const Texture>>
         textureCacheMap;
