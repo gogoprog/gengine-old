@@ -36,6 +36,16 @@ public:
         return value;
     }
 
+    bool operator <(const Pointer<T> & other) const
+    {
+        return value < other.value;
+    }
+
+    bool operator ==(const Pointer<T> & other) const
+    {
+        return value == other.value;
+    }
+
     bool isNull() const { return value == nullptr; }
 
 protected:
