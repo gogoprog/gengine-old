@@ -15,6 +15,11 @@ public:
         array.push_back(t);
     }
 
+    void add()
+    {
+        array.push_back(T());
+    }
+
     void remove(const T & t)
     {
         typename std::vector<T>::iterator it;

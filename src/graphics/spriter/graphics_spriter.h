@@ -124,7 +124,7 @@ struct SpriterFile
     Array<SpriterEntity>
         entities;
     Array<Array<SpriterAsset>>
-        assets;
+        allAssets;
 };
 
 }
