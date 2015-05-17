@@ -160,12 +160,21 @@ void SpriterMainlineKey::fill(Array<SpriterMainlineKeyItem> & table, const core:
     for(uint i=0; i<json.getSize();++i)
     {
         const core::Json
-            & item_json = json[i];
+            & item_json = json[i],
+            & timeline_json = item_json["timeline"];
         SpriterMainlineKeyItem
             & item = table[i];
         uint timeline, key;
 
-        timeline = item_json["timeline"].getUint();
+        if(timeline_json.is<core::Json::Number>())
+        {
+            timeline = timeline_json.getUint();
+        }
+        else
+        {
+            timeline = std::stoi(timeline_json.getString());
+        }
+
         key = item_json["key"].getUint();
 
         item.timelineKey = & animation.timelines[timeline].get(key, animation.looping);
@@ -224,7 +233,21 @@ void SpriterAnimation::load(const core::Json & json, const SpriterFile & file, c
     name = json["name"].getString();
     length = json["length"].getUint();
 
-    looping = getOrDefault(json, "looping", true);
+    if(json.has("looping"))
+    {
+        if(json["looping"].is<core::Json::Boolean>())
+        {
+            looping = json["looping"].getBool();
+        }
+        else
+        {
+            looping = (json["looping"].getString() == "true");
+        }
+    }
+    else
+    {
+        looping = true;
+    }
 
     timelines.reserve(timeline_json.getSize());
 
