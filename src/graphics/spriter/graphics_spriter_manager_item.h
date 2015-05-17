@@ -5,6 +5,8 @@
 #include "array.h"
 #include "pointer.h"
 #include "vector2.h"
+#include "map.h"
+#include "graphics_texture.h"
 #include "graphics_spriter.h"
 #include <string>
 
@@ -26,6 +28,8 @@ private:
         entity;
     Pointer<SpriterAnimation>
         animation;
+    mutable Map<std::string, Pointer<const Texture>>
+        textureCacheMap;
 };
 
 }

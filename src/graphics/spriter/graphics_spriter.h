@@ -18,6 +18,17 @@ struct SpriterFile;
 struct SpriterEntity;
 struct SpriterAnimation;
 
+struct SpriterTransform
+{
+    Vector2
+        position,
+        pivot,
+        scale;
+    float
+        angle,
+        alpha;
+};
+
 struct SpriterAsset
 {
     void load(const core::Json & json);
@@ -44,34 +55,45 @@ struct SpriterTimelineKey
         scale;
     uint
         time;
-    char
+    uint8
         spin;
-    Pointer<SpriterAsset>
+    Pointer<const SpriterAsset>
         asset;
 };
 
 struct SpriterMainlineKeyItem
 {
-    Pointer<SpriterTimelineKey>
+    void fillTransform(SpriterTransform & transform, const uint time, const bool interpolation) const;
+
+    Pointer<const SpriterTimelineKey>
         timelineKey,
         nextTimelineKey;
-    Pointer<SpriterMainlineKeyItem>
+    Pointer<const SpriterMainlineKeyItem>
         parent;
+    uint
+        animationLength;
 };
 
 struct SpriterMainlineKey
 {
     void load(const core::Json & json, const SpriterAnimation & animation);
+    void fill(Array<SpriterMainlineKeyItem> & table, const core::Json & json, const SpriterAnimation & animation);
 
-    Array<SpriterTimelineKey>
-        keys;
-    std::string
-        name;
+    Array<SpriterMainlineKeyItem>
+        boneKeys,
+        objectKeys;
+    uint
+        time;
 };
 
 struct SpriterTimeline
 {
     void load(const core::Json & json, const SpriterFile & file);
+
+    const SpriterTimelineKey & get(const uint index, const bool looping) const
+    {
+        return keys[looping ? (index%keys.getSize()) : (std::min(keys.getSize() - 1, index))];
+    }
 
     Array<SpriterTimelineKey>
         keys;
@@ -85,13 +107,15 @@ struct SpriterCharacterMap
 
     std::string
         name;
-    Map<Pointer<SpriterAsset>, Pointer<SpriterAsset>>
+    Map<Pointer<const SpriterAsset>, Pointer<const SpriterAsset>>
         assetMap;
 };
 
 struct SpriterAnimation
 {
     void load(const core::Json & json, const SpriterFile & file, const SpriterEntity & entity);
+
+    const SpriterMainlineKey & getMainlineKey(const float time) const;
 
     std::string
         name;
