@@ -10,8 +10,6 @@
 
 namespace gengine
 {
-namespace kernel
-{
 namespace math
 {
 
@@ -139,6 +137,5 @@ SCRIPT_REGISTERER()
     lua_setfield(state, -2, "math");
 }
 
-}
 }
 }
