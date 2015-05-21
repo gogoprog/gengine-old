@@ -27,6 +27,8 @@ public:
     {
     }
 
+    virtual ~Object() = default;
+
     virtual Renderer::Type getRenderType() = 0;
 
     const Vector2 & getPosition() const { return position; }

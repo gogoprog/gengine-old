@@ -195,8 +195,10 @@ void Renderer::render(const World & world)
             {
                 SpriteGroup & sprite_group = * dynamic_cast<SpriteGroup *>(object);
 
-                for(auto sprite : sprite_group.sprites)
+                for(uint i=0; i<sprite_group.activeCount; ++i)
                 {
+                    auto & sprite = * sprite_group.sprites[i];
+
                     if(sprite.texture)
                     {
                         transform_matrix.initIdentity();
@@ -263,6 +265,7 @@ void Renderer::enable(const Type type, const World & world)
         switch(type)
         {
             case Type::SPRITE:
+            case Type::SPRITE_GROUP:
             {
                 if(currentProgram != & defaultProgram)
                 {
