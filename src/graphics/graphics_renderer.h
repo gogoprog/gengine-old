@@ -30,6 +30,7 @@ public:
     {
         SPRITE,
         SPRITE_BATCH,
+        SPRITE_GROUP,
         PARTICLE_SYSTEM,
         NONE
     };

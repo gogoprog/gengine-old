@@ -4,7 +4,7 @@
 #include "core_json.h"
 #include <cstring>
 #include <iostream>
-#include <fstream> 
+#include <fstream>
 
 namespace gengine
 {
@@ -40,9 +40,9 @@ SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
 
                     SpriterManagerItem * item = new SpriterManagerItem();
 
-                    item->init();
                     item->entity = & entity;
                     item->animation = & animation;
+                    item->init();
 
                     getInstance().itemMap.add(item, final_key);
 

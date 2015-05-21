@@ -5,6 +5,7 @@
 #include "graphics_system.h"
 #include "graphics_sprite.h"
 #include "graphics_sprite_batch.h"
+#include "graphics_sprite_group.h"
 #include "graphics_particle_system.h"
 #include "graphics_atlas.h"
 
@@ -186,6 +187,34 @@ void Renderer::render(const World & world)
                     uvOffsetUniform.apply(Vector2::zero);
 
                     indexBufferQuad.draw(6 * batch.getItemCount());
+                }
+            }
+            break;
+
+            case Type::SPRITE_GROUP:
+            {
+                SpriteGroup & sprite_group = * dynamic_cast<SpriteGroup *>(object);
+
+                for(auto sprite : sprite_group.sprites)
+                {
+                    if(sprite.texture)
+                    {
+                        transform_matrix.initIdentity();
+                        transform_matrix.setTranslation(sprite.position);
+                        transform_matrix.setRotation(sprite.rotation);
+                        transform_matrix.preScale(sprite.extent);
+
+                        transformMatrixUniform.apply(transform_matrix);
+
+                        colorUniform.apply(sprite.color);
+
+                        samplerUniform.apply(* sprite.texture);
+
+                        uvScaleUniform.apply(sprite.uvScale);
+                        uvOffsetUniform.apply(sprite.uvOffset);
+
+                        indexBufferQuad.draw(6);
+                    }
                 }
             }
             break;
