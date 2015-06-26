@@ -28,7 +28,7 @@ solution "gengine"
             }
 
         links {
-            "lua",
+            "lua5.2",
             "Box2D"
             }
 
