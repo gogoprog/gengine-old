@@ -22,6 +22,8 @@ public:
 
     static SCRIPT_FUNCTION(createFromDirectory);
 
+    static void simplifyName(char *result, const char *input);
+
 private:
     virtual bool internalCreate(Texture * texture, script::State state, const int parameter_position) override;
     virtual void internalGetName(char * name, const char * arg) override;

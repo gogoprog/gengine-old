@@ -47,13 +47,7 @@ SCRIPT_CLASS_FUNCTION(TextureManager, createFromDirectory)
     return 0;
 }
 
-bool TextureManager::internalCreate(Texture * texture, script::State state, const int parameter_position)
-{
-    const char * path = lua_tostring(state, parameter_position);
-    return texture->setFromFile(path);
-}
-
-void TextureManager::internalGetName(char * result, const char * file_path)
+void TextureManager::simplifyName(char *result, const char *file_path)
 {
     const char * begin, * end;
     uint length;
@@ -76,6 +70,17 @@ void TextureManager::internalGetName(char * result, const char * file_path)
 
     strncpy(result, begin, length);
     result[length] = 0;
+}
+
+bool TextureManager::internalCreate(Texture * texture, script::State state, const int parameter_position)
+{
+    const char * path = lua_tostring(state, parameter_position);
+    return texture->setFromFile(path);
+}
+
+void TextureManager::internalGetName(char * result, const char * file_path)
+{
+    simplifyName(result, file_path);
 }
 
 void TextureManager::internalInit()

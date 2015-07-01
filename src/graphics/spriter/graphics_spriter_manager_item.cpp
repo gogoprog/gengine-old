@@ -20,8 +20,13 @@ void SpriterManagerItem::finalize()
 void SpriterManagerItem::fill(SpriteGroup & group, const SpriterMainlineKey & mlk, const Pointer<const SpriterCharacterMap> character_map) const
 {
     uint sprite_count = mlk.objectKeys.getSize();
-    auto sprites = group.getSprites();
+    auto & sprites = group.getSprites();
     group.setActiveCount(sprite_count);
+
+    if(sprites.getSize() < sprite_count)
+    {
+        sprites.setSize(sprite_count);
+    }
 
     for(uint i=0; i<sprite_count; ++i)
     {

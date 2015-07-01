@@ -15,20 +15,10 @@ class ComponentSpriter
 public:
     ComponentSpriter();
 
-    static SCRIPT_REGISTERER();
-
-    static SCRIPT_FUNCTION(create);
-    static SCRIPT_FUNCTION(newIndex);
-    static SCRIPT_FUNCTION(index);
-    static SCRIPT_FUNCTION(update);
-
     ENTITY_COMPONENT_METHOD_DECLARE(pushAnimation);
     ENTITY_COMPONENT_METHOD_DECLARE(removeAnimations);
 
-    static uint
-        metaTableRef;
-    static ENTITY_GETTER_MAP_TYPE(ComponentSpriter)
-        getterMap;
+    ENTITY_COMPONENT_DECLARE(ComponentSpriter);
 
 protected:
 
@@ -44,6 +34,8 @@ protected:
         spriteGroup;
     float
         currentTime;
+    uint
+        worldIndex;
 };
 
 }

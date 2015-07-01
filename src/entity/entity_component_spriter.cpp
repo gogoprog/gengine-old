@@ -20,7 +20,8 @@ namespace entity
 ComponentSpriter::ComponentSpriter()
     :
     animation(nullptr),
-    currentTime(0.0f)
+    currentTime(0.0f),
+    worldIndex(0)
 {
 }
 
@@ -38,6 +39,17 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
         self.animationStack[0] = static_cast<const graphics::SpriterManagerItem *>(lua_touserdata(state, 3));
         self.setAnimation(self.animationStack.getLastItem());
     }
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentSpriter, init)
+{
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentSpriter, insert)
+{
+    graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.spriteGroup);
 }
 ENTITY_COMPONENT_END()
 
@@ -68,6 +80,12 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
             self.animation->update(self.spriteGroup, *mlk, self.currentTime, nullptr);
         }
     }
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentSpriter, remove)
+{
+    graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.spriteGroup);
 }
 ENTITY_COMPONENT_END()
 
