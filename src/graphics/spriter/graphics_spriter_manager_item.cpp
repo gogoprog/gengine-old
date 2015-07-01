@@ -60,7 +60,31 @@ void SpriterManagerItem::fill(SpriteGroup & group, const SpriterMainlineKey & ml
 
 void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & mlk, const float time, const Pointer<const SpriterCharacterMap> character_map) const
 {
+    Vector2 extent, pivot_to_center;
+    SpriterTransform transform;
+    uint time_integer = uint( time * 1000.0f );
+    auto & sprites = group.getSprites();
 
+    for(uint i=0; i<mlk.objectKeys.getSize(); ++i)
+    {
+        auto & item = mlk.objectKeys[i];
+        auto & sprite = * sprites[i];
+        auto & asset = (!character_map.isNull() ? *character_map->assetMap[item.timelineKey->asset] : *item.timelineKey->asset);
+
+        item.fillTransform(transform, time_integer, true);
+
+        extent = Vector2(float(asset.width), float(asset.height)) * transform.scale;
+
+        sprite.setExtent(extent);
+
+        pivot_to_center = extent * transform.pivot;
+
+        sprite.setPosition(transform.position - Vector2::getRotated(pivot_to_center, transform.angle));
+
+        sprite.setRotation(transform.angle);
+
+        sprite.getColor().w = transform.alpha;
+    }
 }
 
 }
