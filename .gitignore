@@ -19,3 +19,10 @@ deps/**/*.make
 deps/**/Makefile
 deps/**/obj/
 debug.log
+*.config
+*.creator
+*.creator.user
+*.files
+*.includes
+
+
