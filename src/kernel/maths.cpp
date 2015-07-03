@@ -13,31 +13,35 @@ namespace gengine
 namespace math
 {
 
-SCRIPT_FUNCTION(getClosestAngle)
+float getClosestAngle(const float angle, const float other_angle)
 {
-    float
-        closest_angle,
-        lower_angle,
-        upper_angle,
-        other_angle;
-
-    closest_angle = lua_tonumber(state, 1);
-    other_angle = lua_tonumber(state, 2);
+    float lower_angle, upper_angle;
+    float closest_angle = angle;
 
     lower_angle = other_angle - PI + 0.00001f;
     upper_angle = other_angle + PI;
 
-    while ( closest_angle > upper_angle )
+    while(closest_angle > upper_angle)
     {
         closest_angle -= TWO_PI;
     }
 
-    while ( lower_angle > closest_angle )
+    while(lower_angle > closest_angle)
     {
         closest_angle += TWO_PI;
     }
 
-    lua_pushnumber(state, closest_angle);
+    return closest_angle;
+}
+
+SCRIPT_FUNCTION(getClosestAngle)
+{
+    float angle, other_angle;
+
+    angle = lua_tonumber(state, 1);
+    other_angle = lua_tonumber(state, 2);
+
+    lua_pushnumber(state, getClosestAngle(angle, other_angle));
 
     return 1;
 }

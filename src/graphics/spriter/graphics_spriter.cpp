@@ -60,13 +60,13 @@ void SpriterTimelineKey::load(const core::Json & json, const SpriterFile & file)
     {
         const core::Json & object = json["object"];
 
-        angle = getOrDefault(object, "angle", 0.0f);
+        angle = getOrDefault(object, "angle", 0.0f) / (180.0f / math::pi);
         alpha = getOrDefault(object, "alpha", 1.0f);
 
         asset = & file.allAssets[object["folder"].getUint()][object["file"].getUint()];
 
-        pivot.x = getOrDefault(object, "pivot_x", 0.0f);
-        pivot.y = getOrDefault(object, "pivot_y", 0.0f);
+        pivot.x = getOrDefault(object, "pivot_x", 0.0f) - 0.5f;
+        pivot.y = getOrDefault(object, "pivot_y", 0.0f) - 0.5f;
 
         position.x = getOrDefault(object, "x", 1.0f);
         position.y = getOrDefault(object, "y", 1.0f);
@@ -77,6 +77,12 @@ void SpriterTimelineKey::load(const core::Json & json, const SpriterFile & file)
     {
         const core::Json & bone = json["bone"];
 
+        angle = getOrDefault(bone, "angle", 0.0f) / (180.0f / math::pi);
+        alpha = getOrDefault(bone, "alpha", 1.0f);
+        position.x = getOrDefault(bone, "x", 1.0f);
+        position.y = getOrDefault(bone, "y", 1.0f);
+        scale.x = getOrDefault(bone, "scale_x", 1.0f);
+        scale.y = getOrDefault(bone, "scale_y", 1.0f);
     }
 
     time = getOrDefault(json, "time", 0u);
@@ -121,13 +127,13 @@ void SpriterMainlineKeyItem::fillTransform(SpriterTransform & transform, const u
 
         delta_angle = ntk.angle - tk.angle;
 
-        if(spin * delta_angle < 0)
+        if(spin * delta_angle <= 0)
         {
             delta_angle += spin * math::pi * 2.0f;
             delta_angle *= spin * spin;
         }
 
-        angle = math::getLerp(tk.alpha, tk.alpha + delta_angle, factor);
+        angle = math::getLerp(tk.angle, tk.angle + delta_angle, factor);
     }
 
     if(parent.isNull())
@@ -141,7 +147,7 @@ void SpriterMainlineKeyItem::fillTransform(SpriterTransform & transform, const u
     else
     {
         parent->fillTransform(transform, time, interpolation);
-        transform.position += Vector2::getRotated(position * transform.scale, angle);
+        transform.position += Vector2::getRotated(position * transform.scale, math::getClosestAngle(angle, 0.0f));
         transform.pivot = pivot;
         transform.scale *= scale;
         transform.angle += angle;
