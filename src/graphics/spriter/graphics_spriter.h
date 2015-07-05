@@ -55,7 +55,7 @@ struct SpriterTimelineKey
         scale;
     uint
         time;
-    uint8
+    int8
         spin;
     Pointer<const SpriterAsset>
         asset;

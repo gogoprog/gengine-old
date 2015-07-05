@@ -19,6 +19,16 @@ uint getOrDefault(const core::Json & json, const char * key, const uint default_
     return default_value;
 }
 
+int getOrDefault(const core::Json & json, const char * key, const int default_value)
+{
+    if(json.has(key))
+    {
+        return json[key].getInt();
+    }
+
+    return default_value;
+}
+
 float getOrDefault(const core::Json & json, const char * key, const float default_value)
 {
     if(json.has(key))
@@ -86,7 +96,7 @@ void SpriterTimelineKey::load(const core::Json & json, const SpriterFile & file)
     }
 
     time = getOrDefault(json, "time", 0u);
-    spin = getOrDefault(json, "spin", 1u);
+    spin = getOrDefault(json, "spin", 1);
 }
 
 void SpriterMainlineKeyItem::fillTransform(SpriterTransform & transform, const uint time, const bool interpolation) const
@@ -106,7 +116,7 @@ void SpriterMainlineKeyItem::fillTransform(SpriterTransform & transform, const u
     else
     {
         const SpriterTimelineKey & ntk = * nextTimelineKey;
-        uint8 spin;
+        int8 spin;
         float delta_angle, factor;
 
         if(ntk.time > tk.time)
@@ -203,7 +213,7 @@ void SpriterMainlineKey::fill(Array<SpriterMainlineKeyItem> & table, const core:
 void SpriterTimeline::load(const core::Json & json, const SpriterFile & file)
 {
     const core::Json
-        & key_json = json[ "key" ];
+        & key_json = json["key"];
 
     name = json["name"].getString();
 
