@@ -62,7 +62,7 @@ void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & 
 {
     Vector2 extent, pivot_to_center;
     SpriterTransform transform;
-    uint time_integer = uint( time * 1000.0f );
+    uint time_integer = uint(time * 1000.0f);
     auto & sprites = group.getSprites();
 
     for(uint i=0; i<mlk.objectKeys.getSize(); ++i)

@@ -202,7 +202,7 @@ void Renderer::render(const World & world)
                     if(sprite.texture)
                     {
                         transform_matrix.initIdentity();
-                        transform_matrix.setTranslation(sprite.position);
+                        transform_matrix.setTranslation(sprite_group.position + sprite.position);
                         transform_matrix.setRotation(sprite.rotation);
                         transform_matrix.preScale(sprite.extent);
 

@@ -62,9 +62,19 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
 
         self.currentTime += System::getInstance().getCurrentDt();
 
-        if(self.currentTime >= duration)
+        if(self.currentTime > duration)
         {
-
+            if(looping)
+            {
+                while(self.currentTime > duration)
+                {
+                    self.currentTime -= duration;
+                }
+            }
+            else
+            {
+                self.currentTime = duration;
+            }
         }
 
         if(self.animation)
@@ -79,6 +89,14 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
 
             self.animation->update(self.spriteGroup, *mlk, self.currentTime, nullptr);
         }
+
+        graphics::SpriteGroup & spriteGroup = self.spriteGroup;
+
+        Transform transform;
+        fillTransformFromComponent(state, transform);
+
+        spriteGroup.setPosition(transform.position);
+        spriteGroup.setRotation(transform.rotation);
     }
 }
 ENTITY_COMPONENT_END()

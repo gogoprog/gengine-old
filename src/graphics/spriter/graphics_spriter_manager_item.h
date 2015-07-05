@@ -41,6 +41,11 @@ public:
         return * animation;
     }
 
+    inline const SpriterCharacterMap & getCharacterMap(const uint index) const
+    {
+        return entity->characterMaps[index];
+    }
+
 private:
     Pointer<const SpriterEntity>
         entity;
