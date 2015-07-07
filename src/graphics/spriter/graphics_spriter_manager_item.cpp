@@ -67,7 +67,7 @@ void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & 
 
     for(uint i=0; i<mlk.objectKeys.getSize(); ++i)
     {
-        auto & item = mlk.objectKeys[i];
+        const auto & item = mlk.objectKeys[i];
         auto & sprite = * sprites[i];
         auto & asset = (!character_map.isNull() ? *character_map->assetMap[item.timelineKey->asset] : *item.timelineKey->asset);
 

@@ -125,7 +125,7 @@ void SpriterMainlineKeyItem::fillTransform(SpriterTransform & transform, const u
         }
         else
         {
-            factor = (time - tk.time) / float(ntk.time - time + animationLength - tk.time);
+            factor = (time - tk.time) / float(ntk.time + animationLength - tk.time);
         }
 
         position = math::getLerp(tk.position, ntk.position, factor);
