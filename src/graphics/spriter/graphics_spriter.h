@@ -133,6 +133,8 @@ struct SpriterEntity
 {
     void load(const core::Json & json, const SpriterFile & file);
 
+    const SpriterCharacterMap * getCharacterMap(const char *name) const;
+
     std::string
         name;
     Array<SpriterAnimation>

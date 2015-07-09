@@ -22,10 +22,14 @@ public:
 
 protected:
 
-    void setAnimation(const graphics::SpriterManagerItem * animation);
+    void setAnimation(const graphics::SpriterManagerItem * animation, const bool reset_time);
 
     Pointer<const graphics::SpriterMainlineKey>
         currentMainlineKey;
+    Pointer<const graphics::SpriterCharacterMap>
+        characterMap;
+    Pointer<const graphics::SpriterEntity>
+        lastSpriterEntity;
     const graphics::SpriterManagerItem
         * animation;
     Array<const graphics::SpriterManagerItem *>

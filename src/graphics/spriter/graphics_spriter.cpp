@@ -336,6 +336,19 @@ void SpriterEntity::load(const core::Json & json, const SpriterFile & file)
     }
 }
 
+const SpriterCharacterMap * SpriterEntity::getCharacterMap(const char *name) const
+{
+    for(auto & cm : characterMaps)
+    {
+        if(cm.name == name)
+        {
+            return & cm;
+        }
+    }
+
+    return nullptr;
+}
+
 void SpriterFile::load(const core::Json & json)
 {
     const core::Json

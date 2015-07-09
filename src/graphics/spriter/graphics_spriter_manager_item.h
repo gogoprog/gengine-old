@@ -36,14 +36,14 @@ public:
         return animation->looping;
     }
 
+    inline const SpriterEntity & getEntity() const
+    {
+        return * entity;
+    }
+
     inline const SpriterAnimation & getAnimation() const
     {
         return * animation;
-    }
-
-    inline const SpriterCharacterMap & getCharacterMap(const uint index) const
-    {
-        return entity->characterMaps[index];
     }
 
 private:

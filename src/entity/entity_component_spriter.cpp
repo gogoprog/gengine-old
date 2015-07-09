@@ -37,8 +37,16 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
     {
         self.animationStack.setSize(1);
         self.animationStack[0] = static_cast<const graphics::SpriterManagerItem *>(lua_touserdata(state, 3));
-        self.setAnimation(self.animationStack.getLastItem());
+        self.setAnimation(self.animationStack.getLastItem(), true);
     }
+    ENTITY_COMPONENT_SETTER(characterMap)
+    {
+        if(self.lastSpriterEntity)
+        {
+            self.characterMap = self.lastSpriterEntity->getCharacterMap(lua_tostring(state,3));
+        }
+    }
+    ENTITY_COMPONENT_SETTER_END()
 }
 ENTITY_COMPONENT_END()
 
@@ -75,7 +83,7 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
 
                 if(self.animationStack.getSize() > 0)
                 {
-                    self.animation = self.animationStack.getLastItem();
+                    self.setAnimation(self.animationStack.getLastItem(), false);
                 }
                 else
                 {
@@ -89,10 +97,10 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
         if(self.currentMainlineKey != mlk)
         {
             self.currentMainlineKey = mlk;
-            self.animation->fill(self.spriteGroup, *mlk, nullptr);
+            self.animation->fill(self.spriteGroup, *mlk, self.characterMap);
         }
 
-        self.animation->update(self.spriteGroup, *mlk, self.currentTime, nullptr);
+        self.animation->update(self.spriteGroup, *mlk, self.currentTime, self.characterMap);
 
         if(!looping && self.currentTime == duration && !self.animationStack.getSize())
         {
@@ -119,7 +127,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentSpriter, pushAnimation)
 {
     self.animationStack.add(static_cast<const graphics::SpriterManagerItem *>(lua_touserdata(state, 2)));
-    self.setAnimation(self.animationStack.getLastItem());
+    self.setAnimation(self.animationStack.getLastItem(), true);
 }
 ENTITY_COMPONENT_END()
 
@@ -130,10 +138,20 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, removeAnimations)
 }
 ENTITY_COMPONENT_END()
 
-void ComponentSpriter::setAnimation(const graphics::SpriterManagerItem * _animation)
+void ComponentSpriter::setAnimation(const graphics::SpriterManagerItem * _animation, const bool reset_time)
 {
     animation = _animation;
-    currentTime = 0.0f;
+
+    if(reset_time)
+    {
+        currentTime = 0.0f;
+    }
+
+    if(lastSpriterEntity != & animation->getEntity())
+    {
+        characterMap = nullptr;
+        lastSpriterEntity = & animation->getEntity();
+    }
 }
 
 }
