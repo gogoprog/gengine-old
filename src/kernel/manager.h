@@ -57,6 +57,27 @@ public:
         internalFinalize();
     }
 
+    T * getItem(const char * name)
+    {
+        T * t;
+
+        if(itemMap.find(t, name))
+        {
+            return t;
+        }
+        else
+        {
+            geLog("Cannot find " << itemTypeName << " \"" << name << "\"");
+
+            if(defaultItem)
+            {
+                return defaultItem;
+            }
+        }
+
+        return nullptr;
+    }
+
 protected:
     virtual bool internalCreate(T * t, script::State state, const int parameter_position) = 0;
     virtual void internalGetName(char * name, const char * arg) = 0;
@@ -98,24 +119,15 @@ protected:
     int getItem(script::State state)
     {
         const char * name = lua_tostring(state, 1);
-        T * t;
+        auto item = getItem(name);
 
-        if(itemMap.find(t, name))
+        if(item)
         {
-            lua_pushlightuserdata(state, t);
+            lua_pushlightuserdata(state, item);
         }
         else
         {
-            geLog("Cannot find " << itemTypeName << " \"" << name << "\"");
-
-            if(defaultItem)
-            {
-                lua_pushlightuserdata(state, defaultItem);
-            }
-            else
-            {
-                lua_pushnil(state);
-            }
+            lua_pushnil(state);
         }
 
         return 1;

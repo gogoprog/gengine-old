@@ -5,6 +5,7 @@
 #include "graphics_system.h"
 #include "graphics_sprite.h"
 #include "graphics_sprite_batch.h"
+#include "graphics_sprite_group.h"
 #include "graphics_particle_system.h"
 #include "graphics_atlas.h"
 
@@ -190,6 +191,36 @@ void Renderer::render(const World & world)
             }
             break;
 
+            case Type::SPRITE_GROUP:
+            {
+                SpriteGroup & sprite_group = * dynamic_cast<SpriteGroup *>(object);
+
+                for(uint i=0; i<sprite_group.activeCount; ++i)
+                {
+                    auto & sprite = * sprite_group.sprites[i];
+
+                    if(sprite.texture)
+                    {
+                        transform_matrix.initIdentity();
+                        transform_matrix.setTranslation(sprite_group.position + sprite.position);
+                        transform_matrix.setRotation(sprite.rotation);
+                        transform_matrix.preScale(sprite.extent);
+
+                        transformMatrixUniform.apply(transform_matrix);
+
+                        colorUniform.apply(sprite.color);
+
+                        samplerUniform.apply(* sprite.texture);
+
+                        uvScaleUniform.apply(sprite.uvScale);
+                        uvOffsetUniform.apply(sprite.uvOffset);
+
+                        indexBufferQuad.draw(6);
+                    }
+                }
+            }
+            break;
+
             case Type::PARTICLE_SYSTEM:
             {
                 ParticleSystem & particle_system = * dynamic_cast<ParticleSystem *>(object);
@@ -234,6 +265,7 @@ void Renderer::enable(const Type type, const World & world)
         switch(type)
         {
             case Type::SPRITE:
+            case Type::SPRITE_GROUP:
             {
                 if(currentProgram != & defaultProgram)
                 {
