@@ -46,7 +46,7 @@ SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
 
                     getInstance().itemMap.add(item, final_key);
 
-                    geDebugLog("graphics::SpriterManager loaded \"" << final_key << "\" ... ");
+                    geDebugLog("graphics::SpriterManager loaded \"" << final_key << "\" " << (animation.looping ? "(loop)" : "") << "...");
                 }
             }
         }

@@ -64,30 +64,39 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
 
         if(self.currentTime > duration)
         {
-            if(looping)
+            while(self.currentTime > duration)
             {
-                while(self.currentTime > duration)
-                {
-                    self.currentTime -= duration;
-                }
+                self.currentTime -= duration;
             }
-            else
+
+            if(!looping)
             {
-                self.currentTime = duration;
+                self.animationStack.removeLastItem();
+
+                if(self.animationStack.getSize() > 0)
+                {
+                    self.animation = self.animationStack.getLastItem();
+                }
+                else
+                {
+                    self.currentTime = duration;
+                }
             }
         }
 
-        if(self.animation)
+        Pointer<const graphics::SpriterMainlineKey> mlk = & self.animation->getAnimation().getMainlineKey(self.currentTime);
+
+        if(self.currentMainlineKey != mlk)
         {
-            Pointer<const graphics::SpriterMainlineKey> mlk = & self.animation->getAnimation().getMainlineKey(self.currentTime);
+            self.currentMainlineKey = mlk;
+            self.animation->fill(self.spriteGroup, *mlk, nullptr);
+        }
 
-            if(self.currentMainlineKey != mlk)
-            {
-                self.currentMainlineKey = mlk;
-                self.animation->fill(self.spriteGroup, *mlk, nullptr);
-            }
+        self.animation->update(self.spriteGroup, *mlk, self.currentTime, nullptr);
 
-            self.animation->update(self.spriteGroup, *mlk, self.currentTime, nullptr);
+        if(!looping && self.currentTime == duration && !self.animationStack.getSize())
+        {
+            self.animation = nullptr;
         }
 
         graphics::SpriteGroup & spriteGroup = self.spriteGroup;
