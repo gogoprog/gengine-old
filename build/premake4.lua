@@ -24,7 +24,8 @@ solution "gengine"
             "../src/entity",
             "../src/gui",
             "../src/physics",
-            "../src/navigation"
+            "../src/navigation",
+            "../src/tiled"
             }
 
         links {
@@ -115,4 +116,3 @@ solution "gengine"
 
         configuration { "not *Emscripten", "x64" }
             libdirs { "../deps/linux/lib64" }
-

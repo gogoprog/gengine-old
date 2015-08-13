@@ -12,6 +12,7 @@
 #include "kernel.h"
 #include "physics.h"
 #include "navigation.h"
+#include "tiled.h"
 
 namespace gengine
 {
@@ -130,6 +131,7 @@ void System::init2()
     audio::luaRegister(state);
     physics::luaRegister(state);
     navigation::luaRegister(state);
+    tiled::luaRegister(state);
 
     lua_pop(state, 1);
 }
