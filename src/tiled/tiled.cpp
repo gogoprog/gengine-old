@@ -12,7 +12,7 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
 
     SCRIPT_DO(
-        return function(filename)
+        return function(filename, offset)
             local result = {}
             local path = filename:match("(.*/)")
             local file = dofile(filename)
@@ -27,6 +27,8 @@ SCRIPT_REGISTERER()
                end
                return result
             end
+
+            offset = offset or vector2(0, 0)
 
             if file then
                 for k, ts in ipairs(file.tilesets) do
@@ -99,8 +101,8 @@ SCRIPT_REGISTERER()
                                 end
                             end
 
-                            e.position.x = x * file.tilewidth
-                            e.position.y = y * file.tileheight
+                            e.position.x = x * file.tilewidth + offset.x
+                            e.position.y = y * file.tileheight + offset.y
 
                             table.insert(result, e)
                         end
