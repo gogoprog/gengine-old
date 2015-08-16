@@ -36,27 +36,27 @@ SCRIPT_REGISTERER()
 
                     for i=1,count do
                         table.insert(indexToTileSet, k)
-                        indexToTile[i + ts.firstgid - 1] = {properties={}, _Components={}}
+                        indexToTile[i + ts.firstgid] = {properties={}, _components={}}
                     end
 
                     for _, tile in ipairs(ts.tiles) do
-                        indexToTile[tile.id + ts.firstgid - 1] = tile
-                        if tile.properties.Component then
-                            tile._Components = split(tile.properties.Component, ",")
-                            tile.properties.Component = nil
+                        indexToTile[tile.id + ts.firstgid] = tile
+                        if tile.properties.component then
+                            tile._components = split(tile.properties.component, ",")
+                            tile.properties.component = nil
                         else
-                            tile._Components = {}
+                            tile._components = {}
                         end
                     end
                 end
 
                 for l, layer in ipairs(file.layers) do
 
-                    if layer.properties.Component then
-                        layer._Components = split(layer.properties.Component, ",")
-                        layer.properties.Component = nil
+                    if layer.properties.component then
+                        layer._components = split(layer.properties.component, ",")
+                        layer.properties.component = nil
                     else
-                        layer._Components = {}
+                        layer._components = {}
                     end
 
                     for k, v in ipairs(layer.data) do
@@ -69,10 +69,10 @@ SCRIPT_REGISTERER()
                             local properties = {}
                             local components = {}
 
-                            for _, p in ipairs(tile.properties) do table.insert(properties, p) end
-                            for _, p in ipairs(layer.properties) do table.insert(properties, p) end
-                            for _, c in ipairs(tile._Components) do table.insert(components, c) end
-                            for _, c in ipairs(layer._Components) do table.insert(components, c) end
+                            for _, p in pairs(tile.properties) do properties[_] = p end
+                            for _, p in pairs(layer.properties) do properties[_] = p end
+                            for _, c in ipairs(tile._components) do table.insert(components, c) end
+                            for _, c in ipairs(layer._components) do table.insert(components, c) end
 
                             for _, component in ipairs(components) do
 
