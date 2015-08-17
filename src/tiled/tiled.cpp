@@ -38,7 +38,7 @@ SCRIPT_REGISTERER()
 
                     for i=1,count do
                         table.insert(indexToTileSet, k)
-                        indexToTile[i + ts.firstgid] = {properties={}, _components={}}
+                        indexToTile[i + ts.firstgid - 1] = {properties={}, _components={}}
                     end
 
                     for _, tile in ipairs(ts.tiles) do
@@ -73,11 +73,9 @@ SCRIPT_REGISTERER()
 
                             for _, p in pairs(tile.properties) do properties[_] = p end
                             for _, p in pairs(layer.properties) do properties[_] = p end
-                            for _, c in ipairs(tile._components) do table.insert(components, c) end
-                            for _, c in ipairs(layer._components) do table.insert(components, c) end
-
-                            for _, component in ipairs(components) do
-
+                            for _, c in ipairs(tile._components) do components[c] = true end
+                            for _, c in ipairs(layer._components) do components[c] = true end
+                            for component, _ in pairs(components) do
                                 if component == "Sprite" then
                                     e:addComponent(
                                         ComponentSprite(),
@@ -88,6 +86,15 @@ SCRIPT_REGISTERER()
                                             layer = l
                                         }
                                         )
+                                elseif component == "Physic" then
+                                    print(v)
+                                    e:addComponent(
+                                        ComponentPhysic(),
+                                        {
+                                            extent = vector2(file.tilewidth, file.tileheight),
+                                            type = properties.type
+                                        }
+                                        )
                                 else
                                     local constructor = _G["Component"..component]
                                     if constructor then
@@ -96,7 +103,7 @@ SCRIPT_REGISTERER()
                                             properties
                                             )
                                     else
-                                        print("gengine.tiled : Unknown component " .. component)
+                                        print("[gengine] tiled : Unknown component " .. component)
                                     end
                                 end
                             end
