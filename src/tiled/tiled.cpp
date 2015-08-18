@@ -69,68 +69,83 @@ SCRIPT_REGISTERER()
                         layer._components = {}
                     end
 
-                    for k, v in ipairs(layer.data) do
-                        if v ~= 0 then
-                            local e = gengine.entity.create()
-                            local x = (k-1) % layer.width
-                            local y = layer.height - math.floor((k-1) / layer.width)
-                            local ts = file.tilesets[indexToTileSet[v]]
-                            local tile = indexToTile[v]
-                            local properties = {}
-                            local components = {}
+                    if layer.data then
+                        for k, v in ipairs(layer.data) do
+                            if v ~= 0 then
+                                local e = gengine.entity.create()
+                                local x = (k-1) % layer.width
+                                local y = layer.height - math.floor((k-1) / layer.width)
+                                local ts = file.tilesets[indexToTileSet[v]]
+                                local tile = indexToTile[v]
+                                local properties = {}
+                                local components = {}
 
-                            for _, p in pairs(tile.properties) do properties[_] = p end
-                            for _, p in pairs(layer.properties) do properties[_] = p end
-                            for _, c in ipairs(tile._components) do components[c] = true end
-                            for _, c in ipairs(layer._components) do components[c] = true end
+                                for _, p in pairs(tile.properties) do properties[_] = p end
+                                for _, p in pairs(layer.properties) do properties[_] = p end
+                                for _, c in ipairs(tile._components) do components[c] = true end
+                                for _, c in ipairs(layer._components) do components[c] = true end
 
-                            for component, _ in pairs(components) do
-                                if component == "Sprite" then
-                                    if not tile.texture then
+                                for component, _ in pairs(components) do
+                                    if component == "Sprite" then
+                                        if not tile.texture then
+                                            e:addComponent(
+                                                ComponentSprite(),
+                                                {
+                                                    atlas = ts.atlas,
+                                                    atlasItem = v - ts.firstgid,
+                                                    extent = vector2(file.tilewidth, file.tileheight),
+                                                    layer = l
+                                                }
+                                                )
+                                        else
+                                            e:addComponent(
+                                                ComponentSprite(),
+                                                {
+                                                    texture = tile.texture,
+                                                    extent = vector2(tile.width, tile.height),
+                                                    layer = l
+                                                }
+                                                )
+                                        end
+                                    elseif component == "Physic" then
                                         e:addComponent(
-                                            ComponentSprite(),
+                                            ComponentPhysic(),
                                             {
-                                                atlas = ts.atlas,
-                                                atlasItem = v - ts.firstgid,
                                                 extent = vector2(file.tilewidth, file.tileheight),
-                                                layer = l
+                                                type = properties.type
                                             }
                                             )
                                     else
-                                        e:addComponent(
-                                            ComponentSprite(),
-                                            {
-                                                texture = tile.texture,
-                                                extent = vector2(tile.width, tile.height),
-                                                layer = l
-                                            }
-                                            )
-                                    end
-                                elseif component == "Physic" then
-                                    e:addComponent(
-                                        ComponentPhysic(),
-                                        {
-                                            extent = vector2(file.tilewidth, file.tileheight),
-                                            type = properties.type
-                                        }
-                                        )
-                                else
-                                    local constructor = _G["Component"..component]
-                                    if constructor then
-                                        e:addComponent(
-                                            constructor(),
-                                            properties
-                                            )
-                                    else
-                                        print("[gengine] tiled : Unknown component " .. component)
+                                        local constructor = _G["Component"..component]
+                                        if constructor then
+                                            e:addComponent(
+                                                constructor(),
+                                                properties
+                                                )
+                                        else
+                                            print("[gengine] tiled : Unknown component " .. component)
+                                        end
                                     end
                                 end
+
+                                e.position.x = (x-0.5) * file.tilewidth + tile.width/2 + offset.x
+                                e.position.y = (y-0.5) * file.tileheight + tile.height/2 + offset.y
+
+                                table.insert(result, e)
                             end
+                        end
+                    end
 
-                            e.position.x = (x-0.5) * file.tilewidth + tile.width/2 + offset.x
-                            e.position.y = (y-0.5) * file.tileheight + tile.height/2 + offset.y
+                    if layer.objects then
+                        for o, object in ipairs(layer.objects) do
+                            local properties = {}
+                            for _, p in pairs(object.properties) do properties[_] = p end
+                            for _, p in pairs(layer.properties) do properties[_] = p end
 
-                            table.insert(result, e)
+                            if properties["function"] then
+                                local f = loadstring("return " .. properties["function"])()
+                                f(object)
+                            end
                         end
                     end
                 end
