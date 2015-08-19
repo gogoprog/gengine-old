@@ -101,7 +101,8 @@ SCRIPT_REGISTERER()
                                                     atlasItem = v - ts.firstgid,
                                                     extent = vector2(file.tilewidth, file.tileheight),
                                                     layer = l
-                                                }
+                                                },
+                                                component:lower()
                                                 )
                                         else
                                             e:addComponent(
@@ -110,7 +111,8 @@ SCRIPT_REGISTERER()
                                                     texture = tile.texture,
                                                     extent = vector2(tile.width, tile.height),
                                                     layer = l
-                                                }
+                                                },
+                                                component:lower()
                                                 )
                                         end
                                     elseif component == "Physic" then
@@ -119,14 +121,16 @@ SCRIPT_REGISTERER()
                                             {
                                                 extent = vector2(file.tilewidth, file.tileheight),
                                                 type = properties.type
-                                            }
+                                            },
+                                            component:lower()
                                             )
                                     else
                                         local constructor = _G["Component"..component]
                                         if constructor then
                                             e:addComponent(
                                                 constructor(),
-                                                properties
+                                                properties,
+                                                component:lower()
                                                 )
                                         else
                                             print("[gengine] tiled : Unknown component " .. component)
