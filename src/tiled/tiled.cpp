@@ -13,6 +13,7 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(filename, offset)
+            print("[gengine] tiled: Loading " .. filename .. "...")
             local result = {}
             local path = filename:match("(.*/)")
             local file = dofile(filename)
@@ -40,6 +41,10 @@ SCRIPT_REGISTERER()
                         for i=1,count do
                             table.insert(indexToTileSet, k)
                             indexToTile[i + ts.firstgid - 1] = {properties={}, _components={}, width=ts.tilewidth, height=ts.tileheight}
+                        end
+                    else
+                        for i=1,#ts.tiles do
+                            table.insert(indexToTileSet, false)
                         end
                     end
 
@@ -75,7 +80,6 @@ SCRIPT_REGISTERER()
                                 local e = gengine.entity.create()
                                 local x = (k-1) % layer.width
                                 local y = layer.height - math.floor((k-1) / layer.width)
-                                local ts = file.tilesets[indexToTileSet[v]]
                                 local tile = indexToTile[v]
                                 local properties = {}
                                 local components = {}
@@ -88,6 +92,8 @@ SCRIPT_REGISTERER()
                                 for component, _ in pairs(components) do
                                     if component == "Sprite" then
                                         if not tile.texture then
+                                            local ts = file.tilesets[indexToTileSet[v]]
+
                                             e:addComponent(
                                                 ComponentSprite(),
                                                 {
