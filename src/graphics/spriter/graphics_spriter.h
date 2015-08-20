@@ -8,6 +8,7 @@
 #include "vector2.h"
 #include "core_json.h"
 #include <string>
+#include <algorithm>
 
 namespace gengine
 {
