@@ -9,7 +9,8 @@ namespace graphics
 
 SpriteGroup::SpriteGroup()
     :
-    Object()
+    Object(),
+    activeCount(0)
 {
 }
 
