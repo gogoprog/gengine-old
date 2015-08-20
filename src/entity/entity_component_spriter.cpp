@@ -39,6 +39,10 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
         self.animationStack[0] = static_cast<const graphics::SpriterManagerItem *>(lua_touserdata(state, 3));
         self.setAnimation(self.animationStack.getLastItem(), true);
     }
+    ENTITY_COMPONENT_SETTER(layer)
+    {
+        self.spriteGroup.setLayer(lua_tonumber(state,3));
+    }
     ENTITY_COMPONENT_SETTER(characterMap)
     {
         if(self.lastSpriterEntity)
