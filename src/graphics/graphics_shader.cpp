@@ -48,7 +48,7 @@ void Shader::compile(const char * source, const char * name)
 
         if(length > 0)
         {
-            geDebugLog("Error while compiling " << name << " " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader :" );
+            geLog("Error while compiling " << name << " " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader :" );
             puts(log);
         }
     }
