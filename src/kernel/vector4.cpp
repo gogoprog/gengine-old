@@ -14,6 +14,56 @@ Vector4::Vector4(const float _x, const float _y, const float _z, const float _w)
 {
 }
 
+Vector4 & Vector4::operator*=(const float value)
+{
+    x *= value;
+    y *= value;
+    z *= value;
+    w *= value;
+
+    return * this;
+}
+
+Vector4 & Vector4::operator/=(const Vector4 & other)
+{
+    x /= other.x;
+    y /= other.y;
+    z /= other.z;
+    w /= other.w;
+
+    return * this;
+}
+
+Vector4 & Vector4::operator-=(const Vector4 & other)
+{
+    x -= other.x;
+    y -= other.y;
+    z -= other.z;
+    w -= other.w;
+
+    return * this;
+}
+
+Vector4 & Vector4::operator+=(const Vector4 & other)
+{
+    x += other.x;
+    y += other.y;
+    z += other.z;
+    w += other.w;
+
+    return * this;
+}
+
+Vector4 & Vector4::operator*=(const Vector4 & other)
+{
+    x *= other.x;
+    y *= other.y;
+    z *= other.z;
+    w *= other.w;
+
+    return * this;
+}
+
 Vector4
     Vector4::zero(0.0f, 0.0f, 0.0f, 0.0f),
     Vector4::one(1.0f, 1.0f, 1.0f, 1.0f);
@@ -103,6 +153,26 @@ void Vector4::fillTableSafe(lua_State * state, Vector4 & result, const char * na
     }
 
     lua_pop(state, 1);
+}
+
+Vector4 operator*(const Vector4 & vector, const float multiplier)
+{
+    return Vector4(vector.x * multiplier, vector.y * multiplier, vector.z * multiplier, vector.w * multiplier);
+}
+
+Vector4 operator-(const Vector4 & a, const Vector4 & b)
+{
+    return Vector4(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+}
+
+Vector4 operator+(const Vector4 & a, const Vector4 & b)
+{
+    return Vector4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+}
+
+Vector4 operator*(const Vector4 & a, const Vector4 & b)
+{
+    return Vector4(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
 }
 
 }
