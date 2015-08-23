@@ -43,6 +43,14 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
     {
         self.spriteGroup.setLayer(lua_tonumber(state,3));
     }
+    ENTITY_COMPONENT_SETTER(color)
+    {
+        Vector4::fill(state, self.spriteGroup.getColor(), 3);
+    }
+    ENTITY_COMPONENT_SETTER(alpha)
+    {
+        self.spriteGroup.setColorAlpha(lua_tonumber(state,3));
+    }
     ENTITY_COMPONENT_SETTER(characterMap)
     {
         if(self.lastSpriterEntity)
