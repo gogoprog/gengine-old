@@ -21,6 +21,7 @@ ComponentSpriter::ComponentSpriter()
     :
     animation(nullptr),
     currentTime(0.0f),
+    timeFactor(1.0f),
     worldIndex(0)
 {
 }
@@ -42,6 +43,10 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
     ENTITY_COMPONENT_SETTER(layer)
     {
         self.spriteGroup.setLayer(lua_tonumber(state,3));
+    }
+    ENTITY_COMPONENT_SETTER(timeFactor)
+    {
+        self.timeFactor = lua_tonumber(state,3);
     }
     ENTITY_COMPONENT_SETTER(color)
     {
@@ -80,7 +85,7 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
         float duration = self.animation->getDuration();
         bool looping = self.animation->isLooping();
 
-        self.currentTime += System::getInstance().getCurrentDt();
+        self.currentTime += System::getInstance().getCurrentDt() * self.timeFactor;
 
         if(self.currentTime > duration)
         {

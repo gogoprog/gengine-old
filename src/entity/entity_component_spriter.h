@@ -37,7 +37,8 @@ protected:
     graphics::SpriteGroup
         spriteGroup;
     float
-        currentTime;
+        currentTime,
+        timeFactor;
     uint
         worldIndex;
 };
