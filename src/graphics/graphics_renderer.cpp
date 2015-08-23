@@ -208,7 +208,7 @@ void Renderer::render(const World & world)
 
                         transformMatrixUniform.apply(transform_matrix);
 
-                        colorUniform.apply(sprite.color);
+                        colorUniform.apply(sprite.color * sprite_group.color);
 
                         samplerUniform.apply(* sprite.texture);
 
