@@ -5,6 +5,8 @@
 
 namespace gengine
 {
+namespace math
+{
 
 void Matrix3::initIdentity()
 {
@@ -71,4 +73,5 @@ void Matrix3::scale(const Vector2 & s)
     get(1,1) *= s.y;
 }
 
+}
 }

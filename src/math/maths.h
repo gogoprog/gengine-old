@@ -4,7 +4,6 @@
 
 namespace gengine
 {
-
 namespace math
 {
 

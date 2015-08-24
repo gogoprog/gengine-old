@@ -4,6 +4,8 @@
 
 namespace gengine
 {
+namespace math
+{
 
 Vector4::Vector4(const float _x, const float _y, const float _z, const float _w)
     :
@@ -175,4 +177,5 @@ Vector4 operator*(const Vector4 & a, const Vector4 & b)
     return Vector4(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
 }
 
+}
 }

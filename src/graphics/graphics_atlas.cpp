@@ -21,7 +21,7 @@ bool Atlas::setFromTextureAndCellCount(const Texture *_texture, const uint x_cel
 {
     texture = _texture;
     uint i,j;
-    Vector2 scale;
+    math::Vector2 scale;
     scale.x = 1.0f / x_cell_count;
     scale.y = 1.0f / y_cell_count;
 
@@ -31,7 +31,7 @@ bool Atlas::setFromTextureAndCellCount(const Texture *_texture, const uint x_cel
         {
             itemTable.add(
                 AtlasItem(
-                    Vector2(scale.x * i, scale.y * j),
+                    math::Vector2(scale.x * i, scale.y * j),
                     scale
                     )
                 );
@@ -45,13 +45,13 @@ bool Atlas::setFromTextureAndTable(const Texture *_texture, lua_State * state)
 {
     texture = _texture;
 
-    Vector2 uv_scale, uv_offset;
-    Vector4 data;
+    math::Vector2 uv_scale, uv_offset;
+    math::Vector4 data;
 
     lua_pushnil(state);
     while(lua_next(state, 3) != 0)
     {
-        Vector4::fill(state, data, -1);
+        math::Vector4::fill(state, data, -1);
 
         uv_offset.x = (1.0f / texture->getWidth()) * data.x;
         uv_offset.y = (1.0f / texture->getHeight()) * data.y;
@@ -73,9 +73,9 @@ bool Atlas::setFromTextureAndTable(const Texture *_texture, lua_State * state)
     return true;
 }
 
-void Atlas::getDefaultExtent(Vector2 & result, const uint index) const
+void Atlas::getDefaultExtent(math::Vector2 & result, const uint index) const
 {
-    const Vector2 & scale = getItem(index).uvScale;
+    const math::Vector2 & scale = getItem(index).uvScale;
 
     result.x = texture->getWidth() * scale.x;
     result.y = texture->getHeight() * scale.y;

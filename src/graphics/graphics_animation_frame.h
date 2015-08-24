@@ -21,7 +21,7 @@ struct AnimationFrame
 
     const Atlas
         * atlas;
-    const Vector2
+    const math::Vector2
         & uvOffset,
         & uvScale;
 };

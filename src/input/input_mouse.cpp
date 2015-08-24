@@ -6,6 +6,9 @@
 
 namespace gengine
 {
+
+using namespace math;
+
 namespace input
 {
 

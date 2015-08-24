@@ -6,9 +6,13 @@
 namespace gengine
 {
 
-class Matrix3;
-struct Vector4;
-struct Vector2;
+namespace math {
+    class Matrix3;
+    struct Vector4;
+    struct Vector2;
+}
+
+using namespace math;
 
 namespace graphics
 {

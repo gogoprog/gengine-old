@@ -5,6 +5,8 @@
 
 namespace gengine
 {
+namespace math
+{
 
 class Matrix3
 {
@@ -30,4 +32,5 @@ protected:
     float data[9];
 };
 
+}
 }

@@ -58,7 +58,7 @@ SCRIPT_FUNCTION(quit)
 const char * getName() { return name.c_str(); }
 uint getWidth() { return width; }
 uint getHeight() { return height; }
-Vector2 getExtent() { return Vector2(width, height); }
+math::Vector2 getExtent() { return math::Vector2(width, height); }
 bool isFullscreen() { return fullscreen; }
 
 SCRIPT_REGISTERER()

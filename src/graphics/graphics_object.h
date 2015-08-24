@@ -11,6 +11,7 @@ namespace gengine
 namespace graphics
 {
 
+using namespace math;
 class Texture;
 
 class Object

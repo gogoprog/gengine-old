@@ -12,6 +12,9 @@
 
 namespace gengine
 {
+
+using namespace math;
+
 namespace graphics
 {
 

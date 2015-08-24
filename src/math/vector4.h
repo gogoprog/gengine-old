@@ -4,6 +4,8 @@
 
 namespace gengine
 {
+namespace math
+{
 
 struct Vector4
 {
@@ -32,4 +34,5 @@ Vector4 operator-(const Vector4 & a, const Vector4 & b);
 Vector4 operator+(const Vector4 & a, const Vector4 & b);
 Vector4 operator*(const Vector4 & a, const Vector4 & b);
 
+}
 }

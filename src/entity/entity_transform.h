@@ -13,7 +13,7 @@ namespace entity
 
 struct Transform
 {
-    Vector2
+    math::Vector2
         position;
     float
         rotation;
