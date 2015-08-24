@@ -270,22 +270,6 @@ void Vector2::fill(lua_State * state, Vector2 & result, int position)
     lua_pop(state, 1);
 }
 
-void Vector2::fillTableSafe(lua_State * state, Vector2 & result, const char * name, int table_position, const Vector2 & default_value)
-{
-    lua_getfield(state, table_position, name);
-
-    if(lua_isnil(state, -1))
-    {
-        result =  default_value;
-    }
-    else
-    {
-        Vector2::fill(state, result);
-    }
-
-    lua_pop(state, 1);
-}
-
 float Vector2::getLength(const Vector2 & a)
 {
     return sqrt(a.x*a.x + a.y*a.y);
