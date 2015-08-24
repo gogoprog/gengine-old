@@ -48,19 +48,21 @@ SCRIPT_REGISTERER()
                         end
                     end
 
-                    for _, tile in ipairs(ts.tiles) do
-                        indexToTile[tile.id + ts.firstgid] = tile
-                        tile.properties = tile.properties or {}
-                        tile.width = tile.width or ts.tilewidth
-                        tile.height = tile.height or ts.tileheight
-                        if tile.properties.component then
-                            tile._components = split(tile.properties.component, ",")
-                            tile.properties.component = nil
-                        else
-                            tile._components = {}
-                        end
-                        if tile.image then
-                            tile.texture = gengine.graphics.texture.create(path .. tile.image)
+                    if ts.tiles then
+                        for _, tile in ipairs(ts.tiles) do
+                            indexToTile[tile.id + ts.firstgid] = tile
+                            tile.properties = tile.properties or {}
+                            tile.width = tile.width or ts.tilewidth
+                            tile.height = tile.height or ts.tileheight
+                            if tile.properties.component then
+                                tile._components = split(tile.properties.component, ",")
+                                tile.properties.component = nil
+                            else
+                                tile._components = {}
+                            end
+                            if tile.image then
+                                tile.texture = gengine.graphics.texture.create(path .. tile.image)
+                            end
                         end
                     end
                 end
@@ -74,7 +76,7 @@ SCRIPT_REGISTERER()
                         layer._components = {}
                     end
 
-                    if layer.data then
+                    if layer.data and layer.encoding == "lua" then
                         for k, v in ipairs(layer.data) do
                             if v ~= 0 then
                                 local e = gengine.entity.create()
