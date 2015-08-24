@@ -30,7 +30,7 @@ ENTITY_COMPONENT_SETTERS(ComponentMouseable)
 {
     ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
-        Vector2::fill(state, self.extent, 3);
+        script::Binder<Vector2>::get(state, self.extent, 3);
     }
     ENTITY_COMPONENT_SETTER(world)
     {

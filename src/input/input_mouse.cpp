@@ -112,7 +112,7 @@ SCRIPT_CLASS_FUNCTION(Mouse, getPosition)
 
     Vector2 position(self.x, self.y);
 
-    Vector2::push(state, position);
+    script::Binder<Vector2>::push(state, position);
 
     return 1;
 }

@@ -124,7 +124,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
 
         while (lua_next(state, 3) != 0)
         {
-            Vector2::fill(state, value, -1);
+            script::Binder<Vector2>::get(state, value, -1);
             self.particleSystem.getScaleTable().add(value);
             lua_pop(state, 1);
         }

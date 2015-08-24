@@ -26,7 +26,7 @@ ComponentSprite::ComponentSprite()
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentSprite)
 {
-    ENTITY_ADD_GETTER(ComponentSprite, "extent", { Vector2::push(state, self.sprite.getExtent()); });
+    ENTITY_ADD_GETTER(ComponentSprite, "extent", { script::Binder<Vector2>::push(state, self.sprite.getExtent()); });
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentSprite)
@@ -37,16 +37,16 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     }
     ENTITY_COMPONENT_SETTER(extent)
     {
-        Vector2::fill(state, self.sprite.getExtent(), 3);
+        script::Binder<Vector2>::get(state, self.sprite.getExtent(), 3);
         self.extentHasBeenSet = true;
     }
     ENTITY_COMPONENT_SETTER(uvScale)
     {
-        Vector2::fill(state, self.sprite.getUvScale(), 3);
+        script::Binder<Vector2>::get(state, self.sprite.getUvScale(), 3);
     }
     ENTITY_COMPONENT_SETTER(uvOffset)
     {
-        Vector2::fill(state, self.sprite.getUvOffset(), 3);
+        script::Binder<Vector2>::get(state, self.sprite.getUvOffset(), 3);
     }
     ENTITY_COMPONENT_SETTER(color)
     {

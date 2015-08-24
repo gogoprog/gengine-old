@@ -23,7 +23,7 @@ ComponentQuad::ComponentQuad()
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentQuad)
 {
-    ENTITY_ADD_GETTER(ComponentQuad, "extent", { Vector2::push(state, self.sprite.getExtent()); });
+    ENTITY_ADD_GETTER(ComponentQuad, "extent", { script::Binder<Vector2>::push(state, self.sprite.getExtent()); });
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentQuad)
@@ -34,7 +34,7 @@ ENTITY_COMPONENT_SETTERS(ComponentQuad)
     }
     ENTITY_COMPONENT_SETTER(extent)
     {
-        Vector2::fill(state, self.sprite.getExtent(), 3);
+        script::Binder<Vector2>::get(state, self.sprite.getExtent(), 3);
     }
     ENTITY_COMPONENT_SETTER(color)
     {

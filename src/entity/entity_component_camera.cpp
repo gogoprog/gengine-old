@@ -33,7 +33,7 @@ ENTITY_COMPONENT_SETTERS(ComponentCamera)
     {
         Vector2 extent;
 
-        Vector2::fill(state, extent, 3);
+        script::Binder<Vector2>::get(state, extent, 3);
 
         self.camera.setExtent(extent);
     }
@@ -98,11 +98,11 @@ ENTITY_COMPONENT_METHOD(ComponentCamera, getWorldPosition)
 {
     Vector2 result, input;
 
-    Vector2::fill(state, input, 2);
+    script::Binder<Vector2>::get(state, input, 2);
 
     self.camera.getWorldPosition(result, input);
 
-    Vector2::push(state, result);
+    script::Binder<Vector2>::push(state, result);
 
     return 1;
 }

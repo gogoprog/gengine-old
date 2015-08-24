@@ -12,7 +12,7 @@ SCRIPT_FUNCTION(getLength)
 {
     Vector2 a;
 
-    Vector2::fill(state, a, 1);
+    script::Binder<Vector2>::get(state, a, 1);
 
     float l = Vector2::getLength(a);
     lua_pushnumber(state, l);
@@ -24,7 +24,7 @@ SCRIPT_FUNCTION(getSquareLength)
 {
     Vector2 a;
 
-    Vector2::fill(state, a, 1);
+    script::Binder<Vector2>::get(state, a, 1);
 
     float sl = Vector2::getSquareLength(a);
     lua_pushnumber(state, sl);
@@ -36,8 +36,8 @@ SCRIPT_FUNCTION(getDistance)
 {
     Vector2 a, b;
 
-    Vector2::fill(state, a, 1);
-    Vector2::fill(state, b, 2);
+    script::Binder<Vector2>::get(state, a, 1);
+    script::Binder<Vector2>::get(state, b, 2);
 
     float d = Vector2::getDistance(a, b);
     lua_pushnumber(state, d);
@@ -49,8 +49,8 @@ SCRIPT_FUNCTION(getSquareDistance)
 {
     Vector2 a, b;
 
-    Vector2::fill(state, a, 1);
-    Vector2::fill(state, b, 2);
+    script::Binder<Vector2>::get(state, a, 1);
+    script::Binder<Vector2>::get(state, b, 2);
 
     float d = Vector2::getSquareDistance(a, b);
     lua_pushnumber(state, d);
@@ -62,8 +62,8 @@ SCRIPT_FUNCTION(getAngle)
 {
     Vector2 a, b;
 
-    Vector2::fill(state, a, 1);
-    Vector2::fill(state, b, 2);
+    script::Binder<Vector2>::get(state, a, 1);
+    script::Binder<Vector2>::get(state, b, 2);
 
     float angle = Vector2::getAngle(a, b);
     lua_pushnumber(state, angle);
@@ -75,11 +75,11 @@ SCRIPT_FUNCTION(getNormalized)
 {
     Vector2 a;
 
-    Vector2::fill(state, a, 1);
+    script::Binder<Vector2>::get(state, a, 1);
 
     a.normalize();
 
-    Vector2::push(state, a);
+    script::Binder<Vector2>::push(state, a);
 
     return 1;
 }
@@ -89,12 +89,12 @@ SCRIPT_FUNCTION(getRotated)
     Vector2 v;
     float a;
 
-    Vector2::fill(state, v, 1);
+    script::Binder<Vector2>::get(state, v, 1);
     a = lua_tonumber(state, 2);
 
     v.rotate(a);
 
-    Vector2::push(state, v);
+    script::Binder<Vector2>::push(state, v);
 
     return 1;
 }
@@ -235,39 +235,6 @@ SCRIPT_CLASS_REGISTERER(Vector2)
     SCRIPT_TABLE_PUSH_FUNCTION(getAngle);
     SCRIPT_TABLE_PUSH_FUNCTION(getNormalized);
     SCRIPT_TABLE_PUSH_FUNCTION(getRotated);
-}
-
-void Vector2::push(lua_State * state, const Vector2 & value)
-{
-    lua_newtable(state);
-    lua_pushnumber(state, value.x);
-    lua_setfield(state, -2, "x");
-
-    lua_pushnumber(state, value.y);
-    lua_setfield(state, -2, "y");
-
-    lua_rawgeti(state, LUA_REGISTRYINDEX, metaTableRef);
-    lua_setmetatable(state, -2);
-}
-
-void Vector2::replace(lua_State * state, const Vector2 & value)
-{
-    lua_pushnumber(state, value.x);
-    lua_setfield(state, -2, "x");
-
-    lua_pushnumber(state, value.y);
-    lua_setfield(state, -2, "y");
-}
-
-void Vector2::fill(lua_State * state, Vector2 & result, int position)
-{
-    lua_getfield(state, position, "x");
-    result.x = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-
-    lua_getfield(state, position, "y");
-    result.y = lua_tonumber(state, -1);
-    lua_pop(state, 1);
 }
 
 float Vector2::getLength(const Vector2 & a)

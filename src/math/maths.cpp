@@ -56,10 +56,10 @@ SCRIPT_FUNCTION(doRectanglesIntersect)
     bool
         result;
 
-    Vector2::fill(state, position1, 1);
-    Vector2::fill(state, half_extent1, 2);
-    Vector2::fill(state, position2, 3);
-    Vector2::fill(state, half_extent2, 4);
+    script::Binder<Vector2>::get(state, position1, 1);
+    script::Binder<Vector2>::get(state, half_extent1, 2);
+    script::Binder<Vector2>::get(state, position2, 3);
+    script::Binder<Vector2>::get(state, half_extent2, 4);
 
     half_extent1 *= 0.5f;
     half_extent2 *= 0.5f;
@@ -90,10 +90,10 @@ SCRIPT_FUNCTION(doesCircleIntersectRectangle)
     bool
         result;
 
-    Vector2::fill(state, circle_position, 1);
+    script::Binder<Vector2>::get(state, circle_position, 1);
     radius = lua_tonumber(state, 2);
-    Vector2::fill(state, rect_position, 3);
-    Vector2::fill(state, half_extent, 4);
+    script::Binder<Vector2>::get(state, rect_position, 3);
+    script::Binder<Vector2>::get(state, half_extent, 4);
 
     half_extent *= 0.5f;
 

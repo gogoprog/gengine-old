@@ -42,11 +42,6 @@ struct Vector2
 
     static SCRIPT_REGISTERER();
 
-    static void push(lua_State * state, const Vector2 & value);
-    static void replace(lua_State * state, const Vector2 & value);
-
-    static void fill(lua_State * state, Vector2 & result, int position = -1);
-
     static float getLength(const Vector2 & a);
     static float getSquareLength(const Vector2 & a);
     static float getDistance(const Vector2 & a, const Vector2 & b);
