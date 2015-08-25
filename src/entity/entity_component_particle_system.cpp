@@ -62,7 +62,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<Vector2> range;
 
-        Range<Vector2>::fill(state, range, 3);
+        script::Binder<Range<Vector2>>::get(state, range, 3);
 
         self.particleSystem.setExtentRange(range);
     }
@@ -70,7 +70,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<Vector2> range;
 
-        Range<Vector2>::fill(state, range, 3);
+        script::Binder<Range<Vector2>>::get(state, range, 3);
 
         self.particleSystem.setLinearAccelerationRange(range);
     }
@@ -78,7 +78,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::Binder<Range<float>>::get(state, range, 3);
 
         self.particleSystem.setLifeTimeRange(range);
     }
@@ -86,7 +86,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::Binder<Range<float>>::get(state, range, 3);
 
         self.particleSystem.setDirectionRange(range);
     }
@@ -94,7 +94,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::Binder<Range<float>>::get(state, range, 3);
 
         self.particleSystem.setSpeedRange(range);
     }
@@ -102,7 +102,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::Binder<Range<float>>::get(state, range, 3);
 
         self.particleSystem.setRotationRange(range);
     }
@@ -110,7 +110,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::Binder<Range<float>>::get(state, range, 3);
 
         self.particleSystem.setSpinRange(range);
     }

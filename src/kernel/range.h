@@ -26,7 +26,18 @@ struct Range
         maximum = max;
     }
 
-    static void fill(lua_State * state, Range<T> & result, int position = -1)
+    T
+        minimum,
+        maximum;
+};
+
+
+namespace script {
+template<class T>
+class Binder<Range<T>>
+{
+public:
+    static void get(script::State state, Range<T> & result, int position = -1)
     {
         lua_rawgeti(state, position, 1);
         script::get(state, result.minimum, -1);
@@ -36,10 +47,7 @@ struct Range
         script::get(state, result.maximum, -1);
         lua_pop(state, 1);
     }
-
-    T
-        minimum,
-        maximum;
 };
+}
 
 }
