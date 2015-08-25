@@ -127,7 +127,7 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
         graphics::SpriteGroup & spriteGroup = self.spriteGroup;
 
         Transform transform;
-        fillTransformFromComponent(state, transform);
+        getTransformFromComponent(state, transform);
 
         spriteGroup.setPosition(transform.position);
         spriteGroup.setRotation(transform.rotation);

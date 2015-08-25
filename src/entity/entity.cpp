@@ -131,38 +131,17 @@ SCRIPT_REGISTERER()
     lua_pop(state, 1);
 }
 
-void fillTransform(lua_State *state, Transform & transform, const int position)
-{
-    lua_getfield(state, position, "position");
-    script::get(state, transform.position);
-    lua_pop(state, 1);
-
-    lua_getfield(state, position, "rotation");
-    transform.rotation = lua_tonumber(state, -1);
-    lua_pop(state, 1);
-}
-
-void fillTransformFromComponent(lua_State *state, Transform & transform)
+void getTransformFromComponent(lua_State *state, math::Transform & transform)
 {
     lua_getfield(state, 1, "entity");
-    fillTransform(state, transform);
+    script::get(state, transform);
     lua_pop(state, 1);
 }
 
-void updateTransform(lua_State *state, const Transform & transform, const int position)
-{
-    lua_getfield(state, position, "position");
-    script::update(state, transform.position);
-    lua_pop(state, 1);
-
-    lua_pushnumber(state, transform.rotation);
-    lua_setfield(state, -2, "rotation");
-}
-
-void updateTransformFromComponent(lua_State *state, const Transform & transform)
+void updateTransformFromComponent(lua_State *state, const math::Transform & transform)
 {
     lua_getfield(state, 1, "entity");
-    updateTransform(state, transform);
+    script::update(state, transform);
     lua_pop(state, 1);
 }
 

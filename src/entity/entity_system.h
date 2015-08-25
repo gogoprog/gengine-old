@@ -5,7 +5,6 @@
 #include "vector2.h"
 #include "script.h"
 #include "debug.h"
-#include "entity_transform.h"
 
 namespace gengine
 {
@@ -85,8 +84,6 @@ private:
 
         lua_setglobal(state, name);
     }
-
-    static void pushTransform(lua_State * state, const Transform & transform);
 
     template<typename COMPONENT>
     static int componentIndex(lua_State * state)

@@ -175,7 +175,7 @@ ENTITY_COMPONENT_METHOD(ComponentParticleSystem, update)
     particleSystem.update(System::getInstance().getCurrentDt());
 
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     particleSystem.setPosition(transform.position);
     particleSystem.setRotation(transform.rotation);

@@ -73,7 +73,7 @@ ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, update)
     graphics::SpriteBatch & spriteBatch = self.spriteBatch;
 
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     spriteBatch.setPosition(transform.position);
 }

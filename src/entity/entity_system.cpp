@@ -212,17 +212,5 @@ SCRIPT_CLASS_FUNCTION(System, destroy)
     return 0;
 }
 
-void System::pushTransform(lua_State * state, const Transform & transform)
-{
-    lua_getfield(state, -1, "position");
-    SCRIPT_TABLE_PUSH_NUMBER(x, transform.position.x);
-    SCRIPT_TABLE_PUSH_NUMBER(y, transform.position.y);
-
-    lua_pop(state, 1);
-
-    SCRIPT_TABLE_PUSH_NUMBER(rotation, transform.rotation);
-}
-
-
 }
 }

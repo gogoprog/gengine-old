@@ -52,7 +52,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, insert)
 {
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     self.agent = & navigation::System::getInstance().getWorld(self.worldIndex).getWorld().createAgent(*(tilemover2d::Vector2 *) & transform.position);
     self.agent->radius = self.radius;

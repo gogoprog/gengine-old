@@ -62,7 +62,7 @@ ENTITY_COMPONENT_METHOD(ComponentCamera, update)
     graphics::Camera & camera = self.camera;
 
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     camera.setPosition(transform.position);
 }

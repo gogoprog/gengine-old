@@ -58,7 +58,7 @@ ENTITY_COMPONENT_METHOD(ComponentMouseable, update)
     Vector2 cursor_position;
     Transform transform;
 
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     const Vector2 & entity_position = transform.position;
 

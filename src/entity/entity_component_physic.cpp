@@ -120,7 +120,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
 {
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
     self.body = physics::System::getInstance().getWorld(self.worldIndex).getBox2dWorld().CreateBody(&self.bodyDefinition);
@@ -143,7 +143,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentPhysic, insert)
 {
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
 
@@ -177,7 +177,7 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, update)
 
         case b2_kinematicBody:
         {
-            fillTransformFromComponent(state, transform);
+            getTransformFromComponent(state, transform);
 
             self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
         }
