@@ -29,11 +29,11 @@ struct Range
     static void fill(lua_State * state, Range<T> & result, int position = -1)
     {
         lua_rawgeti(state, position, 1);
-        script::fill(state, result.minimum, -1);
+        script::get(state, result.minimum, -1);
         lua_pop(state, 1);
 
         lua_rawgeti(state, position, 2);
-        script::fill(state, result.maximum, -1);
+        script::get(state, result.maximum, -1);
         lua_pop(state, 1);
     }
 
