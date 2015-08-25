@@ -22,6 +22,8 @@ protected:
         sprite;
     graphics::Atlas
         * atlas;
+    math::Vector2
+        extent;
     uint
         worldIndex,
         atlasItem;

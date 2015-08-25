@@ -9,7 +9,7 @@ namespace graphics
 
 struct Vertex
 {
-    Vector2
+    math::Vector2
         position,
         texCoords;
 

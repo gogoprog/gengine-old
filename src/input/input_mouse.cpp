@@ -6,6 +6,9 @@
 
 namespace gengine
 {
+
+using namespace math;
+
 namespace input
 {
 
@@ -109,7 +112,7 @@ SCRIPT_CLASS_FUNCTION(Mouse, getPosition)
 
     Vector2 position(self.x, self.y);
 
-    Vector2::push(state, position);
+    script::push(state, position);
 
     return 1;
 }

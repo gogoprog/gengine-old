@@ -33,7 +33,7 @@ ENTITY_COMPONENT_SETTERS(ComponentCamera)
     {
         Vector2 extent;
 
-        Vector2::fill(state, extent, 3);
+        script::get(state, extent, 3);
 
         self.camera.setExtent(extent);
     }
@@ -62,7 +62,7 @@ ENTITY_COMPONENT_METHOD(ComponentCamera, update)
     graphics::Camera & camera = self.camera;
 
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     camera.setPosition(transform.position);
 }
@@ -98,11 +98,11 @@ ENTITY_COMPONENT_METHOD(ComponentCamera, getWorldPosition)
 {
     Vector2 result, input;
 
-    Vector2::fill(state, input, 2);
+    script::get(state, input, 2);
 
     self.camera.getWorldPosition(result, input);
 
-    Vector2::push(state, result);
+    script::push(state, result);
 
     return 1;
 }

@@ -30,7 +30,7 @@ ENTITY_COMPONENT_SETTERS(ComponentMouseable)
 {
     ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
-        Vector2::fill(state, self.extent, 3);
+        script::get(state, self.extent, 3);
     }
     ENTITY_COMPONENT_SETTER(world)
     {
@@ -58,7 +58,7 @@ ENTITY_COMPONENT_METHOD(ComponentMouseable, update)
     Vector2 cursor_position;
     Transform transform;
 
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     const Vector2 & entity_position = transform.position;
 

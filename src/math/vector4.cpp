@@ -4,6 +4,8 @@
 
 namespace gengine
 {
+namespace math
+{
 
 Vector4::Vector4(const float _x, const float _y, const float _z, const float _w)
     :
@@ -139,22 +141,6 @@ void Vector4::fill(lua_State * state, Vector4 & result, int position)
     lua_pop(state, 1);
 }
 
-void Vector4::fillTableSafe(lua_State * state, Vector4 & result, const char * name, int table_position, const Vector4 & default_value)
-{
-    lua_getfield(state, table_position, name);
-
-    if(lua_isnil(state, -1))
-    {
-        result =  default_value;
-    }
-    else
-    {
-        Vector4::fill(state, result);
-    }
-
-    lua_pop(state, 1);
-}
-
 Vector4 operator*(const Vector4 & vector, const float multiplier)
 {
     return Vector4(vector.x * multiplier, vector.y * multiplier, vector.z * multiplier, vector.w * multiplier);
@@ -175,4 +161,5 @@ Vector4 operator*(const Vector4 & a, const Vector4 & b)
     return Vector4(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
 }
 
+}
 }

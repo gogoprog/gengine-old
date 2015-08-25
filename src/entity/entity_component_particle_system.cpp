@@ -62,7 +62,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<Vector2> range;
 
-        Range<Vector2>::fill(state, range, 3);
+        script::get(state, range, 3);
 
         self.particleSystem.setExtentRange(range);
     }
@@ -70,7 +70,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<Vector2> range;
 
-        Range<Vector2>::fill(state, range, 3);
+        script::get(state, range, 3);
 
         self.particleSystem.setLinearAccelerationRange(range);
     }
@@ -78,7 +78,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::get(state, range, 3);
 
         self.particleSystem.setLifeTimeRange(range);
     }
@@ -86,7 +86,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::get(state, range, 3);
 
         self.particleSystem.setDirectionRange(range);
     }
@@ -94,7 +94,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::get(state, range, 3);
 
         self.particleSystem.setSpeedRange(range);
     }
@@ -102,7 +102,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::get(state, range, 3);
 
         self.particleSystem.setRotationRange(range);
     }
@@ -110,7 +110,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
     {
         Range<float> range;
 
-        Range<float>::fill(state, range, 3);
+        script::get(state, range, 3);
 
         self.particleSystem.setSpinRange(range);
     }
@@ -124,7 +124,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
 
         while (lua_next(state, 3) != 0)
         {
-            Vector2::fill(state, value, -1);
+            script::get(state, value, -1);
             self.particleSystem.getScaleTable().add(value);
             lua_pop(state, 1);
         }
@@ -175,7 +175,7 @@ ENTITY_COMPONENT_METHOD(ComponentParticleSystem, update)
     particleSystem.update(System::getInstance().getCurrentDt());
 
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     particleSystem.setPosition(transform.position);
     particleSystem.setRotation(transform.rotation);

@@ -4,6 +4,8 @@
 
 namespace gengine
 {
+namespace math
+{
 
 struct Vector4
 {
@@ -24,7 +26,6 @@ struct Vector4
 
     static SCRIPT_REGISTERER();
     static void fill(lua_State * state, Vector4 & result, int position = -1);
-    static void fillTableSafe(lua_State * state, Vector4 & result, const char * name, int position = -1, const Vector4 & default_value = Vector4::zero);
 };
 
 Vector4 operator*(const Vector4 & vector, const float multiplier);
@@ -32,4 +33,5 @@ Vector4 operator-(const Vector4 & a, const Vector4 & b);
 Vector4 operator+(const Vector4 & a, const Vector4 & b);
 Vector4 operator*(const Vector4 & a, const Vector4 & b);
 
+}
 }

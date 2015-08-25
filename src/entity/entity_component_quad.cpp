@@ -23,7 +23,7 @@ ComponentQuad::ComponentQuad()
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentQuad)
 {
-    ENTITY_ADD_GETTER(ComponentQuad, "extent", { Vector2::push(state, self.sprite.getExtent()); });
+    ENTITY_ADD_GETTER(ComponentQuad, "extent", { script::push(state, self.sprite.getExtent()); });
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentQuad)
@@ -34,7 +34,7 @@ ENTITY_COMPONENT_SETTERS(ComponentQuad)
     }
     ENTITY_COMPONENT_SETTER(extent)
     {
-        Vector2::fill(state, self.sprite.getExtent(), 3);
+        script::get(state, self.sprite.getExtent(), 3);
     }
     ENTITY_COMPONENT_SETTER(color)
     {
@@ -69,7 +69,7 @@ ENTITY_COMPONENT_METHOD(ComponentQuad, update)
     graphics::Sprite & sprite = self.sprite;
 
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     sprite.setPosition(transform.position);
     sprite.setRotation(transform.rotation);

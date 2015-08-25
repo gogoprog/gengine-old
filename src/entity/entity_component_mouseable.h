@@ -18,7 +18,7 @@ public:
     ENTITY_COMPONENT_DECLARE(ComponentMouseable);
 
 private:
-    Vector2
+    math::Vector2
         extent;
     uint
         worldIndex;

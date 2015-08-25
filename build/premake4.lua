@@ -15,6 +15,7 @@ solution "gengine"
         includedirs {
             "../src/kernel",
             "../src/core",
+            "../src/math",
             "../src/application",
             "../src/graphics",
             "../src/graphics/spriter",

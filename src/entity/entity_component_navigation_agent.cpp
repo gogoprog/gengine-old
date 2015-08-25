@@ -10,6 +10,9 @@
 
 namespace gengine
 {
+
+using namespace math;
+
 namespace entity
 {
 
@@ -49,7 +52,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, insert)
 {
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     self.agent = & navigation::System::getInstance().getWorld(self.worldIndex).getWorld().createAgent(*(tilemover2d::Vector2 *) & transform.position);
     self.agent->radius = self.radius;
@@ -78,7 +81,7 @@ ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, moveTo)
 {
     Vector2 position;
 
-    Vector2::fill(state, position, 2);
+    script::get(state, position, 2);
 
     self.agent->moveTo(*(tilemover2d::Vector2 *) & position);
 }

@@ -9,6 +9,9 @@
 
 namespace gengine
 {
+
+using namespace math;
+
 namespace entity
 {
 
@@ -38,7 +41,7 @@ ENTITY_COMPONENT_SETTERS(ComponentPhysic)
 
         Vector2 extent;
 
-        Vector2::fill(state, extent, 3);
+        script::get(state, extent, 3);
 
         shape->SetAsBox(extent.x * 0.5f, extent.y * 0.5f);
 
@@ -117,7 +120,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
 {
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
     self.body = physics::System::getInstance().getWorld(self.worldIndex).getBox2dWorld().CreateBody(&self.bodyDefinition);
@@ -140,7 +143,7 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentPhysic, insert)
 {
     Transform transform;
-    fillTransformFromComponent(state, transform);
+    getTransformFromComponent(state, transform);
 
     self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
 
@@ -174,7 +177,7 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, update)
 
         case b2_kinematicBody:
         {
-            fillTransformFromComponent(state, transform);
+            getTransformFromComponent(state, transform);
 
             self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
         }
@@ -201,8 +204,8 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForce)
 {
     Vector2 force, point;
 
-    Vector2::fill(state, force, 2);
-    Vector2::fill(state, point, 3);
+    script::get(state, force, 2);
+    script::get(state, point, 3);
 
     self.body->ApplyForce(b2Vec2(force.x, force.y), b2Vec2(point.x, point.y));
 }
@@ -212,7 +215,7 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForceToCenter)
 {
     Vector2 force;
 
-    Vector2::fill(state, force, 2);
+    script::get(state, force, 2);
 
     self.body->ApplyForceToCenter(b2Vec2(force.x, force.y));
 }
@@ -222,8 +225,8 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, applyLinearImpulse)
 {
     Vector2 impulse, point;
 
-    Vector2::fill(state, impulse, 2);
-    Vector2::fill(state, point, 3);
+    script::get(state, impulse, 2);
+    script::get(state, point, 3);
 
     self.body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(point.x, point.y));
 }

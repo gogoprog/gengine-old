@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script_lua.h"
+#include "script_binder.h"
 
 #define SCRIPT_DEBUG_TOP() \
     geDebugLog(lua_gettop(state))
@@ -87,14 +88,31 @@ float getTableFloatSafe(lua_State * state, const char * name, const int table_po
 void executeText(const char * text);
 
 template<class T>
-void fill(lua_State * state, T & result, const int position = -1)
+void get(lua_State * state, T & result, const int position = -1)
 {
-    T::fill(state, result, position);
+    Binder<T>::get(state, result, position);
 }
 
-inline void fill(lua_State * state, float & result, const int position = -1)
+inline void get(lua_State * state, float & result, const int position = -1)
 {
     result = lua_tonumber(state, position);
+}
+
+template<class T>
+void push(lua_State * state, const T & value)
+{
+    Binder<T>::push(state, value);
+}
+
+inline void push(lua_State * state, const float value)
+{
+    lua_pushnumber(state, value);
+}
+
+template<class T>
+void update(lua_State * state, const T & value)
+{
+    Binder<T>::update(state, value);
 }
 
 }
