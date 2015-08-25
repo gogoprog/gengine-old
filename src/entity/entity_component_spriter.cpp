@@ -84,6 +84,13 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
     {
         float duration = self.animation->getDuration();
         bool looping = self.animation->isLooping();
+        graphics::SpriteGroup & spriteGroup = self.spriteGroup;
+        Transform transform;
+
+        getTransformFromComponent(state, transform);
+
+        spriteGroup.setPosition(transform.position);
+        spriteGroup.setRotation(transform.rotation);
 
         self.currentTime += System::getInstance().getCurrentDt() * self.timeFactor;
 
@@ -114,23 +121,15 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
         if(self.currentMainlineKey != mlk)
         {
             self.currentMainlineKey = mlk;
-            self.animation->fill(self.spriteGroup, *mlk, self.characterMap);
+            self.animation->fill(spriteGroup, *mlk, self.characterMap);
         }
 
-        self.animation->update(self.spriteGroup, *mlk, self.currentTime, self.characterMap);
+        self.animation->update(spriteGroup, *mlk, self.currentTime, self.characterMap, transform.scale);
 
         if(!looping && self.currentTime == duration && !self.animationStack.getSize())
         {
             self.animation = nullptr;
         }
-
-        graphics::SpriteGroup & spriteGroup = self.spriteGroup;
-
-        Transform transform;
-        getTransformFromComponent(state, transform);
-
-        spriteGroup.setPosition(transform.position);
-        spriteGroup.setRotation(transform.rotation);
     }
 }
 ENTITY_COMPONENT_END()

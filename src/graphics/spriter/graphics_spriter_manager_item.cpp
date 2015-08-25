@@ -58,7 +58,7 @@ void SpriterManagerItem::fill(SpriteGroup & group, const SpriterMainlineKey & ml
     }
 }
 
-void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & mlk, const float time, const Pointer<const SpriterCharacterMap> character_map) const
+void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & mlk, const float time, const Pointer<const SpriterCharacterMap> character_map, const Vector2 & scale) const
 {
     Vector2 extent, pivot_to_center;
     SpriterTransform transform;
@@ -73,13 +73,13 @@ void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & 
 
         item.fillTransform(transform, time_integer, true);
 
-        extent = Vector2(float(asset.width), float(asset.height)) * transform.scale;
+        extent = Vector2(float(asset.width), float(asset.height)) * transform.scale * scale;
 
         sprite.setExtent(extent);
 
         pivot_to_center = extent * transform.pivot;
 
-        sprite.setPosition(transform.position - Vector2::getRotated(pivot_to_center, transform.angle));
+        sprite.setPosition(transform.position * scale - Vector2::getRotated(pivot_to_center, transform.angle));
 
         sprite.setRotation(transform.angle);
 
