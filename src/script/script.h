@@ -98,5 +98,22 @@ inline void get(lua_State * state, float & result, const int position = -1)
     result = lua_tonumber(state, position);
 }
 
+template<class T>
+void push(lua_State * state, const T & value)
+{
+    Binder<T>::push(state, value);
+}
+
+inline void push(lua_State * state, const float value)
+{
+    lua_pushnumber(state, value);
+}
+
+template<class T>
+void update(lua_State * state, const T & value)
+{
+    Binder<T>::update(state, value);
+}
+
 }
 }

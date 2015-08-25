@@ -12,7 +12,7 @@ SCRIPT_FUNCTION(getLength)
 {
     Vector2 a;
 
-    script::Binder<Vector2>::get(state, a, 1);
+    script::get(state, a, 1);
 
     float l = Vector2::getLength(a);
     lua_pushnumber(state, l);
@@ -24,7 +24,7 @@ SCRIPT_FUNCTION(getSquareLength)
 {
     Vector2 a;
 
-    script::Binder<Vector2>::get(state, a, 1);
+    script::get(state, a, 1);
 
     float sl = Vector2::getSquareLength(a);
     lua_pushnumber(state, sl);
@@ -36,8 +36,8 @@ SCRIPT_FUNCTION(getDistance)
 {
     Vector2 a, b;
 
-    script::Binder<Vector2>::get(state, a, 1);
-    script::Binder<Vector2>::get(state, b, 2);
+    script::get(state, a, 1);
+    script::get(state, b, 2);
 
     float d = Vector2::getDistance(a, b);
     lua_pushnumber(state, d);
@@ -49,8 +49,8 @@ SCRIPT_FUNCTION(getSquareDistance)
 {
     Vector2 a, b;
 
-    script::Binder<Vector2>::get(state, a, 1);
-    script::Binder<Vector2>::get(state, b, 2);
+    script::get(state, a, 1);
+    script::get(state, b, 2);
 
     float d = Vector2::getSquareDistance(a, b);
     lua_pushnumber(state, d);
@@ -62,8 +62,8 @@ SCRIPT_FUNCTION(getAngle)
 {
     Vector2 a, b;
 
-    script::Binder<Vector2>::get(state, a, 1);
-    script::Binder<Vector2>::get(state, b, 2);
+    script::get(state, a, 1);
+    script::get(state, b, 2);
 
     float angle = Vector2::getAngle(a, b);
     lua_pushnumber(state, angle);
@@ -75,11 +75,11 @@ SCRIPT_FUNCTION(getNormalized)
 {
     Vector2 a;
 
-    script::Binder<Vector2>::get(state, a, 1);
+    script::get(state, a, 1);
 
     a.normalize();
 
-    script::Binder<Vector2>::push(state, a);
+    script::push(state, a);
 
     return 1;
 }
@@ -89,12 +89,12 @@ SCRIPT_FUNCTION(getRotated)
     Vector2 v;
     float a;
 
-    script::Binder<Vector2>::get(state, v, 1);
+    script::get(state, v, 1);
     a = lua_tonumber(state, 2);
 
     v.rotate(a);
 
-    script::Binder<Vector2>::push(state, v);
+    script::push(state, v);
 
     return 1;
 }

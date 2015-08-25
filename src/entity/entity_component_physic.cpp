@@ -41,7 +41,7 @@ ENTITY_COMPONENT_SETTERS(ComponentPhysic)
 
         Vector2 extent;
 
-        script::Binder<Vector2>::get(state, extent, 3);
+        script::get(state, extent, 3);
 
         shape->SetAsBox(extent.x * 0.5f, extent.y * 0.5f);
 
@@ -204,8 +204,8 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForce)
 {
     Vector2 force, point;
 
-    script::Binder<Vector2>::get(state, force, 2);
-    script::Binder<Vector2>::get(state, point, 3);
+    script::get(state, force, 2);
+    script::get(state, point, 3);
 
     self.body->ApplyForce(b2Vec2(force.x, force.y), b2Vec2(point.x, point.y));
 }
@@ -215,7 +215,7 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForceToCenter)
 {
     Vector2 force;
 
-    script::Binder<Vector2>::get(state, force, 2);
+    script::get(state, force, 2);
 
     self.body->ApplyForceToCenter(b2Vec2(force.x, force.y));
 }
@@ -225,8 +225,8 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, applyLinearImpulse)
 {
     Vector2 impulse, point;
 
-    script::Binder<Vector2>::get(state, impulse, 2);
-    script::Binder<Vector2>::get(state, point, 3);
+    script::get(state, impulse, 2);
+    script::get(state, point, 3);
 
     self.body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(point.x, point.y));
 }

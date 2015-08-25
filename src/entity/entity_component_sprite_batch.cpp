@@ -103,11 +103,11 @@ ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, addItem)
     int atlas_item_index;
 
     atlas_item_index = lua_tonumber(state, 2);
-    script::Binder<Vector2>::get(state, position, 3);
+    script::get(state, position, 3);
 
     if(lua_istable(state, 4))
     {
-        script::Binder<Vector2>::get(state, extent, 4);
+        script::get(state, extent, 4);
         self.spriteBatch.addItem(atlas_item_index, position, extent);
     }
     else

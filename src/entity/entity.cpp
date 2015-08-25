@@ -134,7 +134,7 @@ SCRIPT_REGISTERER()
 void fillTransform(lua_State *state, Transform & transform, const int position)
 {
     lua_getfield(state, position, "position");
-    script::Binder<Vector2>::get(state, transform.position);
+    script::get(state, transform.position);
     lua_pop(state, 1);
 
     lua_getfield(state, position, "rotation");
@@ -152,7 +152,7 @@ void fillTransformFromComponent(lua_State *state, Transform & transform)
 void updateTransform(lua_State *state, const Transform & transform, const int position)
 {
     lua_getfield(state, position, "position");
-    script::Binder<Vector2>::update(state, transform.position);
+    script::update(state, transform.position);
     lua_pop(state, 1);
 
     lua_pushnumber(state, transform.rotation);

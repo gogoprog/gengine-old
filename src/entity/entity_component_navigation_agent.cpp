@@ -81,7 +81,7 @@ ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, moveTo)
 {
     Vector2 position;
 
-    script::Binder<Vector2>::get(state, position, 2);
+    script::get(state, position, 2);
 
     self.agent->moveTo(*(tilemover2d::Vector2 *) & position);
 }

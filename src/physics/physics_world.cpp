@@ -67,7 +67,7 @@ SCRIPT_CLASS_FUNCTION(World, setGravity)
 
     Vector2 gravity;
 
-    script::Binder<Vector2>::get(state, gravity, 2);
+    script::get(state, gravity, 2);
 
     self.b2world.SetGravity(b2Vec2(gravity.x, gravity.y));
 
@@ -81,8 +81,8 @@ SCRIPT_CLASS_FUNCTION(World, rayCast)
     Vector2 start, end;
     LocalAllResult results;
 
-    script::Binder<Vector2>::get(state, start, 2);
-    script::Binder<Vector2>::get(state, end, 3);
+    script::get(state, start, 2);
+    script::get(state, end, 3);
 
     self.b2world.RayCast(&results, b2Vec2(start.x, start.y), b2Vec2(end.x, end.y));
 
