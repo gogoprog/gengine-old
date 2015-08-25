@@ -32,7 +32,10 @@ void Window::init()
 
         if(application::isFullscreen())
         {
-            flags |= SDL_WINDOW_FULLSCREEN;
+            SDL_DisplayMode dm;
+            SDL_GetDesktopDisplayMode(0, &dm);
+            setExtent(dm.w, dm.h);
+            flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
         }
 
         pWindow = SDL_CreateWindow(

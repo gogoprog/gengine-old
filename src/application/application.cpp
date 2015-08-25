@@ -59,6 +59,7 @@ const char * getName() { return name.c_str(); }
 uint getWidth() { return width; }
 uint getHeight() { return height; }
 math::Vector2 getExtent() { return math::Vector2(width, height); }
+void setExtent(const uint _width, const uint _height) { width = _width; height = _height; }
 bool isFullscreen() { return fullscreen; }
 
 SCRIPT_REGISTERER()

@@ -17,7 +17,6 @@ public:
     void finalize();
     void swap();
 
-
     #ifndef EMSCRIPTEN
         SDL_Window * getSdlWindow() { return pWindow; }
         SDL_Renderer * getSdlRenderer() { return pRenderer; }

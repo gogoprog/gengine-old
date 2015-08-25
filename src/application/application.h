@@ -15,6 +15,7 @@ const char * getName();
 uint getWidth();
 uint getHeight();
 math::Vector2 getExtent();
+void setExtent(const uint width, const uint height);
 bool isFullscreen();
 
 SCRIPT_REGISTERER();
