@@ -171,6 +171,12 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     lua_setfield(state, -2, "position");
 
+    SCRIPT_DO(
+        return vector2(1, 1)
+        );
+
+    lua_setfield(state, -2, "scale");
+
     SCRIPT_TABLE_PUSH_NUMBER(rotation, 0);
 
     lua_newtable(state);

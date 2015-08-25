@@ -12,7 +12,8 @@ namespace math
 struct Transform
 {
     Vector2
-        position;
+        position,
+        scale;
     float
         rotation;
 };
@@ -30,6 +31,10 @@ public:
         script::update(state, transform.position);
         lua_pop(state, 1);
 
+        lua_getfield(state, position, "scale");
+        script::update(state, transform.scale);
+        lua_pop(state, 1);
+
         lua_pushnumber(state, transform.rotation);
         lua_setfield(state, -2, "rotation");
     }
@@ -38,6 +43,10 @@ public:
     {
         lua_getfield(state, position, "position");
         script::get(state, transform.position);
+        lua_pop(state, 1);
+
+        lua_getfield(state, position, "scale");
+        script::get(state, transform.scale);
         lua_pop(state, 1);
 
         lua_getfield(state, position, "rotation");
