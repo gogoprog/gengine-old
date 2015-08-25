@@ -18,6 +18,7 @@ namespace entity
 ComponentSprite::ComponentSprite()
     :
     atlas(nullptr),
+    extent(math::Vector2::zero),
     worldIndex(0),
     atlasItem(0),
     extentHasBeenSet(false)
@@ -37,7 +38,7 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     }
     ENTITY_COMPONENT_SETTER(extent)
     {
-        script::get(state, self.sprite.getExtent(), 3);
+        script::get(state, self.extent, 3);
         self.extentHasBeenSet = true;
     }
     ENTITY_COMPONENT_SETTER(uvScale)
@@ -88,7 +89,7 @@ ENTITY_COMPONENT_METHOD(ComponentSprite, init)
 
         if(!self.extentHasBeenSet)
         {
-            self.atlas->getDefaultExtent(self.sprite.getExtent(), self.atlasItem);
+            self.atlas->getDefaultExtent(self.extent, self.atlasItem);
         }
     }
     else
@@ -99,8 +100,8 @@ ENTITY_COMPONENT_METHOD(ComponentSprite, init)
 
             if(!texture.isNull())
             {
-                self.sprite.getExtent().x = texture->getWidth();
-                self.sprite.getExtent().y = texture->getHeight();
+                self.extent.x = texture->getWidth();
+                self.extent.y = texture->getHeight();
             }
         }
     }
@@ -116,12 +117,13 @@ ENTITY_COMPONENT_END()
 ENTITY_COMPONENT_METHOD(ComponentSprite, update)
 {
     graphics::Sprite & sprite = self.sprite;
-
     Transform transform;
+
     getTransformFromComponent(state, transform);
 
     sprite.setPosition(transform.position);
     sprite.setRotation(transform.rotation);
+    sprite.setExtent(self.extent * transform.scale);
 }
 ENTITY_COMPONENT_END()
 
