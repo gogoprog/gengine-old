@@ -73,9 +73,11 @@ bool Atlas::setFromTextureAndTable(const Texture *_texture, script::State state)
     return true;
 }
 
-bool Atlas::setFromTextureForTileset(const Texture *texture, script::State state)
+bool Atlas::setFromTextureForTileset(const Texture *_texture, script::State state)
 {
     uint width, height, padding;
+
+    texture = _texture;
 
     lua_getfield(state, 3, "width");
     script::get(state, width, -1, 0);
@@ -97,15 +99,15 @@ bool Atlas::setFromTextureForTileset(const Texture *texture, script::State state
         texture_width = texture->getWidth();
         texture_height = texture->getHeight();
 
-        uv_scale.x = width / texture_width;
-        uv_scale.y = height / texture_height;
+        uv_scale.x = width / (float)texture_width;
+        uv_scale.y = height / (float)texture_height;
 
-        for(uint x=padding; x<=texture_width-width-padding; x+=padding+width)
+        for(uint y=padding; y<=texture_height-height-padding; y+=padding+height)
         {
-            for(uint y=padding; y<=texture_height-height-padding; y+=padding+height)
+            for(uint x=padding; x<=texture_width-width-padding; x+=padding+width)
             {
-                uv_offset.x = x / texture_width;
-                uv_offset.y = y / texture_height;
+                uv_offset.x = x / (float)texture_width;
+                uv_offset.y = y / (float)texture_height;
 
                 itemTable.add(
                     AtlasItem(
