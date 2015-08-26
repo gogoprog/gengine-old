@@ -35,7 +35,7 @@ SCRIPT_REGISTERER()
                 for k, ts in ipairs(file.tilesets) do
                     if ts.image then
                         local texture = gengine.graphics.texture.create(path .. ts.image)
-                        ts.atlas = gengine.graphics.atlas.create(ts.name, texture, ts.imagewidth / ts.tilewidth,  ts.imageheight / ts.tileheight)
+                        ts.atlas = gengine.graphics.atlas.create(ts.name, texture, { width=ts.tilewidth, height=ts.tileheight, spacing=ts.spacing, margin=ts.margin })
                         local count = (ts.imagewidth / ts.tilewidth) * (ts.imageheight / ts.tileheight)
 
                         for i=1,count do
