@@ -22,7 +22,17 @@ bool AtlasManager::internalCreate(Atlas * atlas, script::State state, const int 
     }
     else if(lua_istable(state, 3))
     {
-        return atlas->setFromTextureAndTable(texture, state);
+        lua_getfield(state, 3, "width");
+        if(lua_isnil(state, -1))
+        {
+            lua_pop(state, 1);
+            return atlas->setFromTextureAndTable(texture, state);
+        }
+        else
+        {
+            lua_pop(state, 1);
+            return atlas->setFromTextureForTileset(texture, state);
+        }
     }
 
     return false;

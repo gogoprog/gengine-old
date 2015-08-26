@@ -98,6 +98,23 @@ inline void get(lua_State * state, float & result, const int position = -1)
     result = lua_tonumber(state, position);
 }
 
+inline void get(lua_State * state, uint & result, const int position = -1)
+{
+    result = uint(lua_tonumber(state, position));
+}
+
+inline void get(lua_State * state, uint & result, const int position, const uint default_value)
+{
+    if(lua_isnil(state, position))
+    {
+        result = default_value;
+    }
+    else
+    {
+        result = uint(lua_tonumber(state, position));
+    }
+}
+
 template<class T>
 void push(lua_State * state, const T & value)
 {
