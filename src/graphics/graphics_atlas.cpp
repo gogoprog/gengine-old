@@ -41,7 +41,7 @@ bool Atlas::setFromTextureAndCellCount(const Texture *_texture, const uint x_cel
     return true;
 }
 
-bool Atlas::setFromTextureAndTable(const Texture *_texture, lua_State * state)
+bool Atlas::setFromTextureAndTable(const Texture *_texture, script::State state)
 {
     texture = _texture;
 
@@ -71,6 +71,55 @@ bool Atlas::setFromTextureAndTable(const Texture *_texture, lua_State * state)
     lua_pop(state, 1);
 
     return true;
+}
+
+bool Atlas::setFromTextureForTileset(const Texture *texture, script::State state)
+{
+    uint width, height, padding;
+
+    lua_getfield(state, 3, "width");
+    script::get(state, width, -1, 0);
+    lua_pop(state, 1);
+
+    lua_getfield(state, 3, "height");
+    script::get(state, height, -1, 0);
+    lua_pop(state, 1);
+
+    lua_getfield(state, 3, "padding");
+    script::get(state, padding, -1, 0);
+    lua_pop(state, 1);
+
+    if(width && height)
+    {
+        uint texture_width, texture_height;
+        math::Vector2 uv_scale, uv_offset;
+
+        texture_width = texture->getWidth();
+        texture_height = texture->getHeight();
+
+        uv_scale.x = width / texture_width;
+        uv_scale.y = height / texture_height;
+
+        for(uint x=padding; x<=texture_width-width-padding; x+=padding+width)
+        {
+            for(uint y=padding; y<=texture_height-height-padding; y+=padding+height)
+            {
+                uv_offset.x = x / texture_width;
+                uv_offset.y = y / texture_height;
+
+                itemTable.add(
+                    AtlasItem(
+                        uv_offset,
+                        uv_scale
+                        )
+                    );
+            }
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 void Atlas::getDefaultExtent(math::Vector2 & result, const uint index) const

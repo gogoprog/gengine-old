@@ -22,7 +22,8 @@ public:
     void init();
     void finalize();
     bool setFromTextureAndCellCount(const Texture *texture, const uint x_cell_count, const uint y_cell_count);
-    bool setFromTextureAndTable(const Texture *texture, lua_State * state);
+    bool setFromTextureAndTable(const Texture *texture, script::State state);
+    bool setFromTextureForTileset(const Texture *texture, script::State state);
 
     uint getSize() const { return itemTable.getSize(); }
     AtlasItem & getItem(const uint index) { return itemTable[index]; }
