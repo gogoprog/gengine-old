@@ -5,7 +5,7 @@
 #include "application.h"
 #include <sstream>
 #include "debug.h"
-#include <GL/gl.h>
+#include "graphics_opengl.h"
 
 #ifdef EMSCRIPTEN
     #include <emscripten.h>
