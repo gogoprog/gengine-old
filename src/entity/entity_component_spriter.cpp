@@ -62,6 +62,10 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
         {
             self.characterMap = self.lastSpriterEntity->getCharacterMap(lua_tostring(state,3));
         }
+        else
+        {
+            self.characterMapName = lua_tostring(state,3);
+        }
     }
     ENTITY_COMPONENT_SETTER_END()
 }
@@ -167,6 +171,12 @@ void ComponentSpriter::setAnimation(const graphics::SpriterManagerItem * _animat
     {
         characterMap = nullptr;
         lastSpriterEntity = & animation->getEntity();
+
+        if(characterMapName != "")
+        {
+            characterMap = lastSpriterEntity->getCharacterMap(characterMapName.c_str());
+            characterMapName = "";
+        }
     }
 }
 
