@@ -32,7 +32,7 @@ void SpriterManagerItem::fill(SpriteGroup & group, const SpriterMainlineKey & ml
     {
         auto & item = mlk.objectKeys[i];
 
-        if ( sprites[i].isNull() )
+        if(sprites[i].isNull())
         {
             sprites[i] = new Sprite();
         }
@@ -51,6 +51,7 @@ void SpriterManagerItem::fill(SpriteGroup & group, const SpriterMainlineKey & ml
         {
             auto texture = TextureManager::getInstance().getItem(texture_name.c_str());
             textureCacheMap.add(texture, texture_name);
+            sprite.setTexture(*texture);
         }
 
         sprite.setUvScale( Vector2::one );

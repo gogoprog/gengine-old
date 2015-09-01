@@ -355,33 +355,28 @@ void SpriterFile::load(const core::Json & json)
         & entity_json = json["entity"],
         & folder_json = json["folder"];
 
-    allAssets.reserve(folder_json.getSize());
+    allAssets.setSize(folder_json.getSize());
 
     for(uint i=0; i<folder_json.getSize();++i)
     {
         const core::Json
             & file_json = folder_json[i]["file"];
 
-        allAssets.add();
+        Array<SpriterAsset> & assets = allAssets[i];
 
-        Array<SpriterAsset> & assets = allAssets.getLastItem();
+        assets.setSize(file_json.getSize());
 
         for(uint f=0; f<file_json.getSize(); ++f)
         {
-            assets.add();
-
-            SpriterAsset & asset = assets.getLastItem();
-
-            asset.load(file_json[f]);
+            assets[f].load(file_json[f]);
         }
     }
 
-    entities.reserve(entity_json.getSize());
+    entities.setSize(entity_json.getSize());
 
     for(uint i=0; i<entity_json.getSize();++i)
     {
-        entities.add();
-        entities.getLastItem().load(entity_json[i], *this);
+        entities[i].load(entity_json[i], *this);
     }
 }
 

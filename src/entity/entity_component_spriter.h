@@ -36,6 +36,8 @@ protected:
         animationStack;
     graphics::SpriteGroup
         spriteGroup;
+    std::string
+        characterMapName;
     float
         currentTime,
         timeFactor;
