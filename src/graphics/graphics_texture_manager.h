@@ -27,8 +27,6 @@ private:
     virtual void internalGetName(char * name, const char * arg) override;
     virtual void internalInit() override;
     virtual void internalFinalize() override;
-
-    static void internalLuaRegister(script::State state);
 };
 
 }

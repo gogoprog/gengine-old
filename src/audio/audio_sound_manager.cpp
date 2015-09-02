@@ -11,7 +11,7 @@ namespace audio
 
 bool SoundManager::internalCreate(Sound * sound, script::State state, const int parameter_position)
 {
-    const char * path = lua_tostring(state, 1);
+    const char * path = lua_tostring(state, parameter_position);
     return sound->setFromFile(path);
 }
 

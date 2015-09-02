@@ -31,6 +31,7 @@
     { \
         lua_newtable(state); \
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, create); \
+        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, createFromDirectory); \
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, get); \
         SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, getKeys); \
         internalLuaRegister(state); \

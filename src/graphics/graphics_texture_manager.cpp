@@ -56,10 +56,5 @@ void TextureManager::internalFinalize()
     delete defaultItem;
 }
 
-void TextureManager::internalLuaRegister(script::State state)
-{
-    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(TextureManager, createFromDirectory);
-}
-
 }
 }

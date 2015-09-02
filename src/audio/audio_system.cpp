@@ -25,6 +25,7 @@ void System::init()
     }
 
     SoundManager::getInstance().init("sound");
+    SoundManager::getInstance().addSupportedExtension(".wav");
 }
 
 void System::finalize()
