@@ -76,6 +76,30 @@ SCRIPT_FUNCTION(doRectanglesIntersect)
     return 1;
 }
 
+
+SCRIPT_FUNCTION(doCirclesIntersect)
+{
+    Vector2
+        position1,
+        position2;
+    float
+        radius1,
+        radius2;
+    bool
+        result;
+
+    script::get(state, position1, 1);
+    script::get(state, radius1, 2);
+    script::get(state, position2, 3);
+    script::get(state, radius2, 4);
+
+    result = Vector2::getDistance(position1, position2) < radius1 + radius2;
+
+    lua_pushboolean(state, result);
+
+    return 1;
+}
+
 SCRIPT_FUNCTION(doesCircleIntersectRectangle)
 {
     Vector2
@@ -136,6 +160,7 @@ SCRIPT_REGISTERER()
 
     SCRIPT_TABLE_PUSH_FUNCTION(getClosestAngle);
     SCRIPT_TABLE_PUSH_FUNCTION(doRectanglesIntersect);
+    SCRIPT_TABLE_PUSH_FUNCTION(doCirclesIntersect);
     SCRIPT_TABLE_PUSH_FUNCTION(doesCircleIntersectRectangle);
 
     lua_setfield(state, -2, "math");
