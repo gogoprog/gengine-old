@@ -145,7 +145,7 @@ protected:
 
                 if(length > 4)
                 {
-                    std::string extension = str_name.substr(length - 4);
+                    std::string extension = str_name.substr(str_name.find_last_of("."));
 
                     if(supportedExtensions.contains(extension))
                     {
