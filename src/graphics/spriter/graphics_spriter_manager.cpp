@@ -11,9 +11,9 @@ namespace gengine
 namespace graphics
 {
 
-SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
+bool SpriterManager::internalCreate(SpriterManagerItem * item, script::State state, const int parameter_position)
 {
-    const char * path = lua_tostring(state, 1);
+    const char * path = lua_tostring(state, parameter_position);
 
     std::filebuf fb;
 
@@ -28,7 +28,7 @@ SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
 
             file.load(json);
 
-            getInstance().files.add( & file );
+            files.add( & file );
 
             for(const SpriterEntity & entity : file.entities)
             {
@@ -44,7 +44,7 @@ SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
                     item->animation = & animation;
                     item->init();
 
-                    getInstance().itemMap.add(item, final_key);
+                    itemMap.add(item, final_key);
 
                     geDebugLog("graphics::SpriterManager loaded \"" << final_key << "\" " << (animation.looping ? "(loop)" : "") << "...");
                 }
@@ -52,22 +52,12 @@ SCRIPT_CLASS_FUNCTION(SpriterManager, loadFile)
         }
     }
 
-    return 0;
-}
-
-bool SpriterManager::internalCreate(SpriterManagerItem * item, script::State state, const int parameter_position)
-{
     return false;
 }
 
 void SpriterManager::internalGetName(char * result, const char * arg)
 {
     strcpy(result, arg);
-}
-
-void SpriterManager::internalLuaRegister(script::State state)
-{
-    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(SpriterManager, loadFile);
 }
 
 }

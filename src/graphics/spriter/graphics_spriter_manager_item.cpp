@@ -9,7 +9,10 @@ namespace graphics
 
 void SpriterManagerItem::init()
 {
-    duration = animation->length / 1000.0f;
+    if(animation)
+    {
+        duration = animation->length / 1000.0f;
+    }
 }
 
 void SpriterManagerItem::finalize()
