@@ -25,6 +25,7 @@ void System::init()
     renderer.init();
 
     TextureManager::getInstance().init("texture");
+    TextureManager::getInstance().addSupportedExtension(".png");
     AtlasManager::getInstance().init("atlas");
     AnimationManager::getInstance().init("animation");
 

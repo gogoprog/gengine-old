@@ -20,8 +20,6 @@ public:
 
     MANAGER_DECLARE(TextureManager);
 
-    static SCRIPT_FUNCTION(createFromDirectory);
-
     static void simplifyName(char *result, const char *input);
 
 private:

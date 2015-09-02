@@ -7,11 +7,17 @@
 #include "script.h"
 #include "pointer.h"
 #include "debug.h"
+#include <cstring>
+#include <dirent.h>
 
 #define MANAGER_DECLARE(_class_) \
     static SCRIPT_FUNCTION(create) \
     { \
         return getInstance().createItem(state); \
+    } \
+    static SCRIPT_FUNCTION(createFromDirectory) \
+    { \
+        return getInstance().createFromDirectory(state); \
     } \
     static SCRIPT_FUNCTION(get) \
     { \
@@ -78,6 +84,11 @@ public:
         return nullptr;
     }
 
+    void addSupportedExtension(const char * extension)
+    {
+        supportedExtensions.add(true, extension);
+    }
+
 protected:
     virtual bool internalCreate(T * t, script::State state, const int parameter_position) = 0;
     virtual void internalGetName(char * name, const char * arg) = 0;
@@ -114,6 +125,44 @@ protected:
         }
 
         return 1;
+    }
+
+    int createFromDirectory(script::State state)
+    {
+        const char * path = lua_tostring(state, 1);
+        DIR * directory;
+        dirent * result;
+
+        directory = opendir(path);
+
+        if(directory)
+        {
+            while((result = readdir(directory)))
+            {
+                std::string str_name = result->d_name;
+                size_t length = str_name.length();
+
+                if(length > 4)
+                {
+                    std::string extension = str_name.substr(length - 4);
+
+                    if(supportedExtensions.contains(extension))
+                    {
+                        std::string final_path = path;
+                        final_path += "/";
+                        final_path += str_name;
+
+                        lua_pushstring(state, final_path.c_str());
+                        createItem(state, -1);
+                        lua_pop(state, 1);
+                    }
+                }
+            }
+
+            closedir(directory);
+        }
+
+        return 0;
     }
 
     int getItem(script::State state)
@@ -154,6 +203,8 @@ protected:
         defaultItem;
     std::string
         itemTypeName;
+    Map<std::string, bool>
+        supportedExtensions;
 };
 
 }
