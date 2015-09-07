@@ -202,8 +202,8 @@ void Renderer::render(const World & world)
                     if(sprite.texture)
                     {
                         transform_matrix.initIdentity();
-                        transform_matrix.setTranslation(sprite_group.position + sprite.position);
-                        transform_matrix.setRotation(sprite.rotation);
+                        transform_matrix.setTranslation(sprite_group.position + math::Vector2::getRotated(sprite.position, sprite_group.rotation));
+                        transform_matrix.setRotation(sprite.rotation + sprite_group.rotation);
                         transform_matrix.preScale(sprite.extent);
 
                         transformMatrixUniform.apply(transform_matrix);
