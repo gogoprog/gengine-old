@@ -145,17 +145,21 @@ protected:
 
                 if(length > 4)
                 {
-                    std::string extension = str_name.substr(str_name.find_last_of("."));
-
-                    if(supportedExtensions.contains(extension))
+                    size_t pos = str_name.find_last_of(".");
+                    if(pos != std::string::npos)
                     {
-                        std::string final_path = path;
-                        final_path += "/";
-                        final_path += str_name;
+                        std::string extension = str_name.substr(pos);
 
-                        lua_pushstring(state, final_path.c_str());
-                        createItem(state, -1);
-                        lua_pop(state, 1);
+                        if(supportedExtensions.contains(extension))
+                        {
+                            std::string final_path = path;
+                            final_path += "/";
+                            final_path += str_name;
+
+                            lua_pushstring(state, final_path.c_str());
+                            createItem(state, -1);
+                            lua_pop(state, 1);
+                        }
                     }
                 }
             }
