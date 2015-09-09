@@ -36,14 +36,13 @@ SCRIPT_REGISTERER()
                     if ts.image then
                         local texture = gengine.graphics.texture.create(path .. ts.image)
                         ts.atlas = gengine.graphics.atlas.create(ts.name, texture, { width=ts.tilewidth, height=ts.tileheight, spacing=ts.spacing, margin=ts.margin })
-                        local count = (ts.imagewidth / ts.tilewidth) * (ts.imageheight / ts.tileheight)
 
-                        for i=1,count do
+                        for i=1,ts.tilecount do
                             table.insert(indexToTileSet, k)
                             indexToTile[i + ts.firstgid - 1] = {properties={}, _components={}, width=ts.tilewidth, height=ts.tileheight}
                         end
                     else
-                        for i=1,#ts.tiles do
+                        for _,__ in ipairs(ts.tiles) do
                             table.insert(indexToTileSet, false)
                         end
                     end
@@ -95,13 +94,13 @@ SCRIPT_REGISTERER()
                                     if component == "Sprite" then
                                         if not tile.texture then
                                             local ts = file.tilesets[indexToTileSet[v]]
-
+                                            assert(ts, "Error in tiled")
                                             e:addComponent(
                                                 ComponentSprite(),
                                                 {
                                                     atlas = ts.atlas,
                                                     atlasItem = v - ts.firstgid,
-                                                    extent = vector2(file.tilewidth, file.tileheight),
+                                                    extent = vector2(tile.width, tile.height),
                                                     layer = l
                                                 },
                                                 component:lower()
@@ -121,7 +120,7 @@ SCRIPT_REGISTERER()
                                         e:addComponent(
                                             ComponentPhysic(),
                                             {
-                                                extent = vector2(file.tilewidth, file.tileheight),
+                                                extent = vector2(tile.width, tile.height),
                                                 type = properties.type
                                             },
                                             component:lower()
