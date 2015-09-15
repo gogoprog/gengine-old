@@ -64,6 +64,8 @@ ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, update)
 {
     Transform transform;
 
+    getTransformFromComponent(state, transform);
+
     transform.position.x = self.agent->getPosition().x;
     transform.position.y = self.agent->getPosition().y;
 

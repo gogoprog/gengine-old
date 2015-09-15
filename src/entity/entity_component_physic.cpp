@@ -162,6 +162,8 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, update)
             b2Vec2 position = self.body->GetPosition();
             float32 angle = self.body->GetAngle();
 
+            getTransformFromComponent(state, transform);
+
             transform.position.x = position.x;
             transform.position.y = position.y;
             transform.rotation = angle;

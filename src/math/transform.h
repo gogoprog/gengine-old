@@ -36,7 +36,7 @@ public:
         lua_pop(state, 1);
 
         lua_pushnumber(state, transform.rotation);
-        lua_setfield(state, -2, "rotation");
+        lua_setfield(state, position - 1, "rotation");
     }
 
     static void get(script::State state, math::Transform & transform, int position = -1)
