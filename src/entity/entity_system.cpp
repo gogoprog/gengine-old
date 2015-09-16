@@ -206,14 +206,36 @@ SCRIPT_CLASS_FUNCTION(System, getCount)
 
 SCRIPT_CLASS_FUNCTION(System, destroy)
 {
-    lua_getfield(state, 1, "_ref");
-    int ref = lua_tonumber(state, -1);
-    lua_pop(state, 1);
+    lua_getfield(state, 1, "destroyed");
 
-    lua_pushboolean(state, true);
-    lua_setfield(state, 1, "destroyed");
+    if(lua_isnil(state, -1))
+    {
+        lua_pop(state, 1);
 
-    getInstance().refToRemoveTable.add(ref);
+        lua_getfield(state, 1, "_ref");
+        int ref = lua_tonumber(state, -1);
+        lua_pop(state, 1);
+
+        lua_getfield(state, 1, "_isInserted");
+        bool it_is_inserted = lua_toboolean(state, -1);
+        lua_pop(state, 1);
+
+        if(it_is_inserted)
+        {
+            lua_getfield(state, 1, "remove");
+            lua_pushvalue(state, 1);
+            script::System::getInstance().call(1, 0);
+        }
+
+        lua_pushboolean(state, true);
+        lua_setfield(state, 1, "destroyed");
+
+        getInstance().refToRemoveTable.add(ref);
+    }
+    else
+    {
+        lua_pop(state, 1);
+    }
 
     return 0;
 }

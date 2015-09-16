@@ -36,10 +36,12 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(self)
-            for k,v in ipairs(self.components) do
-                v:insert()
+            if not self._isInserted then
+                for k,v in ipairs(self.components) do
+                    v:insert()
+                end
+                self._isInserted = true
             end
-            self._isInserted = true
         end
         );
 
@@ -47,10 +49,12 @@ SCRIPT_REGISTERER()
 
     SCRIPT_DO(
         return function(self)
-            for k,v in ipairs(self.components) do
-                v:remove()
+            if self._isInserted then
+                for k,v in ipairs(self.components) do
+                    v:remove()
+                end
+                self._isInserted = false
             end
-            self._isInserted = false
         end
         );
 
