@@ -75,9 +75,10 @@ ENTITY_COMPONENT_METHOD(ComponentMouseable, update)
         if(!self.itIsHovered)
         {
             lua_getfield(state, 1, "entity");
-            lua_getfield(state, -1, "onMouseEnter");
-            lua_getfield(state, 1, "entity");
-            script::System::getInstance().call(1, 0);
+            lua_getfield(state, -1, "fireEvent");
+            lua_pushvalue(state, -2);
+            lua_pushstring(state, "MouseEnter");
+            script::System::getInstance().call(2, 0);
             lua_pop(state, 1);
             self.itIsHovered = true;
         }
@@ -87,10 +88,11 @@ ENTITY_COMPONENT_METHOD(ComponentMouseable, update)
             if(mouse.isJustDown(i))
             {
                 lua_getfield(state, 1, "entity");
-                lua_getfield(state, -1, "onMouseJustDown");
-                lua_getfield(state, 1, "entity");
+                lua_getfield(state, -1, "fireEvent");
+                lua_pushvalue(state, -2);
+                lua_pushstring(state, "MouseJustDown");
                 lua_pushnumber(state, i);
-                script::System::getInstance().call(2, 0);
+                script::System::getInstance().call(3, 0);
                 lua_pop(state, 1);
             }
         }
@@ -100,9 +102,10 @@ ENTITY_COMPONENT_METHOD(ComponentMouseable, update)
         if(self.itIsHovered)
         {
             lua_getfield(state, 1, "entity");
-            lua_getfield(state, -1, "onMouseExit");
-            lua_getfield(state, 1, "entity");
-            script::System::getInstance().call(1, 0);
+            lua_getfield(state, -1, "fireEvent");
+            lua_pushvalue(state, -2);
+            lua_pushstring(state, "MouseExit");
+            script::System::getInstance().call(2, 0);
             lua_pop(state, 1);
             self.itIsHovered = false;
         }
