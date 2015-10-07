@@ -24,11 +24,11 @@ void Font::finalize()
 {
 }
 
-bool Font::setFromFile(const char * filename)
+bool Font::setFromFile(const char * filename, const int size)
 {
-    geDebugLogN("graphics::Font::setFromFile \"" << filename << "\" ... ");
+    geDebugLogN("graphics::Font::setFromFile \"" << filename << "\"(" << size << ")" << " ... ");
 
-    font = TTF_OpenFont(filename, 10);
+    font = TTF_OpenFont(filename, size);
 
     if(font)
     {

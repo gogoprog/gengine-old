@@ -12,7 +12,8 @@ namespace graphics
 bool FontManager::internalCreate(Font * font, script::State state, const int parameter_position)
 {
     const char * path = lua_tostring(state, parameter_position);
-    return font->setFromFile(path);
+    int size = int(lua_tonumber(state, parameter_position + 1));
+    return font->setFromFile(path, size);
 }
 
 void FontManager::internalGetName(char * result, const char * name)
