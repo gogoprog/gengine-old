@@ -9,6 +9,7 @@
 #include "graphics_atlas_manager.h"
 #include "graphics_animation_manager.h"
 #include "graphics_spriter_manager.h"
+#include "graphics_font_manager.h"
 #include "vector4.h"
 
 namespace gengine
@@ -54,6 +55,9 @@ SCRIPT_REGISTERER()
 
     SpriterManager::luaRegister(state);
     lua_setfield(state, -2, "spriter");
+
+    FontManager::luaRegister(state);
+    lua_setfield(state, -2, "font");
 
     lua_setfield(state, -2, "graphics");
 }

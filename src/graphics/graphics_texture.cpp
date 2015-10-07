@@ -28,7 +28,7 @@ void Texture::finalize()
 
 bool Texture::setFromFile(const char * filename)
 {
-    geDebugLog("graphics::Texture::setFromFile \"" << filename << "\" ... ");
+    geDebugLogN("graphics::Texture::setFromFile \"" << filename << "\" ... ");
 
     SDL_Surface *image = IMG_Load(filename);
 
@@ -69,7 +69,7 @@ bool Texture::setFromFile(const char * filename)
         }
         else
         {
-            SDL_FreeSurface (image);
+            SDL_FreeSurface(image);
 
             geDebugRawLog("Failed! Unsupported format");
 

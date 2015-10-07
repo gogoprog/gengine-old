@@ -32,6 +32,7 @@ public:
         SPRITE_BATCH,
         SPRITE_GROUP,
         PARTICLE_SYSTEM,
+        TEXT,
         NONE
     };
 

@@ -9,6 +9,7 @@
 #include "graphics_animation_manager.h"
 #include "graphics_atlas_manager.h"
 #include "graphics_spriter_manager.h"
+#include "graphics_font_manager.h"
 #include "graphics_world.h"
 #include "vector4.h"
 #include "application.h"
@@ -30,7 +31,7 @@ void System::init()
     AtlasManager::getInstance().init("atlas");
     AnimationManager::getInstance().init("animation");
     SpriterManager::getInstance().init("Spriter animation");
-    SpriterManager::getInstance().addSupportedExtension(".scon");
+    FontManager::getInstance().init("font");
 
     defaultCamera.setExtent(application::getExtent());
 
@@ -54,6 +55,7 @@ void System::finalize()
         world->finalize();
     }
 
+    FontManager::getInstance().finalize();
     SpriterManager::getInstance().finalize();
     AnimationManager::getInstance().finalize();
     AtlasManager::getInstance().finalize();
