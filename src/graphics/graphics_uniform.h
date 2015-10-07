@@ -2,6 +2,7 @@
 
 #include "primitives.h"
 #include "array.h"
+struct SDL_Texture;
 
 namespace gengine
 {
@@ -34,6 +35,7 @@ public:
     void apply(const Array<Vector4> & vector4_table);
     void apply(const Array<float> & float_table);
     void apply(const int value);
+    void apply(SDL_Texture & sdl_texture);
 
     uint getLocation() const { return location; }
 

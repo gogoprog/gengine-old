@@ -34,10 +34,16 @@ ENTITY_COMPONENT_SETTERS(ComponentText)
     {
         graphics::Font * font = static_cast<graphics::Font *>(lua_touserdata(state, 3));
         self.text.setFont(*font);
+        self.text.update();
     }
     ENTITY_COMPONENT_SETTER(world)
     {
         self.worldIndex = lua_tonumber(state,3);
+    }
+    ENTITY_COMPONENT_SETTER(text)
+    {
+        self.text.setText(lua_tostring(state,3));
+        self.text.update();
     }
     ENTITY_COMPONENT_SETTER_END()
 }

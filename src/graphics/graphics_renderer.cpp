@@ -8,6 +8,8 @@
 #include "graphics_sprite_group.h"
 #include "graphics_particle_system.h"
 #include "graphics_atlas.h"
+#include "graphics_text.h"
+#include "core.h"
 
 #define INDEX_BUFFER_SIZE 102400
 
@@ -248,6 +250,34 @@ void Renderer::render(const World & world)
             }
             break;
 
+            case Type::TEXT:
+            {
+                Text & text = * dynamic_cast<Text *>(object);
+
+                if(text.texture)
+                {
+                    /*geDebugLog(text.surface->w <<","<< text.surface->h);
+                    transform_matrix.initIdentity();
+                    transform_matrix.setTranslation(text.position);
+                    transform_matrix.setRotation(text.rotation);
+                    transform_matrix.preScale(Vector2(text.surface->w, text.surface->h));
+
+                    transformMatrixUniform.apply(transform_matrix);
+
+                    colorUniform.apply(text.color);
+                    samplerUniform.apply(* text.texture);
+
+                    uvScaleUniform.apply(Vector2::one);
+                    uvOffsetUniform.apply(Vector2::zero);
+
+                    indexBufferQuad.draw(6);*/
+
+                    SDL_RenderCopy(core::getMainWindow().getSdlRenderer(), text.texture, nullptr, nullptr);
+                    geDebugLog(SDL_GetError());
+                }
+            }
+            break;
+
             default:
             break;
         }
@@ -266,6 +296,7 @@ void Renderer::enable(const Type type, const World & world)
         {
             case Type::SPRITE:
             case Type::SPRITE_GROUP:
+            case Type::TEXT:
             {
                 if(currentProgram != & defaultProgram)
                 {

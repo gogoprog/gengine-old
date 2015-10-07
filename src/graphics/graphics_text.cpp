@@ -1,6 +1,7 @@
 #include "graphics_text.h"
 
 #include "graphics_renderer.h"
+#include "core.h"
 
 namespace gengine
 {
@@ -18,12 +19,26 @@ Renderer::Type Text::getRenderType()
     return Renderer::Type::TEXT;
 }
 
-void Text::setText(const char *text)
+void Text::update()
 {
-    SDL_Color color = {0, 0, 0};
-    surface = TTF_RenderText_Blended(font->getTtfFont(), text, color);
-}
+    if(font)
+    {
+        SDL_Color color = {1, 0, 0};
 
+        if(surface)
+        {
+            SDL_FreeSurface(surface);
+        }
+
+        if(texture)
+        {
+            SDL_DestroyTexture(texture);
+        }
+
+        surface = TTF_RenderText_Solid(font->getTtfFont(), text.c_str(), color);
+        texture = SDL_CreateTextureFromSurface(core::getMainWindow().getSdlRenderer(), surface);
+    }
+}
 
 }
 }

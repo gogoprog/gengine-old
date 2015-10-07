@@ -25,13 +25,18 @@ public:
 
     const Pointer<const Font> getFont() const { return font; }
     void setFont(const Font & _font) { font = & _font; }
-    void setText(const char *text);
+    void setText(const char *_text) { text = _text; }
+    void update();
 
 private:
     Pointer<SDL_Surface>
         surface;
+    Pointer<SDL_Texture>
+        texture;
     Pointer<const Font>
         font;
+    std::string
+        text;
 };
 
 }
