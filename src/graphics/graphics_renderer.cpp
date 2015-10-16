@@ -254,9 +254,8 @@ void Renderer::render(const World & world)
             {
                 Text & text = * dynamic_cast<Text *>(object);
 
-                if(text.texture)
+                if(text.surface)
                 {
-                    /*geDebugLog(text.surface->w <<","<< text.surface->h);
                     transform_matrix.initIdentity();
                     transform_matrix.setTranslation(text.position);
                     transform_matrix.setRotation(text.rotation);
@@ -265,15 +264,12 @@ void Renderer::render(const World & world)
                     transformMatrixUniform.apply(transform_matrix);
 
                     colorUniform.apply(text.color);
-                    samplerUniform.apply(* text.texture);
+                    samplerUniform.apply(text.texture);
 
                     uvScaleUniform.apply(Vector2::one);
                     uvOffsetUniform.apply(Vector2::zero);
 
-                    indexBufferQuad.draw(6);*/
-
-                    SDL_RenderCopy(core::getMainWindow().getSdlRenderer(), text.texture, nullptr, nullptr);
-                    geDebugLog(SDL_GetError());
+                    indexBufferQuad.draw(6);
                 }
             }
             break;

@@ -133,6 +133,77 @@ void Texture::setDefault()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_FLOAT, pixels);
 }
 
+bool Texture::setFromSdlSurface(const SDL_Surface & surface)
+{
+    bool pot = true;
+
+    if((surface.w & (surface.w - 1)) || (surface.h & (surface.h - 1)))
+    {
+        pot = false;
+    }
+
+    int bpp = surface.format->BytesPerPixel;
+    GLenum texture_format;
+
+    if(bpp == 4)
+    {
+        if(surface.format->Rmask == 0x000000ff)
+        {
+            texture_format = GL_RGBA;
+        }
+        else
+        {
+            texture_format = GL_BGRA;
+        }
+    }
+    else if(bpp == 3)
+    {
+        if(surface.format->Rmask == 0x000000ff)
+        {
+            texture_format = GL_RGB;
+        }
+        else
+        {
+            texture_format = GL_BGR;
+        }
+    }
+    else if(bpp == 1)
+    {
+        texture_format = GL_ALPHA;
+    }
+    else
+    {
+        geDebugRawLog("Failed! Unsupported format");
+
+        return false;
+    }
+
+    glBindTexture(GL_TEXTURE_2D, id);
+
+    if(pot)
+    {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    }
+    else
+    {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    }
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, texture_format, surface.w, surface.h, 0, texture_format, GL_UNSIGNED_BYTE, surface.pixels);
+
+    width = surface.w;
+    height = surface.h;
+
+    geDebugRawLog("#" << id << " " << width << "x" << height);
+
+    return true;
+}
+
 void Texture::setWhite()
 {
     float pixels[] = {

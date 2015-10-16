@@ -6,7 +6,7 @@
 #include "matrix3.h"
 #include "vector4.h"
 #include "vector2.h"
-#include "core_sdl.h"
+#include "debug.h"
 
 namespace gengine
 {
@@ -58,13 +58,6 @@ void Uniform::apply(const Array<float> & float_table)
 void Uniform::apply(const int value)
 {
     glUniform1i(location, value);
-}
-
-void Uniform::apply(SDL_Texture & sdl_texture)
-{
-    glActiveTexture(GL_TEXTURE0);
-    SDL_GL_BindTexture(&sdl_texture, nullptr, nullptr);
-    glUniform1i(location, 0);
 }
 
 }

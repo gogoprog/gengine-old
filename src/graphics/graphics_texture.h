@@ -1,6 +1,7 @@
 #pragma once
 
 #include "primitives.h"
+#include "core_sdl.h"
 
 namespace gengine
 {
@@ -17,6 +18,7 @@ public:
     void finalize();
     bool setFromFile(const char * filename);
     void setDefault();
+    bool setFromSdlSurface(const SDL_Surface & surface);
     void setWhite();
 
     uint getId() const { return id; }

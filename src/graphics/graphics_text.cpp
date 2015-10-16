@@ -2,6 +2,7 @@
 
 #include "graphics_renderer.h"
 #include "core.h"
+#include "debug.h"
 
 namespace gengine
 {
@@ -23,20 +24,21 @@ void Text::update()
 {
     if(font)
     {
-        SDL_Color color = {1, 0, 0};
+        SDL_Color color = {255, 255, 255, 0};
 
         if(surface)
         {
             SDL_FreeSurface(surface);
-        }
-
-        if(texture)
-        {
-            SDL_DestroyTexture(texture);
+            texture.finalize();
         }
 
         surface = TTF_RenderText_Solid(font->getTtfFont(), text.c_str(), color);
-        texture = SDL_CreateTextureFromSurface(core::getMainWindow().getSdlRenderer(), surface);
+
+        if(surface)
+        {
+            texture.init();
+            texture.setFromSdlSurface(* surface);
+        }
     }
 }
 

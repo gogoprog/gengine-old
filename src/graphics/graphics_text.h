@@ -7,6 +7,7 @@
 #include "graphics_object.h"
 #include "graphics_font.h"
 #include "pointer.h"
+#include "graphics_texture.h"
 struct SDL_Surface;
 
 namespace gengine
@@ -31,7 +32,7 @@ public:
 private:
     Pointer<SDL_Surface>
         surface;
-    Pointer<SDL_Texture>
+    Texture
         texture;
     Pointer<const Font>
         font;
