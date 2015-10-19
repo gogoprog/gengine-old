@@ -31,6 +31,7 @@ void System::init()
     AtlasManager::getInstance().init("atlas");
     AnimationManager::getInstance().init("animation");
     SpriterManager::getInstance().init("Spriter animation");
+    SpriterManager::getInstance().addSupportedExtension(".scon");
     FontManager::getInstance().init("font");
 
     defaultCamera.setExtent(application::getExtent());
