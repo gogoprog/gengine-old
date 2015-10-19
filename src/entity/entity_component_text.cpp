@@ -40,6 +40,14 @@ ENTITY_COMPONENT_SETTERS(ComponentText)
     {
         self.worldIndex = lua_tonumber(state,3);
     }
+    ENTITY_COMPONENT_SETTER(color)
+    {
+        Vector4::fill(state, self.text.getColor(), 3);
+    }
+    ENTITY_COMPONENT_SETTER(alpha)
+    {
+        self.text.setColorAlpha(lua_tonumber(state,3));
+    }
     ENTITY_COMPONENT_SETTER(text)
     {
         self.text.setText(lua_tostring(state,3));
@@ -70,6 +78,7 @@ ENTITY_COMPONENT_METHOD(ComponentText, update)
 
     text.setPosition(transform.position);
     text.setRotation(transform.rotation);
+    text.scale(transform.scale);
 }
 ENTITY_COMPONENT_END()
 

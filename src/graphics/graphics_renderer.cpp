@@ -259,7 +259,7 @@ void Renderer::render(const World & world)
                     transform_matrix.initIdentity();
                     transform_matrix.setTranslation(text.position);
                     transform_matrix.setRotation(text.rotation);
-                    transform_matrix.preScale(Vector2(text.surface->w, text.surface->h));
+                    transform_matrix.preScale(text.extent);
 
                     transformMatrixUniform.apply(transform_matrix);
 

@@ -21,6 +21,7 @@ friend class Renderer;
 
 public:
     Text();
+    virtual ~Text();
 
     virtual Renderer::Type getRenderType() override;
 
@@ -28,6 +29,7 @@ public:
     void setFont(const Font & _font) { font = & _font; }
     void setText(const char *_text) { text = _text; }
     void update();
+    void scale(const math::Vector2 & scaling);
 
 private:
     Pointer<SDL_Surface>
@@ -38,6 +40,8 @@ private:
         font;
     std::string
         text;
+    math::Vector2
+        extent;
 };
 
 }

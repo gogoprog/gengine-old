@@ -15,6 +15,15 @@ Text::Text()
 {
 }
 
+Text::~Text()
+{
+    if(surface)
+    {
+        SDL_FreeSurface(surface);
+        texture.finalize();
+    }
+}
+
 Renderer::Type Text::getRenderType()
 {
     return Renderer::Type::TEXT;
@@ -24,7 +33,7 @@ void Text::update()
 {
     if(font)
     {
-        SDL_Color color = {255, 255, 255, 0};
+        static SDL_Color color = {255, 255, 255, 0};
 
         if(surface)
         {
@@ -41,6 +50,13 @@ void Text::update()
         }
     }
 }
+
+void Text::scale(const math::Vector2 & scaling)
+{
+    extent.x = surface->w * scaling.x;
+    extent.y = surface->h * scaling.y;
+}
+
 
 }
 }
