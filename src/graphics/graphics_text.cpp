@@ -32,7 +32,7 @@ void Text::update()
             texture.finalize();
         }
 
-        surface = TTF_RenderText_Solid(font->getTtfFont(), text.c_str(), color);
+        surface = TTF_RenderText_Blended(font->getTtfFont(), text.c_str(), color);
 
         if(surface)
         {
