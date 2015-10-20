@@ -58,14 +58,13 @@ SCRIPT_FUNCTION(getSquareDistance)
     return 1;
 }
 
-SCRIPT_FUNCTION(getAngle)
+SCRIPT_FUNCTION(getPolarAngle)
 {
     Vector2 a, b;
 
     script::get(state, a, 1);
-    script::get(state, b, 2);
 
-    float angle = Vector2::getAngle(a, b);
+    float angle = Vector2::getPolarAngle(a);
     lua_pushnumber(state, angle);
 
     return 1;
@@ -232,7 +231,7 @@ SCRIPT_CLASS_REGISTERER(Vector2)
     SCRIPT_TABLE_PUSH_FUNCTION(getSquareLength);
     SCRIPT_TABLE_PUSH_FUNCTION(getDistance);
     SCRIPT_TABLE_PUSH_FUNCTION(getSquareDistance);
-    SCRIPT_TABLE_PUSH_FUNCTION(getAngle);
+    SCRIPT_TABLE_PUSH_FUNCTION(getPolarAngle);
     SCRIPT_TABLE_PUSH_FUNCTION(getNormalized);
     SCRIPT_TABLE_PUSH_FUNCTION(getRotated);
 }
@@ -257,9 +256,9 @@ float Vector2::getSquareDistance(const Vector2 & a, const Vector2 & b)
     return (b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y);
 }
 
-float Vector2::getAngle(const Vector2 & a, const Vector2 & b)
+float Vector2::getPolarAngle(const Vector2 & a)
 {
-    return atan2(b.y - a.y, b.x - a.x);
+    return atan2(a.y, a.x);
 }
 
 Vector2 Vector2::getRotated(Vector2 v, const float angle)
