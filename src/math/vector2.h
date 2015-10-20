@@ -46,7 +46,7 @@ struct Vector2
     static float getSquareLength(const Vector2 & a);
     static float getDistance(const Vector2 & a, const Vector2 & b);
     static float getSquareDistance(const Vector2 & a, const Vector2 & b);
-    static float getAngle(const Vector2 & a, const Vector2 & b);
+    static float getPolarAngle(const Vector2 & a);
     static Vector2 getRotated(Vector2 v, const float angle);
 
 private:
