@@ -156,6 +156,7 @@ bool Texture::setFromSdlSurface(const SDL_Surface & surface)
         }
 
         texture_format = GL_RGBA;
+        internal_texture_format = GL_RGBA;
     }
     else
     {
