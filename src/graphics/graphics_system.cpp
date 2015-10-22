@@ -28,6 +28,7 @@ void System::init()
 
     TextureManager::getInstance().init("texture");
     TextureManager::getInstance().addSupportedExtension(".png");
+    TextureManager::getInstance().addSupportedExtension(".jpg");
     AtlasManager::getInstance().init("atlas");
     AnimationManager::getInstance().init("animation");
     SpriterManager::getInstance().init("Spriter animation");
