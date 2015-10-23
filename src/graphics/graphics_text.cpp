@@ -31,7 +31,7 @@ Renderer::Type Text::getRenderType()
 
 void Text::update()
 {
-    if(font)
+    if(font && text.size())
     {
         static SDL_Color color = {255, 255, 255, 0};
 
