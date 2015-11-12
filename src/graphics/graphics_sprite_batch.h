@@ -21,16 +21,22 @@ public:
 
     virtual Renderer::Type getRenderType() override;
 
-    void setAtlas(const Atlas & _atlas)
+    void setTexture(const Texture & _texture)
     {
-        atlas = & _atlas;
+        texture = & _texture;
     }
 
-    const uint getItemCount() const { return itemCount; }
+    void setScale(const Vector2 & _scale)
+    {
+        scale = _scale;
+    }
+
+    const uint getVertexCount() const { return vertexCount; }
 
     void init(const uint size);
-    void addItem(const int index, const Vector2 & position, const Vector2 & extent);
-    void addItem(const int index, const Vector2 & position);
+    void addItem(const Atlas *atlas, const int index, const Vector2 & position, const Vector2 & extent);
+    void addItem(const Atlas *atlas, const int index, const Vector2 & position);
+    Vertex *getAddedVertices(const uint count);
 
     void lock();
     void unlock();
@@ -41,10 +47,11 @@ private:
     Vertex
         * vertices;
     uint
-        itemCount,
-        maximumItemCount;
-    const Atlas
-        * atlas;
+        vertexCount;
+    Pointer<const Texture>
+        texture;
+    Vector2
+        scale;
 };
 
 }

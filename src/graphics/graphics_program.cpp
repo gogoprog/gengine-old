@@ -21,6 +21,7 @@ void Program::init()
     glBindAttribLocation(id, ATTRIBUTE_LOCATION_ROTATION, "rotation");
     glBindAttribLocation(id, ATTRIBUTE_LOCATION_INDEX, "index");
     glBindAttribLocation(id, ATTRIBUTE_LOCATION_LIFE, "life");
+    glBindAttribLocation(id, ATTRIBUTE_LOCATION_COLOR, "color");
 }
 
 void Program::finalize()

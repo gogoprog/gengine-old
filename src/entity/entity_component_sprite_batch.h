@@ -2,6 +2,7 @@
 
 #include "script.h"
 #include "graphics_sprite_batch.h"
+#include "graphics_atlas.h"
 #include "entity_macros.h"
 
 namespace gengine
@@ -23,6 +24,8 @@ public:
 protected:
     graphics::SpriteBatch
         spriteBatch;
+    Pointer<graphics::Atlas>
+        atlas;
     uint
         worldIndex,
         size;
