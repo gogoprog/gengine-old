@@ -151,7 +151,12 @@ bool Texture::setFromSdlSurface(const SDL_Surface & surface)
                 uint8_data[offset * 4 + 0] = color.r;
                 uint8_data[offset * 4 + 1] = color.g;
                 uint8_data[offset * 4 + 2] = color.b;
-                uint8_data[offset * 4 + 3] = color.a;
+                
+                #ifndef EMSCRIPTEN
+		    uint8_data[offset * 4 + 3] = color.a;
+                #else
+                    uint8_data[offset * 4 + 3] = 255;
+                #endif
             }
         }
 
