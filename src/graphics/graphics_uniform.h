@@ -34,7 +34,6 @@ public:
     void apply(const Array<Vector4> & vector4_table);
     void apply(const Array<float> & float_table);
     void apply(const int value);
-
     uint getLocation() const { return location; }
 
 private:
