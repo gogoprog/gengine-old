@@ -15,6 +15,7 @@ class ComponentSpine
 {
 public:
     ComponentSpine();
+    ~ComponentSpine();
 
     ENTITY_COMPONENT_METHOD_DECLARE(setAnimation);
     ENTITY_COMPONENT_METHOD_DECLARE(addAnimation);
@@ -25,9 +26,8 @@ protected:
 
     void setAnimation(const graphics::SpineManagerItem * animation, const int track_index, const bool loop);
     void addAnimation(const graphics::SpineManagerItem * animation, const int track_index, const bool loop, const float delay);
+    void updateSpine(graphics::SpineManagerItem & animation);
 
-    const graphics::SpineManagerItem
-        * animation;
     graphics::Mesh<graphics::Vertex>
         mesh;
     Pointer<spAnimationState>

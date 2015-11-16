@@ -19,10 +19,18 @@ namespace entity
 
 ComponentSpine::ComponentSpine()
     :
-    animation(nullptr),
     timeFactor(1.0f),
     worldIndex(0)
 {
+}
+
+ComponentSpine::~ComponentSpine()
+{
+    if(skeleton)
+    {
+        spSkeleton_dispose(skeleton);
+        spAnimationState_dispose(animationState);
+    }
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentSpine)
@@ -320,11 +328,7 @@ void ComponentSpine::setAnimation(const graphics::SpineManagerItem * _animation,
 {
     auto __animation = * const_cast<graphics::SpineManagerItem *>(_animation);
 
-    if(!skeleton)
-    {
-        skeleton = spSkeleton_create(__animation.getSkeletonData());
-        animationState = spAnimationState_create(__animation.getAnimationStateData());
-    }
+    updateSpine(__animation);
 
     spAnimationState_setAnimation(animationState, track_index, __animation.getAnimation(), loop);
 }
@@ -333,13 +337,25 @@ void ComponentSpine::addAnimation(const graphics::SpineManagerItem * _animation,
 {
     auto __animation = * const_cast<graphics::SpineManagerItem *>(_animation);
 
-    if(!skeleton)
-    {
-        skeleton = spSkeleton_create(__animation.getSkeletonData());
-        animationState = spAnimationState_create(__animation.getAnimationStateData());
-    }
+    updateSpine(__animation);
 
     spAnimationState_addAnimation(animationState, track_index, __animation.getAnimation(), loop, delay);
+}
+
+void ComponentSpine::updateSpine(graphics::SpineManagerItem & animation)
+{
+    if(skeleton && skeleton->data != animation.getSkeletonData())
+    {
+        spSkeleton_dispose(skeleton);
+        spAnimationState_dispose(animationState);
+        skeleton = nullptr;
+    }
+
+    if(!skeleton)
+    {
+        skeleton = spSkeleton_create(animation.getSkeletonData());
+        animationState = spAnimationState_create(animation.getAnimationStateData());
+    }
 }
 
 }
