@@ -7,8 +7,10 @@ A C++ game engine with Lua scripting that supports HTML5
 [![Build Status](https://drone.io/github.com/gogoprog/gengine/status.png)](https://drone.io/github.com/gogoprog/gengine/latest)
 
 ## Features
- * Emscripten/WebGL support
- * Lua scripting
+ * For Linux, Windows and HTML5 (using emscripten)
+ * HTML5 User Interface (using chromium-embedded-framework on non-HTML5 target)
+ * OpenGL/WebGL
+ * Lua scripts
  * Entities system with native components:
    * ComponentAnimatedSprite
    * ComponentCamera
