@@ -1,3 +1,13 @@
+local getcxxflags = premake.gcc.getcxxflags;
+function premake.gcc.getcxxflags(cfg)
+    local cxxflags = { Cxx11 = "-std=c++11" }
+    local r = getcxxflags(cfg);
+    local r2 = table.translate(cfg.flags, cxxflags);
+    for _,v in ipairs(r2) do table.insert(r, v) end
+    return r;
+end
+table.insert(premake.fields.flags.allowed, "Cxx11");
+
 solution "gengine"
     configurations { "Debug", "Release", "DebugEmscripten", "ReleaseEmscripten" }
 
@@ -40,11 +50,12 @@ solution "gengine"
             "FloatFast",
             "NoExceptions",
             "NoFramePointer",
-            "NoNativeWChar"
+            "NoNativeWChar",
+            "Cxx11"
             }
 
         if not os.is("windows") then
-            buildoptions { "-std=c++11 -Wno-error=unused-variable -Wno-error=unused-parameter" }
+            buildoptions { "-Wno-error=unused-variable -Wno-error=unused-parameter" }
         end
 
         if os.is("linux") then
