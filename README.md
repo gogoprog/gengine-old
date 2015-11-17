@@ -10,12 +10,16 @@ A C++ game engine with Lua scripting that supports HTML5
  * Emscripten/WebGL support
  * Lua scripting
  * Entities system with native components:
-   * Sprite
-   * Camera
-   * Mouseable
-   * Animated sprite
-   * Navigation agent
-   * Particle system
-   * Sprite batch
-   * Physic
+   * ComponentAnimatedSprite
+   * ComponentCamera
+   * ComponentMouseable
+   * ComponentNavigationAgent
+   * ComponentParticleSystem
+   * ComponentPhysic (Box2D support)
+   * ComponentQuad
+   * ComponentSpine (Spine support)
+   * ComponentSprite
+   * ComponentSpriteBatch
+   * ComponentSpriter (Spriter support)
+   * ComponentText
 
