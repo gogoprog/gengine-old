@@ -66,7 +66,7 @@ void IndexBuffer::unMap()
     #ifndef EMSCRIPTEN
         glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
     #else
-        setData(data, dataCount, steamUsage);
+        setData(data, dataCount, streamUsage);
     #endif
 }
 

@@ -111,7 +111,7 @@ void Renderer::init()
     projectionMatrixUniform.init(defaultProgram, "projectionMatrix");
     transformMatrixUniform.init(defaultProgram, "transformMatrix");
     samplerUniform.init(defaultProgram, "tex0");
-    colorUniform.init(defaultProgram, "color");
+    colorUniform.init(defaultProgram, "colorUniform");
     uvScaleUniform.init(defaultProgram, "uvScale");
     uvOffsetUniform.init(defaultProgram, "uvOffset");
 

@@ -3,8 +3,10 @@ GL_GLSL(
 attribute vec2 position;
 attribute vec2 texCoords;
 attribute vec4 color;
+
 varying highp vec2 v_texCoords;
 varying highp vec4 v_color;
+
 uniform highp mat3 projectionMatrix;
 uniform highp mat3 transformMatrix;
 uniform highp vec2 uvScale;
