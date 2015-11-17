@@ -37,7 +37,8 @@ protected:
     float
         timeFactor;
     uint
-        worldIndex;
+        worldIndex,
+        size;
 };
 
 }

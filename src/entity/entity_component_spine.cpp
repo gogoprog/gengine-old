@@ -20,7 +20,8 @@ namespace entity
 ComponentSpine::ComponentSpine()
     :
     timeFactor(1.0f),
-    worldIndex(0)
+    worldIndex(0),
+    size(2048)
 {
 }
 
@@ -62,13 +63,17 @@ ENTITY_COMPONENT_SETTERS(ComponentSpine)
     {
         self.mesh.setColorAlpha(lua_tonumber(state, 3));
     }
+    ENTITY_COMPONENT_SETTER(size)
+    {
+        self.size = static_cast<uint>(lua_tonumber(state, 3));
+    }
     ENTITY_COMPONENT_SETTER_END()
 }
 ENTITY_COMPONENT_END()
 
 ENTITY_COMPONENT_METHOD(ComponentSpine, init)
 {
-    self.mesh.init(1024, 1024);
+    self.mesh.init(self.size, self.size * 2);
 }
 ENTITY_COMPONENT_END()
 
