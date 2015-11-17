@@ -37,8 +37,8 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
     }
     ENTITY_COMPONENT_SETTER(atlas)
     {
-        graphics::Atlas * atlas = static_cast<graphics::Atlas *>(lua_touserdata(state, 3));
-        self.spriteBatch.setAtlas(* atlas);
+        self.atlas = static_cast<graphics::Atlas *>(lua_touserdata(state, 3));
+        self.spriteBatch.setTexture(self.atlas->getTexture());
     }
     ENTITY_COMPONENT_SETTER(world)
     {
@@ -56,7 +56,7 @@ ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, init)
 {
     SCRIPT_GET_SELF(ComponentSpriteBatch);
 
-    self.spriteBatch.init(self.size);
+    self.spriteBatch.init(self.size * 4);
 }
 ENTITY_COMPONENT_END()
 
@@ -108,11 +108,11 @@ ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, addItem)
     if(lua_istable(state, 4))
     {
         script::get(state, extent, 4);
-        self.spriteBatch.addItem(atlas_item_index, position, extent);
+        self.spriteBatch.addItem(self.atlas, atlas_item_index, position, extent);
     }
     else
     {
-        self.spriteBatch.addItem(atlas_item_index, position);
+        self.spriteBatch.addItem(self.atlas, atlas_item_index, position);
     }
 }
 ENTITY_COMPONENT_END()

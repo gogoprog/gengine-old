@@ -19,6 +19,7 @@
 #include "entity_component_quad.h"
 #include "entity_component_spriter.h"
 #include "entity_component_text.h"
+#include "entity_component_spine.h"
 
 namespace gengine
 {
@@ -156,6 +157,7 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentQuad>(state, "ComponentQuad");
     registerComponent<ComponentSpriter>(state, "ComponentSpriter");
     registerComponent<ComponentText>(state, "ComponentText");
+    registerComponent<ComponentSpine>(state, "ComponentSpine");
 }
 
 SCRIPT_CLASS_UNREGISTERER(System)

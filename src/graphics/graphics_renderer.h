@@ -33,6 +33,7 @@ public:
         SPRITE_GROUP,
         PARTICLE_SYSTEM,
         TEXT,
+        MESH,
         NONE
     };
 

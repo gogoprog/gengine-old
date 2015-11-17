@@ -9,6 +9,7 @@
 #include "graphics_particle_system.h"
 #include "graphics_atlas.h"
 #include "graphics_text.h"
+#include "graphics_mesh.h"
 #include "core.h"
 
 #define INDEX_BUFFER_SIZE 102400
@@ -82,25 +83,29 @@ void Renderer::init()
     vertices[0].position.y = 0.5f;
     vertices[0].texCoords.u = 0.0f;
     vertices[0].texCoords.v = 0.0f;
+    vertices[0].color = Vector4::one;
 
     vertices[1].position.x = 0.5f;
     vertices[1].position.y = 0.5f;
     vertices[1].texCoords.u = 1.0f;
     vertices[1].texCoords.v = 0.0f;
+    vertices[1].color = Vector4::one;
 
     vertices[2].position.x = 0.5f;
     vertices[2].position.y = -0.5f;
     vertices[2].texCoords.u = 1.0f;
     vertices[2].texCoords.v = 1.0f;
+    vertices[2].color = Vector4::one;
 
     vertices[3].position.x = -0.5f;
     vertices[3].position.y = -0.5f;
     vertices[3].texCoords.u = 0.0f;
     vertices[3].texCoords.v = 1.0f;
+    vertices[3].color = Vector4::one;
 
     vertexBufferQuad.unMap();
 
-    indexBufferQuad.init();
+    indexBufferQuad.init(INDEX_BUFFER_SIZE, false);
     indexBufferQuad.setData(indices, INDEX_BUFFER_SIZE);
 
     projectionMatrixUniform.init(defaultProgram, "projectionMatrix");
@@ -172,23 +177,50 @@ void Renderer::render(const World & world)
             {
                 SpriteBatch & batch = * dynamic_cast<SpriteBatch *>(object);
 
-                if(batch.atlas && batch.atlas->hasTexture())
+                if(batch.texture)
                 {
                     batch.vertexBuffer.apply();
 
                     transform_matrix.initIdentity();
                     transform_matrix.setTranslation(batch.position);
+                    transform_matrix.preScale(batch.scale);
 
                     transformMatrixUniform.apply(transform_matrix);
 
                     colorUniform.apply(batch.color);
 
-                    samplerUniform.apply(batch.atlas->getTexture());
+                    samplerUniform.apply(* batch.texture);
 
                     uvScaleUniform.apply(Vector2::one);
                     uvOffsetUniform.apply(Vector2::zero);
 
-                    indexBufferQuad.draw(6 * batch.getItemCount());
+                    indexBufferQuad.draw((batch.getVertexCount() / 4) * 6);
+                }
+            }
+            break;
+
+            case Type::MESH:
+            {
+                auto & mesh = * dynamic_cast<Mesh<Vertex> *>(object);
+
+                if(mesh.texture)
+                {
+                    mesh.vertexBuffer.apply();
+
+                    transform_matrix.initIdentity();
+                    transform_matrix.setTranslation(mesh.position);
+                    transform_matrix.preScale(mesh.scale);
+
+                    transformMatrixUniform.apply(transform_matrix);
+
+                    colorUniform.apply(mesh.color);
+
+                    samplerUniform.apply(* mesh.texture);
+
+                    uvScaleUniform.apply(Vector2::one);
+                    uvOffsetUniform.apply(Vector2::zero);
+
+                    mesh.indexBuffer.draw(mesh.indexCount);
                 }
             }
             break;
@@ -306,6 +338,7 @@ void Renderer::enable(const Type type, const World & world)
             break;
 
             case Type::SPRITE_BATCH:
+            case Type::MESH:
             {
                 if(currentProgram != & defaultProgram)
                 {

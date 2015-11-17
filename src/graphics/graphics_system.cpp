@@ -9,6 +9,7 @@
 #include "graphics_animation_manager.h"
 #include "graphics_atlas_manager.h"
 #include "graphics_spriter_manager.h"
+#include "graphics_spine_manager.h"
 #include "graphics_font_manager.h"
 #include "graphics_world.h"
 #include "vector4.h"
@@ -33,6 +34,8 @@ void System::init()
     AnimationManager::getInstance().init("animation");
     SpriterManager::getInstance().init("Spriter animation");
     SpriterManager::getInstance().addSupportedExtension(".scon");
+    SpineManager::getInstance().init("Spine animation");
+    SpineManager::getInstance().addSupportedExtension(".json");
     FontManager::getInstance().init("font");
 
     defaultCamera.setExtent(application::getExtent());

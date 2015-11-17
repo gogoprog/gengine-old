@@ -13,7 +13,9 @@ namespace graphics
 SpriteBatch::SpriteBatch()
     :
     Object(),
-    itemCount( 0 )
+    vertexCount(0),
+    texture(nullptr),
+    scale(Vector2::one)
 {
 }
 
@@ -22,43 +24,48 @@ Renderer::Type SpriteBatch::getRenderType()
     return Renderer::Type::SPRITE_BATCH;
 }
 
-void SpriteBatch::init(const uint size)
+void SpriteBatch::init(const uint maximum_vertex_count)
 {
-    maximumItemCount = size;
-    vertexBuffer.init(size * 4, false);
+    vertexBuffer.init(maximum_vertex_count, false);
 }
 
-void SpriteBatch::addItem(const int atlas_index, const Vector2 & position, const Vector2 & extent)
+void SpriteBatch::addItem(const Atlas *atlas, const int atlas_index, const Vector2 & position, const Vector2 & extent)
 {
     Vector2 half_extent = extent * 0.5f;
     const AtlasItem & atlas_item = atlas->getItem(atlas_index);
     const Vector2 & uv_offset = atlas_item.uvOffset;
     const Vector2 & uv_scale = atlas_item.uvScale;
 
-    vertices[itemCount * 4 + 0].position.x = position.x - half_extent.x;
-    vertices[itemCount * 4 + 0].position.y = position.y + half_extent.y;
-    vertices[itemCount * 4 + 0].texCoords.u = uv_offset.x;
-    vertices[itemCount * 4 + 0].texCoords.v = uv_offset.y;
+    vertices[vertexCount].position.x = position.x - half_extent.x;
+    vertices[vertexCount].position.y = position.y + half_extent.y;
+    vertices[vertexCount].texCoords.u = uv_offset.x;
+    vertices[vertexCount].texCoords.v = uv_offset.y;
+    vertices[vertexCount].color = Vector4::one;
+    ++vertexCount;
 
-    vertices[itemCount * 4 + 1].position.x = position.x + half_extent.x;
-    vertices[itemCount * 4 + 1].position.y = position.y + half_extent.y;
-    vertices[itemCount * 4 + 1].texCoords.u = uv_scale.x + uv_offset.x;
-    vertices[itemCount * 4 + 1].texCoords.v = uv_offset.y;
+    vertices[vertexCount].position.x = position.x + half_extent.x;
+    vertices[vertexCount].position.y = position.y + half_extent.y;
+    vertices[vertexCount].texCoords.u = uv_scale.x + uv_offset.x;
+    vertices[vertexCount].texCoords.v = uv_offset.y;
+    vertices[vertexCount].color = Vector4::one;
+    ++vertexCount;
 
-    vertices[itemCount * 4 + 2].position.x = position.x + half_extent.x;
-    vertices[itemCount * 4 + 2].position.y = position.y - half_extent.y;
-    vertices[itemCount * 4 + 2].texCoords.u = uv_scale.x + uv_offset.x;
-    vertices[itemCount * 4 + 2].texCoords.v = uv_scale.y + uv_offset.y;
+    vertices[vertexCount].position.x = position.x + half_extent.x;
+    vertices[vertexCount].position.y = position.y - half_extent.y;
+    vertices[vertexCount].texCoords.u = uv_scale.x + uv_offset.x;
+    vertices[vertexCount].texCoords.v = uv_scale.y + uv_offset.y;
+    vertices[vertexCount].color = Vector4::one;
+    ++vertexCount;
 
-    vertices[itemCount * 4 + 3].position.x = position.x - half_extent.x;
-    vertices[itemCount * 4 + 3].position.y = position.y - half_extent.y;
-    vertices[itemCount * 4 + 3].texCoords.u = uv_offset.x;
-    vertices[itemCount * 4 + 3].texCoords.v = uv_scale.y + uv_offset.y;
-
-    ++itemCount;
+    vertices[vertexCount].position.x = position.x - half_extent.x;
+    vertices[vertexCount].position.y = position.y - half_extent.y;
+    vertices[vertexCount].texCoords.u = uv_offset.x;
+    vertices[vertexCount].texCoords.v = uv_scale.y + uv_offset.y;
+    vertices[vertexCount].color = Vector4::one;
+    ++vertexCount;
 }
 
-void SpriteBatch::addItem(const int index, const Vector2 & position)
+void SpriteBatch::addItem(const Atlas *atlas, const int index, const Vector2 & position)
 {
     const AtlasItem & atlas_item = atlas->getItem(index);
     const Vector2 & uv_scale = atlas_item.uvScale;
@@ -69,13 +76,22 @@ void SpriteBatch::addItem(const int index, const Vector2 & position)
     extent.x = uv_scale.x * texture.getWidth();
     extent.y = uv_scale.y * texture.getHeight();
 
-    addItem(index, position, extent);
+    addItem(atlas, index, position, extent);
+}
+
+Vertex *SpriteBatch::getAddedVertices(const uint count)
+{
+    Vertex * result = vertices + vertexCount;
+
+    vertexCount += 4;
+
+    return result;
 }
 
 void SpriteBatch::lock()
 {
     vertices = vertexBuffer.map();
-    itemCount = 0;
+    vertexCount = 0;
 }
 
 void SpriteBatch::unlock()

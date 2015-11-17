@@ -81,4 +81,3 @@
 #define ENTITY_COMPONENT_END() \
         return 0; \
     }
-
