@@ -2,9 +2,14 @@
 
 if [[ ${SHELL} == *"/bash"* ]]; then
     SRC=${BASH_SOURCE}
+
+    if [[ ${SRC} == "" ]] then
+    	SRC=$0
+	fi
 else
     SRC=$0
 fi
+
 
 BIN_DIR=$(dirname $(readlink -e ${SRC}))
 BASEDIR=${BIN_DIR%/*}
