@@ -1,12 +1,14 @@
-local getcxxflags = premake.gcc.getcxxflags;
-function premake.gcc.getcxxflags(cfg)
-    local cxxflags = { Cxx11 = "-std=c++11" }
-    local r = getcxxflags(cfg);
-    local r2 = table.translate(cfg.flags, cxxflags);
-    for _,v in ipairs(r2) do table.insert(r, v) end
-    return r;
+if os.is("linux") then
+    local getcxxflags = premake.gcc.getcxxflags;
+    function premake.gcc.getcxxflags(cfg)
+        local cxxflags = { Cxx11 = "-std=c++11" }
+        local r = getcxxflags(cfg);
+        local r2 = table.translate(cfg.flags, cxxflags);
+        for _,v in ipairs(r2) do table.insert(r, v) end
+        return r;
+    end
+    table.insert(premake.fields.flags.allowed, "Cxx11");
 end
-table.insert(premake.fields.flags.allowed, "Cxx11");
 
 solution "gengine"
     configurations { "Debug", "Release", "DebugEmscripten", "ReleaseEmscripten" }
@@ -50,16 +52,13 @@ solution "gengine"
             "FloatFast",
             "NoExceptions",
             "NoFramePointer",
-            "NoNativeWChar",
-            "Cxx11"
+            "NoNativeWChar"
             }
-
-        if not os.is("windows") then
-            buildoptions { "-Wno-error=unused-variable -Wno-error=unused-parameter" }
-        end
 
         if os.is("linux") then
             defines { "_LINUX" }
+            flags { "Cxx11" }
+            buildoptions { "-Wno-error=unused-variable -Wno-error=unused-parameter" }
         elseif os.is("windows") then
             defines { "_WINDOWS", "NOMINMAX" }
             flags { "StaticRuntime" }
