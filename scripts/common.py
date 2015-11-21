@@ -23,7 +23,7 @@ def log(*args):
     print(*args)
 
 def isPlatform64():
-    if platform.system() == "Windows":
+    if getPlatformName() == "Windows":
         return False
     return "_64" in platform.machine()
 
@@ -108,4 +108,3 @@ def build(emscripten=False):
         os.system(msbuild + " /p:Configuration=Release")
 
     os.chdir(current_dir)
-
