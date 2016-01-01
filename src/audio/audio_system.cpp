@@ -47,6 +47,11 @@ void System::playMusic(const char *path, const float volume, const bool looping)
     Mix_VolumeMusic(int(MIX_MAX_VOLUME * volume));
 }
 
+void System::stopMusic()
+{
+    Mix_HaltMusic();
+}
+
 void System::playSound(const Sound *sound, const float volume)
 {
     if(sound)

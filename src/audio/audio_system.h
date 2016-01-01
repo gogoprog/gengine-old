@@ -18,6 +18,7 @@ public:
     void finalize();
 
     void playMusic(const char *path, const float volume, const bool looping);
+    void stopMusic();
     void playSound(const Sound *sound, const float volume);
 
 private:

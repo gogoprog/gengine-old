@@ -21,6 +21,13 @@ SCRIPT_FUNCTION(playMusic)
     return 0;
 }
 
+SCRIPT_FUNCTION(stopMusic)
+{
+    System::getInstance().stopMusic();
+
+    return 0;
+}
+
 SCRIPT_FUNCTION(playSound)
 {
     Sound * sound = static_cast<Sound *>(lua_touserdata(state, 1));
@@ -38,6 +45,7 @@ SCRIPT_REGISTERER()
     lua_newtable(state);
 
     SCRIPT_TABLE_PUSH_FUNCTION(playMusic);
+    SCRIPT_TABLE_PUSH_FUNCTION(stopMusic);
     SCRIPT_TABLE_PUSH_FUNCTION(playSound);
 
     SoundManager::luaRegister(state);
