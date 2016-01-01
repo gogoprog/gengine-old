@@ -49,9 +49,15 @@ void System::playMusic(const char *path, const float volume, const bool looping)
 
 void System::playSound(const Sound *sound, const float volume)
 {
-    int channel = Mix_PlayChannel(-1, sound->chunk, 0);
-
-    Mix_Volume(channel, int(MIX_MAX_VOLUME * volume));
+    if(sound)
+    {
+        int channel = Mix_PlayChannel(-1, sound->chunk, 0);
+        Mix_Volume(channel, int(MIX_MAX_VOLUME * volume));
+    }
+    else
+    {
+        geLog("audio::System::playSound() : Null sound given.")
+    }
 }
 
 }
