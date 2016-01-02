@@ -193,6 +193,32 @@ void System::executeScript(const char *code)
     #endif
 }
 
+void System::showPage(const char *name, const int duration)
+{
+    std::string js_code;
+
+    js_code += "var nextPageName = '";
+    js_code += name;
+    js_code += "'; var nextPage = $('#' + nextPageName);";
+    js_code += "var halfDuration = ";
+    js_code += std::to_string(duration);
+    js_code += " / 2;";
+
+    js_code += JAVASCRIPT(
+        $(".gengine-page").animate(
+            {opacity:0},
+            halfDuration,
+            function() {
+                $(".gengine-page").hide();
+                nextPage.css("opacity", 0);
+                nextPage.show();
+                nextPage.animate({opacity:1}, halfDuration);
+            }
+            );
+        );
+
+    executeScript(js_code.c_str());
+}
 
 }
 }
