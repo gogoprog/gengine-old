@@ -208,11 +208,15 @@ void System::showPage(const char *name, const int duration)
         $(".gengine-page").animate(
             {opacity:0},
             halfDuration,
-            function() {
-                $(".gengine-page").hide();
-                nextPage.css("opacity", 0);
-                nextPage.show();
-                nextPage.animate({opacity:1}, halfDuration);
+            function(index) {
+                if($(this).index() == 0)
+                {
+                    $(".gengine-page").hide();
+                    gengine_execute("gengine.gui:changeState('" + nextPageName + "')");
+                    nextPage.css("opacity", 0);
+                    nextPage.show();
+                    nextPage.animate({opacity:1}, halfDuration);
+                }
             }
             );
         );

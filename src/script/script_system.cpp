@@ -102,6 +102,12 @@ void System::init()
 
     lua_setglobal(state, "gengine");
 
+    lua_getglobal(state, "gengine");
+
+    gui::luaRegister(state);
+
+    lua_pop(state, 1);
+
     SCRIPT_DO(
         function __init()
             debug = debug or require("debug")
@@ -127,7 +133,6 @@ void System::init2()
     graphics::luaRegister(state);
     input::luaRegister(state);
     entity::luaRegister(state);
-    gui::luaRegister(state);
     audio::luaRegister(state);
     physics::luaRegister(state);
     navigation::luaRegister(state);
