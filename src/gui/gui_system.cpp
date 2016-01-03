@@ -205,13 +205,13 @@ void System::showPage(const char *name, const char *effect, const int duration)
     js_code += JAVASCRIPT(
         $(".gengine-page").hide(
             effectName,
-            halfDuration,
+            halfDuration
+            );
+
+        $(".gengine-page").promise().done(
             function(index) {
-                if($(this).index() == 0)
-                {
-                    gengine_execute("gengine.gui:changeState('" + nextPageName + "')");
-                    nextPage.show(effectName, halfDuration);
-                }
+                gengine_execute("gengine.gui:changeState('" + nextPageName + "')");
+                nextPage.show(effectName, halfDuration);
             }
             );
         );
