@@ -193,29 +193,24 @@ void System::executeScript(const char *code)
     #endif
 }
 
-void System::showPage(const char *name, const int duration)
+void System::showPage(const char *name, const char *effect, const int duration)
 {
     std::string js_code;
 
-    js_code += "var nextPageName = '";
-    js_code += name;
-    js_code += "'; var nextPage = $('#' + nextPageName);";
-    js_code += "var halfDuration = ";
-    js_code += std::to_string(duration);
-    js_code += " / 2;";
+    js_code += "var nextPageName = '" + std::string(name) + "';";
+    js_code += "var nextPage = $('#' + nextPageName);";
+    js_code += "var halfDuration = " + std::to_string(duration) +" / 2;";
+    js_code += "var effectName = '" + std::string(effect) + "';";
 
     js_code += JAVASCRIPT(
-        $(".gengine-page").animate(
-            {opacity:0},
+        $(".gengine-page").hide(
+            effectName,
             halfDuration,
             function(index) {
                 if($(this).index() == 0)
                 {
-                    $(".gengine-page").hide();
                     gengine_execute("gengine.gui:changeState('" + nextPageName + "')");
-                    nextPage.css("opacity", 0);
-                    nextPage.show();
-                    nextPage.animate({opacity:1}, halfDuration);
+                    nextPage.show(effectName, halfDuration);
                 }
             }
             );

@@ -31,9 +31,10 @@ SCRIPT_FUNCTION(executeScript)
 SCRIPT_FUNCTION(showPage)
 {
     const char * name = lua_tostring(state, 1);
-    auto duration = int(lua_tonumber(state, 2));
+    auto effect = lua_tostring(state, 2);
+    auto duration = int(lua_tonumber(state, 3));
 
-    System::getInstance().showPage(name, duration);
+    System::getInstance().showPage(name, effect, duration);
 
     return 0;
 }
