@@ -210,7 +210,7 @@ void System::showPage(const char *name, const char *effect, const int duration)
 
         $(".gengine-page").promise().done(
             function(index) {
-                gengine_execute("gengine.gui:changeState('" + nextPageName + "')");
+                gengine.execute("gengine.gui:changeState('" + nextPageName + "')");
                 nextPage.show(effectName, halfDuration);
             }
             );

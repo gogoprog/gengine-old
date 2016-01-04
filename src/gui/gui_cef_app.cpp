@@ -18,13 +18,8 @@ public:
 
     virtual bool Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception) OVERRIDE
     {
-        if (name == "gengine_execute")
-        {
-            gui::System::getInstance().getHandler().addTextToExecute(arguments[0]->GetStringValue().ToString().c_str());
-            return true;
-        }
-
-        return false;
+        gui::System::getInstance().getHandler().addTextToExecute(arguments[0]->GetStringValue().ToString().c_str());
+        return true;
     }
 
     IMPLEMENT_REFCOUNTING(LocalV8Handler);
@@ -32,11 +27,13 @@ public:
 
 void App::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-    CefRefPtr<CefV8Handler> v8handler = new LocalV8Handler();
-    CefRefPtr<CefV8Value> func = CefV8Value::CreateFunction("gengine_execute", v8handler);
+    CefRefPtr<CefV8Value> global_object = context->GetGlobal();
+    CefRefPtr<CefV8Value> gengine_object = CefV8Value::CreateObject(nullptr);
+    CefRefPtr<CefV8Value> execute_func = CefV8Value::CreateFunction("gengine_execute", new LocalV8Handler());
 
-    CefRefPtr<CefV8Value> object = context->GetGlobal();
-    object->SetValue("gengine_execute", func, V8_PROPERTY_ATTRIBUTE_NONE);
+    gengine_object->SetValue("execute", execute_func, V8_PROPERTY_ATTRIBUTE_NONE);
+
+    global_object->SetValue("gengine", gengine_object, V8_PROPERTY_ATTRIBUTE_NONE);
 }
 
 void App::OnContextInitialized()
