@@ -19,6 +19,9 @@
 
 #ifdef EMSCRIPTEN
     #include <emscripten.h>
+    #include <emscripten/bind.h>
+
+    using namespace emscripten;
 #endif
 
 namespace gengine
@@ -218,6 +221,19 @@ void System::showPage(const char *name, const char *effect, const int duration)
 
     executeScript(js_code.c_str());
 }
+
+#ifdef EMSCRIPTEN
+    EMSCRIPTEN_BINDINGS(gengine_gui)
+    {
+        void (* gengine_gui_showpage )(std::string, std::string, float) = []
+            (std::string page_name, std::string effect, float duration)
+            {
+                gengine::gui::System::getInstance().showPage(page_name.c_str(), effect.c_str(), duration);
+            };
+
+        function<void, std::string, std::string, float>("gengine_gui_showpage", gengine_gui_showpage );
+    }
+#endif
 
 }
 }
