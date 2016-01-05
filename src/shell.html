@@ -173,6 +173,13 @@
       function gengine_execute(text) {
         Module.execute(text);
       }
+
+      var gengine = {
+          execute: function(a) { Module.execute(a) },
+          gui: {
+              showPage: function(a, b, c) { Module.gengine_gui_showpage(a, b, c) }
+          }
+      };
     </script>
     {{{ SCRIPT }}}
   </body>

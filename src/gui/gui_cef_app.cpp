@@ -12,31 +12,51 @@ namespace gengine
 namespace gui
 {
 
-class LocalV8Handler : public CefV8Handler {
+class LocalExecute : public CefV8Handler {
 public:
-    LocalV8Handler() {}
+    LocalExecute() {}
 
     virtual bool Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception) OVERRIDE
     {
-        if (name == "gengine_execute")
-        {
-            gui::System::getInstance().getHandler().addTextToExecute(arguments[0]->GetStringValue().ToString().c_str());
-            return true;
-        }
-
-        return false;
+        gui::System::getInstance().getHandler().addTextToExecute(arguments[0]->GetStringValue().ToString().c_str());
+        return true;
     }
 
-    IMPLEMENT_REFCOUNTING(LocalV8Handler);
+    IMPLEMENT_REFCOUNTING(LocalExecute);
+};
+
+class LocalShowPage : public CefV8Handler {
+public:
+    LocalShowPage() {}
+
+    virtual bool Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception) OVERRIDE
+    {
+        auto page_name = arguments[0]->GetStringValue().ToString().c_str();
+        auto effect = arguments[1]->GetStringValue().ToString().c_str();
+        auto duration = arguments[2]->GetDoubleValue();
+
+        gui::System::getInstance().showPage(page_name, effect, duration);
+
+        return true;
+    }
+
+    IMPLEMENT_REFCOUNTING(LocalShowPage);
 };
 
 void App::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-    CefRefPtr<CefV8Handler> v8handler = new LocalV8Handler();
-    CefRefPtr<CefV8Value> func = CefV8Value::CreateFunction("gengine_execute", v8handler);
+    CefRefPtr<CefV8Value> global_object = context->GetGlobal();
+    CefRefPtr<CefV8Value> gengine_object = CefV8Value::CreateObject(nullptr);
+    CefRefPtr<CefV8Value> gui_object = CefV8Value::CreateObject(nullptr);
+    CefRefPtr<CefV8Value> execute_func = CefV8Value::CreateFunction("gengine_execute", new LocalExecute());
+    CefRefPtr<CefV8Value> gui_showpage_func = CefV8Value::CreateFunction("gengine_gui_showpage", new LocalShowPage());
 
-    CefRefPtr<CefV8Value> object = context->GetGlobal();
-    object->SetValue("gengine_execute", func, V8_PROPERTY_ATTRIBUTE_NONE);
+    gui_object->SetValue("showPage", gui_showpage_func, V8_PROPERTY_ATTRIBUTE_NONE);
+
+    gengine_object->SetValue("execute", execute_func, V8_PROPERTY_ATTRIBUTE_NONE);
+    gengine_object->SetValue("gui", gui_object, V8_PROPERTY_ATTRIBUTE_NONE);
+
+    global_object->SetValue("gengine", gengine_object, V8_PROPERTY_ATTRIBUTE_NONE);
 }
 
 void App::OnContextInitialized()
