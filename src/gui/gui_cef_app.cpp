@@ -31,11 +31,11 @@ public:
 
     virtual bool Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception) OVERRIDE
     {
-        auto page_name = arguments[0]->GetStringValue().ToString().c_str();
-        auto effect = arguments[1]->GetStringValue().ToString().c_str();
+        auto page_name = arguments[0]->GetStringValue().ToString();
+        auto effect = arguments[1]->GetStringValue().ToString();
         auto duration = arguments[2]->GetDoubleValue();
 
-        gui::System::getInstance().showPage(page_name, effect, duration);
+        gui::System::getInstance().showPage(page_name.c_str(), effect.c_str(), duration);
 
         return true;
     }
