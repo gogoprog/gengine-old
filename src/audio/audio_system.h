@@ -17,12 +17,17 @@ public:
     void init();
     void finalize();
 
-    void playMusic(const char *path, const float volume, const bool looping);
+    void playMusic(const char *path, const bool looping);
     void stopMusic();
     void playSound(const Sound *sound, const float volume);
+    void setMusicVolume(const float value);
+    void setSoundVolume(const float value);
 
 private:
 
+    float
+        soundVolume,
+        musicVolume;
 };
 
 }

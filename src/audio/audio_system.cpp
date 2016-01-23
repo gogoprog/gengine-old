@@ -26,6 +26,9 @@ void System::init()
 
     SoundManager::getInstance().init("sound");
     SoundManager::getInstance().addSupportedExtension(".wav");
+
+    musicVolume = 1.0f;
+    soundVolume = 1.0f;
 }
 
 void System::finalize()
@@ -37,14 +40,13 @@ void System::finalize()
     Mix_CloseAudio();
 }
 
-void System::playMusic(const char *path, const float volume, const bool looping)
+void System::playMusic(const char *path, const bool looping)
 {
     Mix_Music * music;
 
     music = Mix_LoadMUS(path);
 
     Mix_PlayMusic(music, looping ? -1 : 0);
-    Mix_VolumeMusic(int(MIX_MAX_VOLUME * volume));
 }
 
 void System::stopMusic()
@@ -57,12 +59,23 @@ void System::playSound(const Sound *sound, const float volume)
     if(sound)
     {
         int channel = Mix_PlayChannel(-1, sound->chunk, 0);
-        Mix_Volume(channel, int(MIX_MAX_VOLUME * volume));
+        Mix_Volume(channel, int(MIX_MAX_VOLUME * volume * soundVolume));
     }
     else
     {
         geLog("audio::System::playSound() : Null sound given.")
     }
+}
+
+void System::setMusicVolume(const float value)
+{
+    musicVolume = value;
+    Mix_VolumeMusic(int(MIX_MAX_VOLUME * musicVolume));
+}
+
+void System::setSoundVolume(const float value)
+{
+    soundVolume = value;
 }
 
 }

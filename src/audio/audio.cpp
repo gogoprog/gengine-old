@@ -11,12 +11,10 @@ namespace audio
 SCRIPT_FUNCTION(playMusic)
 {
     bool looping;
-    float volume;
 
-    volume = lua_tonumber(state, 2);
-    looping = lua_toboolean(state, 3);
+    looping = lua_toboolean(state, 2);
 
-    System::getInstance().playMusic(lua_tostring(state, 1), volume, looping);
+    System::getInstance().playMusic(lua_tostring(state, 1), looping);
 
     return 0;
 }
@@ -40,6 +38,28 @@ SCRIPT_FUNCTION(playSound)
     return 0;
 }
 
+SCRIPT_FUNCTION(setMusicVolume)
+{
+    float volume;
+
+    volume = lua_tonumber(state, 1);
+
+    System::getInstance().setMusicVolume(volume);
+
+    return 0;
+}
+
+SCRIPT_FUNCTION(setSoundVolume)
+{
+    float volume;
+
+    volume = lua_tonumber(state, 1);
+
+    System::getInstance().setSoundVolume(volume);
+
+    return 0;
+}
+
 SCRIPT_REGISTERER()
 {
     lua_newtable(state);
@@ -47,6 +67,8 @@ SCRIPT_REGISTERER()
     SCRIPT_TABLE_PUSH_FUNCTION(playMusic);
     SCRIPT_TABLE_PUSH_FUNCTION(stopMusic);
     SCRIPT_TABLE_PUSH_FUNCTION(playSound);
+    SCRIPT_TABLE_PUSH_FUNCTION(setMusicVolume);
+    SCRIPT_TABLE_PUSH_FUNCTION(setSoundVolume);
 
     SoundManager::luaRegister(state);
     lua_setfield(state, -2, "sound");
