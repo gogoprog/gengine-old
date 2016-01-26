@@ -33,6 +33,7 @@ public:
 
     uint getX() const { return x; }
     uint getY() const { return y; }
+    int getWheelY() const { return wheelY; }
     bool isJustDown(const uint button_index) const;
     bool isDown(const uint button_index) const;
     bool isJustUp(const uint button_index) const;

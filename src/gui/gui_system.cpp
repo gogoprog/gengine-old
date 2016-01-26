@@ -109,6 +109,7 @@ void System::update(const float dt)
         {
             CefMouseEvent mouse_event;
             const input::Mouse & mouse = input::System::getInstance().getMouse(0);
+            int wheelY;
 
             mouse_event.x = mouse.getX();
             mouse_event.y = mouse.getY();
@@ -121,6 +122,13 @@ void System::update(const float dt)
             if(mouse.isJustUp(1))
             {
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
+            }
+
+            wheelY = mouse.getWheelY();
+
+            if(wheelY != 0)
+            {
+                browser->GetHost()->SendMouseWheelEvent(mouse_event, 0, wheelY * 32);
             }
 
             browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
