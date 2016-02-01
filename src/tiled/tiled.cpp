@@ -153,9 +153,11 @@ SCRIPT_REGISTERER()
                             for _, p in pairs(object.properties) do properties[_] = p end
                             for _, p in pairs(layer.properties) do properties[_] = p end
 
+                            object.y = file.tileheight * file.height - object.y
+
                             if properties["function"] then
                                 local f = loadstring("return " .. properties["function"])()
-                                f(object)
+                                f(object, properties)
                             end
                         end
                     end
