@@ -155,6 +155,12 @@ SCRIPT_REGISTERER()
 
                             object.y = file.tileheight * file.height - object.y
 
+                            if object.polyline then
+                                for _, v in ipairs(object.polyline) do
+                                    v.y = - v.y
+                                end
+                            end
+
                             if properties["function"] then
                                 local f = loadstring("return " .. properties["function"])()
                                 f(object, properties)
