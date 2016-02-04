@@ -101,6 +101,14 @@ protected:
     {
         const char * arg = lua_tostring(state, parameter_position);
         char name[128];
+        internalGetName(name, arg);
+
+        if(itemMap.contains(name))
+        {
+            geDebugLog("Skipping already loaded " << itemTypeName << " '" << name << "'");
+            lua_pushlightuserdata(state, itemMap[name]);
+            return 1;
+        }
 
         T * t = new T();
 
@@ -108,7 +116,6 @@ protected:
 
         if(internalCreate(t, state, parameter_position))
         {
-            internalGetName(name, arg);
             itemMap.add(t, name);
             lua_pushlightuserdata(state, t);
         }
@@ -116,7 +123,6 @@ protected:
         {
             if(defaultItem)
             {
-                internalGetName(name, arg);
                 itemMap.add(defaultItem, name);
             }
 
