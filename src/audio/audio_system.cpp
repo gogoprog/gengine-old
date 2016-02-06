@@ -24,6 +24,8 @@ void System::init()
         geDebugLog("audio::System Unable to open audio!");
     }
 
+    Mix_AllocateChannels(32);
+
     SoundManager::getInstance().init("sound");
     SoundManager::getInstance().addSupportedExtension(".wav");
 
