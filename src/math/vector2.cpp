@@ -60,7 +60,7 @@ SCRIPT_FUNCTION(getSquareDistance)
 
 SCRIPT_FUNCTION(getPolarAngle)
 {
-    Vector2 a, b;
+    Vector2 a;
 
     script::get(state, a, 1);
 
