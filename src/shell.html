@@ -147,7 +147,7 @@
 
       function loadFile(filePath) {
           $("#gui").load(filePath, function() {
-            gengine_execute("if gengine.gui.onPageLoaded then gengine.gui.onPageLoaded() end");
+            gengine.execute("if gengine.gui.onPageLoaded then gengine.gui.onPageLoaded() end");
             });
       }
 
@@ -168,10 +168,6 @@
               document.getElementById('canvas_holder').style.width = "'" + width + "px'";
               document.getElementById('canvas_holder').style.height = "'" + height + "px'";
           }
-      }
-
-      function gengine_execute(text) {
-        Module.execute(text);
       }
 
       var gengine = {
