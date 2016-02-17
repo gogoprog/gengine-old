@@ -46,7 +46,17 @@ bool SpriterManager::internalCreate(SpriterManagerItem * _item, script::State st
 
                     itemMap.add(item, final_key);
 
-                    geDebugLog("graphics::SpriterManager loaded \"" << final_key << "\" " << (animation.looping ? "(loop)" : "") << "...");
+                    geDebugLogN("graphics::SpriterManager loaded \"" << final_key << "\" (loop:" << (animation.looping ? "true" : "false") << ", events:[");
+
+                    bool first = true;
+                    for(auto & event : animation.events)
+                    {
+                        geDebugRawLogN((first?"":", ") << event.name);
+
+                        first = false;
+                    }
+
+                    geDebugRawLog("])");
                 }
             }
         }

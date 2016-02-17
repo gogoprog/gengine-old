@@ -7,6 +7,7 @@
 #include "graphics_animation.h"
 #include "entity_system.h"
 #include "script.h"
+#include "script_system.h"
 #include "debug.h"
 #include <string.h>
 #include "entity.h"
@@ -84,17 +85,19 @@ ENTITY_COMPONENT_END()
 
 ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
 {
+    graphics::SpriteGroup & spriteGroup = self.spriteGroup;
+    Transform transform;
+
+    getTransformFromComponent(state, transform);
+
+    spriteGroup.setPosition(transform.position);
+    spriteGroup.setRotation(transform.rotation);
+
     if(self.animation)
     {
         float duration = self.animation->getDuration();
         bool looping = self.animation->isLooping();
-        graphics::SpriteGroup & spriteGroup = self.spriteGroup;
-        Transform transform;
 
-        getTransformFromComponent(state, transform);
-
-        spriteGroup.setPosition(transform.position);
-        spriteGroup.setRotation(transform.rotation);
 
         self.currentTime += System::getInstance().getCurrentDt() * self.timeFactor;
 
@@ -120,7 +123,11 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
             }
         }
 
-        Pointer<const graphics::SpriterMainlineKey> mlk = & self.animation->getAnimation().getMainlineKey(self.currentTime);
+        const auto & animation = self.animation->getAnimation();
+
+        self.currentUintTime = uint(self.currentTime * 1000) % animation.length;
+
+        Pointer<const graphics::SpriterMainlineKey> mlk = & animation.getMainlineKey(self.currentUintTime);
 
         if(self.currentMainlineKey != mlk)
         {
@@ -134,6 +141,22 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
         {
             self.animation = nullptr;
         }
+
+        for(const auto & event : animation.events)
+        {
+            if(event.time > self.previousUintTime && event.time <= self.currentUintTime)
+            {
+                lua_getfield(state, 1, "entity");
+                lua_getfield(state, -1, "fireEvent");
+                lua_pushvalue(state, -2);
+                lua_pushstring(state, "SpriterEvent");
+                lua_pushstring(state, event.name.c_str());
+                script::System::getInstance().call(3, 0);
+                lua_pop(state, 1);
+            }
+        }
+
+        self.previousUintTime = self.currentUintTime;
     }
 }
 ENTITY_COMPONENT_END()
@@ -165,6 +188,7 @@ void ComponentSpriter::setAnimation(const graphics::SpriterManagerItem * _animat
     if(reset_time)
     {
         currentTime = 0.0f;
+        previousUintTime = 0;
     }
 
     if(lastSpriterEntity != & animation->getEntity())

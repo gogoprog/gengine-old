@@ -42,7 +42,9 @@ protected:
         currentTime,
         timeFactor;
     uint
-        worldIndex;
+        worldIndex,
+        currentUintTime,
+        previousUintTime;
 };
 
 }

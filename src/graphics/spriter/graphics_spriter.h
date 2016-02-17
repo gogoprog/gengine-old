@@ -115,11 +115,19 @@ struct SpriterCharacterMap
         assetMap;
 };
 
+struct SpriterEvent
+{
+    uint
+        time;
+    std::string
+        name;
+};
+
 struct SpriterAnimation
 {
     void load(const core::Json & json, const SpriterFile & file, const SpriterEntity & entity);
 
-    const SpriterMainlineKey & getMainlineKey(const float time) const;
+    const SpriterMainlineKey & getMainlineKey(const uint time) const;
 
     std::string
         name;
@@ -131,6 +139,8 @@ struct SpriterAnimation
         mainlineKeys;
     Array<SpriterTimeline>
         timelines;
+    Array<SpriterEvent>
+        events;
 };
 
 struct SpriterEntity

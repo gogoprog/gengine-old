@@ -285,18 +285,34 @@ void SpriterAnimation::load(const core::Json & json, const SpriterFile & file, c
         mainlineKeys.add();
         mainlineKeys.getLastItem().load(mainline_json[i], *this);
     }
+
+    if(json.has("eventline"))
+    {
+        const core::Json
+            & eventline_json = json["eventline"];
+        SpriterEvent
+            event;
+
+        events.reserve(eventline_json.getSize());
+
+        for(uint i=0; i<eventline_json.getSize();++i)
+        {
+            const auto
+                & event_json = eventline_json[i];
+
+            for(uint k=0; k<event_json["key"].getSize();++k)
+            {
+                event.time = event_json["key"][k]["time"].getUint();
+                event.name = event_json["name"].getString();
+                events.add(event);
+            }
+        }
+    }
 }
 
-const SpriterMainlineKey & SpriterAnimation::getMainlineKey(const float ftime) const
+const SpriterMainlineKey & SpriterAnimation::getMainlineKey(const uint time) const
 {
-    uint time, index;
-
-    time = uint(ftime * 1000);
-
-    if(looping)
-    {
-        time %= length;
-    }
+    uint index;
 
     for(index=0; index<mainlineKeys.getSize();++index)
     {
