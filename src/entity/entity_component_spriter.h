@@ -17,6 +17,7 @@ public:
 
     ENTITY_COMPONENT_METHOD_DECLARE(pushAnimation);
     ENTITY_COMPONENT_METHOD_DECLARE(removeAnimations);
+    ENTITY_COMPONENT_METHOD_DECLARE(getBoneLocalTransform);
 
     ENTITY_COMPONENT_DECLARE(ComponentSpriter);
 

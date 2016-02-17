@@ -31,6 +31,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentSpriter)
 {
     ENTITY_COMPONENT_PUSH_FUNCTION(pushAnimation);
     ENTITY_COMPONENT_PUSH_FUNCTION(removeAnimations);
+    ENTITY_COMPONENT_PUSH_FUNCTION(getBoneLocalTransform);
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentSpriter)
@@ -178,6 +179,28 @@ ENTITY_COMPONENT_METHOD(ComponentSpriter, removeAnimations)
 {
     self.animationStack.setSize(0);
     self.animation = nullptr;
+}
+ENTITY_COMPONENT_END()
+
+ENTITY_COMPONENT_METHOD(ComponentSpriter, getBoneLocalTransform)
+{
+    if(self.currentMainlineKey)
+    {
+        uint bone_index;
+        math::Transform result;
+
+        script::get(state, bone_index, 2);
+
+        self.animation->getBoneTransform(result, *self.currentMainlineKey, self.currentTime, bone_index);
+
+        script::push(state, result);
+
+        return 1;
+    }
+
+    lua_pushnil(state);
+
+    return 1;
 }
 ENTITY_COMPONENT_END()
 

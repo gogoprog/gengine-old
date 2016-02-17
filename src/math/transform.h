@@ -25,6 +25,20 @@ template<>
 class Binder<math::Transform>
 {
 public:
+    static void push(script::State state, const math::Transform & transform)
+    {
+        lua_newtable(state);
+
+        script::push(state, transform.position);
+        lua_setfield(state, -2, "position");
+
+        script::push(state, transform.scale);
+        lua_setfield(state, -2, "scale");
+
+        script::push(state, transform.rotation);
+        lua_setfield(state, -2, "rotation");
+    }
+
     static void update(script::State state, const math::Transform & transform, int position = -1)
     {
         lua_getfield(state, position, "position");
