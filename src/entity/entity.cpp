@@ -1,9 +1,10 @@
 #include "entity.h"
 
-#include "entity_system.h"
 #include "script.h"
 #include "debug.h"
 #include "string.h"
+#include "entity_system.h"
+#include "entity_component.h"
 
 namespace gengine
 {
@@ -17,6 +18,44 @@ int
     metaTableRef;
 
 int getMetaTableRef() { return metaTableRef; }
+
+SCRIPT_FUNCTION(addComponent)
+{
+    auto name = lua_tostring(state, 4);
+
+    lua_getfield(state, 2, "this");
+    auto instance = reinterpret_cast<Component*>(lua_touserdata(state, -1));
+    lua_pop(state, 1);
+
+    if(name)
+    {
+        lua_pushvalue(state, 2);
+        lua_setfield(state, 1, name);
+    }
+
+    lua_pushvalue(state, 1);
+    lua_setfield(state, 2, "entity");
+
+    lua_pushvalue(state, 4);
+    lua_setfield(state, 2, "name");
+
+    lua_pushvalue(state, 3);
+    lua_pushnil(state);
+
+    while(lua_next(state, -2))
+    {
+        auto key = lua_tostring(state, -2);
+        lua_pushvalue(state, -1);
+        lua_setfield(state, 2, key);
+        lua_pop(state, 1);
+    }
+
+    lua_pop(state, 1);
+
+    instance->init();
+
+    return 0;
+}
 
 SCRIPT_REGISTERER()
 {
@@ -68,7 +107,7 @@ SCRIPT_REGISTERER()
 
     lua_setfield(state, -2, "isInserted");
 
-    SCRIPT_DO(
+    /*SCRIPT_DO(
         return function(self, comp, params, name)
             if name ~= nil then
                 self[name] = comp
@@ -86,6 +125,9 @@ SCRIPT_REGISTERER()
         );
 
     lua_setfield(state, -2, "addComponent");
+    */
+
+    SCRIPT_TABLE_PUSH_FUNCTION(addComponent);
 
     SCRIPT_DO(
         return function(self, name)

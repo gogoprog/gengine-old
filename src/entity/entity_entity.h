@@ -5,26 +5,32 @@
 #include "vector2.h"
 #include "script.h"
 #include "debug.h"
+#include "transform.h"
 
 namespace gengine
 {
 namespace entity
 {
-    class Entity
-    {
-        friend class System;
+class Component;
 
-    public:
-        Entity() = default;
-        ~Entity() = default;
+class Entity
+{
+    friend class System;
 
-        inline int getRef() const { return ref; }
+public:
+    Entity() = default;
+    ~Entity() = default;
 
-    private:
-        Array<int>
-            componentsRefs;
-        int
-            ref;
-    };
+    inline int getRef() const { return ref; }
+
+    math::Transform
+        tranform;
+
+private:
+    Array<Component*>
+        componentsRefs;
+    int
+        ref;
+};
 }
 }

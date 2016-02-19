@@ -25,6 +25,56 @@ ComponentSprite::ComponentSprite()
 {
 }
 
+void ComponentSprite::init()
+{
+    if(atlas)
+    {
+        sprite.setTexture(atlas->getTexture());
+        const graphics::AtlasItem & item = atlas->getItem(atlasItem);
+        sprite.setUvOffset(item.uvOffset);
+        sprite.setUvScale(item.uvScale);
+
+        if(!extentHasBeenSet)
+        {
+            atlas->getDefaultExtent(extent, atlasItem);
+        }
+    }
+    else
+    {
+        if(!extentHasBeenSet)
+        {
+            const Pointer<const graphics::Texture> texture = sprite.getTexture();
+
+            if(!texture.isNull())
+            {
+                extent.x = texture->getWidth();
+                extent.y = texture->getHeight();
+            }
+        }
+    }
+}
+
+void ComponentSprite::insert()
+{
+    graphics::System::getInstance().getWorld(worldIndex).addObject(sprite);
+}
+
+void ComponentSprite::update(const float dt)
+{
+    Transform transform;
+
+    //getTransformFromComponent(state, transform);
+
+    sprite.setPosition(transform.position);
+    sprite.setRotation(transform.rotation);
+    sprite.setExtent(extent * transform.scale);
+}
+
+void ComponentSprite::remove()
+{
+    graphics::System::getInstance().getWorld(worldIndex).removeObject(sprite);
+}
+
 ENTITY_COMPONENT_IMPLEMENT(ComponentSprite)
 {
     ENTITY_ADD_GETTER(ComponentSprite, "extent", { script::push(state, self.sprite.getExtent()); });
