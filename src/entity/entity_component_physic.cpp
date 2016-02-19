@@ -133,9 +133,9 @@ ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
     self.body->SetActive(false);
 
     lua_getfield(state, 1, "entity");
-    lua_getfield(state, -1, "_ref");
-    int ref = lua_tonumber(state, -1);
-    self.fixture->SetUserData(reinterpret_cast<void *>(ref));
+    lua_getfield(state, -1, "_e");
+    auto entity = reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+    self.fixture->SetUserData(reinterpret_cast<void*>(entity));
     lua_pop(state, 2);
 }
 ENTITY_COMPONENT_END()

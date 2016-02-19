@@ -10,6 +10,7 @@ namespace gengine
 {
 namespace entity
 {
+class Entity;
 
 class System
 {
@@ -102,10 +103,10 @@ private:
         }
     }
 
-    Array<int>
-        refTable,
-        refToRemoveTable,
-        refToUpdateTable;
+    Array<Entity*>
+        entities,
+        entitiesToRemove,
+        entitiesToUpdate;
     float
         currentDt;
 };
