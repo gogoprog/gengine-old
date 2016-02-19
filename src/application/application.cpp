@@ -106,7 +106,8 @@ void Application::Setup()
     engineParameters_["FullScreen"] = false;
     engineParameters_["Headless"] = false;
     engineParameters_["Sound"] = false;
-    engineParameters_["ResourcePrefixPaths"] = ".";
+
+    engineParameters_["ResourcePrefixPaths"] = (".;" + std::string(getenv("GENGINE")) + "/res/").c_str();
 }
 
 void Application::Start()
