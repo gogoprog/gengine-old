@@ -44,7 +44,6 @@ solution "gengine"
 
         links {
             "Urho3D",
-            "lua5.2",
             "Box2D"
             }
 

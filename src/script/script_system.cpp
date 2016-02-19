@@ -256,7 +256,7 @@ int System::traceBack(lua_State *state)
     const char *msg = lua_tostring(state, 1);
     if (msg)
     {
-        luaL_traceback(state, state, msg, 1);
+        //luaL_traceback(state, state, msg, 1);
     }
     else if (!lua_isnoneornil(state, 1))
     {

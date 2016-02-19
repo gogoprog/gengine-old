@@ -6,7 +6,6 @@
 #include "debug.h"
 #include <string>
 
-#include <Urho3D/Core/Main.h>
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Engine/Console.h>
@@ -99,11 +98,15 @@ Application::Application(Urho3D::Context* context)
     :
     Urho3D::Application(context)
 {
-    geDebugLog("app urho created");
 }
 
 void Application::Setup()
 {
+    engineParameters_["LogName"] = "gengine.log";
+    engineParameters_["FullScreen"] = false;
+    engineParameters_["Headless"] = false;
+    engineParameters_["Sound"] = false;
+    engineParameters_["ResourcePrefixPaths"] = ".";
 }
 
 void Application::Start()
@@ -116,5 +119,3 @@ void Application::Stop()
 
 }
 }
-
-URHO3D_DEFINE_APPLICATION_MAIN(gengine::application::Application)

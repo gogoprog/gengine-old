@@ -46,11 +46,11 @@ bool init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
 
-    /*gui::System::getInstance().preinit(argc,argv);
+    gui::System::getInstance().preinit(argc,argv);
 
     script::System & script_system = script::System::getInstance();
 
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
+    //SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 
     script_system.init();
 
@@ -62,8 +62,8 @@ bool init(int argc, char *argv[])
 
     script_system.call("init");
 
-    mainWindow.init();
-
+    //mainWindow.init();
+/*
     #ifdef _WINDOWS
         glewInit();
     #endif
