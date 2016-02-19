@@ -103,7 +103,7 @@ Application::Application(Urho3D::Context* context)
 void Application::Setup()
 {
     engineParameters_["LogName"] = "gengine.log";
-    engineParameters_["FullScreen"] = false;
+    engineParameters_["FullScreen"] = fullscreen;
     engineParameters_["Headless"] = false;
     engineParameters_["Sound"] = false;
 
@@ -112,6 +112,8 @@ void Application::Setup()
 
 void Application::Start()
 {
+    auto* graphics = GetSubsystem<Urho3D::Graphics>();
+    graphics->SetMode(width, height);
 }
 
 void Application::Stop()
