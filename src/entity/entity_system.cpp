@@ -37,27 +37,23 @@ void System::finalize()
 
 void System::update(const float dt)
 {
-    bool isInserted;
     lua_State * state = script::System::getInstance().getState();
     currentDt = dt;
 
     entitiesToUpdate = entities;
 
-    for(auto entity : entitiesToUpdate)
+    for(auto pentity : entitiesToUpdate)
     {
-        int ref = entity->ref;
+        auto & entity = *pentity;
+
+        int ref = entity.ref;
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
-        lua_getfield(state, -1, "_isInserted");
-        isInserted = lua_toboolean(state, -1);
-        lua_pop(state, 1);
+        script::get(state, entity.transform);
 
-        if(isInserted)
+        if(entity.isInserted())
         {
-            lua_getfield(state, -1, "update");
-            lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
-            lua_pushnumber(state, dt);
-            script::System::getInstance().call(2, 0);
+            entity.update(dt);
         }
 
         lua_pop(state, 1);

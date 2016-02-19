@@ -18,19 +18,30 @@ class Entity
     friend class System;
 
 public:
-    Entity() = default;
+    Entity();
     ~Entity() = default;
 
+    Entity(Entity &) = delete;
+    Entity & operator=(Entity &) = delete;
+
     inline int getRef() const { return ref; }
+    inline bool isInserted() const { return itIsInserted; }
+
+    void addComponent(Component & component);
+
+    void insert();
+    void update(const float dt);
 
     math::Transform
-        tranform;
+        transform;
 
 private:
     Array<Component*>
-        componentsRefs;
+        components;
     int
         ref;
+    bool
+        itIsInserted;
 };
 }
 }

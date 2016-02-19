@@ -5,6 +5,7 @@
 #include "string.h"
 #include "entity_system.h"
 #include "entity_component.h"
+#include "entity_entity.h"
 
 namespace gengine
 {
@@ -23,21 +24,28 @@ SCRIPT_FUNCTION(addComponent)
 {
     auto name = lua_tostring(state, 4);
 
+    lua_getfield(state, 1, "_e");
+    auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+    lua_pop(state, 1);
+
     lua_getfield(state, 2, "this");
-    auto instance = reinterpret_cast<Component*>(lua_touserdata(state, -1));
+    auto & component_instance = * reinterpret_cast<Component*>(lua_touserdata(state, -1));
     lua_pop(state, 1);
 
     if(name)
     {
+        lua_pushstring(state, name);
         lua_pushvalue(state, 2);
-        lua_setfield(state, 1, name);
+        lua_rawset(state, 1);
     }
 
+    lua_pushstring(state, "entity");
     lua_pushvalue(state, 1);
-    lua_setfield(state, 2, "entity");
+    lua_rawset(state, 2);
 
+    lua_pushstring(state, "name");
     lua_pushvalue(state, 4);
-    lua_setfield(state, 2, "name");
+    lua_rawset(state, 2);
 
     lua_pushvalue(state, 3);
     lua_pushnil(state);
@@ -52,7 +60,21 @@ SCRIPT_FUNCTION(addComponent)
 
     lua_pop(state, 1);
 
-    instance->init();
+    component_instance.init();
+    component_instance.setEntity(entity_instance);
+
+    entity_instance.addComponent(component_instance);
+
+    return 0;
+}
+
+SCRIPT_FUNCTION(insert)
+{
+    lua_getfield(state, 1, "_e");
+    auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+    lua_pop(state, 1);
+
+    entity_instance.insert();
 
     return 0;
 }
@@ -63,28 +85,7 @@ SCRIPT_REGISTERER()
 
     lua_newtable(state);
 
-    SCRIPT_DO(
-        return function(self, dt)
-            for k,v in ipairs(self.components) do
-                v:update(dt)
-            end
-        end
-        );
-
-    lua_setfield(state, -2, "update");
-
-    SCRIPT_DO(
-        return function(self)
-            if not self._isInserted then
-                for k,v in ipairs(self.components) do
-                    v:insert()
-                end
-                self._isInserted = true
-            end
-        end
-        );
-
-    lua_setfield(state, -2, "insert");
+    SCRIPT_TABLE_PUSH_FUNCTION(insert);
 
     SCRIPT_DO(
         return function(self)
@@ -106,26 +107,6 @@ SCRIPT_REGISTERER()
         );
 
     lua_setfield(state, -2, "isInserted");
-
-    /*SCRIPT_DO(
-        return function(self, comp, params, name)
-            if name ~= nil then
-                self[name] = comp
-            end
-            rawset(comp, 'entity', self)
-            rawset(comp, 'name', name)
-            table.insert(self.components, comp)
-            if params ~= nil then
-                for k,v in pairs(params) do
-                    comp[k] = v
-                end
-            end
-            comp:init(params)
-        end
-        );
-
-    lua_setfield(state, -2, "addComponent");
-    */
 
     SCRIPT_TABLE_PUSH_FUNCTION(addComponent);
 

@@ -5,6 +5,7 @@
 #include "graphics_texture.h"
 #include "graphics_atlas.h"
 #include "entity_system.h"
+#include "entity_entity.h"
 #include "script.h"
 #include "debug.h"
 #include <string.h>
@@ -61,9 +62,7 @@ void ComponentSprite::insert()
 
 void ComponentSprite::update(const float dt)
 {
-    Transform transform;
-
-    //getTransformFromComponent(state, transform);
+    Transform & transform = entity->transform;
 
     sprite.setPosition(transform.position);
     sprite.setRotation(transform.rotation);

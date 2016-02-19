@@ -26,7 +26,9 @@ public:
     virtual void update(const float dt);
     virtual void remove();
 
-private:
+    void setEntity(Entity & _entity) { entity = & _entity; }
+
+protected:
     Pointer<Entity>
         entity;
 };
