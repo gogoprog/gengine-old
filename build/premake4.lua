@@ -43,6 +43,7 @@ solution "gengine"
             }
 
         links {
+            "Urho3D",
             "lua5.2",
             "Box2D"
             }
@@ -68,7 +69,9 @@ solution "gengine"
             "../deps/common/include",
             "../deps/common/tilemover2d/src/",
             "../deps/common/jsonxx/",
-            "../deps/common/spine/include/"
+            "../deps/common/spine/include/",
+            "../deps/common/Urho3D/",
+            "../deps/common/Urho3D/ThirdParty/"
             }
 
         files {
@@ -108,7 +111,8 @@ solution "gengine"
                     "GL",
                     "cef",
                     "cef_dll_wrapper",
-                    "pthread"
+                    "pthread",
+                    "dl"
                     }
 
             elseif os.is("windows") then

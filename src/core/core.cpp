@@ -1,5 +1,6 @@
 #include "core.h"
 
+#include <Urho3D/Engine/Application.h>
 #include "core_sdl.h"
 #include "input_system.h"
 #include "graphics_system.h"

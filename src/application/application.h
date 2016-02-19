@@ -3,6 +3,7 @@
 #include "primitives.h"
 #include "script.h"
 #include "vector2.h"
+#include <Urho3D/Engine/Application.h>
 
 struct lua_State;
 
@@ -19,6 +20,18 @@ void setExtent(const uint width, const uint height);
 bool isFullscreen();
 
 SCRIPT_REGISTERER();
+
+class Application : public Urho3D::Application
+{
+    URHO3D_OBJECT(Application, Application);
+
+public:
+    Application(Urho3D::Context* context);
+
+    virtual void Setup() override;
+    virtual void Start() override;
+    virtual void Stop() override;
+};
 
 }
 }
