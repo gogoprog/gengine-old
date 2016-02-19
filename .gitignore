@@ -24,5 +24,4 @@ debug.log
 *.creator.user
 *.files
 *.includes
-
-
+*.log

@@ -70,8 +70,7 @@ solution "gengine"
             "../deps/common/tilemover2d/src/",
             "../deps/common/jsonxx/",
             "../deps/common/spine/include/",
-            "../deps/common/Urho3D/",
-            "../deps/common/Urho3D/ThirdParty/"
+            "../deps/common/include/Urho3D/ThirdParty/"
             }
 
         files {

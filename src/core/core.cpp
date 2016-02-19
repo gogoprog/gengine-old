@@ -46,7 +46,7 @@ bool init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
 
-    gui::System::getInstance().preinit(argc,argv);
+    /*gui::System::getInstance().preinit(argc,argv);
 
     script::System & script_system = script::System::getInstance();
 
@@ -79,7 +79,7 @@ bool init(int argc, char *argv[])
     script_system.init2();
 
     script_system.call("start");
-
+    */
     return true;
 }
 

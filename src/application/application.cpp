@@ -3,8 +3,10 @@
 #include "primitives.h"
 #include "script.h"
 #include "core.h"
+#include "debug.h"
 #include <string>
 
+#include <Urho3D/Core/Main.h>
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Engine/Console.h>
@@ -97,7 +99,7 @@ Application::Application(Urho3D::Context* context)
     :
     Urho3D::Application(context)
 {
-
+    geDebugLog("app urho created");
 }
 
 void Application::Setup()
@@ -112,7 +114,7 @@ void Application::Stop()
 {
 }
 
-URHO3D_DEFINE_APPLICATION_MAIN(Application)
+}
+}
 
-}
-}
+URHO3D_DEFINE_APPLICATION_MAIN(gengine::application::Application)

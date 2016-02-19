@@ -6,7 +6,7 @@
 #endif
 
 using namespace gengine;
-
+/*
 int main(int argc, char *argv[])
 {
     if(core::init(argc, argv))
@@ -14,14 +14,14 @@ int main(int argc, char *argv[])
         #ifndef EMSCRIPTEN
             while(!core::mustQuit())
             {
-                core::update();
+                //core::update();
             }
 
-            core::finalize();
+            //core::finalize();
         #else
             emscripten_set_main_loop(core::update, 0, 0);
         #endif
     }
 
     return 0;
-}
+}*/
