@@ -5,22 +5,25 @@
 #include "graphics_spine_manager_item.h"
 #include "graphics_mesh.h"
 #include "graphics_vertex.h"
+#include "entity_component.h"
 
 namespace gengine
 {
 namespace entity
 {
 
-class ComponentSpine
+class ComponentSpine : public Component
 {
 public:
     ComponentSpine();
     ~ComponentSpine();
 
-    ENTITY_COMPONENT_METHOD_DECLARE(setAnimation);
-    ENTITY_COMPONENT_METHOD_DECLARE(addAnimation);
+    virtual void init() override;
+    virtual void insert() override;
+    virtual void update(const float dt) override;
+    virtual void remove() override;
 
-    ENTITY_COMPONENT_DECLARE_OLD(ComponentSpine);
+    ENTITY_COMPONENT_DECLARE(ComponentSpine);
 
 protected:
 
