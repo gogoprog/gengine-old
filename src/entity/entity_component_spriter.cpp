@@ -98,13 +98,11 @@ void ComponentSpriter::update(const float dt)
             if(event.time > previousUintTime && event.time <= currentUintTime)
             {
                 auto state = script::System::getInstance().getState();
-                lua_getfield(state, 1, "entity");
                 lua_getfield(state, -1, "fireEvent");
                 lua_pushvalue(state, -2);
                 lua_pushstring(state, "SpriterEvent");
                 lua_pushstring(state, event.name.c_str());
                 script::System::getInstance().call(3, 0);
-                lua_pop(state, 1);
             }
         }
 
