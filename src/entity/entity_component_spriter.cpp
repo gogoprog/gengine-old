@@ -6,6 +6,7 @@
 #include "graphics_atlas.h"
 #include "graphics_animation.h"
 #include "entity_system.h"
+#include "entity_entity.h"
 #include "script.h"
 #include "script_system.h"
 #include "debug.h"
@@ -27,11 +28,141 @@ ComponentSpriter::ComponentSpriter()
 {
 }
 
+void ComponentSpriter::init()
+{
+}
+
+void ComponentSpriter::insert()
+{
+    graphics::System::getInstance().getWorld(worldIndex).addObject(spriteGroup);
+}
+
+void ComponentSpriter::update(const float dt)
+{
+    Transform & transform = entity->transform;
+
+    spriteGroup.setPosition(transform.position);
+    spriteGroup.setRotation(transform.rotation);
+
+    if(animation)
+    {
+        float duration = animation->getDuration();
+        bool looping = animation->isLooping();
+
+
+        currentTime += System::getInstance().getCurrentDt() * timeFactor;
+
+        if(currentTime > duration)
+        {
+            while(currentTime > duration)
+            {
+                currentTime -= duration;
+            }
+
+            if(!looping)
+            {
+                animationStack.removeLastItem();
+
+                if(animationStack.getSize() > 0)
+                {
+                    setAnimation(animationStack.getLastItem(), false);
+                }
+                else
+                {
+                    currentTime = duration;
+                }
+            }
+        }
+
+        const auto & animation_animation = animation->getAnimation();
+
+        currentUintTime = uint(currentTime * 1000) % animation_animation.length;
+
+        Pointer<const graphics::SpriterMainlineKey> mlk = & animation_animation.getMainlineKey(currentUintTime);
+
+        if(currentMainlineKey != mlk)
+        {
+            currentMainlineKey = mlk;
+            animation->fill(spriteGroup, *mlk, characterMap);
+        }
+
+        animation->update(spriteGroup, *mlk, currentTime, characterMap, transform.scale);
+
+        if(!looping && currentTime == duration && !animationStack.getSize())
+        {
+            animation = nullptr;
+        }
+
+        for(const auto & event : animation_animation.events)
+        {
+            if(event.time > previousUintTime && event.time <= currentUintTime)
+            {
+                auto state = script::System::getInstance().getState();
+                lua_getfield(state, 1, "entity");
+                lua_getfield(state, -1, "fireEvent");
+                lua_pushvalue(state, -2);
+                lua_pushstring(state, "SpriterEvent");
+                lua_pushstring(state, event.name.c_str());
+                script::System::getInstance().call(3, 0);
+                lua_pop(state, 1);
+            }
+        }
+
+        previousUintTime = currentUintTime;
+    }
+}
+
+void ComponentSpriter::remove()
+{
+    graphics::System::getInstance().getWorld(worldIndex).removeObject(spriteGroup);
+}
+
 ENTITY_COMPONENT_IMPLEMENT(ComponentSpriter)
 {
-    ENTITY_COMPONENT_PUSH_FUNCTION(pushAnimation);
-    ENTITY_COMPONENT_PUSH_FUNCTION(removeAnimations);
-    ENTITY_COMPONENT_PUSH_FUNCTION(getBoneLocalTransform);
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        pushAnimation,
+        {
+            SCRIPT_GET_SELF(ComponentSpriter);
+            self.animationStack.add(static_cast<const graphics::SpriterManagerItem *>(lua_touserdata(state, 2)));
+            self.setAnimation(self.animationStack.getLastItem(), true);
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        removeAnimations,
+        {
+            SCRIPT_GET_SELF(ComponentSpriter);
+            self.animationStack.setSize(0);
+            self.animation = nullptr;
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        getBoneLocalTransform,
+        {
+            SCRIPT_GET_SELF(ComponentSpriter);
+
+            if(self.currentMainlineKey)
+            {
+                uint bone_index;
+                math::Transform result;
+
+                script::get(state, bone_index, 2);
+
+                self.animation->getBoneTransform(result, *self.currentMainlineKey, self.currentTime, bone_index);
+
+                script::push(state, result);
+
+                return 1;
+            }
+
+            lua_pushnil(state);
+
+            return 1;
+        }
+        );
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentSpriter)
@@ -70,137 +201,6 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
         }
     }
     ENTITY_COMPONENT_SETTER_END()
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriter, init)
-{
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriter, insert)
-{
-    graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.spriteGroup);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriter, update)
-{
-    graphics::SpriteGroup & spriteGroup = self.spriteGroup;
-    Transform transform;
-
-    getTransformFromComponent(state, transform);
-
-    spriteGroup.setPosition(transform.position);
-    spriteGroup.setRotation(transform.rotation);
-
-    if(self.animation)
-    {
-        float duration = self.animation->getDuration();
-        bool looping = self.animation->isLooping();
-
-
-        self.currentTime += System::getInstance().getCurrentDt() * self.timeFactor;
-
-        if(self.currentTime > duration)
-        {
-            while(self.currentTime > duration)
-            {
-                self.currentTime -= duration;
-            }
-
-            if(!looping)
-            {
-                self.animationStack.removeLastItem();
-
-                if(self.animationStack.getSize() > 0)
-                {
-                    self.setAnimation(self.animationStack.getLastItem(), false);
-                }
-                else
-                {
-                    self.currentTime = duration;
-                }
-            }
-        }
-
-        const auto & animation = self.animation->getAnimation();
-
-        self.currentUintTime = uint(self.currentTime * 1000) % animation.length;
-
-        Pointer<const graphics::SpriterMainlineKey> mlk = & animation.getMainlineKey(self.currentUintTime);
-
-        if(self.currentMainlineKey != mlk)
-        {
-            self.currentMainlineKey = mlk;
-            self.animation->fill(spriteGroup, *mlk, self.characterMap);
-        }
-
-        self.animation->update(spriteGroup, *mlk, self.currentTime, self.characterMap, transform.scale);
-
-        if(!looping && self.currentTime == duration && !self.animationStack.getSize())
-        {
-            self.animation = nullptr;
-        }
-
-        for(const auto & event : animation.events)
-        {
-            if(event.time > self.previousUintTime && event.time <= self.currentUintTime)
-            {
-                lua_getfield(state, 1, "entity");
-                lua_getfield(state, -1, "fireEvent");
-                lua_pushvalue(state, -2);
-                lua_pushstring(state, "SpriterEvent");
-                lua_pushstring(state, event.name.c_str());
-                script::System::getInstance().call(3, 0);
-                lua_pop(state, 1);
-            }
-        }
-
-        self.previousUintTime = self.currentUintTime;
-    }
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriter, remove)
-{
-    graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.spriteGroup);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriter, pushAnimation)
-{
-    self.animationStack.add(static_cast<const graphics::SpriterManagerItem *>(lua_touserdata(state, 2)));
-    self.setAnimation(self.animationStack.getLastItem(), true);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriter, removeAnimations)
-{
-    self.animationStack.setSize(0);
-    self.animation = nullptr;
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriter, getBoneLocalTransform)
-{
-    if(self.currentMainlineKey)
-    {
-        uint bone_index;
-        math::Transform result;
-
-        script::get(state, bone_index, 2);
-
-        self.animation->getBoneTransform(result, *self.currentMainlineKey, self.currentTime, bone_index);
-
-        script::push(state, result);
-
-        return 1;
-    }
-
-    lua_pushnil(state);
-
-    return 1;
 }
 ENTITY_COMPONENT_END()
 

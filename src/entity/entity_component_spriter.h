@@ -4,25 +4,26 @@
 #include "entity_macros.h"
 #include "graphics_spriter_manager_item.h"
 #include "graphics_spriter.h"
+#include "entity_component.h"
 
 namespace gengine
 {
 namespace entity
 {
 
-class ComponentSpriter
+class ComponentSpriter : public Component
 {
 public:
     ComponentSpriter();
 
-    ENTITY_COMPONENT_METHOD_DECLARE(pushAnimation);
-    ENTITY_COMPONENT_METHOD_DECLARE(removeAnimations);
-    ENTITY_COMPONENT_METHOD_DECLARE(getBoneLocalTransform);
+    virtual void init() override;
+    virtual void insert() override;
+    virtual void update(const float dt) override;
+    virtual void remove() override;
 
-    ENTITY_COMPONENT_DECLARE_OLD(ComponentSpriter);
+    ENTITY_COMPONENT_DECLARE(ComponentSpriter);
 
 protected:
-
     void setAnimation(const graphics::SpriterManagerItem * animation, const bool reset_time);
 
     Pointer<const graphics::SpriterMainlineKey>
