@@ -224,21 +224,16 @@ SCRIPT_CLASS_FUNCTION(System, destroy)
         auto entity = reinterpret_cast<Entity*>(lua_touserdata(state, -1));
         lua_pop(state, 1);
 
-        lua_getfield(state, 1, "_isInserted");
-        bool it_is_inserted = lua_toboolean(state, -1);
-        lua_pop(state, 1);
-
-        if(it_is_inserted)
+        if(entity->isInserted())
         {
-            lua_getfield(state, 1, "remove");
-            lua_pushvalue(state, 1);
-            script::System::getInstance().call(1, 0);
+            entity->remove();
         }
 
         lua_pushboolean(state, true);
         lua_setfield(state, 1, "destroyed");
 
         getInstance().entitiesToRemove.add(entity);
+        entity->finalize();
     }
     else
     {

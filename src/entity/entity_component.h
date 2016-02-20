@@ -25,6 +25,7 @@ public:
     Component & operator=(Component &) = delete;
 
     virtual void init();
+    virtual void finalize();
     virtual void insert();
     virtual void update(const float dt);
     virtual void remove();

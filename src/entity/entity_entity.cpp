@@ -18,6 +18,22 @@ void Entity::addComponent(Component & component)
     components.add(& component);
 }
 
+void Entity::init()
+{
+
+}
+
+void Entity::finalize()
+{
+    for(auto component : components)
+    {
+        component->finalize();
+        delete component;
+    }
+
+    components.setSize(0);
+}
+
 void Entity::insert()
 {
     if(!itIsInserted)

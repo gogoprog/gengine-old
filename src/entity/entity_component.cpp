@@ -11,6 +11,11 @@ void Component::init()
 
 }
 
+void Component::finalize()
+{
+
+}
+
 void Component::insert()
 {
 

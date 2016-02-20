@@ -162,19 +162,5 @@ SCRIPT_REGISTERER()
     lua_pop(state, 1);
 }
 
-void getTransformFromComponent(lua_State *state, math::Transform & transform)
-{
-    lua_getfield(state, 1, "entity");
-    script::get(state, transform);
-    lua_pop(state, 1);
-}
-
-void updateTransformFromComponent(lua_State *state, const math::Transform & transform)
-{
-    lua_getfield(state, 1, "entity");
-    script::update(state, transform);
-    lua_pop(state, 1);
-}
-
 }
 }

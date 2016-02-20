@@ -29,6 +29,8 @@ public:
 
     void addComponent(Component & component);
 
+    void init();
+    void finalize();
     void insert();
     void remove();
     void update(const float dt);
