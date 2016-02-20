@@ -74,37 +74,41 @@ SCRIPT_REGISTERER()
 
     lua_newtable(state);
 
-    lua_pushcfunction(state, [](lua_State *state) -> int {
-        lua_getfield(state, 1, "_e");
-        auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
-        lua_pop(state, 1);
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        insert,
+        {
+            lua_getfield(state, 1, "_e");
+            auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
 
-        entity_instance.insert();
+            entity_instance.insert();
 
-        return 0;
-    });
+            return 0;
+        });
 
-    lua_setfield(state, -2, "insert");
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        remove,
+        {
+            lua_getfield(state, 1, "_e");
+            auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
 
-    lua_pushcfunction(state, [](lua_State *state) -> int {
-        lua_getfield(state, 1, "_e");
-        auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
-        lua_pop(state, 1);
+            entity_instance.remove();
 
-        entity_instance.remove();
+            return 0;
+        });
 
-        return 0;
-    });
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        isInserted,
+        {
+            lua_getfield(state, 1, "_e");
+            auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
 
-    lua_setfield(state, -2, "remove");
+            lua_pushboolean(state, entity_instance.isInserted());
 
-    SCRIPT_DO(
-        return function(self)
-            return self._isInserted == true
-        end
-        );
-
-    lua_setfield(state, -2, "isInserted");
+            return 1;
+        });
 
     SCRIPT_TABLE_PUSH_FUNCTION(addComponent);
 

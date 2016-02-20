@@ -39,16 +39,14 @@
     lua_pushcfunction(state, &_##_name_); \
     lua_setfield(state, -2, #_name_)
 
-#define SCRIPT_TABLE_PUSH_FUNCTION2(_function_, _name_) \
-    lua_pushcfunction(state, &_##_function_); \
+#define SCRIPT_TABLE_PUSH_INLINE_FUNCTION(_name_, _body_) \
+    lua_pushcfunction(state, [](lua_State *state) -> int \
+        _body_ \
+        ); \
     lua_setfield(state, -2, #_name_)
 
 #define SCRIPT_TABLE_PUSH_CLASS_FUNCTION(_class_, _name_) \
     lua_pushcfunction(state, &_class_::_##_name_); \
-    lua_setfield(state, -2, #_name_)
-
-#define SCRIPT_TABLE_PUSH_INTERNAL_FUNCTION(_name_) \
-    lua_pushcfunction(state, &_##_name_); \
     lua_setfield(state, -2, #_name_)
 
 #define SCRIPT_TABLE_PUSH_NUMBER(_name_, _value_) \
