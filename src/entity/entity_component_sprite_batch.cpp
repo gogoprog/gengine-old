@@ -9,6 +9,7 @@
 #include "debug.h"
 #include <string.h>
 #include "entity.h"
+#include "entity_entity.h"
 
 namespace gengine
 {
@@ -17,16 +18,78 @@ namespace entity
 
 ComponentSpriteBatch::ComponentSpriteBatch()
     :
+    Component(),
     worldIndex(0),
     size(128)
 {
 }
 
+void ComponentSpriteBatch::init()
+{
+    spriteBatch.init(size * 4);
+}
+
+void ComponentSpriteBatch::insert()
+{
+    graphics::System::getInstance().getWorld(worldIndex).addObject(spriteBatch);
+}
+
+void ComponentSpriteBatch::update(const float /*dt*/)
+{
+    Transform & transform = entity->transform;
+
+    spriteBatch.setPosition(transform.position);
+}
+
+void ComponentSpriteBatch::remove()
+{
+    graphics::System::getInstance().getWorld(worldIndex).removeObject(spriteBatch);
+}
+
 ENTITY_COMPONENT_IMPLEMENT(ComponentSpriteBatch)
 {
-    ENTITY_COMPONENT_PUSH_FUNCTION(lock);
-    ENTITY_COMPONENT_PUSH_FUNCTION(unlock);
-    ENTITY_COMPONENT_PUSH_FUNCTION(addItem);
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        lock,
+        {
+            SCRIPT_GET_SELF(ComponentSpriteBatch);
+            self.spriteBatch.lock();
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        unlock,
+        {
+            SCRIPT_GET_SELF(ComponentSpriteBatch);
+            self.spriteBatch.unlock();
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        addItem,
+        {
+            SCRIPT_GET_SELF(ComponentSpriteBatch);
+            Vector2 position;
+            int atlas_item_index;
+
+            atlas_item_index = lua_tonumber(state, 2);
+            script::get(state, position, 3);
+
+            if(lua_istable(state, 4))
+            {
+                Vector2 extent;
+                script::get(state, extent, 4);
+                self.spriteBatch.addItem(self.atlas, atlas_item_index, position, extent);
+            }
+            else
+            {
+                self.spriteBatch.addItem(self.atlas, atlas_item_index, position);
+            }
+
+            return 0;
+        }
+        );
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
@@ -49,71 +112,6 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriteBatch)
         self.size = uint(lua_tonumber(state,3));
     }
     ENTITY_COMPONENT_SETTER_END()
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, init)
-{
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-
-    self.spriteBatch.init(self.size * 4);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, insert)
-{
-    SCRIPT_GET_SELF(ComponentSpriteBatch);
-
-    graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.spriteBatch);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, update)
-{
-    graphics::SpriteBatch & spriteBatch = self.spriteBatch;
-
-    Transform transform;
-    getTransformFromComponent(state, transform);
-
-    spriteBatch.setPosition(transform.position);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, remove)
-{
-    graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.spriteBatch);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, lock)
-{
-    self.spriteBatch.lock();
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, unlock)
-{
-    self.spriteBatch.unlock();
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentSpriteBatch, addItem)
-{
-    Vector2 position, extent;
-    int atlas_item_index;
-
-    atlas_item_index = lua_tonumber(state, 2);
-    script::get(state, position, 3);
-
-    if(lua_istable(state, 4))
-    {
-        script::get(state, extent, 4);
-        self.spriteBatch.addItem(self.atlas, atlas_item_index, position, extent);
-    }
-    else
-    {
-        self.spriteBatch.addItem(self.atlas, atlas_item_index, position);
-    }
 }
 ENTITY_COMPONENT_END()
 
