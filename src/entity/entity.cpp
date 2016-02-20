@@ -60,8 +60,8 @@ SCRIPT_FUNCTION(addComponent)
 
     lua_pop(state, 1);
 
-    component_instance.init();
     component_instance.setEntity(entity_instance);
+    component_instance.init();
 
     entity_instance.addComponent(component_instance);
 

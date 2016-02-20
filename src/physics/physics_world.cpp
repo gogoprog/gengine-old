@@ -87,8 +87,6 @@ SCRIPT_CLASS_FUNCTION(World, rayCast)
 
     self.b2world.RayCast(&results, b2Vec2(start.x, start.y), b2Vec2(end.x, end.y));
 
-    lua_pushvalue(state, 4);
-
     for(auto entity : results.entities)
     {
         lua_pushvalue(state, 4);

@@ -152,7 +152,7 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");
     registerComponent<ComponentSpriteBatch>(state, "ComponentSpriteBatch");
-    //registerComponent<ComponentPhysic>(state, "ComponentPhysic");
+    registerComponent<ComponentPhysic>(state, "ComponentPhysic");
     registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
     registerComponent<ComponentQuad>(state, "ComponentQuad");

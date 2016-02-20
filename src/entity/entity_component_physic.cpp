@@ -1,11 +1,13 @@
 #include "entity_component_physic.h"
 
 #include "physics_system.h"
+#include "entity.h"
 #include "entity_system.h"
+#include "entity_entity.h"
 #include "script.h"
+#include "script_system.h"
 #include "debug.h"
 #include <string.h>
-#include "entity.h"
 
 namespace gengine
 {
@@ -17,6 +19,7 @@ namespace entity
 
 ComponentPhysic::ComponentPhysic()
     :
+    Component(),
     body(nullptr),
     fixture(nullptr),
     itIsSensor(false),
@@ -24,13 +27,133 @@ ComponentPhysic::ComponentPhysic()
 {
 }
 
+void ComponentPhysic::init()
+{
+    bodyDefinition.position.Set(-10000, -10000);
+    body = physics::System::getInstance().getWorld(worldIndex).getBox2dWorld().CreateBody(&bodyDefinition);
+
+    fixtureDefinition.shape = shape;
+
+    fixture = body->CreateFixture(&fixtureDefinition);
+    fixture->SetSensor(itIsSensor);
+
+    body->SetActive(false);
+
+    fixture->SetUserData(reinterpret_cast<void*>(&*entity));
+}
+
+void ComponentPhysic::insert()
+{
+    Transform & transform = entity->transform;
+
+    body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
+
+    body->SetActive(true);
+}
+
+void ComponentPhysic::update(const float /*dt*/)
+{
+    Transform & transform = entity->transform;
+
+    switch(bodyDefinition.type)
+    {
+        case b2_dynamicBody:
+        {
+            b2Vec2 position = body->GetPosition();
+            float32 angle = body->GetAngle();
+
+            transform.position.x = position.x;
+            transform.position.y = position.y;
+            transform.rotation = angle;
+
+            script::update(script::System::getInstance().getState(), transform);
+        }
+        break;
+
+        case b2_staticBody:
+        {
+        }
+        break;
+
+        case b2_kinematicBody:
+        {
+            body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
+        }
+        break;
+    }
+}
+
+void ComponentPhysic::remove()
+{
+    body->SetActive(false);
+}
+
 ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
 {
-    ENTITY_COMPONENT_PUSH_FUNCTION(applyAngularImpulse);
-    ENTITY_COMPONENT_PUSH_FUNCTION(applyForce);
-    ENTITY_COMPONENT_PUSH_FUNCTION(applyForceToCenter);
-    ENTITY_COMPONENT_PUSH_FUNCTION(applyLinearImpulse);
-    ENTITY_COMPONENT_PUSH_FUNCTION(applyTorque);
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        applyAngularImpulse,
+        {
+            SCRIPT_GET_SELF(ComponentPhysic);
+            float impulse = lua_tonumber(state, 2);
+
+            self.body->ApplyAngularImpulse(impulse);
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        applyForce,
+        {
+            SCRIPT_GET_SELF(ComponentPhysic);
+            Vector2 force;
+            Vector2 point;
+
+            script::get(state, force, 2);
+            script::get(state, point, 3);
+
+            self.body->ApplyForce(b2Vec2(force.x, force.y), b2Vec2(point.x, point.y));
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        applyForceToCenter,
+        {
+            SCRIPT_GET_SELF(ComponentPhysic);
+            Vector2 force;
+
+            script::get(state, force, 2);
+
+            self.body->ApplyForceToCenter(b2Vec2(force.x, force.y));
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        applyLinearImpulse,
+        {
+            SCRIPT_GET_SELF(ComponentPhysic);
+            Vector2 impulse;
+            Vector2 point;
+
+            script::get(state, impulse, 2);
+            script::get(state, point, 3);
+
+            self.body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(point.x, point.y));
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        applyTorque,
+        {
+            SCRIPT_GET_SELF(ComponentPhysic);
+            float torque = lua_tonumber(state, 2);
+
+            self.body->ApplyTorque(torque);
+            return 0;
+        }
+        );
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentPhysic)
@@ -114,131 +237,6 @@ ENTITY_COMPONENT_SETTERS(ComponentPhysic)
         }
     }
     ENTITY_COMPONENT_SETTER_END()
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, init)
-{
-    Transform transform;
-    getTransformFromComponent(state, transform);
-
-    self.bodyDefinition.position.Set(transform.position.x, transform.position.y);
-    self.body = physics::System::getInstance().getWorld(self.worldIndex).getBox2dWorld().CreateBody(&self.bodyDefinition);
-
-    self.fixtureDefinition.shape = self.shape;
-
-    self.fixture = self.body->CreateFixture(&self.fixtureDefinition);
-    self.fixture->SetSensor(self.itIsSensor);
-
-    self.body->SetActive(false);
-
-    lua_getfield(state, 1, "entity");
-    lua_getfield(state, -1, "_e");
-    auto entity = reinterpret_cast<Entity*>(lua_touserdata(state, -1));
-    self.fixture->SetUserData(reinterpret_cast<void*>(entity));
-    lua_pop(state, 2);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, insert)
-{
-    Transform transform;
-    getTransformFromComponent(state, transform);
-
-    self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
-
-    self.body->SetActive(true);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, update)
-{
-    Transform transform;
-
-    switch(self.bodyDefinition.type)
-    {
-        case b2_dynamicBody:
-        {
-            b2Vec2 position = self.body->GetPosition();
-            float32 angle = self.body->GetAngle();
-
-            getTransformFromComponent(state, transform);
-
-            transform.position.x = position.x;
-            transform.position.y = position.y;
-            transform.rotation = angle;
-
-            updateTransformFromComponent(state, transform);
-        }
-        break;
-
-        case b2_staticBody:
-        {
-        }
-        break;
-
-        case b2_kinematicBody:
-        {
-            getTransformFromComponent(state, transform);
-
-            self.body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
-        }
-        break;
-    }
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, remove)
-{
-    self.body->SetActive(false);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, applyAngularImpulse)
-{
-    float impulse = lua_tonumber(state, 2);
-
-    self.body->ApplyAngularImpulse(impulse);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForce)
-{
-    Vector2 force, point;
-
-    script::get(state, force, 2);
-    script::get(state, point, 3);
-
-    self.body->ApplyForce(b2Vec2(force.x, force.y), b2Vec2(point.x, point.y));
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, applyForceToCenter)
-{
-    Vector2 force;
-
-    script::get(state, force, 2);
-
-    self.body->ApplyForceToCenter(b2Vec2(force.x, force.y));
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, applyLinearImpulse)
-{
-    Vector2 impulse, point;
-
-    script::get(state, impulse, 2);
-    script::get(state, point, 3);
-
-    self.body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(point.x, point.y));
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentPhysic, applyTorque)
-{
-    float torque = lua_tonumber(state, 2);
-
-    self.body->ApplyTorque(torque);
 }
 ENTITY_COMPONENT_END()
 
