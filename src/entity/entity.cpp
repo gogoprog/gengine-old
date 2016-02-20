@@ -1,6 +1,7 @@
 #include "entity.h"
 
 #include "script.h"
+#include "script_system.h"
 #include "debug.h"
 #include "string.h"
 #include "entity_system.h"
@@ -69,6 +70,12 @@ SCRIPT_FUNCTION(addComponent)
         new_component->setRef(luaL_ref(state, LUA_REGISTRYINDEX));
 
         component_instance = new_component;
+
+        lua_getglobal(state, "table");
+        lua_getfield(state, -1, "insert");
+        lua_getfield(state, 1, "components");
+        lua_pushvalue(state, 2);
+        script::System::getInstance().call(2, 0);
     }
 
     component_instance->setEntity(entity_instance);
