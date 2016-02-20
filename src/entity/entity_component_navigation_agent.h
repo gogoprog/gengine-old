@@ -3,20 +3,24 @@
 #include "script.h"
 #include "entity_macros.h"
 #include "tilemover2d.h"
+#include "entity_component.h"
 
 namespace gengine
 {
 namespace entity
 {
 
-class ComponentNavigationAgent
+class ComponentNavigationAgent : public Component
 {
 public:
     ComponentNavigationAgent();
 
-    ENTITY_COMPONENT_DECLARE_OLD(ComponentNavigationAgent);
+    virtual void init() override;
+    virtual void insert() override;
+    virtual void update(const float dt) override;
+    virtual void remove() override;
 
-    ENTITY_COMPONENT_METHOD_DECLARE(moveTo);
+    ENTITY_COMPONENT_DECLARE(ComponentNavigationAgent);
 
 protected:
     tilemover2d::Agent

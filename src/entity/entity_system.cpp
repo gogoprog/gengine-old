@@ -148,12 +148,12 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_setfield(state, -2, "entity");
 
     registerComponent<ComponentSprite>(state, "ComponentSprite");
-    //registerComponent<ComponentCamera>(state, "ComponentCamera");
+    registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");
     registerComponent<ComponentSpriteBatch>(state, "ComponentSpriteBatch");
     //registerComponent<ComponentPhysic>(state, "ComponentPhysic");
-    //registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
+    registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
     //registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
     registerComponent<ComponentQuad>(state, "ComponentQuad");
     registerComponent<ComponentSpriter>(state, "ComponentSpriter");
