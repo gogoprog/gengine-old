@@ -19,7 +19,7 @@ public:
     ENTITY_COMPONENT_METHOD_DECLARE(removeAnimations);
     ENTITY_COMPONENT_METHOD_DECLARE(getBoneLocalTransform);
 
-    ENTITY_COMPONENT_DECLARE(ComponentSpriter);
+    ENTITY_COMPONENT_DECLARE_OLD(ComponentSpriter);
 
 protected:
 

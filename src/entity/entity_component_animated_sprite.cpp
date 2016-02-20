@@ -88,7 +88,9 @@ ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, update)
         }
     }
 
-    return ComponentSprite::_update(state);
+    self.update(System::getInstance().getCurrentDt());
+
+    return 0;
 }
 ENTITY_COMPONENT_END()
 

@@ -31,6 +31,19 @@ void Entity::insert()
     }
 }
 
+void Entity::remove()
+{
+    if(itIsInserted)
+    {
+        for(auto component : components)
+        {
+            component->remove();
+        }
+
+        itIsInserted = false;
+    }
+}
+
 void Entity::update(const float dt)
 {
     for(auto component : components)

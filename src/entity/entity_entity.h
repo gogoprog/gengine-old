@@ -30,6 +30,7 @@ public:
     void addComponent(Component & component);
 
     void insert();
+    void remove();
     void update(const float dt);
 
     math::Transform

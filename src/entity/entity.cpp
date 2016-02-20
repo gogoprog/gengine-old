@@ -68,35 +68,33 @@ SCRIPT_FUNCTION(addComponent)
     return 0;
 }
 
-SCRIPT_FUNCTION(insert)
-{
-    lua_getfield(state, 1, "_e");
-    auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
-    lua_pop(state, 1);
-
-    entity_instance.insert();
-
-    return 0;
-}
-
 SCRIPT_REGISTERER()
 {
     System::getInstance().luaRegister(state);
 
     lua_newtable(state);
 
-    SCRIPT_TABLE_PUSH_FUNCTION(insert);
+    lua_pushcfunction(state, [](lua_State *state) -> int {
+        lua_getfield(state, 1, "_e");
+        auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+        lua_pop(state, 1);
 
-    SCRIPT_DO(
-        return function(self)
-            if self._isInserted then
-                for k,v in ipairs(self.components) do
-                    v:remove()
-                end
-                self._isInserted = false
-            end
-        end
-        );
+        entity_instance.insert();
+
+        return 0;
+    });
+
+    lua_setfield(state, -2, "insert");
+
+    lua_pushcfunction(state, [](lua_State *state) -> int {
+        lua_getfield(state, 1, "_e");
+        auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+        lua_pop(state, 1);
+
+        entity_instance.remove();
+
+        return 0;
+    });
 
     lua_setfield(state, -2, "remove");
 

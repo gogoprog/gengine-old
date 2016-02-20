@@ -14,7 +14,7 @@ class ComponentParticleSystem
 public:
     ComponentParticleSystem();
 
-    ENTITY_COMPONENT_DECLARE(ComponentParticleSystem);
+    ENTITY_COMPONENT_DECLARE_OLD(ComponentParticleSystem);
 
     ENTITY_COMPONENT_METHOD_DECLARE(reset);
 

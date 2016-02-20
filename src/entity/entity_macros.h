@@ -7,7 +7,7 @@
 #define ENTITY_GETTER_MAP_TYPE(_CLASS_) \
     Map<std::string, std::function<void(lua_State *, const _CLASS_ &)> >
 
-#define ENTITY_COMPONENT_DECLARE(_CLASS_) \
+#define ENTITY_COMPONENT_DECLARE_OLD(_CLASS_) \
     static SCRIPT_REGISTERER(); \
     static SCRIPT_FUNCTION(create); \
     static SCRIPT_FUNCTION(newIndex); \
@@ -16,6 +16,16 @@
     static SCRIPT_FUNCTION(insert); \
     static SCRIPT_FUNCTION(update); \
     static SCRIPT_FUNCTION(remove); \
+    static uint \
+        metaTableRef; \
+    static ENTITY_GETTER_MAP_TYPE(_CLASS_) \
+        getterMap;
+
+#define ENTITY_COMPONENT_DECLARE(_CLASS_) \
+    static SCRIPT_REGISTERER(); \
+    static SCRIPT_FUNCTION(create); \
+    static SCRIPT_FUNCTION(newIndex); \
+    static SCRIPT_FUNCTION(index); \
     static uint \
         metaTableRef; \
     static ENTITY_GETTER_MAP_TYPE(_CLASS_) \

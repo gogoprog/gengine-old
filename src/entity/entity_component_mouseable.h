@@ -15,7 +15,7 @@ class ComponentMouseable
 public:
     ComponentMouseable();
 
-    ENTITY_COMPONENT_DECLARE(ComponentMouseable);
+    ENTITY_COMPONENT_DECLARE_OLD(ComponentMouseable);
 
 private:
     math::Vector2

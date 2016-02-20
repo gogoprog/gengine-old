@@ -15,7 +15,7 @@ class ComponentQuad
 public:
     ComponentQuad();
 
-    ENTITY_COMPONENT_DECLARE(ComponentQuad);
+    ENTITY_COMPONENT_DECLARE_OLD(ComponentQuad);
 
 protected:
     graphics::Sprite

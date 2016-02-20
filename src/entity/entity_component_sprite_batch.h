@@ -15,7 +15,7 @@ class ComponentSpriteBatch
 public:
     ComponentSpriteBatch();
 
-    ENTITY_COMPONENT_DECLARE(ComponentSpriteBatch);
+    ENTITY_COMPONENT_DECLARE_OLD(ComponentSpriteBatch);
 
     static SCRIPT_FUNCTION(lock);
     static SCRIPT_FUNCTION(unlock);

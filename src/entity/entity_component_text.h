@@ -14,7 +14,7 @@ class ComponentText
 public:
     ComponentText();
 
-    ENTITY_COMPONENT_DECLARE(ComponentText);
+    ENTITY_COMPONENT_DECLARE_OLD(ComponentText);
 
 protected:
     graphics::Text

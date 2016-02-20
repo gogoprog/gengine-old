@@ -2,6 +2,7 @@
 
 #include "script_lua.h"
 #include "script_binder.h"
+#include <functional>
 
 #define SCRIPT_DEBUG_TOP() \
     geDebugLog(lua_gettop(state))

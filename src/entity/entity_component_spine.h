@@ -20,7 +20,7 @@ public:
     ENTITY_COMPONENT_METHOD_DECLARE(setAnimation);
     ENTITY_COMPONENT_METHOD_DECLARE(addAnimation);
 
-    ENTITY_COMPONENT_DECLARE(ComponentSpine);
+    ENTITY_COMPONENT_DECLARE_OLD(ComponentSpine);
 
 protected:
 
