@@ -19,8 +19,8 @@ public:
 
     ENTITY_COMPONENT_DECLARE(ComponentAnimatedSprite);
 
-    ENTITY_COMPONENT_METHOD_DECLARE(pushAnimation);
-    ENTITY_COMPONENT_METHOD_DECLARE(removeAnimations);
+    void pushAnimation(const graphics::Animation * animation);
+    void removeAnimations();
 
 protected:
     void setAnimation(const graphics::Animation * animation);

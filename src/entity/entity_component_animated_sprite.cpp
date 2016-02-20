@@ -70,10 +70,37 @@ void ComponentAnimatedSprite::update(const float dt)
     ComponentSprite::update(dt);
 }
 
+void ComponentAnimatedSprite::pushAnimation(const graphics::Animation * animation)
+{
+    animationStack.add(animation);
+    setAnimation(animationStack.getLastItem());
+}
+
+void ComponentAnimatedSprite::removeAnimations()
+{
+    animationStack.setSize(0);
+    animation = nullptr;
+}
+
 ENTITY_COMPONENT_IMPLEMENT(ComponentAnimatedSprite)
 {
-    ENTITY_COMPONENT_PUSH_FUNCTION(pushAnimation);
-    ENTITY_COMPONENT_PUSH_FUNCTION(removeAnimations);
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        pushAnimation,
+        {
+            SCRIPT_GET_SELF(ComponentAnimatedSprite);
+            self.pushAnimation(static_cast<const graphics::Animation*>(lua_touserdata(state, 2)));
+            return 0;
+        }
+        );
+
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        removeAnimations,
+        {
+            SCRIPT_GET_SELF(ComponentAnimatedSprite);
+            self.removeAnimations();
+            return 0;
+        }
+        );
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
@@ -88,20 +115,6 @@ ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
     {
         ComponentSprite::_newIndex(state);
     }
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, pushAnimation)
-{
-    self.animationStack.add(static_cast<const graphics::Animation *>(lua_touserdata(state, 2)));
-    self.setAnimation(self.animationStack.getLastItem());
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, removeAnimations)
-{
-    self.animationStack.setSize(0);
-    self.animation = nullptr;
 }
 ENTITY_COMPONENT_END()
 
