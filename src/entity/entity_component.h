@@ -21,6 +21,9 @@ public:
     Component() = default;
     virtual ~Component() = default;
 
+    Component(Component &) = delete;
+    Component & operator=(Component &) = delete;
+
     virtual void init();
     virtual void insert();
     virtual void update(const float dt);

@@ -25,6 +25,51 @@ ComponentAnimatedSprite::ComponentAnimatedSprite()
 {
 }
 
+void ComponentAnimatedSprite::update(const float dt)
+{
+    if(animation)
+    {
+        float duration = animation->getDuration();
+        bool looping = animation->isLooping();
+
+        currentTime += dt;
+
+        if(!looping)
+        {
+            currentTime = std::min(duration, currentTime);
+        }
+
+        const graphics::AnimationFrame & frame = animation->getFrame(currentTime);
+
+        sprite.setTexture(frame.atlas->getTexture());
+        sprite.setUvOffset(frame.uvOffset);
+        sprite.setUvScale(frame.uvScale);
+
+        if(currentTime >= duration)
+        {
+            if(looping)
+            {
+                currentTime -= duration;
+            }
+            else
+            {
+                animationStack.removeLastItem();
+
+                if(animationStack.getSize() > 0)
+                {
+                    setAnimation(animationStack.getLastItem());
+                }
+                else
+                {
+                    animation = nullptr;
+                }
+            }
+        }
+    }
+
+    ComponentSprite::update(dt);
+}
+
 ENTITY_COMPONENT_IMPLEMENT(ComponentAnimatedSprite)
 {
     ENTITY_COMPONENT_PUSH_FUNCTION(pushAnimation);
@@ -43,54 +88,6 @@ ENTITY_COMPONENT_SETTERS(ComponentAnimatedSprite)
     {
         ComponentSprite::_newIndex(state);
     }
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentAnimatedSprite, update)
-{
-    if(self.animation)
-    {
-        float duration = self.animation->getDuration();
-        bool looping = self.animation->isLooping();
-
-        self.currentTime += System::getInstance().getCurrentDt();
-
-        if(!looping)
-        {
-            self.currentTime = std::min(duration, self.currentTime);
-        }
-
-        const graphics::AnimationFrame & frame = self.animation->getFrame(self.currentTime);
-
-        self.sprite.setTexture(frame.atlas->getTexture());
-        self.sprite.setUvOffset(frame.uvOffset);
-        self.sprite.setUvScale(frame.uvScale);
-
-        if(self.currentTime >= duration)
-        {
-            if(looping)
-            {
-                self.currentTime -= duration;
-            }
-            else
-            {
-                self.animationStack.removeLastItem();
-
-                if(self.animationStack.getSize() > 0)
-                {
-                    self.setAnimation(self.animationStack.getLastItem());
-                }
-                else
-                {
-                    self.animation = nullptr;
-                }
-            }
-        }
-    }
-
-    self.update(System::getInstance().getCurrentDt());
-
-    return 0;
 }
 ENTITY_COMPONENT_END()
 

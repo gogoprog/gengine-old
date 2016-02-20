@@ -15,23 +15,14 @@ class ComponentAnimatedSprite : public ComponentSprite
 public:
     ComponentAnimatedSprite();
 
-    static SCRIPT_REGISTERER();
+    virtual void update(const float dt) override;
 
-    static SCRIPT_FUNCTION(create);
-    static SCRIPT_FUNCTION(newIndex);
-    static SCRIPT_FUNCTION(index);
-    static SCRIPT_FUNCTION(update);
+    ENTITY_COMPONENT_DECLARE(ComponentAnimatedSprite);
 
     ENTITY_COMPONENT_METHOD_DECLARE(pushAnimation);
     ENTITY_COMPONENT_METHOD_DECLARE(removeAnimations);
 
-    static uint
-        metaTableRef;
-    static ENTITY_GETTER_MAP_TYPE(ComponentAnimatedSprite)
-        getterMap;
-
 protected:
-
     void setAnimation(const graphics::Animation * animation);
 
     const graphics::Animation
