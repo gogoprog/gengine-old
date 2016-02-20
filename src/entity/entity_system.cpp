@@ -155,7 +155,7 @@ SCRIPT_CLASS_REGISTERER(System)
     //registerComponent<ComponentPhysic>(state, "ComponentPhysic");
     //registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
     //registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
-    //registerComponent<ComponentQuad>(state, "ComponentQuad");
+    registerComponent<ComponentQuad>(state, "ComponentQuad");
     //registerComponent<ComponentSpriter>(state, "ComponentSpriter");
     //registerComponent<ComponentText>(state, "ComponentText");
     //registerComponent<ComponentSpine>(state, "ComponentSpine");
