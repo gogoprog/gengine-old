@@ -31,6 +31,7 @@ void ComponentCustom::update(const float dt)
     lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
     script::push(state, dt);
     script::System::getInstance().call(2, 0);
+    lua_pop(state, 1);
 }
 
 void ComponentCustom::remove()
@@ -46,6 +47,7 @@ void ComponentCustom::scriptCall(const char *name)
     lua_getfield(state, -1, name);
     lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
     script::System::getInstance().call(1, 0);
+    lua_pop(state, 1);
 }
 
 }
