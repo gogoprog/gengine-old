@@ -106,6 +106,10 @@ void Application::Setup()
     engineParameters_["FullScreen"] = fullscreen;
     engineParameters_["Headless"] = false;
     engineParameters_["Sound"] = false;
+    engineParameters_["WindowWidth"] = width;
+    engineParameters_["WindowHeight"] = height;
+    engineParameters_["WindowTitle"] = getName();
+    engineParameters_["ResourcePaths"] = "data;coreData";
 
     engineParameters_["ResourcePrefixPaths"] = (".;" + std::string(getenv("GENGINE")) + "/res/").c_str();
 }
@@ -113,7 +117,6 @@ void Application::Setup()
 void Application::Start()
 {
     auto* graphics = GetSubsystem<Urho3D::Graphics>();
-    graphics->SetMode(width, height);
 }
 
 void Application::Stop()
