@@ -1,6 +1,5 @@
 #include "core.h"
 
-#include <Urho3D/Engine/Application.h>
 #include "core_sdl.h"
 #include "input_system.h"
 #include "graphics_system.h"
@@ -13,6 +12,7 @@
 #include "physics_system.h"
 #include "navigation_system.h"
 #include "debug.h"
+#include "application.h"
 
 namespace gengine
 {
@@ -31,6 +31,10 @@ float
     updateFactor = 1.0f;
 application::Window
     mainWindow;
+Urho3D::SharedPtr<Urho3D::Context>
+    context;
+Urho3D::SharedPtr<application::Application>
+    urhoApplication;
 
 bool mustQuit()
 {
@@ -50,7 +54,7 @@ bool init(int argc, char *argv[])
 
     script::System & script_system = script::System::getInstance();
 
-    //SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
+    SDL_Init(SDL_INIT_AUDIO);
 
     script_system.init();
 
@@ -62,25 +66,27 @@ bool init(int argc, char *argv[])
 
     script_system.call("init");
 
-    //mainWindow.init();
-/*
-    #ifdef _WINDOWS
-        glewInit();
-    #endif
+    context = new Urho3D::Context();
+    urhoApplication = new gengine::application::Application(context);
 
-    graphics::System::getInstance().init();
-    input::System::getInstance().init();
-    entity::System::getInstance().init();
+    //graphics::System::getInstance().init();
+    //input::System::getInstance().init();
+    //entity::System::getInstance().init();
     gui::System::getInstance().init(argc,argv);
     audio::System::getInstance().init();
-    physics::System::getInstance().init();
-    navigation::System::getInstance().init();
+    //physics::System::getInstance().init();
+    //navigation::System::getInstance().init();
 
     script_system.init2();
 
     script_system.call("start");
-    */
+
     return true;
+}
+
+int run()
+{
+    return urhoApplication->Run();
 }
 
 void finalize()
@@ -111,24 +117,24 @@ void update()
     currentTicks = SDL_GetTicks();
     dt = ( ( currentTicks - lastTicks ) * updateFactor )/ 1000.0f;
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT);
 
-    handleEvents();
+    //handleEvents();
 
     script::System::getInstance().call1("update", dt);
 
-    physics::System::getInstance().update(dt);
-    navigation::System::getInstance().update(dt);
+    //physics::System::getInstance().update(dt);
+    //navigation::System::getInstance().update(dt);
     entity::System::getInstance().update(dt);
-    graphics::System::getInstance().update();
-    gui::System::getInstance().update(dt);
+    //graphics::System::getInstance().update();
+    //gui::System::getInstance().update(dt);
 
-    graphics::System::getInstance().render();
-    gui::System::getInstance().render();
+    //graphics::System::getInstance().render();
+    //gui::System::getInstance().render();
 
-    input::System::getInstance().update();
+    //input::System::getInstance().update();
 
-    mainWindow.swap();
+    //mainWindow.swap();
 
     lastTicks = currentTicks;
 

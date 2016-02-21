@@ -130,12 +130,12 @@ void System::init2()
     lua_getglobal(state, "gengine");
 
     kernel::luaRegister(state);
-    graphics::luaRegister(state);
-    input::luaRegister(state);
+    //graphics::luaRegister(state);
+    //input::luaRegister(state);
     entity::luaRegister(state);
     audio::luaRegister(state);
-    physics::luaRegister(state);
-    navigation::luaRegister(state);
+    //physics::luaRegister(state);
+    //navigation::luaRegister(state);
     tiled::luaRegister(state);
 
     lua_pop(state, 1);
@@ -256,6 +256,7 @@ int System::traceBack(lua_State *state)
     const char *msg = lua_tostring(state, 1);
     if (msg)
     {
+        geDebugLog(msg);
         //luaL_traceback(state, state, msg, 1);
     }
     else if (!lua_isnoneornil(state, 1))

@@ -4,6 +4,7 @@
 #include "script.h"
 #include "vector2.h"
 #include <Urho3D/Engine/Application.h>
+#include <Urho3D/Scene/Scene.h>
 
 struct lua_State;
 
@@ -31,6 +32,10 @@ public:
     virtual void Setup() override;
     virtual void Start() override;
     virtual void Stop() override;
+
+    void Update(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
+
+    Urho3D::SharedPtr<Urho3D::Scene> scene_;
 };
 
 }

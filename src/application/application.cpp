@@ -25,6 +25,10 @@
 #include <Urho3D/Core/Timer.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Resource/XMLFile.h>
+#include <Urho3D/Core/CoreEvents.h>
+#include <Urho3D/Urho2D/Sprite2D.h>
+#include <Urho3D/Urho2D/StaticSprite2D.h>
+#include <Urho3D/Graphics/Octree.h>
 
 namespace gengine
 {
@@ -103,24 +107,67 @@ Application::Application(Urho3D::Context* context)
 void Application::Setup()
 {
     engineParameters_["LogName"] = "gengine.log";
+    engineParameters_["LogLevel"] = "Debug";
     engineParameters_["FullScreen"] = fullscreen;
     engineParameters_["Headless"] = false;
     engineParameters_["Sound"] = false;
     engineParameters_["WindowWidth"] = width;
     engineParameters_["WindowHeight"] = height;
     engineParameters_["WindowTitle"] = getName();
-    engineParameters_["ResourcePaths"] = "data;coreData";
+    engineParameters_["ResourcePaths"] = "data;coreData;";
+    engineParameters_["AutoloadPaths"] = "data;coreData;";
 
-    engineParameters_["ResourcePrefixPaths"] = (".;" + std::string(getenv("GENGINE")) + "/res/").c_str();
+    engineParameters_["ResourcePrefixPaths"] = ("./;" + std::string(getenv("GENGINE")) + "/res/").c_str();
+    geDebugLog((".;" + std::string(getenv("GENGINE")) + "/res/").c_str());
 }
 
 void Application::Start()
 {
-    auto* graphics = GetSubsystem<Urho3D::Graphics>();
+    SubscribeToEvent(Urho3D::E_UPDATE, URHO3D_HANDLER(Application, Update));
+
+    scene_ = new Urho3D::Scene(context_);
+    scene_->CreateComponent<Urho3D::Octree>();
+
+    // Create camera node
+    auto cameraNode_ = scene_->CreateChild("Camera");
+    // Set camera's position
+    cameraNode_->SetPosition(Urho3D::Vector3(0.0f, 0.0f, -10.0f));
+
+    auto camera = cameraNode_->CreateComponent<Urho3D::Camera>();
+    camera->SetOrthographic(true);
+
+    auto graphics = GetSubsystem<Urho3D::Graphics>();
+    camera->SetOrthoSize((float)graphics->GetHeight() * 0.01);
+
+    auto cache = GetSubsystem<Urho3D::ResourceCache>();
+    auto sprite = cache->GetResource<Urho3D::Sprite2D>("logo.png");
+
+
+    auto spriteNode = scene_->CreateChild("StaticSprite2D");
+    spriteNode->SetPosition(Urho3D::Vector3(0, 0, 0.0f));
+
+    auto staticSprite = spriteNode->CreateComponent<Urho3D::StaticSprite2D>();
+
+    //staticSprite->SetColor(Urho3D::Color(1,1,1, 1.0f));
+    staticSprite->SetSprite(sprite);
+
+
+
+    auto renderer = GetSubsystem<Urho3D::Renderer>();
+
+    // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
+    auto viewport = new Urho3D::Viewport(context_, scene_, cameraNode_->GetComponent<Urho3D::Camera>());
+    renderer->SetViewport(0, viewport);
+
 }
 
 void Application::Stop()
 {
+}
+
+void Application::Update(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
+{
+    core::update();
 }
 
 }

@@ -13,9 +13,7 @@ int main(int argc, char *argv[])
 {
     if(core::init(argc, argv))
     {
-        Urho3D::SharedPtr<Urho3D::Context> context(new Urho3D::Context()); \
-        Urho3D::SharedPtr<gengine::application::Application> application(new gengine::application::Application(context)); \
-        return application->Run();
+        return core::run();
 
         /*
         #ifndef EMSCRIPTEN
