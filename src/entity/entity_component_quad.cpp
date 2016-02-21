@@ -9,6 +9,7 @@
 #include "debug.h"
 #include <string.h>
 #include "entity.h"
+#include "entity_entity.h"
 
 namespace gengine
 {
@@ -17,8 +18,32 @@ namespace entity
 
 ComponentQuad::ComponentQuad()
     :
+    Component(),
     worldIndex(0)
 {
+}
+
+void ComponentQuad::init()
+{
+    sprite.setTexture(graphics::System::getInstance().getWhiteTexture());
+}
+
+void ComponentQuad::insert()
+{
+    graphics::System::getInstance().getWorld(worldIndex).addObject(sprite);
+}
+
+void ComponentQuad::update(const float /*dt*/)
+{
+    Transform & transform = entity->transform;
+
+    sprite.setPosition(transform.position);
+    sprite.setRotation(transform.rotation);
+}
+
+void ComponentQuad::remove()
+{
+    graphics::System::getInstance().getWorld(worldIndex).removeObject(sprite);
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentQuad)
@@ -49,36 +74,6 @@ ENTITY_COMPONENT_SETTERS(ComponentQuad)
         self.worldIndex = lua_tonumber(state,3);
     }
     ENTITY_COMPONENT_SETTER_END()
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentQuad, init)
-{
-    self.sprite.setTexture(graphics::System::getInstance().getWhiteTexture());
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentQuad, insert)
-{
-    graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.sprite);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentQuad, update)
-{
-    graphics::Sprite & sprite = self.sprite;
-
-    Transform transform;
-    getTransformFromComponent(state, transform);
-
-    sprite.setPosition(transform.position);
-    sprite.setRotation(transform.rotation);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentQuad, remove)
-{
-    graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.sprite);
 }
 ENTITY_COMPONENT_END()
 

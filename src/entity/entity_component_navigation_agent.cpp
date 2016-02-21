@@ -2,11 +2,13 @@
 
 #include "navigation_system.h"
 #include "navigation_world.h"
-#include "entity_system.h"
 #include "script.h"
+#include "script_system.h"
 #include "debug.h"
 #include <string.h>
 #include "entity.h"
+#include "entity_entity.h"
+#include "entity_system.h"
 
 namespace gengine
 {
@@ -18,6 +20,7 @@ namespace entity
 
 ComponentNavigationAgent::ComponentNavigationAgent()
     :
+    Component(),
     agent(nullptr),
     worldIndex(0),
     radius(10.0f),
@@ -25,9 +28,48 @@ ComponentNavigationAgent::ComponentNavigationAgent()
 {
 }
 
+void ComponentNavigationAgent::init()
+{
+}
+
+void ComponentNavigationAgent::insert()
+{
+    Transform & transform = entity->transform;
+
+    agent = & navigation::System::getInstance().getWorld(worldIndex).getWorld().createAgent(*(tilemover2d::Vector2 *) & transform.position);
+    agent->radius = radius;
+    agent->speed = speed;
+}
+
+void ComponentNavigationAgent::update(const float /*dt*/)
+{
+    Transform & transform = entity->transform;
+
+    transform.position.x = agent->getPosition().x;
+    transform.position.y = agent->getPosition().y;
+
+    script::update(script::System::getInstance().getState(), transform);
+}
+
+void ComponentNavigationAgent::remove()
+{
+}
+
 ENTITY_COMPONENT_IMPLEMENT(ComponentNavigationAgent)
 {
-    ENTITY_COMPONENT_PUSH_FUNCTION(moveTo);
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        moveTo,
+        {
+            SCRIPT_GET_SELF(ComponentNavigationAgent);
+            Vector2 position;
+
+            script::get(state, position, 2);
+
+            self.agent->moveTo(*(tilemover2d::Vector2 *) & position);
+
+            return 0;
+        }
+        );
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentNavigationAgent)
@@ -41,51 +83,6 @@ ENTITY_COMPONENT_SETTERS(ComponentNavigationAgent)
         self.speed = lua_tonumber(state, 3);
     }
     ENTITY_COMPONENT_SETTER_END()
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, init)
-{
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, insert)
-{
-    Transform transform;
-    getTransformFromComponent(state, transform);
-
-    self.agent = & navigation::System::getInstance().getWorld(self.worldIndex).getWorld().createAgent(*(tilemover2d::Vector2 *) & transform.position);
-    self.agent->radius = self.radius;
-    self.agent->speed = self.speed;
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, update)
-{
-    Transform transform;
-
-    getTransformFromComponent(state, transform);
-
-    transform.position.x = self.agent->getPosition().x;
-    transform.position.y = self.agent->getPosition().y;
-
-    updateTransformFromComponent(state, transform);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, remove)
-{
-
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentNavigationAgent, moveTo)
-{
-    Vector2 position;
-
-    script::get(state, position, 2);
-
-    self.agent->moveTo(*(tilemover2d::Vector2 *) & position);
 }
 ENTITY_COMPONENT_END()
 

@@ -4,24 +4,24 @@
 #include "physics_system.h"
 #include "physics_world.h"
 #include "entity_macros.h"
+#include "entity_component.h"
 
 namespace gengine
 {
 namespace entity
 {
 
-class ComponentPhysic
+class ComponentPhysic : public Component
 {
 public:
     ComponentPhysic();
 
-    ENTITY_COMPONENT_DECLARE(ComponentPhysic);
+    virtual void init() override;
+    virtual void insert() override;
+    virtual void update(const float dt) override;
+    virtual void remove() override;
 
-    ENTITY_COMPONENT_METHOD_DECLARE(applyAngularImpulse);
-    ENTITY_COMPONENT_METHOD_DECLARE(applyForce);
-    ENTITY_COMPONENT_METHOD_DECLARE(applyForceToCenter);
-    ENTITY_COMPONENT_METHOD_DECLARE(applyLinearImpulse);
-    ENTITY_COMPONENT_METHOD_DECLARE(applyTorque);
+    ENTITY_COMPONENT_DECLARE(ComponentPhysic);
 
 protected:
     b2Body

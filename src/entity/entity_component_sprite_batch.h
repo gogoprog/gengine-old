@@ -4,22 +4,24 @@
 #include "graphics_sprite_batch.h"
 #include "graphics_atlas.h"
 #include "entity_macros.h"
+#include "entity_component.h"
 
 namespace gengine
 {
 namespace entity
 {
 
-class ComponentSpriteBatch
+class ComponentSpriteBatch : Component
 {
 public:
     ComponentSpriteBatch();
 
-    ENTITY_COMPONENT_DECLARE(ComponentSpriteBatch);
+    virtual void init() override;
+    virtual void insert() override;
+    virtual void update(const float dt) override;
+    virtual void remove() override;
 
-    static SCRIPT_FUNCTION(lock);
-    static SCRIPT_FUNCTION(unlock);
-    static SCRIPT_FUNCTION(addItem);
+    ENTITY_COMPONENT_DECLARE(ComponentSpriteBatch);
 
 protected:
     graphics::SpriteBatch
