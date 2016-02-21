@@ -1,9 +1,13 @@
 #include "entity.h"
 
-#include "entity_system.h"
 #include "script.h"
+#include "script_system.h"
 #include "debug.h"
 #include "string.h"
+#include "entity_system.h"
+#include "entity_component.h"
+#include "entity_component_custom.h"
+#include "entity_entity.h"
 
 namespace gengine
 {
@@ -18,74 +22,114 @@ int
 
 int getMetaTableRef() { return metaTableRef; }
 
+SCRIPT_FUNCTION(addComponent)
+{
+    auto name = lua_tostring(state, 4);
+
+    lua_getfield(state, 1, "_e");
+    auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+    lua_pop(state, 1);
+
+    lua_getfield(state, 2, "this");
+    auto component_instance = reinterpret_cast<Component*>(lua_touserdata(state, -1));
+    lua_pop(state, 1);
+
+    if(name)
+    {
+        lua_pushstring(state, name);
+        lua_pushvalue(state, 2);
+        lua_rawset(state, 1);
+    }
+
+    lua_pushstring(state, "entity");
+    lua_pushvalue(state, 1);
+    lua_rawset(state, 2);
+
+    lua_pushstring(state, "name");
+    lua_pushvalue(state, 4);
+    lua_rawset(state, 2);
+
+    lua_pushvalue(state, 3);
+    lua_pushnil(state);
+
+    while(lua_next(state, -2))
+    {
+        auto key = lua_tostring(state, -2);
+        lua_pushvalue(state, -1);
+        lua_setfield(state, 2, key);
+        lua_pop(state, 1);
+    }
+
+    lua_pop(state, 1);
+
+    if(!component_instance)
+    {
+        auto new_component = new ComponentCustom();
+
+        lua_pushvalue(state, 2);
+        new_component->setRef(luaL_ref(state, LUA_REGISTRYINDEX));
+
+        component_instance = new_component;
+
+        lua_getglobal(state, "table");
+        lua_getfield(state, -1, "insert");
+        lua_getfield(state, 1, "components");
+        lua_pushvalue(state, 2);
+        script::System::getInstance().call(2, 0);
+    }
+
+    component_instance->setEntity(entity_instance);
+    component_instance->init();
+    entity_instance.addComponent(*component_instance);
+
+    return 0;
+}
+
 SCRIPT_REGISTERER()
 {
     System::getInstance().luaRegister(state);
 
     lua_newtable(state);
 
-    SCRIPT_DO(
-        return function(self, dt)
-            for k,v in ipairs(self.components) do
-                v:update(dt)
-            end
-        end
-        );
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        insert,
+        {
+            lua_getfield(state, 1, "_e");
+            auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
 
-    lua_setfield(state, -2, "update");
+            script::get(state, entity_instance.transform, 1);
 
-    SCRIPT_DO(
-        return function(self)
-            if not self._isInserted then
-                for k,v in ipairs(self.components) do
-                    v:insert()
-                end
-                self._isInserted = true
-            end
-        end
-        );
+            entity_instance.insert();
 
-    lua_setfield(state, -2, "insert");
+            return 0;
+        });
 
-    SCRIPT_DO(
-        return function(self)
-            if self._isInserted then
-                for k,v in ipairs(self.components) do
-                    v:remove()
-                end
-                self._isInserted = false
-            end
-        end
-        );
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        remove,
+        {
+            lua_getfield(state, 1, "_e");
+            auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
 
-    lua_setfield(state, -2, "remove");
+            entity_instance.remove();
 
-    SCRIPT_DO(
-        return function(self)
-            return self._isInserted == true
-        end
-        );
+            return 0;
+        });
 
-    lua_setfield(state, -2, "isInserted");
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        isInserted,
+        {
+            lua_getfield(state, 1, "_e");
+            auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
 
-    SCRIPT_DO(
-        return function(self, comp, params, name)
-            if name ~= nil then
-                self[name] = comp
-            end
-            rawset(comp, 'entity', self)
-            rawset(comp, 'name', name)
-            table.insert(self.components, comp)
-            if params ~= nil then
-                for k,v in pairs(params) do
-                    comp[k] = v
-                end
-            end
-            comp:init(params)
-        end
-        );
+            lua_pushboolean(state, entity_instance.isInserted());
 
-    lua_setfield(state, -2, "addComponent");
+            return 1;
+        });
+
+    SCRIPT_TABLE_PUSH_FUNCTION(addComponent);
 
     SCRIPT_DO(
         return function(self, name)
@@ -106,6 +150,7 @@ SCRIPT_REGISTERER()
         return function(self, event_name, ...)
             local name = "on" .. event_name
             local result = 0
+
             for k, v in ipairs(self.components) do
                 if v[name] and type(v[name]) == "function" then
                     v[name](v, ...)
@@ -132,20 +177,6 @@ SCRIPT_REGISTERER()
 
     lua_setfield(state, -2, "__index");
 
-    lua_pop(state, 1);
-}
-
-void getTransformFromComponent(lua_State *state, math::Transform & transform)
-{
-    lua_getfield(state, 1, "entity");
-    script::get(state, transform);
-    lua_pop(state, 1);
-}
-
-void updateTransformFromComponent(lua_State *state, const math::Transform & transform)
-{
-    lua_getfield(state, 1, "entity");
-    script::update(state, transform);
     lua_pop(state, 1);
 }
 

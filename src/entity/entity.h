@@ -13,8 +13,5 @@ int getMetaTableRef();
 
 SCRIPT_REGISTERER();
 
-void getTransformFromComponent(lua_State *state, math::Transform & transform);
-void updateTransformFromComponent(lua_State *state, const math::Transform & transform);
-
 }
 }

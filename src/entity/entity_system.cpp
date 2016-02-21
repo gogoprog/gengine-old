@@ -8,6 +8,7 @@
 #include "vector2.h"
 #include "string.h"
 #include "entity.h"
+#include "entity_entity.h"
 #include "entity_component_sprite.h"
 #include "entity_component_camera.h"
 #include "entity_component_mouseable.h"
@@ -36,46 +37,46 @@ void System::finalize()
 
 void System::update(const float dt)
 {
-    bool isInserted;
     lua_State * state = script::System::getInstance().getState();
     currentDt = dt;
 
-    refToUpdateTable = refTable;
+    entitiesToUpdate = entities;
 
-    for(int ref : refToUpdateTable)
+    for(auto pentity : entitiesToUpdate)
     {
+        auto & entity = *pentity;
+
+        int ref = entity.ref;
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
-        lua_getfield(state, -1, "_isInserted");
-        isInserted = lua_toboolean(state, -1);
-        lua_pop(state, 1);
+        script::get(state, entity.transform);
 
-        if(isInserted)
+        if(entity.isInserted())
         {
-            lua_getfield(state, -1, "update");
-            lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
-            lua_pushnumber(state, dt);
-            script::System::getInstance().call(2, 0);
+            entity.update(dt);
         }
 
         lua_pop(state, 1);
     }
 
-    if(refToRemoveTable.getSize() > 0 && refTable.getSize() > 0)
+    if(entitiesToRemove.getSize() > 0 && entities.getSize() > 0)
     {
-        for(int i = int(refTable.getSize()) - 1; i >= 0; --i)
+        for(int i = int(entities.getSize()) - 1; i >= 0; --i)
         {
-            int ref = refTable[i];
+            auto & entity = * entities[i];
+            int ref = entity.ref;
 
-            for(uint j = 0; j < refToRemoveTable.getSize(); ++j)
+            for(uint j = 0; j < entitiesToRemove.getSize(); ++j)
             {
-                int refToRemove = refToRemoveTable[j];
+                auto & entityToRemove = * entitiesToRemove[j];
+                int refToRemove = entityToRemove.ref;
 
                 if(ref == refToRemove)
                 {
                     luaL_unref(state, LUA_REGISTRYINDEX, ref);
-                    refTable.removeAt(i);
-                    refToRemoveTable.removeAt(j);
+                    entities.removeAt(i);
+                    entitiesToRemove.removeAt(j);
+                    delete & entity;
                     break;
                 }
             }
@@ -191,19 +192,22 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     int ref = luaL_ref(state, LUA_REGISTRYINDEX);
 
-    getInstance().refTable.add(ref);
+    Entity *entity = new Entity();
+    entity->ref = ref;
+
+    getInstance().entities.add(entity);
 
     lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
-    lua_pushnumber(state, ref);
-    lua_setfield(state, -2, "_ref");
+    lua_pushlightuserdata(state, entity);
+    lua_setfield(state, -2, "_e");
 
     return 1;
 }
 
 SCRIPT_CLASS_FUNCTION(System, getCount)
 {
-    lua_pushnumber(state, getInstance().refTable.getSize());
+    lua_pushnumber(state, getInstance().entities.getSize());
 
     return 1;
 }
@@ -216,25 +220,20 @@ SCRIPT_CLASS_FUNCTION(System, destroy)
     {
         lua_pop(state, 1);
 
-        lua_getfield(state, 1, "_ref");
-        int ref = lua_tonumber(state, -1);
+        lua_getfield(state, 1, "_e");
+        auto entity = reinterpret_cast<Entity*>(lua_touserdata(state, -1));
         lua_pop(state, 1);
 
-        lua_getfield(state, 1, "_isInserted");
-        bool it_is_inserted = lua_toboolean(state, -1);
-        lua_pop(state, 1);
-
-        if(it_is_inserted)
+        if(entity->isInserted())
         {
-            lua_getfield(state, 1, "remove");
-            lua_pushvalue(state, 1);
-            script::System::getInstance().call(1, 0);
+            entity->remove();
         }
 
         lua_pushboolean(state, true);
         lua_setfield(state, 1, "destroyed");
 
-        getInstance().refToRemoveTable.add(ref);
+        getInstance().entitiesToRemove.add(entity);
+        entity->finalize();
     }
     else
     {

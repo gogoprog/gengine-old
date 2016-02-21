@@ -8,6 +8,7 @@
 #include "debug.h"
 #include <string.h>
 #include "entity.h"
+#include "entity_entity.h"
 
 namespace gengine
 {
@@ -16,8 +17,33 @@ namespace entity
 
 ComponentText::ComponentText()
     :
+    Component(),
     worldIndex(0)
 {
+}
+
+void ComponentText::init()
+{
+
+}
+
+void ComponentText::insert()
+{
+    graphics::System::getInstance().getWorld(worldIndex).addObject(text);
+}
+
+void ComponentText::update(const float dt)
+{
+    Transform & transform = entity->transform;
+
+    text.setPosition(transform.position);
+    text.setRotation(transform.rotation);
+    text.scale(transform.scale);
+}
+
+void ComponentText::remove()
+{
+    graphics::System::getInstance().getWorld(worldIndex).removeObject(text);
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentText)
@@ -54,37 +80,6 @@ ENTITY_COMPONENT_SETTERS(ComponentText)
         self.text.update();
     }
     ENTITY_COMPONENT_SETTER_END()
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentText, init)
-{
-
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentText, insert)
-{
-    graphics::System::getInstance().getWorld(self.worldIndex).addObject(self.text);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentText, update)
-{
-    graphics::Text & text = self.text;
-    Transform transform;
-
-    getTransformFromComponent(state, transform);
-
-    text.setPosition(transform.position);
-    text.setRotation(transform.rotation);
-    text.scale(transform.scale);
-}
-ENTITY_COMPONENT_END()
-
-ENTITY_COMPONENT_METHOD(ComponentText, remove)
-{
-    graphics::System::getInstance().getWorld(self.worldIndex).removeObject(self.text);
 }
 ENTITY_COMPONENT_END()
 

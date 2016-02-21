@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "vector2.h"
 #include "script_system.h"
+#include "entity_entity.h"
 
 #define FIXED_TIME_STEP 0.01
 
@@ -16,12 +17,12 @@ namespace physics
 
 struct LocalAllResult : public b2RayCastCallback
 {
-    Array<int>
-        entityRefTable;
+    Array<entity::Entity*>
+        entities;
 
     virtual float32 ReportFixture(b2Fixture *fixture, const b2Vec2 & point, const b2Vec2 &  normal, float32 fraction) override
     {
-        entityRefTable.add(int(reinterpret_cast<long>(fixture->GetUserData())));
+        entities.add(reinterpret_cast<entity::Entity*>(fixture->GetUserData()));
         return 0;
     }
 };
@@ -86,12 +87,10 @@ SCRIPT_CLASS_FUNCTION(World, rayCast)
 
     self.b2world.RayCast(&results, b2Vec2(start.x, start.y), b2Vec2(end.x, end.y));
 
-    lua_pushvalue(state, 4);
-
-    for(int ref : results.entityRefTable)
+    for(auto entity : results.entities)
     {
         lua_pushvalue(state, 4);
-        lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
+        lua_rawgeti(state, LUA_REGISTRYINDEX, entity->getRef());
 
         script::System::getInstance().call(1, 0);
     }

@@ -10,6 +10,7 @@ namespace gengine
 {
 namespace entity
 {
+class Entity;
 
 class System
 {
@@ -54,12 +55,6 @@ private:
     {
         lua_newtable(state);
 
-        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, init);
-
-        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, insert);
-        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, update);
-        SCRIPT_TABLE_PUSH_CLASS_FUNCTION(COMPONENT, remove);
-
         COMPONENT::luaRegister(state);
 
         lua_pushcfunction(state, &COMPONENT::_create);
@@ -102,10 +97,10 @@ private:
         }
     }
 
-    Array<int>
-        refTable,
-        refToRemoveTable,
-        refToUpdateTable;
+    Array<Entity*>
+        entities,
+        entitiesToRemove,
+        entitiesToUpdate;
     float
         currentDt;
 };
