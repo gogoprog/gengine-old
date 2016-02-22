@@ -11,6 +11,7 @@
 #include <string.h>
 #include "entity.h"
 #include "core.h"
+#include "application.h"
 
 namespace gengine
 {
@@ -23,7 +24,8 @@ ComponentSprite::ComponentSprite()
     extent(math::Vector2::zero),
     worldIndex(0),
     atlasItem(0),
-    extentHasBeenSet(false)
+    extentHasBeenSet(false),
+    staticSprite(nullptr)
 {
 }
 
@@ -31,6 +33,8 @@ void ComponentSprite::init()
 {
     staticSprite = entity->getNode().CreateComponent<Urho3D::StaticSprite2D>();
 
+    return;
+    /*
     if(atlas)
     {
         sprite.setTexture(atlas->getTexture());
@@ -55,12 +59,11 @@ void ComponentSprite::init()
                 extent.y = texture->getHeight();
             }
         }
-    }
+    }*/
 }
 
 void ComponentSprite::insert()
 {
-    graphics::System::getInstance().getWorld(worldIndex).addObject(sprite);
 }
 
 void ComponentSprite::update(const float dt)
@@ -74,7 +77,6 @@ void ComponentSprite::update(const float dt)
 
 void ComponentSprite::remove()
 {
-    graphics::System::getInstance().getWorld(worldIndex).removeObject(sprite);
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentSprite)
@@ -111,8 +113,6 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     }
     ENTITY_COMPONENT_SETTER(texture)
     {
-        /*graphics::Texture * texture = static_cast<graphics::Texture *>(lua_touserdata(state, 3));
-        self.sprite.setTexture(*texture);*/
         auto name = lua_tostring(state, 3);
 
         auto sprite = core::getResourceCache().GetResource<Urho3D::Sprite2D>(name);

@@ -50,7 +50,7 @@ void System::update(const float dt)
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
         script::get(state, entity.transform);
-
+        
         if(entity.isInserted())
         {
             entity.update(dt);

@@ -3,6 +3,7 @@
 #include "entity_component.h"
 #include "application.h"
 #include "core.h"
+#include <Urho3D/Urho2D/Drawable2D.h>
 
 namespace gengine
 {
@@ -11,7 +12,8 @@ namespace entity
 
 Entity::Entity()
     :
-    itIsInserted(false)
+    itIsInserted(false),
+    node(nullptr)
 {
 }
 
@@ -22,7 +24,8 @@ void Entity::addComponent(Component & component)
 
 void Entity::init()
 {
-    node = new Urho3D::Node(& core::getContext());
+    node = application::getScene().CreateChild();
+    node->SetEnabled(false);
 }
 
 void Entity::finalize()
@@ -40,7 +43,7 @@ void Entity::insert()
 {
     if(!itIsInserted)
     {
-        application::getScene(0).AddChild(node);
+        node->SetEnabled(true);
 
         for(auto component : components)
         {
@@ -55,6 +58,8 @@ void Entity::remove()
 {
     if(itIsInserted)
     {
+        node->SetEnabled(false);
+
         for(auto component : components)
         {
             component->remove();
@@ -66,6 +71,12 @@ void Entity::remove()
 
 void Entity::update(const float dt)
 {
+    node->SetTransform2D(
+        *(Urho3D::Vector2*)&transform.position,
+        transform.rotation,
+        *(Urho3D::Vector2*)&transform.scale
+    );
+
     for(auto component : components)
     {
         component->update(dt);
