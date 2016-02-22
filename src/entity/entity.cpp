@@ -49,19 +49,6 @@ SCRIPT_FUNCTION(addComponent)
     lua_pushvalue(state, 4);
     lua_rawset(state, 2);
 
-    lua_pushvalue(state, 3);
-    lua_pushnil(state);
-
-    while(lua_next(state, -2))
-    {
-        auto key = lua_tostring(state, -2);
-        lua_pushvalue(state, -1);
-        lua_setfield(state, 2, key);
-        lua_pop(state, 1);
-    }
-
-    lua_pop(state, 1);
-
     if(!component_instance)
     {
         auto new_component = new ComponentCustom();
@@ -80,6 +67,20 @@ SCRIPT_FUNCTION(addComponent)
 
     component_instance->setEntity(entity_instance);
     component_instance->init();
+
+    lua_pushvalue(state, 3);
+    lua_pushnil(state);
+
+    while(lua_next(state, -2))
+    {
+        auto key = lua_tostring(state, -2);
+        lua_pushvalue(state, -1);
+        lua_setfield(state, 2, key);
+        lua_pop(state, 1);
+    }
+
+    lua_pop(state, 1);
+
     entity_instance.addComponent(*component_instance);
 
     return 0;

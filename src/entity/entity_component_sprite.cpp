@@ -25,11 +25,12 @@ ComponentSprite::ComponentSprite()
     atlasItem(0),
     extentHasBeenSet(false)
 {
-    staticSprite = entity->getNode().CreateComponent<Urho3D::StaticSprite2D>();
 }
 
 void ComponentSprite::init()
 {
+    staticSprite = entity->getNode().CreateComponent<Urho3D::StaticSprite2D>();
+
     if(atlas)
     {
         sprite.setTexture(atlas->getTexture());

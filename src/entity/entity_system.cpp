@@ -193,6 +193,7 @@ SCRIPT_CLASS_FUNCTION(System, create)
     int ref = luaL_ref(state, LUA_REGISTRYINDEX);
 
     Entity *entity = new Entity();
+    entity->init();
     entity->ref = ref;
 
     getInstance().entities.add(entity);
