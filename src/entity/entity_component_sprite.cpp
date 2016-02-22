@@ -10,6 +10,7 @@
 #include "debug.h"
 #include <string.h>
 #include "entity.h"
+#include "core.h"
 
 namespace gengine
 {
@@ -24,6 +25,7 @@ ComponentSprite::ComponentSprite()
     atlasItem(0),
     extentHasBeenSet(false)
 {
+    staticSprite = entity->getNode().CreateComponent<Urho3D::StaticSprite2D>();
 }
 
 void ComponentSprite::init()
@@ -108,8 +110,13 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     }
     ENTITY_COMPONENT_SETTER(texture)
     {
-        graphics::Texture * texture = static_cast<graphics::Texture *>(lua_touserdata(state, 3));
-        self.sprite.setTexture(*texture);
+        /*graphics::Texture * texture = static_cast<graphics::Texture *>(lua_touserdata(state, 3));
+        self.sprite.setTexture(*texture);*/
+        auto name = lua_tostring(state, 3);
+
+        auto sprite = core::getResourceCache().GetResource<Urho3D::Sprite2D>(name);
+
+        self.staticSprite->SetSprite(sprite);
     }
     ENTITY_COMPONENT_SETTER(atlas)
     {

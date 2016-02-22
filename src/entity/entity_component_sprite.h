@@ -5,6 +5,8 @@
 #include "graphics_atlas.h"
 #include "entity_macros.h"
 #include "entity_component.h"
+#include <Urho3D/Urho2D/StaticSprite2D.h>
+#include <Urho3D/Urho2D/Sprite2D.h>
 
 namespace gengine
 {
@@ -35,6 +37,8 @@ protected:
         atlasItem;
     bool
         extentHasBeenSet;
+    Urho3D::SharedPtr<Urho3D::StaticSprite2D>
+        staticSprite;
 };
 
 }

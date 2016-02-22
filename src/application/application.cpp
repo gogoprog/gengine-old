@@ -4,6 +4,8 @@
 #include "script.h"
 #include "core.h"
 #include "debug.h"
+#include "array.h"
+#include "script_system.h"
 #include <string>
 
 #include <Urho3D/Engine/Application.h>
@@ -42,6 +44,8 @@ bool
 uint
     width = 640,
     height = 480;
+Array<Urho3D::SharedPtr<Urho3D::Scene>>
+    scenes;
 
 SCRIPT_FUNCTION(setName)
 {
@@ -86,6 +90,7 @@ uint getHeight() { return height; }
 math::Vector2 getExtent() { return math::Vector2(width, height); }
 void setExtent(const uint _width, const uint _height) { width = _width; height = _height; }
 bool isFullscreen() { return fullscreen; }
+Urho3D::Scene & getScene(const uint index) {return *scenes[index];}
 
 SCRIPT_REGISTERER()
 {
@@ -125,12 +130,11 @@ void Application::Start()
 {
     SubscribeToEvent(Urho3D::E_UPDATE, URHO3D_HANDLER(Application, Update));
 
-    scene_ = new Urho3D::Scene(context_);
+    Urho3D::SharedPtr<Urho3D::Scene> scene_(new Urho3D::Scene(context_));
     scene_->CreateComponent<Urho3D::Octree>();
+    scenes.add(scene_);
 
-    // Create camera node
     auto cameraNode_ = scene_->CreateChild("Camera");
-    // Set camera's position
     cameraNode_->SetPosition(Urho3D::Vector3(0.0f, 0.0f, -10.0f));
 
     auto camera = cameraNode_->CreateComponent<Urho3D::Camera>();
@@ -139,26 +143,25 @@ void Application::Start()
     auto graphics = GetSubsystem<Urho3D::Graphics>();
     camera->SetOrthoSize((float)graphics->GetHeight() * 0.01);
 
+    scenes.add(scene_);
+
+/*
     auto cache = GetSubsystem<Urho3D::ResourceCache>();
     auto sprite = cache->GetResource<Urho3D::Sprite2D>("logo.png");
-
 
     auto spriteNode = scene_->CreateChild("StaticSprite2D");
     spriteNode->SetPosition(Urho3D::Vector3(0, 0, 0.0f));
 
     auto staticSprite = spriteNode->CreateComponent<Urho3D::StaticSprite2D>();
-
-    //staticSprite->SetColor(Urho3D::Color(1,1,1, 1.0f));
     staticSprite->SetSprite(sprite);
-
-
+*/
 
     auto renderer = GetSubsystem<Urho3D::Renderer>();
-
-    // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     auto viewport = new Urho3D::Viewport(context_, scene_, cameraNode_->GetComponent<Urho3D::Camera>());
     renderer->SetViewport(0, viewport);
 
+    script::System::getInstance().init2();
+    script::System::getInstance().call("start");
 }
 
 void Application::Stop()

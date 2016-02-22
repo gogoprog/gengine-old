@@ -1,6 +1,8 @@
 #include "entity_entity.h"
 
 #include "entity_component.h"
+#include "application.h"
+#include "core.h"
 
 namespace gengine
 {
@@ -20,7 +22,7 @@ void Entity::addComponent(Component & component)
 
 void Entity::init()
 {
-
+    node = new Urho3D::Node(& core::getContext());
 }
 
 void Entity::finalize()
@@ -38,6 +40,8 @@ void Entity::insert()
 {
     if(!itIsInserted)
     {
+        application::getScene(0).AddChild(node);
+
         for(auto component : components)
         {
             component->insert();

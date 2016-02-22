@@ -6,6 +6,7 @@
 #include "script.h"
 #include "debug.h"
 #include "transform.h"
+#include <Urho3D/Scene/Node.h>
 
 namespace gengine
 {
@@ -35,6 +36,8 @@ public:
     void remove();
     void update(const float dt);
 
+    Urho3D::Node & getNode() { return *node; }
+
     math::Transform
         transform;
 
@@ -45,6 +48,8 @@ private:
         ref;
     bool
         itIsInserted;
+    Urho3D::SharedPtr<Urho3D::Node>
+        node;
 };
 }
 }

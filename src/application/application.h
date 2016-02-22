@@ -19,6 +19,7 @@ uint getHeight();
 math::Vector2 getExtent();
 void setExtent(const uint width, const uint height);
 bool isFullscreen();
+Urho3D::Scene & getScene(const uint index = 0);
 
 SCRIPT_REGISTERER();
 
@@ -34,8 +35,6 @@ public:
     virtual void Stop() override;
 
     void Update(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
-
-    Urho3D::SharedPtr<Urho3D::Scene> scene_;
 };
 
 }

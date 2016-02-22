@@ -77,10 +77,6 @@ bool init(int argc, char *argv[])
     //physics::System::getInstance().init();
     //navigation::System::getInstance().init();
 
-    script_system.init2();
-
-    script_system.call("start");
-
     return true;
 }
 
@@ -149,6 +145,16 @@ void setMustQuit(const bool it_must_quit)
 void setUpdateFactor(const float factor)
 {
     updateFactor = factor;
+}
+
+Urho3D::Context & getContext()
+{
+    return *context;
+}
+
+Urho3D::ResourceCache & getResourceCache()
+{
+    return *urhoApplication->GetSubsystem<Urho3D::ResourceCache>();
 }
 
 void handleEvents()

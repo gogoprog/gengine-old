@@ -1,7 +1,6 @@
 #include "debug.h"
 #include "core.h"
 #include "application.h"
-#include <Urho3D/Engine/Application.h>
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>

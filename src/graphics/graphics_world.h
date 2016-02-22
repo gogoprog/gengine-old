@@ -5,6 +5,7 @@
 #include "stack.h"
 #include "array.h"
 #include "graphics_uniform.h"
+#include <Urho3D/Scene/Scene.h>
 
 namespace gengine
 {
@@ -44,6 +45,8 @@ private:
         colorUniform,
         uvScaleUniform,
         uvOffsetUniform;
+    Urho3D::SharedPtr<Urho3D::Scene>
+        urhoScene;
 };
 
 }
