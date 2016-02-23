@@ -6,9 +6,7 @@
 #include "pointer.h"
 #include "vector2.h"
 #include "map.h"
-#include "graphics_texture.h"
 #include "graphics_spriter.h"
-#include "graphics_sprite_group.h"
 #include "transform.h"
 #include <string>
 
@@ -24,8 +22,8 @@ class SpriterManagerItem
 public:
     void init();
     void finalize();
-    void fill(SpriteGroup & group, const SpriterMainlineKey & mlk, const Pointer<const SpriterCharacterMap> character_map) const;
-    void update(SpriteGroup & group, const SpriterMainlineKey & mlk, const float time, const Pointer<const SpriterCharacterMap> character_map, const Vector2 & scale) const;
+    //void fill(SpriteGroup & group, const SpriterMainlineKey & mlk, const Pointer<const SpriterCharacterMap> character_map) const;
+    //void update(SpriteGroup & group, const SpriterMainlineKey & mlk, const float time, const Pointer<const SpriterCharacterMap> character_map, const Vector2 & scale) const;
     void getBoneTransform(math::Transform & result, const SpriterMainlineKey & mlk, const float time, const uint bone_index) const;
 
     inline float getDuration() const
@@ -53,8 +51,8 @@ private:
         entity;
     Pointer<const SpriterAnimation>
         animation;
-    mutable Map<std::string, Pointer<const Texture>>
-        textureCacheMap;
+    /*mutable Map<std::string, Pointer<const Texture>>
+        textureCacheMap;*/
     float
         duration;
 };

@@ -57,7 +57,6 @@ public:
     {
         for(auto & kv : itemMap)
         {
-            kv.second->finalize();
             delete kv.second;
         }
 
@@ -91,7 +90,7 @@ public:
     }
 
 protected:
-    virtual bool internalCreate(T * t, script::State state, const int parameter_position) = 0;
+    virtual T * internalCreate(script::State state, const int parameter_position) = 0;
     virtual void internalGetName(char * name, const char * arg) = 0;
     virtual void internalInit() {}
     virtual void internalFinalize() {}
@@ -110,11 +109,9 @@ protected:
             return 1;
         }
 
-        T * t = new T();
+        T * t = internalCreate(state, parameter_position);
 
-        t->init();
-
-        if(internalCreate(t, state, parameter_position))
+        if(t)
         {
             itemMap.add(t, name);
             lua_pushlightuserdata(state, t);
@@ -126,8 +123,6 @@ protected:
                 itemMap.add(defaultItem, name);
             }
 
-            t->finalize();
-            delete t;
             lua_pushnil(state);
         }
 

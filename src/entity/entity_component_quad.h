@@ -1,8 +1,6 @@
 #pragma once
 
 #include "script.h"
-#include "graphics_sprite.h"
-#include "graphics_atlas.h"
 #include "entity_macros.h"
 #include "entity_component.h"
 
@@ -24,8 +22,6 @@ public:
     ENTITY_COMPONENT_DECLARE(ComponentQuad);
 
 protected:
-    graphics::Sprite
-        sprite;
     uint
         worldIndex;
 };

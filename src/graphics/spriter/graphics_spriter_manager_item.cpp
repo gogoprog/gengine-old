@@ -1,6 +1,5 @@
 #include "graphics_spriter_manager_item.h"
 
-#include "graphics_texture_manager.h"
 
 namespace gengine
 {
@@ -20,6 +19,7 @@ void SpriterManagerItem::finalize()
 
 }
 
+/*
 void SpriterManagerItem::fill(SpriteGroup & group, const SpriterMainlineKey & mlk, const Pointer<const SpriterCharacterMap> character_map) const
 {
     uint sprite_count = mlk.objectKeys.getSize();
@@ -90,7 +90,7 @@ void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & 
         sprite.getColor().w = transform.alpha;
     }
 }
-
+*/
 void SpriterManagerItem::getBoneTransform(math::Transform & result, const SpriterMainlineKey & mlk, const float time, const uint bone_index) const
 {
     SpriterTransform transform;

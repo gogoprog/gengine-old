@@ -6,7 +6,6 @@
 #include "pointer.h"
 #include "vector2.h"
 #include "map.h"
-#include "graphics_texture.h"
 #include <string>
 #include <spine/spine.h>
 

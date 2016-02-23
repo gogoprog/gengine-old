@@ -1,9 +1,5 @@
 #include "entity_component_particle_system.h"
 
-#include "graphics_system.h"
-#include "graphics_world.h"
-#include "graphics_texture.h"
-#include "graphics_atlas.h"
 #include "script.h"
 #include "debug.h"
 #include "entity.h"
@@ -26,27 +22,27 @@ ComponentParticleSystem::ComponentParticleSystem()
 
 void ComponentParticleSystem::init()
 {
-    particleSystem.init(size);
+    //particleSystem.init(size);
 }
 
 void ComponentParticleSystem::insert()
 {
-    graphics::System::getInstance().getWorld(worldIndex).addObject(particleSystem);
+    //graphics::System::getInstance().getWorld(worldIndex).addObject(particleSystem);
 }
 
 void ComponentParticleSystem::update(const float dt)
 {
-    particleSystem.update(dt);
+    /*particleSystem.update(dt);
 
     Transform & transform = entity->transform;
 
     particleSystem.setPosition(transform.position);
-    particleSystem.setRotation(transform.rotation);
+    particleSystem.setRotation(transform.rotation);*/
 }
 
 void ComponentParticleSystem::remove()
 {
-    graphics::System::getInstance().getWorld(worldIndex).removeObject(particleSystem);
+    //graphics::System::getInstance().getWorld(worldIndex).removeObject(particleSystem);
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentParticleSystem)
@@ -55,7 +51,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentParticleSystem)
         reset,
         {
             SCRIPT_GET_SELF(ComponentParticleSystem);
-            self.particleSystem.reset();
+            //self.particleSystem.reset();
             return 0;
         }
         );
@@ -63,7 +59,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentParticleSystem)
 
 ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
 {
-    ENTITY_COMPONENT_SETTER_FIRST(layer)
+    /*ENTITY_COMPONENT_SETTER_FIRST(layer)
     {
         self.particleSystem.setLayer(lua_tonumber(state,3));
     }
@@ -182,7 +178,7 @@ ENTITY_COMPONENT_SETTERS(ComponentParticleSystem)
 
         lua_pop(state, 1);
     }
-    ENTITY_COMPONENT_SETTER_END()
+    ENTITY_COMPONENT_SETTER_END()*/
 }
 ENTITY_COMPONENT_END()
 

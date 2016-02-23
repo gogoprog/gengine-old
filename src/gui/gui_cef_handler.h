@@ -9,10 +9,6 @@
 #include "include/cef_request_handler.h"
 #include "include/cef_load_handler.h"
 #include "core_sdl.h"
-#include "graphics_texture.h"
-#include "graphics_shader.h"
-#include "graphics_program.h"
-#include "graphics_uniform.h"
 
 namespace gengine
 {
@@ -48,17 +44,12 @@ public:
     IMPLEMENT_REFCOUNTING(Handler)
 
 private:
-    graphics::Shader
-        vertexShader,
-        fragmentShader;
-    graphics::Program
-        program;
     uint
         pboId;
-    graphics::Texture
+    /*graphics::Texture
         texture;
     graphics::Uniform
-        samplerUniform;
+        samplerUniform;*/
     std::string
         textToExecute;
 

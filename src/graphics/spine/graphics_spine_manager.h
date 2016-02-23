@@ -21,7 +21,7 @@ public:
     MANAGER_DECLARE(SpineManager);
 
 private:
-    virtual bool internalCreate(SpineManagerItem * item, script::State state, const int parameter_position) override;
+    virtual SpineManagerItem * internalCreate(script::State state, const int parameter_position) override;
     virtual void internalGetName(char * name, const char * arg) override;
 
 };

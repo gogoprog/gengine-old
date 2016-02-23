@@ -5,8 +5,6 @@
 #include "application.h"
 #include "debug.h"
 #include "core.h"
-#include "graphics_opengl.h"
-#include "graphics_system.h"
 #include "script_system.h"
 
 #ifdef _WINDOWS
@@ -20,31 +18,9 @@ namespace gengine
 namespace gui
 {
 
-const char vertex_shader_source[] = GL_GLSL(
-    attribute vec2 position;
-    attribute vec2 texCoords;
-    varying highp vec2 v_texCoords;
-
-    void main()
-    {
-        v_texCoords = texCoords;
-        gl_Position = vec4(position * 2.0,1,1);
-    }
-);
-
-const char fragment_shader_source[] = GL_GLSL(
-    varying highp vec2 v_texCoords;
-    uniform sampler2D tex0;
-
-    void main()
-    {
-        gl_FragColor = texture2D(tex0, v_texCoords).rgba;
-    }
-);
-
 void Handler::init()
 {
-    uint width = application::getWidth();
+    /*uint width = application::getWidth();
     uint height = application::getHeight();
 
     glGenBuffers(1, &pboId);
@@ -75,7 +51,7 @@ void Handler::init()
 
     samplerUniform.init(program, "tex0");
 
-    GL_CHECK();
+    GL_CHECK();*/
 }
 
 void Handler::finalize()
@@ -95,7 +71,7 @@ void Handler::update()
 
 void Handler::render()
 {
-    graphics::System & system = graphics::System::getInstance();
+    /*graphics::System & system = graphics::System::getInstance();
 
     program.use();
 
@@ -105,7 +81,7 @@ void Handler::render()
 
     system.getIndexBufferQuad().draw(6);
 
-    glUseProgram(0);
+    glUseProgram(0);*/
 }
 
 void Handler::lock()
@@ -135,7 +111,7 @@ bool Handler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 
 void Handler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
 {
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboId);
+    /*glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboId);
 
     void * memory = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);
     memcpy(memory, buffer, width * height * 4);
@@ -143,15 +119,11 @@ void Handler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, cons
 
     glBindTexture(GL_TEXTURE_2D, texture.getId());
 
-    /*for(const CefRect & rect : dirtyRects)
-    {
-        glTexSubImage2D(GL_TEXTURE_2D, 0, rect.x, rect.y, rect.width, rect.height, GL_BGRA, GL_UNSIGNED_BYTE, 0);
-    }*/
 
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);*/
 }
 
 bool Handler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request)

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "application_window.h"
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Resource/ResourceCache.h>
 
@@ -10,7 +9,6 @@ namespace core
 {
 
 bool mustQuit();
-application::Window getMainWindow();
 
 bool init(int argc, char *argv[]);
 int run();

@@ -1,9 +1,5 @@
 #include "entity_component_quad.h"
 
-#include "graphics_system.h"
-#include "graphics_world.h"
-#include "graphics_texture.h"
-#include "graphics_atlas.h"
 #include "entity_system.h"
 #include "script.h"
 #include "debug.h"
@@ -25,35 +21,35 @@ ComponentQuad::ComponentQuad()
 
 void ComponentQuad::init()
 {
-    sprite.setTexture(graphics::System::getInstance().getWhiteTexture());
+    //sprite.setTexture(graphics::System::getInstance().getWhiteTexture());
 }
 
 void ComponentQuad::insert()
 {
-    graphics::System::getInstance().getWorld(worldIndex).addObject(sprite);
+    //graphics::System::getInstance().getWorld(worldIndex).addObject(sprite);
 }
 
 void ComponentQuad::update(const float /*dt*/)
 {
-    Transform & transform = entity->transform;
+    math::Transform & transform = entity->transform;
 
-    sprite.setPosition(transform.position);
-    sprite.setRotation(transform.rotation);
+    /*sprite.setPosition(transform.position);
+    sprite.setRotation(transform.rotation);*/
 }
 
 void ComponentQuad::remove()
 {
-    graphics::System::getInstance().getWorld(worldIndex).removeObject(sprite);
+    //graphics::System::getInstance().getWorld(worldIndex).removeObject(sprite);
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentQuad)
 {
-    ENTITY_ADD_GETTER(ComponentQuad, "extent", { script::push(state, self.sprite.getExtent()); });
+    //ENTITY_ADD_GETTER(ComponentQuad, "extent", { script::push(state, self.sprite.getExtent()); });
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentQuad)
 {
-    ENTITY_COMPONENT_SETTER_FIRST(layer)
+    /*ENTITY_COMPONENT_SETTER_FIRST(layer)
     {
         self.sprite.setLayer(lua_tonumber(state,3));
     }
@@ -73,7 +69,7 @@ ENTITY_COMPONENT_SETTERS(ComponentQuad)
     {
         self.worldIndex = lua_tonumber(state,3);
     }
-    ENTITY_COMPONENT_SETTER_END()
+    ENTITY_COMPONENT_SETTER_END()*/
 }
 ENTITY_COMPONENT_END()
 

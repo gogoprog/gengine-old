@@ -1,10 +1,5 @@
 #include "entity_component_spriter.h"
 
-#include "graphics_system.h"
-#include "graphics_world.h"
-#include "graphics_texture.h"
-#include "graphics_atlas.h"
-#include "graphics_animation.h"
 #include "entity_system.h"
 #include "entity_entity.h"
 #include "script.h"
@@ -34,12 +29,12 @@ void ComponentSpriter::init()
 
 void ComponentSpriter::insert()
 {
-    graphics::System::getInstance().getWorld(worldIndex).addObject(spriteGroup);
+    //graphics::System::getInstance().getWorld(worldIndex).addObject(spriteGroup);
 }
 
 void ComponentSpriter::update(const float dt)
 {
-    Transform & transform = entity->transform;
+    /*Transform & transform = entity->transform;
 
     spriteGroup.setPosition(transform.position);
     spriteGroup.setRotation(transform.rotation);
@@ -107,12 +102,12 @@ void ComponentSpriter::update(const float dt)
         }
 
         previousUintTime = currentUintTime;
-    }
+    }*/
 }
 
 void ComponentSpriter::remove()
 {
-    graphics::System::getInstance().getWorld(worldIndex).removeObject(spriteGroup);
+    //graphics::System::getInstance().getWorld(worldIndex).removeObject(spriteGroup);
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentSpriter)
@@ -165,7 +160,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentSpriter)
 
 ENTITY_COMPONENT_SETTERS(ComponentSpriter)
 {
-    ENTITY_COMPONENT_SETTER_FIRST(animation)
+    /*ENTITY_COMPONENT_SETTER_FIRST(animation)
     {
         self.animationStack.setSize(1);
         self.animationStack[0] = static_cast<const graphics::SpriterManagerItem *>(lua_touserdata(state, 3));
@@ -198,7 +193,7 @@ ENTITY_COMPONENT_SETTERS(ComponentSpriter)
             self.characterMapName = lua_tostring(state,3);
         }
     }
-    ENTITY_COMPONENT_SETTER_END()
+    ENTITY_COMPONENT_SETTER_END()*/
 }
 ENTITY_COMPONENT_END()
 

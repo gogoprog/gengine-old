@@ -1,15 +1,15 @@
 #include "entity_component_mouseable.h"
 
-#include "graphics_system.h"
-#include "graphics_world.h"
 #include "entity_system.h"
+#include "entity_entity.h"
 #include "script.h"
 #include "debug.h"
-#include <string.h>
 #include "entity.h"
 #include "input_system.h"
 #include "script_system.h"
-#include "entity_entity.h"
+#include <string.h>
+
+using namespace gengine::math;
 
 namespace gengine
 {
@@ -44,7 +44,7 @@ void ComponentMouseable::update(const float /*dt*/)
     x = mouse.getX();
     y = mouse.getY();
 
-    graphics::System::getInstance().getWorld(worldIndex).getCurrentCamera().getWorldPosition(cursor_position, Vector2(x, y));
+    //graphics::System::getInstance().getWorld(worldIndex).getCurrentCamera().getWorldPosition(cursor_position, Vector2(x, y));
 
     if(cursor_position.x > entity_position.x - extent.x * 0.5f
         && cursor_position.x < entity_position.x + extent.x * 0.5f

@@ -11,7 +11,7 @@ namespace gengine
 namespace graphics
 {
 
-bool SpineManager::internalCreate(SpineManagerItem * _item, script::State state, const int parameter_position)
+SpineManagerItem * SpineManager::internalCreate(script::State state, const int parameter_position)
 {
     std::string path = lua_tostring(state, parameter_position);
     size_t pos = path.find_last_of(".");
@@ -32,7 +32,7 @@ bool SpineManager::internalCreate(SpineManagerItem * _item, script::State state,
     if(!skeletonData)
     {
         geLog("Error: " << json->error);
-        return false;
+        return nullptr;
     }
 
     for(int i=0; i<skeletonData->animationsCount; ++i)
@@ -56,7 +56,7 @@ bool SpineManager::internalCreate(SpineManagerItem * _item, script::State state,
 
     spSkeletonJson_dispose(json);
 
-    return false;
+    return nullptr;
 }
 
 void SpineManager::internalGetName(char * result, const char * arg)

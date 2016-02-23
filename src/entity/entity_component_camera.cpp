@@ -1,7 +1,5 @@
 #include "entity_component_camera.h"
 
-#include "graphics_system.h"
-#include "graphics_world.h"
 #include "entity_system.h"
 #include "script.h"
 #include "debug.h"
@@ -29,24 +27,24 @@ void ComponentCamera::init()
 
 void ComponentCamera::insert()
 {
-    graphics::System::getInstance().getWorld(worldIndex).pushCamera(camera);
+    //graphics::System::getInstance().getWorld(worldIndex).pushCamera(camera);
 }
 
 void ComponentCamera::update(const float /*dt*/)
 {
-    Transform & transform = entity->transform;
+    /*Transform & transform = entity->transform;
 
-    camera.setPosition(transform.position);
+    camera.setPosition(transform.position);*/
 }
 
 void ComponentCamera::remove()
 {
-    graphics::System::getInstance().getWorld(worldIndex).popCamera();
+    //graphics::System::getInstance().getWorld(worldIndex).popCamera();
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentCamera)
 {
-    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+    /*SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         getWorldPosition,
         {
             SCRIPT_GET_SELF(ComponentCamera);
@@ -59,12 +57,12 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentCamera)
 
             return 1;
         }
-        );
+    );*/
 }
 
 ENTITY_COMPONENT_SETTERS(ComponentCamera)
 {
-    ENTITY_COMPONENT_SETTER_FIRST(extent)
+    /*ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
         Vector2 extent;
 
@@ -76,7 +74,7 @@ ENTITY_COMPONENT_SETTERS(ComponentCamera)
     {
         self.worldIndex = lua_tonumber(state,3);
     }
-    ENTITY_COMPONENT_SETTER_END()
+    ENTITY_COMPONENT_SETTER_END()*/
 }
 ENTITY_COMPONENT_END()
 

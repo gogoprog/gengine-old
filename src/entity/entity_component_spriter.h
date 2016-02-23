@@ -36,8 +36,6 @@ protected:
         * animation;
     Array<const graphics::SpriterManagerItem *>
         animationStack;
-    graphics::SpriteGroup
-        spriteGroup;
     std::string
         characterMapName;
     float

@@ -2,9 +2,6 @@
 
 #include "core_sdl.h"
 #include "input_system.h"
-#include "graphics_system.h"
-#include "graphics_opengl.h"
-#include "application_window.h"
 #include "script_system.h"
 #include "entity_system.h"
 #include "gui_system.h"
@@ -29,8 +26,6 @@ unsigned long long
     frameIndex = 0;
 float
     updateFactor = 1.0f;
-application::Window
-    mainWindow;
 Urho3D::SharedPtr<Urho3D::Context>
     context;
 Urho3D::SharedPtr<application::Application>
@@ -41,11 +36,6 @@ bool mustQuit()
     return itMustQuit;
 }
 
-application::Window getMainWindow()
-{
-    return mainWindow;
-}
-
 bool init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
@@ -54,7 +44,7 @@ bool init(int argc, char *argv[])
 
     script::System & script_system = script::System::getInstance();
 
-    SDL_Init(SDL_INIT_AUDIO);
+    SDL_Init(SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 
     script_system.init();
 
@@ -70,7 +60,7 @@ bool init(int argc, char *argv[])
     urhoApplication = new gengine::application::Application(context);
 
     //graphics::System::getInstance().init();
-    //input::System::getInstance().init();
+    input::System::getInstance().init();
     //entity::System::getInstance().init();
     gui::System::getInstance().init(argc,argv);
     audio::System::getInstance().init();
@@ -97,10 +87,6 @@ void finalize()
 
     script::System::getInstance().call("stop");
 
-    graphics::System::getInstance().finalize();
-
-    mainWindow.finalize();
-
     script::System::getInstance().finalize();
 
     SDL_Quit();
@@ -113,9 +99,7 @@ void update()
     currentTicks = SDL_GetTicks();
     dt = ( ( currentTicks - lastTicks ) * updateFactor )/ 1000.0f;
 
-    //glClear(GL_COLOR_BUFFER_BIT);
-
-    //handleEvents();
+    handleEvents();
 
     script::System::getInstance().call1("update", dt);
 
@@ -128,9 +112,7 @@ void update()
     //graphics::System::getInstance().render();
     //gui::System::getInstance().render();
 
-    //input::System::getInstance().update();
-
-    //mainWindow.swap();
+    input::System::getInstance().update();
 
     lastTicks = currentTicks;
 

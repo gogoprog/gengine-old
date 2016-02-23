@@ -1,7 +1,6 @@
 #pragma once
 
 #include "script.h"
-#include "graphics_camera.h"
 #include "entity_macros.h"
 #include "entity_component.h"
 
@@ -23,8 +22,6 @@ public:
     ENTITY_COMPONENT_DECLARE(ComponentCamera);
 
 private:
-    graphics::Camera
-        camera;
     uint
         worldIndex;
 };

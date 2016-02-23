@@ -21,7 +21,7 @@ public:
     MANAGER_DECLARE(SoundManager);
 
 private:
-    virtual bool internalCreate(Sound * atlas, script::State state, const int parameter_position) override;
+    virtual Sound * internalCreate(script::State state, const int parameter_position) override;
     virtual void internalGetName(char * name, const char * arg) override;
 };
 

@@ -22,7 +22,7 @@ public:
     MANAGER_DECLARE(SpriterManager);
 
 private:
-    virtual bool internalCreate(SpriterManagerItem * item, script::State state, const int parameter_position) override;
+    virtual SpriterManagerItem * internalCreate(script::State state, const int parameter_position) override;
     virtual void internalGetName(char * name, const char * arg) override;
 
     Array<Pointer<SpriterFile>>

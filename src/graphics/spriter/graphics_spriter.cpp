@@ -2,7 +2,6 @@
 
 #include "debug.h"
 #include "maths.h"
-#include "graphics_texture_manager.h"
 
 namespace gengine
 {
@@ -53,7 +52,7 @@ void SpriterAsset::load(const core::Json & json)
 {
     char corrected_name[128];
 
-    TextureManager::simplifyName(corrected_name, json["name"].getString().c_str());
+    //TextureManager::simplifyName(corrected_name, json["name"].getString().c_str());
 
     name = corrected_name;
 

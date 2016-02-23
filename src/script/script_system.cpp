@@ -131,7 +131,7 @@ void System::init2()
 
     kernel::luaRegister(state);
     //graphics::luaRegister(state);
-    //input::luaRegister(state);
+    input::luaRegister(state);
     entity::luaRegister(state);
     audio::luaRegister(state);
     //physics::luaRegister(state);

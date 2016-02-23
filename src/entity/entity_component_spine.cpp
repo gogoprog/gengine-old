@@ -1,10 +1,5 @@
 #include "entity_component_spine.h"
 
-#include "graphics_system.h"
-#include "graphics_world.h"
-#include "graphics_texture.h"
-#include "graphics_atlas.h"
-#include "graphics_animation.h"
 #include "entity_system.h"
 #include "entity_entity.h"
 #include "script.h"
@@ -38,12 +33,12 @@ ComponentSpine::~ComponentSpine()
 
 void ComponentSpine::init()
 {
-    mesh.init(size, size * 2);
+    //mesh.init(size, size * 2);
 }
 
 void ComponentSpine::insert()
 {
-    graphics::System::getInstance().getWorld(worldIndex).addObject(mesh);
+    //graphics::System::getInstance().getWorld(worldIndex).addObject(mesh);
 }
 
 void ComponentSpine::update(const float dt)
@@ -53,7 +48,7 @@ void ComponentSpine::update(const float dt)
         return;
     }
 
-    Transform & transform = entity->transform;
+    /*Transform & transform = entity->transform;
 
     mesh.setPosition(transform.position);
     mesh.setRotation(transform.rotation);
@@ -253,11 +248,11 @@ void ComponentSpine::update(const float dt)
     mesh.setVertexCount(vertex_count);
     mesh.setIndexCount(index_count);
     mesh.getVertexBuffer().unMap();
-    mesh.getIndexBuffer().unMap();
+    mesh.getIndexBuffer().unMap();*/
 }
 void ComponentSpine::remove()
 {
-    graphics::System::getInstance().getWorld(worldIndex).removeObject(mesh);
+    //graphics::System::getInstance().getWorld(worldIndex).removeObject(mesh);
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentSpine)
@@ -294,7 +289,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentSpine)
 
 ENTITY_COMPONENT_SETTERS(ComponentSpine)
 {
-    ENTITY_COMPONENT_SETTER_FIRST(animation)
+    /*ENTITY_COMPONENT_SETTER_FIRST(animation)
     {
         auto animation = static_cast<const graphics::SpineManagerItem *>(lua_touserdata(state, 3));
         self.setAnimation(animation, 0, false);
@@ -319,7 +314,7 @@ ENTITY_COMPONENT_SETTERS(ComponentSpine)
     {
         self.size = static_cast<uint>(lua_tonumber(state, 3));
     }
-    ENTITY_COMPONENT_SETTER_END()
+    ENTITY_COMPONENT_SETTER_END()*/
 }
 ENTITY_COMPONENT_END()
 

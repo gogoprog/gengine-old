@@ -2,7 +2,6 @@
 
 #include "entity_component_sprite.h"
 #include "script.h"
-#include "graphics_animation.h"
 #include "entity_macros.h"
 
 namespace gengine
@@ -19,16 +18,16 @@ public:
 
     ENTITY_COMPONENT_DECLARE(ComponentAnimatedSprite);
 
-    void pushAnimation(const graphics::Animation * animation);
+    //void pushAnimation(const graphics::Animation * animation);
     void removeAnimations();
 
 protected:
-    void setAnimation(const graphics::Animation * animation);
+    //void setAnimation(const graphics::Animation * animation);
 
-    const graphics::Animation
+    /*const graphics::Animation
         * animation;
     Array<const graphics::Animation *>
-        animationStack;
+        animationStack;*/
     float
         currentTime;
 };

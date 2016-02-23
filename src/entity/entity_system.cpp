@@ -13,7 +13,6 @@
 #include "entity_component_camera.h"
 #include "entity_component_mouseable.h"
 #include "entity_component_animated_sprite.h"
-#include "entity_component_sprite_batch.h"
 #include "entity_component_physic.h"
 #include "entity_component_navigation_agent.h"
 #include "entity_component_particle_system.h"
@@ -50,7 +49,7 @@ void System::update(const float dt)
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
         script::get(state, entity.transform);
-        
+
         if(entity.isInserted())
         {
             entity.update(dt);
@@ -151,7 +150,6 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");
-    registerComponent<ComponentSpriteBatch>(state, "ComponentSpriteBatch");
     registerComponent<ComponentPhysic>(state, "ComponentPhysic");
     registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");

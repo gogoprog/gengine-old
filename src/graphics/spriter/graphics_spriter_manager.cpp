@@ -11,7 +11,7 @@ namespace gengine
 namespace graphics
 {
 
-bool SpriterManager::internalCreate(SpriterManagerItem * _item, script::State state, const int parameter_position)
+SpriterManagerItem * SpriterManager::internalCreate(script::State state, const int parameter_position)
 {
     const char * path = lua_tostring(state, parameter_position);
 
@@ -62,7 +62,7 @@ bool SpriterManager::internalCreate(SpriterManagerItem * _item, script::State st
         }
     }
 
-    return false;
+    return nullptr;
 }
 
 void SpriterManager::internalGetName(char * result, const char * arg)
