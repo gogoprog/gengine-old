@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2015 the Urho3D project.
+// Copyright (c) 2008-2016 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,9 @@ public:
     /// Return Direct3D rendertarget or depth-stencil view.
     void* GetRenderTargetView() const { return renderTargetView_; }
 
+    /// Return Direct3D read-only depth-stencil view. May be null if not applicable
+    void* GetReadOnlyView() const { return readOnlyView_; }
+
     /// Return width.
     int GetWidth() const;
     /// Return height.
@@ -85,14 +88,18 @@ public:
     /// Return linked depth-stencil surface.
     RenderSurface* GetLinkedDepthStencil() const { return linkedDepthStencil_; }
 
-    /// Clear update flag. Called by Renderer.
-    void WasUpdated();
+    /// Return whether manual update queued. Called internally.
+    bool IsUpdateQueued() const { return updateQueued_; }
+    /// Reset update queued flag. Called internally.
+    void ResetUpdateQueued();
 
 private:
     /// Parent texture.
     Texture* parentTexture_;
     /// Direct3D rendertarget or depth-stencil view.
     void* renderTargetView_;
+    /// Direct3D read-only depth-stencil view. Present only on depth-stencil surfaces.
+    void* readOnlyView_;
     /// Viewports.
     Vector<SharedPtr<Viewport> > viewports_;
     /// Linked color buffer.

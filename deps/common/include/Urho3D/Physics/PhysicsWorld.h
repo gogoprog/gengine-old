@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2015 the Urho3D project.
+// Copyright (c) 2008-2016 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -77,6 +77,8 @@ struct URHO3D_API PhysicsRaycastResult
     Vector3 normal_;
     /// Hit distance from ray origin.
     float distance_;
+    /// Hit fraction.
+    float hitFraction_;
     /// Rigid body that was hit.
     RigidBody* body_;
 };
@@ -160,6 +162,8 @@ public:
         (PODVector<PhysicsRaycastResult>& result, const Ray& ray, float maxDistance, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Perform a physics world raycast and return the closest hit.
     void RaycastSingle(PhysicsRaycastResult& result, const Ray& ray, float maxDistance, unsigned collisionMask = M_MAX_UNSIGNED);
+    /// Perform a physics world segmented raycast and return the closest hit. Useful for big scenes with many bodies.
+    void RaycastSingleSegmented(PhysicsRaycastResult& result, const Ray& ray, float maxDistance, float segmentDistance, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Perform a physics world swept sphere test and return the closest hit.
     void SphereCast
         (PhysicsRaycastResult& result, const Ray& ray, float radius, float maxDistance, unsigned collisionMask = M_MAX_UNSIGNED);
@@ -175,8 +179,10 @@ public:
     void GetRigidBodies(PODVector<RigidBody*>& result, const Sphere& sphere, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Return rigid bodies by a box query.
     void GetRigidBodies(PODVector<RigidBody*>& result, const BoundingBox& box, unsigned collisionMask = M_MAX_UNSIGNED);
-    /// Return rigid bodies that have been in collision with a specific body on the last simulation step.
+    /// Return rigid bodies by contact test with the specified body. It needs to be active to return all contacts reliably.
     void GetRigidBodies(PODVector<RigidBody*>& result, const RigidBody* body);
+    /// Return rigid bodies that have been in collision with the specified body on the last simulation step. Only returns collisions that were sent as events (depends on collision event mode) and excludes e.g. static-static collisions.
+    void GetCollidingBodies(PODVector<RigidBody*>& result, const RigidBody* body);
 
     /// Return gravity.
     Vector3 GetGravity() const;
@@ -244,6 +250,9 @@ public:
     /// Return whether node dirtying should be disregarded.
     bool IsApplyingTransforms() const { return applyingTransforms_; }
 
+    /// Return whether is currently inside the Bullet substep loop.
+    bool IsSimulating() const { return simulating_; }
+
 protected:
     /// Handle scene being assigned.
     virtual void OnSceneSet(Scene* scene);
@@ -308,12 +317,14 @@ private:
     bool internalEdge_;
     /// Applying transforms flag.
     bool applyingTransforms_;
+    /// Simulating flag.
+    bool simulating_;
+    /// Debug draw depth test mode.
+    bool debugDepthTest_;
     /// Debug renderer.
     DebugRenderer* debugRenderer_;
     /// Debug draw flags.
     int debugMode_;
-    /// Debug draw depth test mode.
-    bool debugDepthTest_;
 };
 
 /// Register Physics library objects.

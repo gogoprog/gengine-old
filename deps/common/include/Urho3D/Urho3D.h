@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2015 the Urho3D project.
+// Copyright (c) 2008-2016 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,15 @@
 
 #ifndef URHO3D_API_H
 #define URHO3D_API_H
+
+/* #undef URHO3D_STATIC_DEFINE */
+#define URHO3D_OPENGL
+/* #undef URHO3D_D3D11 */
+#define URHO3D_SSE
+/* #undef URHO3D_DATABASE_ODBC */
+/* #undef URHO3D_DATABASE_SQLITE */
+/* #undef URHO3D_LUAJIT */
+/* #undef URHO3D_TESTING */
 
 #ifdef URHO3D_STATIC_DEFINE
 #  define URHO3D_API
@@ -59,6 +68,6 @@
 # define URHO3D_NO_DEPRECATED
 #endif
 
-#define NONSCRIPTABLE
+#define NONSCRIPTABLE 
 
 #endif

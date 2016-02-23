@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2015 the Urho3D project.
+// Copyright (c) 2008-2016 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -212,12 +212,8 @@ private:
     PODVector<Drawable*> drawableReinsertions_;
     /// Mutex for octree reinsertions.
     Mutex octreeMutex_;
-    /// Current threaded ray query.
-    mutable RayOctreeQuery* rayQuery_;
-    /// Drawable list for threaded ray query.
+    /// Ray query temporary list of drawables.
     mutable PODVector<Drawable*> rayQueryDrawables_;
-    /// Threaded ray query intermediate results.
-    mutable Vector<PODVector<RayQueryResult> > rayQueryResults_;
     /// Subdivision level.
     unsigned numLevels_;
 };

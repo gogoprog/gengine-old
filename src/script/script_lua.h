@@ -7,7 +7,7 @@ extern "C" {
 }
 */
 extern "C" {
-#include "LuaJIT/lua.h"
-#include "LuaJIT/lualib.h"
-#include "LuaJIT/lauxlib.h"
+#include "Lua/lua.h"
+#include "Lua/lualib.h"
+#include "Lua/lauxlib.h"
 }

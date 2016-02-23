@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2015 the Urho3D project.
+// Copyright (c) 2008-2016 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ public:
     void SetAddressMode(TextureCoordinate coord, TextureAddressMode address);
 
     /// Set shadow compare mode. No-op on D3D9.
-    void SetShadowCompare(bool enable) { }
+    void SetShadowCompare(bool enable);
 
     /// Set border color for border addressing mode.
     void SetBorderColor(const Color& color);

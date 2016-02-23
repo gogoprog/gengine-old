@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2015 the Urho3D project.
+// Copyright (c) 2008-2016 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 #include "../Core/ProcessUtils.h"
 
-#if defined(WIN32) && !defined(URHO3D_WIN32_CONSOLE)
+#if defined(_WIN32) && !defined(URHO3D_WIN32_CONSOLE)
 #include "../Core/MiniDump.h"
 #include <windows.h>
 #ifdef _MSC_VER
@@ -60,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
     return exitCode; \
 }
 // Other Win32 or minidumps disabled: just execute the function
-#elif defined(WIN32) && !defined(URHO3D_WIN32_CONSOLE)
+#elif defined(_WIN32) && !defined(URHO3D_WIN32_CONSOLE)
 #define URHO3D_DEFINE_MAIN(function) \
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd) \
 { \
