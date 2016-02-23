@@ -130,7 +130,7 @@ void System::init2()
     lua_getglobal(state, "gengine");
 
     kernel::luaRegister(state);
-    //graphics::luaRegister(state);
+    graphics::luaRegister(state);
     input::luaRegister(state);
     entity::luaRegister(state);
     audio::luaRegister(state);

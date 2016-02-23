@@ -44,7 +44,7 @@ bool init(int argc, char *argv[])
 
     script::System & script_system = script::System::getInstance();
 
-    SDL_Init(SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
+    SDL_Init(SDL_INIT_AUDIO);
 
     script_system.init();
 
@@ -138,6 +138,12 @@ Urho3D::ResourceCache & getResourceCache()
 {
     return *urhoApplication->GetSubsystem<Urho3D::ResourceCache>();
 }
+
+Urho3D::Renderer & getRenderer()
+{
+    return *urhoApplication->GetSubsystem<Urho3D::Renderer>();
+}
+
 
 void handleEvents()
 {

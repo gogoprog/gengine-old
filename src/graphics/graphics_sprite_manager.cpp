@@ -36,7 +36,6 @@ void SpriteManager::simplifyName(char *result, const char *file_path)
 Urho3D::Sprite2D * SpriteManager::internalCreate(script::State state, const int parameter_position)
 {
     const char * path = lua_tostring(state, parameter_position);
-    //return texture->setFromFile(path);
 
     return core::getResourceCache().GetResource<Urho3D::Sprite2D>(path);
 }
