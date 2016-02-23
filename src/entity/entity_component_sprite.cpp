@@ -98,11 +98,9 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     {
         //self.sprite.setColorAlpha(lua_tonumber(state,3));
     }
-    ENTITY_COMPONENT_SETTER(texture)
+    ENTITY_COMPONENT_SETTER(sprite)
     {
-        auto name = lua_tostring(state, 3);
-
-        auto sprite = core::getResourceCache().GetResource<Urho3D::Sprite2D>(name);
+        auto sprite = reinterpret_cast<Urho3D::Sprite2D*>(lua_touserdata(state, 3));
 
         self.staticSprite->SetSprite(sprite);
     }
