@@ -45,6 +45,7 @@ bool init(int argc, char *argv[])
     script::System & script_system = script::System::getInstance();
 
     SDL_Init(SDL_INIT_AUDIO);
+    context = new Urho3D::Context();
 
     script_system.init();
 
@@ -56,7 +57,6 @@ bool init(int argc, char *argv[])
 
     script_system.call("init");
 
-    context = new Urho3D::Context();
     urhoApplication = new gengine::application::Application(context);
 
     //graphics::System::getInstance().init();

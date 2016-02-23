@@ -13,6 +13,7 @@
 #include "physics.h"
 #include "navigation.h"
 #include "tiled.h"
+#include <Urho3D/LuaScript/LuaScript.h>
 
 namespace gengine
 {
@@ -23,10 +24,14 @@ void System::init()
 {
     geDebugLog("script::System::init()");
 
-    state = luaL_newstate();
+    /*state = luaL_newstate();
     luaL_openlibs(state);
 
-    lua_checkstack(state, 128);
+    lua_checkstack(state, 128);*/
+
+    auto lua_script = new Urho3D::LuaScript(&core::getContext());
+
+    state = lua_script->GetState();
 
     lua_newtable(state);
 
@@ -108,13 +113,13 @@ void System::init()
 
     lua_pop(state, 1);
 
-    SCRIPT_DO(
+    /*SCRIPT_DO(
         function __init()
             debug = debug or require("debug")
             require("mobdebug").start()
         end
         pcall(__init)
-        );
+        );*/
 }
 
 void System::finalize()

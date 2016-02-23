@@ -96,7 +96,7 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     }
     ENTITY_COMPONENT_SETTER(alpha)
     {
-        //self.sprite.setColorAlpha(lua_tonumber(state,3));
+        self.staticSprite->SetAlpha(lua_tonumber(state,3));
     }
     ENTITY_COMPONENT_SETTER(sprite)
     {
