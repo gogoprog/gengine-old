@@ -160,6 +160,12 @@ void Application::Stop()
 void Application::Update(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
 {
     core::update();
+
+    if(core::mustQuit())
+    {
+        core::finalize();
+        engine_->Exit();
+    }
 }
 
 }

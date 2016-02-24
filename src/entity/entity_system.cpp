@@ -48,17 +48,7 @@ void System::update(const float dt)
         int ref = entity.ref;
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
-        lua_getfield(state, -1, "position");
-        lua_getfield(state, -2, "scale");
-        lua_getfield(state, -3, "rotation");
-
-        entity.node->SetTransform2D(
-            *script::get<Vector2>(state, -3),
-            lua_tonumber(state, -1),
-            *script::get<Vector2>(state, -2)
-            );
-
-        lua_pop(state, 3);
+        readEntityTransform(state, entity, -1);
 
         if(entity.isInserted())
         {

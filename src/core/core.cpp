@@ -16,8 +16,6 @@ namespace gengine
 namespace core
 {
 
-void handleEvents();
-
 bool
     itMustQuit = false;
 unsigned long long
@@ -88,8 +86,6 @@ void finalize()
     script::System::getInstance().call("stop");
 
     script::System::getInstance().finalize();
-
-    SDL_Quit();
 }
 
 void update()
@@ -98,8 +94,6 @@ void update()
 
     currentTicks = SDL_GetTicks();
     dt = ( ( currentTicks - lastTicks ) * updateFactor )/ 1000.0f;
-
-    handleEvents();
 
     script::System::getInstance().call1("update", dt);
 
@@ -149,108 +143,9 @@ Urho3D::FileSystem & getFileSystem()
     return *urhoApplication->GetSubsystem<Urho3D::FileSystem>();
 }
 
-void handleEvents()
+Urho3D::Input & getInput()
 {
-    SDL_Event e;
-
-    while(SDL_PollEvent(&e))
-    {
-        switch(e.type)
-        {
-            case SDL_QUIT:
-            {
-                itMustQuit = true;
-            }
-            break;
-
-            case SDL_MOUSEMOTION:
-            {
-                SDL_MouseMotionEvent *m = (SDL_MouseMotionEvent*)&e;
-
-                input::System::getInstance().updateMouseCoordinates(0, m->x, m->y);
-            }
-            break;
-
-            case SDL_MOUSEBUTTONDOWN:
-            {
-                SDL_MouseButtonEvent *m = (SDL_MouseButtonEvent*)&e;
-
-                input::System::getInstance().updateMouseButton(0, m->button, input::Mouse::DOWN);
-            }
-            break;
-
-            case SDL_MOUSEBUTTONUP:
-            {
-                SDL_MouseButtonEvent *m = (SDL_MouseButtonEvent*)&e;
-
-                input::System::getInstance().updateMouseButton(0, m->button, input::Mouse::UP);
-            }
-            break;
-
-            case SDL_MOUSEWHEEL:
-            {
-                SDL_MouseWheelEvent *w = (SDL_MouseWheelEvent*)&e;
-                int value = w->y;
-
-                #ifdef EMSCRIPTEN
-                    value /= std::abs(value) * -1.0f;
-                #endif
-
-                input::System::getInstance().updateMouseWheel(0, value);
-            }
-            break;
-
-            case SDL_KEYDOWN:
-            {
-                input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, true);
-            }
-            break;
-
-            case SDL_KEYUP:
-            {
-                input::System::getInstance().updateKeyboardState(e.key.keysym.scancode, false);
-            }
-            break;
-
-            case SDL_JOYBUTTONDOWN:
-            {
-                input::System::getInstance().updateJoypadButton(e.jbutton.which, e.jbutton.button, true);
-            }
-            break;
-
-            case SDL_JOYBUTTONUP:
-            {
-                input::System::getInstance().updateJoypadButton(e.jbutton.which, e.jbutton.button, false);
-            }
-            break;
-
-            #ifndef EMSCRIPTEN
-                case SDL_JOYDEVICEADDED:
-                {
-                    input::System::getInstance().onJoypadConnected(e.jdevice.which);
-                }
-                break;
-
-                case SDL_JOYDEVICEREMOVED:
-                {
-                    input::System::getInstance().onJoypadDisconnected(e.jdevice.which);
-                }
-                break;
-            #endif
-
-            case SDL_JOYAXISMOTION:
-            {
-                input::System::getInstance().updateJoypadAxis(e.jaxis.which, e.jaxis.axis, e.jaxis.value / 32767.0f);
-            }
-            break;
-
-            case SDL_JOYHATMOTION:
-            {
-                input::System::getInstance().updateJoypadHat(e.jhat.which, e.jhat.hat, e.jhat.value);
-            }
-            break;
-        }
-    }
+    return *urhoApplication->GetSubsystem<Urho3D::Input>();
 }
 
 }

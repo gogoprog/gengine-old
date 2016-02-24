@@ -2,7 +2,6 @@
 
 #include "gui_cef_app.h"
 #include "debug.h"
-#include "input_mouse.h"
 #include "input_system.h"
 #include "application.h"
 
@@ -106,7 +105,7 @@ void System::update(const float dt)
     {
         timeSinceLastUpdate += dt;
 
-        {
+        /*{
             CefMouseEvent mouse_event;
             const input::Mouse & mouse = input::System::getInstance().getMouse(0);
             int wheelY;
@@ -134,7 +133,7 @@ void System::update(const float dt)
             browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
         }
 
-        CefDoMessageLoopWork();
+        CefDoMessageLoopWork();*/
 
         handler->update();
     }

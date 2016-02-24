@@ -50,6 +50,8 @@ public:
 
 private:
 
+    inline void readEntityTransform(script::State state, Entity & entity, const int position);
+
     template<typename COMPONENT>
     static void registerComponent(lua_State * state, const char * name)
     {
@@ -104,6 +106,31 @@ private:
     float
         currentDt;
 };
+
+}
+}
+
+#include "entity_entity.h"
+
+namespace gengine
+{
+namespace entity
+{
+
+inline void System::readEntityTransform(script::State state, Entity & entity, const int position)
+{
+    lua_getfield(state, position, "position");
+    lua_getfield(state, position - 1, "scale");
+    lua_getfield(state, position - 2, "rotation");
+
+    entity.node->SetTransform2D(
+        *script::get<math::Vector2>(state, -3),
+        lua_tonumber(state, -1),
+        *script::get<math::Vector2>(state, -2)
+        );
+
+    lua_pop(state, 3);
+}
 
 }
 }

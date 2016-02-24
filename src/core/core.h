@@ -4,6 +4,7 @@
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Graphics/Renderer.h>
 #include <Urho3D/IO/FileSystem.h>
+#include <Urho3D/Input/Input.h>
 
 namespace gengine
 {
@@ -23,6 +24,7 @@ Urho3D::Context & getContext();
 Urho3D::ResourceCache & getResourceCache();
 Urho3D::Renderer & getRenderer();
 Urho3D::FileSystem & getFileSystem();
+Urho3D::Input & getInput();
 
 }
 }
