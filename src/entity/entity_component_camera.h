@@ -3,6 +3,7 @@
 #include "script.h"
 #include "entity_macros.h"
 #include "entity_component.h"
+#include <Urho3D/Graphics/Camera.h>
 
 namespace gengine
 {
@@ -22,8 +23,8 @@ public:
     ENTITY_COMPONENT_DECLARE(ComponentCamera);
 
 private:
-    uint
-        worldIndex;
+    Urho3D::SharedPtr<Urho3D::Camera>
+        camera;
 };
 
 }

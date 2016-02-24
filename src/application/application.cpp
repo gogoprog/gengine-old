@@ -134,8 +134,6 @@ void Application::Start()
     scenes.add(scene_);
 
     auto cameraNode_ = scene_->CreateChild("Camera");
-    cameraNode_->SetPosition(Urho3D::Vector3(0.0f, 0.0f, -10.0f));
-
     auto camera = cameraNode_->CreateComponent<Urho3D::Camera>();
     camera->SetOrthographic(true);
 

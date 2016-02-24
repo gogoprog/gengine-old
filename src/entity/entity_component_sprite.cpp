@@ -16,7 +16,7 @@ namespace entity
 
 ComponentSprite::ComponentSprite()
     :
-    staticSprite(nullptr)
+    Component()
 {
 }
 

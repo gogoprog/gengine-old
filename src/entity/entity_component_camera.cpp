@@ -1,13 +1,12 @@
 #include "entity_component_camera.h"
 
+#include "entity.h"
+#include "entity_macros.h"
 #include "entity_system.h"
 #include "script.h"
 #include "debug.h"
-#include <string.h>
 #include "application.h"
-#include "entity.h"
-#include "entity_macros.h"
-#include "entity_entity.h"
+#include "core.h"
 
 namespace gengine
 {
@@ -16,30 +15,27 @@ namespace entity
 
 ComponentCamera::ComponentCamera()
     :
-    Component(),
-    worldIndex(0)
+    Component()
 {
 }
 
 void ComponentCamera::init()
 {
+    camera = entity->getNode().CreateComponent<Urho3D::Camera>();
 }
 
 void ComponentCamera::insert()
 {
-    //graphics::System::getInstance().getWorld(worldIndex).pushCamera(camera);
+    auto viewport = new Urho3D::Viewport(&core::getContext(), &application::getScene(0), camera);
+    core::getRenderer().SetViewport(0, viewport);
 }
 
 void ComponentCamera::update(const float /*dt*/)
 {
-    /*Transform & transform = entity->transform;
-
-    camera.setPosition(transform.position);*/
 }
 
 void ComponentCamera::remove()
 {
-    //graphics::System::getInstance().getWorld(worldIndex).popCamera();
 }
 
 ENTITY_COMPONENT_IMPLEMENT(ComponentCamera)
@@ -62,19 +58,14 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentCamera)
 
 ENTITY_COMPONENT_SETTERS(ComponentCamera)
 {
-    /*ENTITY_COMPONENT_SETTER_FIRST(extent)
+    ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
-        Vector2 extent;
+        auto extent = script::get<math::Vector2>(state, 3);
 
-        script::get(state, extent, 3);
-
-        self.camera.setExtent(extent);
+        self.camera->SetOrthographic(true);
+        self.camera->SetOrthoSize(*extent);
     }
-    ENTITY_COMPONENT_SETTER(world)
-    {
-        self.worldIndex = lua_tonumber(state,3);
-    }
-    ENTITY_COMPONENT_SETTER_END()*/
+    ENTITY_COMPONENT_SETTER_END()
 }
 ENTITY_COMPONENT_END()
 

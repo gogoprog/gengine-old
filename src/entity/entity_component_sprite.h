@@ -24,13 +24,6 @@ public:
     ENTITY_COMPONENT_DECLARE(ComponentSprite);
 
 protected:
-    math::Vector2
-        extent;
-    uint
-        worldIndex,
-        atlasItem;
-    bool
-        extentHasBeenSet;
     Urho3D::SharedPtr<Urho3D::StaticSprite2D>
         staticSprite;
 };
