@@ -23,34 +23,6 @@ ComponentSprite::ComponentSprite()
 void ComponentSprite::init()
 {
     staticSprite = entity->getNode().CreateComponent<Urho3D::StaticSprite2D>();
-
-    return;
-    /*
-    if(atlas)
-    {
-        sprite.setTexture(atlas->getTexture());
-        const graphics::AtlasItem & item = atlas->getItem(atlasItem);
-        sprite.setUvOffset(item.uvOffset);
-        sprite.setUvScale(item.uvScale);
-
-        if(!extentHasBeenSet)
-        {
-            atlas->getDefaultExtent(extent, atlasItem);
-        }
-    }
-    else
-    {
-        if(!extentHasBeenSet)
-        {
-            const Pointer<const graphics::Texture> texture = sprite.getTexture();
-
-            if(!texture.isNull())
-            {
-                extent.x = texture->getWidth();
-                extent.y = texture->getHeight();
-            }
-        }
-    }*/
 }
 
 void ComponentSprite::insert()
@@ -76,11 +48,6 @@ ENTITY_COMPONENT_SETTERS(ComponentSprite)
     ENTITY_COMPONENT_SETTER_FIRST(layer)
     {
         self.staticSprite->SetLayer(lua_tonumber(state,3));
-    }
-    ENTITY_COMPONENT_SETTER(extent)
-    {
-        script::get(state, self.extent, 3);
-        self.extentHasBeenSet = true;
     }
     ENTITY_COMPONENT_SETTER(uvScale)
     {

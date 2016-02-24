@@ -12,7 +12,7 @@ namespace gengine
 {
 namespace math
 {
-
+/*
 float getClosestAngle(const float angle, const float other_angle)
 {
     float lower_angle, upper_angle;
@@ -65,10 +65,10 @@ SCRIPT_FUNCTION(doRectanglesIntersect)
     half_extent2 *= 0.5f;
 
     result = !(
-        (position1.x + half_extent1.x < position2.x - half_extent2.x)
-        || (position2.x + half_extent2.x < position1.x - half_extent1.x)
-        || (position1.y + half_extent1.y < position2.y - half_extent2.y)
-        || (position2.y + half_extent2.y < position1.y - half_extent1.y)
+        (position1.x_ + half_extent1.x_ < position2.x_ - half_extent2.x_)
+        || (position2.x_ + half_extent2.x_ < position1.x_ - half_extent1.x_)
+        || (position1.y_ + half_extent1.y_ < position2.y_ - half_extent2.y_)
+        || (position2.y_ + half_extent2.y_ < position1.y_ - half_extent1.y_)
         );
 
     lua_pushboolean(state, result);
@@ -93,7 +93,7 @@ SCRIPT_FUNCTION(doCirclesIntersect)
     script::get(state, position2, 3);
     script::get(state, radius2, 4);
 
-    result = Vector2::getDistance(position1, position2) < radius1 + radius2;
+    //result = Vector2::getDistance(position1, position2) < radius1 + radius2;
 
     lua_pushboolean(state, result);
 
@@ -150,18 +150,18 @@ SCRIPT_FUNCTION(doesCircleIntersectRectangle)
 
     return 1;
 }
-
+*/
 SCRIPT_REGISTERER()
 {
     lua_newtable(state);
 
-    Vector2::luaRegister(state);
+    //Vector2::luaRegister(state);
     Vector4::luaRegister(state);
 
-    SCRIPT_TABLE_PUSH_FUNCTION(getClosestAngle);
+    /*SCRIPT_TABLE_PUSH_FUNCTION(getClosestAngle);
     SCRIPT_TABLE_PUSH_FUNCTION(doRectanglesIntersect);
     SCRIPT_TABLE_PUSH_FUNCTION(doCirclesIntersect);
-    SCRIPT_TABLE_PUSH_FUNCTION(doesCircleIntersectRectangle);
+    SCRIPT_TABLE_PUSH_FUNCTION(doesCircleIntersectRectangle);*/
 
     lua_setfield(state, -2, "math");
 }

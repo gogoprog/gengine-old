@@ -5,7 +5,6 @@
 #include "vector2.h"
 #include "script.h"
 #include "debug.h"
-#include "transform.h"
 #include <Urho3D/Scene/Node.h>
 
 namespace gengine
@@ -37,9 +36,6 @@ public:
     void update(const float dt);
 
     Urho3D::Node & getNode() { return *node; }
-
-    math::Transform
-        transform;
 
 private:
     Array<Component*>

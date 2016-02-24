@@ -137,7 +137,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentSpriter)
         {
             SCRIPT_GET_SELF(ComponentSpriter);
 
-            if(self.currentMainlineKey)
+            /*if(self.currentMainlineKey)
             {
                 uint bone_index;
                 math::Transform result;
@@ -149,7 +149,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentSpriter)
                 script::push(state, result);
 
                 return 1;
-            }
+            }*/
 
             lua_pushnil(state);
 

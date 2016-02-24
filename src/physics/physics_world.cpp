@@ -66,11 +66,9 @@ SCRIPT_CLASS_FUNCTION(World, setGravity)
 {
     SCRIPT_GET_SELF(World);
 
-    Vector2 gravity;
+    Vector2 *gravity = script::get<Vector2>(state, 2);
 
-    script::get(state, gravity, 2);
-
-    self.b2world.SetGravity(b2Vec2(gravity.x, gravity.y));
+    self.b2world.SetGravity(b2Vec2(gravity->x_, gravity->y_));
 
     return 0;
 }
@@ -78,14 +76,16 @@ SCRIPT_CLASS_FUNCTION(World, setGravity)
 SCRIPT_CLASS_FUNCTION(World, rayCast)
 {
     SCRIPT_GET_SELF(World);
-
-    Vector2 start, end;
+/*
     LocalAllResult results;
+
+    Vector2 *start = script::get<Vector2>(state, 2);
+    Vector2 *end = script::get<Vector2>(state, 2);
 
     script::get(state, start, 2);
     script::get(state, end, 3);
 
-    self.b2world.RayCast(&results, b2Vec2(start.x, start.y), b2Vec2(end.x, end.y));
+    self.b2world.RayCast(&results, b2Vec2(start->x_, start.y_), b2Vec2(end.x_, end.y_));
 
     for(auto entity : results.entities)
     {
@@ -94,7 +94,7 @@ SCRIPT_CLASS_FUNCTION(World, rayCast)
 
         script::System::getInstance().call(1, 0);
     }
-
+*/
     return 0;
 }
 

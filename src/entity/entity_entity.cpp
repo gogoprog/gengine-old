@@ -71,12 +71,6 @@ void Entity::remove()
 
 void Entity::update(const float dt)
 {
-    node->SetTransform2D(
-        *(Urho3D::Vector2*)&transform.position,
-        transform.rotation,
-        *(Urho3D::Vector2*)&transform.scale
-    );
-
     for(auto component : components)
     {
         component->update(dt);

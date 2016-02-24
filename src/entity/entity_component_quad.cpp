@@ -31,7 +31,7 @@ void ComponentQuad::insert()
 
 void ComponentQuad::update(const float /*dt*/)
 {
-    math::Transform & transform = entity->transform;
+    //math::Transform & transform = entity->transform;
 
     /*sprite.setPosition(transform.position);
     sprite.setRotation(transform.rotation);*/

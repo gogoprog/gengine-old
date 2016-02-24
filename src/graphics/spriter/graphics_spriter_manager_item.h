@@ -7,7 +7,6 @@
 #include "vector2.h"
 #include "map.h"
 #include "graphics_spriter.h"
-#include "transform.h"
 #include <string>
 
 namespace gengine
@@ -24,7 +23,7 @@ public:
     void finalize();
     //void fill(SpriteGroup & group, const SpriterMainlineKey & mlk, const Pointer<const SpriterCharacterMap> character_map) const;
     //void update(SpriteGroup & group, const SpriterMainlineKey & mlk, const float time, const Pointer<const SpriterCharacterMap> character_map, const Vector2 & scale) const;
-    void getBoneTransform(math::Transform & result, const SpriterMainlineKey & mlk, const float time, const uint bone_index) const;
+    //void getBoneTransform(math::Transform & result, const SpriterMainlineKey & mlk, const float time, const uint bone_index) const;
 
     inline float getDuration() const
     {

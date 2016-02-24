@@ -59,8 +59,8 @@ void SpriterAsset::load(const core::Json & json)
     width = json["width"].getUint();
     height = json["height"].getUint();
 
-    pivot.x = json["pivot_x"].getFloat();
-    pivot.y = json["pivot_y"].getFloat();
+    pivot.x_ = json["pivot_x"].getFloat();
+    pivot.y_ = json["pivot_y"].getFloat();
 }
 
 void SpriterTimelineKey::load(const core::Json & json, const SpriterFile & file)
@@ -74,13 +74,13 @@ void SpriterTimelineKey::load(const core::Json & json, const SpriterFile & file)
 
         asset = & file.allAssets[object["folder"].getUint()][object["file"].getUint()];
 
-        pivot.x = getOrDefault(object, "pivot_x", asset->pivot.x) - 0.5f;
-        pivot.y = getOrDefault(object, "pivot_y", asset->pivot.y) - 0.5f;
+        pivot.x_ = getOrDefault(object, "pivot_x", asset->pivot.x_) - 0.5f;
+        pivot.y_ = getOrDefault(object, "pivot_y", asset->pivot.y_) - 0.5f;
 
-        position.x = getOrDefault(object, "x", 0.0f);
-        position.y = getOrDefault(object, "y", 0.0f);
-        scale.x = getOrDefault(object, "scale_x", 1.0f);
-        scale.y = getOrDefault(object, "scale_y", 1.0f);
+        position.x_ = getOrDefault(object, "x", 0.0f);
+        position.y_ = getOrDefault(object, "y", 0.0f);
+        scale.x_ = getOrDefault(object, "scale_x", 1.0f);
+        scale.y_ = getOrDefault(object, "scale_y", 1.0f);
     }
     else if(json.has("bone"))
     {
@@ -88,10 +88,10 @@ void SpriterTimelineKey::load(const core::Json & json, const SpriterFile & file)
 
         angle = getOrDefault(bone, "angle", 0.0f) / (180.0f / math::pi);
         alpha = getOrDefault(bone, "alpha", 1.0f);
-        position.x = getOrDefault(bone, "x", 0.0f);
-        position.y = getOrDefault(bone, "y", 0.0f);
-        scale.x = getOrDefault(bone, "scale_x", 1.0f);
-        scale.y = getOrDefault(bone, "scale_y", 1.0f);
+        position.x_ = getOrDefault(bone, "x", 0.0f);
+        position.y_ = getOrDefault(bone, "y", 0.0f);
+        scale.x_ = getOrDefault(bone, "scale_x", 1.0f);
+        scale.y_ = getOrDefault(bone, "scale_y", 1.0f);
     }
 
     time = getOrDefault(json, "time", 0u);
@@ -156,7 +156,7 @@ void SpriterMainlineKeyItem::fillTransform(SpriterTransform & transform, const u
     else
     {
         parent->fillTransform(transform, time, interpolation);
-        transform.position += Vector2::getRotated(position * transform.scale, math::getClosestAngle(transform.angle, 0.0f));
+        //transform.position += Vector2::getRotated(position * transform.scale, math::getClosestAngle(transform.angle, 0.0f));
         transform.pivot = pivot;
         transform.scale *= scale;
         transform.angle += angle;

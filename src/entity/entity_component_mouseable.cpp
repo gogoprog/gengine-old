@@ -34,7 +34,7 @@ void ComponentMouseable::insert()
 
 void ComponentMouseable::update(const float /*dt*/)
 {
-    const input::Mouse & mouse = input::System::getInstance().getMouse(0);
+    /*const input::Mouse & mouse = input::System::getInstance().getMouse(0);
     Transform & transform = entity->transform;
     const Vector2 & entity_position = transform.position;
     auto state = script::System::getInstance().getState();
@@ -82,7 +82,7 @@ void ComponentMouseable::update(const float /*dt*/)
             script::System::getInstance().call(2, 0);
             itIsHovered = false;
         }
-    }
+    }*/
 }
 
 void ComponentMouseable::remove()
@@ -97,7 +97,7 @@ ENTITY_COMPONENT_SETTERS(ComponentMouseable)
 {
     ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
-        script::get(state, self.extent, 3);
+        self.extent = *script::get<Vector2>(state, 3);
     }
     ENTITY_COMPONENT_SETTER(world)
     {

@@ -91,6 +91,7 @@ void SpriterManagerItem::update(SpriteGroup & group, const SpriterMainlineKey & 
     }
 }
 */
+/*
 void SpriterManagerItem::getBoneTransform(math::Transform & result, const SpriterMainlineKey & mlk, const float time, const uint bone_index) const
 {
     SpriterTransform transform;
@@ -102,7 +103,7 @@ void SpriterManagerItem::getBoneTransform(math::Transform & result, const Sprite
     result.position = transform.position;
     result.scale = transform.scale;
     result.rotation = transform.angle;
-}
+}*/
 
 }
 }

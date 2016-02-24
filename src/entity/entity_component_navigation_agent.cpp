@@ -34,21 +34,21 @@ void ComponentNavigationAgent::init()
 
 void ComponentNavigationAgent::insert()
 {
-    Transform & transform = entity->transform;
+    /*Transform & transform = entity->transform;
 
     agent = & navigation::System::getInstance().getWorld(worldIndex).getWorld().createAgent(*(tilemover2d::Vector2 *) & transform.position);
     agent->radius = radius;
-    agent->speed = speed;
+    agent->speed = speed;*/
 }
 
 void ComponentNavigationAgent::update(const float /*dt*/)
 {
-    Transform & transform = entity->transform;
+    /*Transform & transform = entity->transform;
 
     transform.position.x = agent->getPosition().x;
     transform.position.y = agent->getPosition().y;
 
-    script::update(script::System::getInstance().getState(), transform);
+    script::update(script::System::getInstance().getState(), transform);*/
 }
 
 void ComponentNavigationAgent::remove()
@@ -61,11 +61,8 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentNavigationAgent)
         moveTo,
         {
             SCRIPT_GET_SELF(ComponentNavigationAgent);
-            Vector2 position;
 
-            script::get(state, position, 2);
-
-            self.agent->moveTo(*(tilemover2d::Vector2 *) & position);
+            self.agent->moveTo(*(tilemover2d::Vector2 *) script::get<Vector2>(state, 2));
 
             return 0;
         }

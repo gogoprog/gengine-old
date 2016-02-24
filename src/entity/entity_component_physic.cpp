@@ -44,16 +44,16 @@ void ComponentPhysic::init()
 
 void ComponentPhysic::insert()
 {
-    Transform & transform = entity->transform;
+    /*Transform & transform = entity->transform;
 
     body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
 
-    body->SetActive(true);
+    body->SetActive(true);*/
 }
 
 void ComponentPhysic::update(const float /*dt*/)
 {
-    Transform & transform = entity->transform;
+    /*Transform & transform = entity->transform;
 
     switch(bodyDefinition.type)
     {
@@ -80,7 +80,7 @@ void ComponentPhysic::update(const float /*dt*/)
             body->SetTransform(b2Vec2(transform.position.x, transform.position.y), transform.rotation);
         }
         break;
-    }
+    }*/
 }
 
 void ComponentPhysic::remove()
@@ -93,10 +93,10 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
     SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         applyAngularImpulse,
         {
-            SCRIPT_GET_SELF(ComponentPhysic);
+            /*SCRIPT_GET_SELF(ComponentPhysic);
             float impulse = lua_tonumber(state, 2);
 
-            self.body->ApplyAngularImpulse(impulse);
+            self.body->ApplyAngularImpulse(impulse);*/
             return 0;
         }
         );
@@ -104,14 +104,14 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
     SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         applyForce,
         {
-            SCRIPT_GET_SELF(ComponentPhysic);
+            /*SCRIPT_GET_SELF(ComponentPhysic);
             Vector2 force;
             Vector2 point;
 
             script::get(state, force, 2);
             script::get(state, point, 3);
 
-            self.body->ApplyForce(b2Vec2(force.x, force.y), b2Vec2(point.x, point.y));
+            self.body->ApplyForce(b2Vec2(force.x, force.y), b2Vec2(point.x, point.y));*/
             return 0;
         }
         );
@@ -119,12 +119,12 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
     SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         applyForceToCenter,
         {
-            SCRIPT_GET_SELF(ComponentPhysic);
+            /*SCRIPT_GET_SELF(ComponentPhysic);
             Vector2 force;
 
             script::get(state, force, 2);
 
-            self.body->ApplyForceToCenter(b2Vec2(force.x, force.y));
+            self.body->ApplyForceToCenter(b2Vec2(force.x, force.y));*/
             return 0;
         }
         );
@@ -132,14 +132,14 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
     SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         applyLinearImpulse,
         {
-            SCRIPT_GET_SELF(ComponentPhysic);
+            /*SCRIPT_GET_SELF(ComponentPhysic);
             Vector2 impulse;
             Vector2 point;
 
             script::get(state, impulse, 2);
             script::get(state, point, 3);
 
-            self.body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(point.x, point.y));
+            self.body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(point.x, point.y));*/
             return 0;
         }
         );
@@ -147,10 +147,10 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
     SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         applyTorque,
         {
-            SCRIPT_GET_SELF(ComponentPhysic);
+            /*SCRIPT_GET_SELF(ComponentPhysic);
             float torque = lua_tonumber(state, 2);
 
-            self.body->ApplyTorque(torque);
+            self.body->ApplyTorque(torque);*/
             return 0;
         }
         );
@@ -158,7 +158,7 @@ ENTITY_COMPONENT_IMPLEMENT(ComponentPhysic)
 
 ENTITY_COMPONENT_SETTERS(ComponentPhysic)
 {
-    ENTITY_COMPONENT_SETTER_FIRST(extent)
+    /*ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
         b2PolygonShape * shape = new b2PolygonShape();
 
@@ -236,7 +236,7 @@ ENTITY_COMPONENT_SETTERS(ComponentPhysic)
             self.fixture->SetSensor(self.itIsSensor);
         }
     }
-    ENTITY_COMPONENT_SETTER_END()
+    ENTITY_COMPONENT_SETTER_END()*/
 }
 ENTITY_COMPONENT_END()
 
