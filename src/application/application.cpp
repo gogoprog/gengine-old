@@ -137,9 +137,7 @@ void Application::Start()
     auto camera = cameraNode_->CreateComponent<Urho3D::Camera>();
     camera->SetOrthographic(true);
 
-    auto graphics = GetSubsystem<Urho3D::Graphics>();
-
-    camera->SetOrthoSize(Urho3D::Vector2((float)graphics->GetWidth(), (float)graphics->GetHeight() ));
+    camera->SetOrthoSize(Urho3D::Vector2(float(width), float(height)));
 
     scenes.add(scene_);
 
