@@ -2,6 +2,7 @@
 
 #include "script_lua.h"
 #include "script_binder.h"
+#include "script_types.h"
 #include <functional>
 
 #define SCRIPT_DEBUG_TOP() \
@@ -70,7 +71,6 @@
 #define SCRIPT_DO(...) \
     luaL_dostring(state, #__VA_ARGS__);
 
-
 namespace gengine
 {
 namespace script
@@ -78,11 +78,6 @@ namespace script
 
 typedef lua_State *
     State;
-
-int getTableInteger(lua_State * state, const char * name, const int table_position = -1);
-int getTableIntegerSafe(lua_State * state, const char * name, const int table_position = -1, const int default_value = 0);
-float getTableFloat(lua_State * state, const char * name, const int table_position = -1);
-float getTableFloatSafe(lua_State * state, const char * name, const int table_position = -1, const float default_value = 0.0f);
 
 void executeText(const char * text);
 

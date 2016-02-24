@@ -120,10 +120,9 @@ void Application::Setup()
     engineParameters_["WindowHeight"] = height;
     engineParameters_["WindowTitle"] = getName();
     engineParameters_["ResourcePaths"] = "data;coreData;";
-    engineParameters_["AutoloadPaths"] = "data;coreData;";
+    //engineParameters_["AutoloadPaths"] = "data;coreData;";
 
-    engineParameters_["ResourcePrefixPaths"] = ("./;" + std::string(getenv("GENGINE")) + "/res/").c_str();
-    geDebugLog((".;" + std::string(getenv("GENGINE")) + "/res/").c_str());
+    engineParameters_["ResourcePrefixPaths"] = (std::string(core::getFileSystem().GetCurrentDir().CString()) + ";" + std::string(getenv("GENGINE")) + "/res/").c_str();
 }
 
 void Application::Start()
@@ -136,7 +135,6 @@ void Application::Start()
 
     auto cameraNode_ = scene_->CreateChild("Camera");
     cameraNode_->SetPosition(Urho3D::Vector3(0.0f, 0.0f, -10.0f));
-
 
     auto camera = cameraNode_->CreateComponent<Urho3D::Camera>();
     camera->SetOrthographic(true);

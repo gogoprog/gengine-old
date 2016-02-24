@@ -3,6 +3,7 @@
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Graphics/Renderer.h>
+#include <Urho3D/IO/FileSystem.h>
 
 namespace gengine
 {
@@ -21,5 +22,7 @@ void setUpdateFactor(const float factor);
 Urho3D::Context & getContext();
 Urho3D::ResourceCache & getResourceCache();
 Urho3D::Renderer & getRenderer();
+Urho3D::FileSystem & getFileSystem();
+
 }
 }

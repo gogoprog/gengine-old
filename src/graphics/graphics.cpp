@@ -30,8 +30,7 @@ SCRIPT_REGISTERER()
     SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         setClearColor,
         {
-            auto color = (Urho3D::Color*) tolua_tousertype(state,1,0);
-            core::getRenderer().GetDefaultZone()->SetFogColor(*color);
+            core::getRenderer().GetDefaultZone()->SetFogColor(*script::get<Urho3D::Color>(state, 1));
             return 0;
         });
 

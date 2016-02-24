@@ -144,6 +144,10 @@ Urho3D::Renderer & getRenderer()
     return *urhoApplication->GetSubsystem<Urho3D::Renderer>();
 }
 
+Urho3D::FileSystem & getFileSystem()
+{
+    return *urhoApplication->GetSubsystem<Urho3D::FileSystem>();
+}
 
 void handleEvents()
 {
