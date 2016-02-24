@@ -13,10 +13,13 @@ void System::init()
 {
     geDebugLog("input::System::init()");
     input = & core::getInput();
+
+    setMouseVisible(true);
 }
 
 void System::finalize()
 {
+    geDebugLog("input::System::finalize()");
 }
 
 void System::update()

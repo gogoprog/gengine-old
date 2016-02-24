@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script.h"
+#include "vector2.h"
 
 namespace gengine
 {

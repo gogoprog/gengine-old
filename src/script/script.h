@@ -1,8 +1,6 @@
 #pragma once
 
 #include "script_lua.h"
-#include "script_binder.h"
-#include "script_types.h"
 #include <functional>
 
 #define SCRIPT_DEBUG_TOP() \
@@ -71,6 +69,15 @@
 #define SCRIPT_DO(...) \
     luaL_dostring(state, #__VA_ARGS__);
 
+#define SCRIPT_TYPE(type, name) \
+    namespace script { inline void push(lua_State * state, const type & value) \
+        { \
+            void* tolua_obj = Mtolua_new((type)(value)); \
+            tolua_pushusertype(state, tolua_obj, name); \
+            tolua_register_gc(state, lua_gettop(state)); \
+        } \
+    }
+
 namespace gengine
 {
 namespace script
@@ -80,12 +87,6 @@ typedef lua_State *
     State;
 
 void executeText(const char * text);
-
-template<class T>
-void get(lua_State * state, T & result, const int position = -1)
-{
-    Binder<T>::get(state, result, position);
-}
 
 inline void get(lua_State * state, float & result, const int position = -1)
 {
@@ -109,21 +110,15 @@ inline void get(lua_State * state, uint & result, const int position, const uint
     }
 }
 
-template<class T>
-void push(lua_State * state, const T & value)
-{
-    Binder<T>::push(state, value);
-}
-
 inline void push(lua_State * state, const float value)
 {
     lua_pushnumber(state, value);
 }
 
 template<class T>
-void update(lua_State * state, const T & value)
+T *get(lua_State * state, const int position = -1)
 {
-    Binder<T>::update(state, value);
+    return (T*)tolua_tousertype(state, position, 0);
 }
 
 }
