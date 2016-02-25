@@ -9,10 +9,8 @@
 #include "string.h"
 #include "entity.h"
 #include "entity_entity.h"
-#include "entity_component_sprite.h"
 #include "entity_component_camera.h"
 #include "entity_component_mouseable.h"
-#include "entity_component_animated_sprite.h"
 #include "entity_component_physic.h"
 #include "entity_component_navigation_agent.h"
 #include "entity_component_particle_system.h"
@@ -149,11 +147,9 @@ SCRIPT_CLASS_REGISTERER(System)
 
     lua_setfield(state, -2, "entity");
 
-    registerComponent<ComponentSprite>(state, "ComponentSprite");
     registerComponent<ComponentGeneric<Urho3D::StaticSprite2D>>(state, "ComponentStaticSprite2D");
     registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
-    registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");
     registerComponent<ComponentPhysic>(state, "ComponentPhysic");
     registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
