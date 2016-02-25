@@ -26,11 +26,6 @@
 #include <Urho3D/Resource/XMLFile.h>
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/SceneEvents.h>
-#include <Urho3D/UI/Cursor.h>
-#include <Urho3D/UI/Sprite.h>
-#include <Urho3D/UI/UI.h>
-#include <Urho3D/Urho2D/Sprite2D.h>
-#include <Urho3D/Urho2D/StaticSprite2D.h>
 
 namespace gengine
 {

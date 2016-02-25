@@ -20,6 +20,9 @@
 #include "entity_component_spriter.h"
 #include "entity_component_text.h"
 #include "entity_component_spine.h"
+#include "entity_component_generic.h"
+#include <Urho3D/Graphics/Camera.h>
+#include <Urho3D/Urho2D/StaticSprite2D.h>
 
 namespace gengine
 {
@@ -147,6 +150,7 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_setfield(state, -2, "entity");
 
     registerComponent<ComponentSprite>(state, "ComponentSprite");
+    registerComponent<ComponentGeneric<Urho3D::StaticSprite2D>>(state, "ComponentStaticSprite2D");
     registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentAnimatedSprite>(state, "ComponentAnimatedSprite");

@@ -53,7 +53,7 @@ private:
     inline void readEntityTransform(script::State state, Entity & entity, const int position);
 
     template<typename COMPONENT>
-    static void registerComponent(lua_State * state, const char * name)
+    static void registerComponent(lua_State * state, const char *name)
     {
         lua_newtable(state);
 
