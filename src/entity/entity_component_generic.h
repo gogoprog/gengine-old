@@ -24,7 +24,7 @@ public:
 
     ENTITY_COMPONENT_DECLARE(ComponentGeneric);
 
-private:
+protected:
     Urho3D::SharedPtr<C>
         urhoComponent;
 
@@ -99,6 +99,7 @@ SCRIPT_CLASS_REGISTERER(ComponentGeneric<C>)
 template<class C>
 ENTITY_COMPONENT_SETTERS(ComponentGeneric<C>)
 {
+    geDebugLog(C::GetTypeNameStatic().CString());
     tolua_pushusertype(state, (void*)self.urhoComponent, C::GetTypeNameStatic().CString());
     lua_pushvalue(state, 3);
     lua_setfield(state, -2, key);
