@@ -1,7 +1,6 @@
 #include "kernel.h"
 
 #include "script.h"
-#include "vector2.h"
 #include "vector4.h"
 
 #define PI 3.14159265358979323846264338327950288419716939937510f

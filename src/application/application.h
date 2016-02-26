@@ -2,7 +2,7 @@
 
 #include "primitives.h"
 #include "script.h"
-#include "vector2.h"
+#include "maths.h"
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Scene/Scene.h>
 

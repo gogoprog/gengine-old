@@ -2,7 +2,7 @@
 
 #include "script.h"
 #include "primitives.h"
-#include "vector2.h"
+#include "maths.h"
 #include "entity_macros.h"
 #include "entity_component.h"
 

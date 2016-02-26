@@ -4,7 +4,7 @@
 #include "script.h"
 #include "array.h"
 #include "pointer.h"
-#include "vector2.h"
+#include "maths.h"
 #include "map.h"
 #include "graphics_spriter.h"
 #include <string>

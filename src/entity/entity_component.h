@@ -2,7 +2,7 @@
 
 #include "primitives.h"
 #include "array.h"
-#include "vector2.h"
+#include "maths.h"
 #include "script.h"
 #include "debug.h"
 #include "pointer.h"

@@ -1,7 +1,6 @@
 #include "kernel.h"
 
 #include "script.h"
-#include "vector2.h"
 #include "vector4.h"
 #include "maths.h"
 

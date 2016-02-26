@@ -5,7 +5,7 @@
 #include "script.h"
 #include "script_system.h"
 #include "debug.h"
-#include "vector2.h"
+#include "maths.h"
 #include "string.h"
 #include "entity.h"
 #include "entity_entity.h"
@@ -56,6 +56,7 @@ void System::update(const float dt)
         if(entity.isInserted())
         {
             entity.update(dt);
+            writeEntityTransform(state, entity, -1);
         }
 
         lua_pop(state, 1);
@@ -174,13 +175,13 @@ SCRIPT_CLASS_FUNCTION(System, create)
     lua_newtable(state);
 
     SCRIPT_DO(
-        return Vector2(0, 0)
+        return Vector3(0, 0, 0)
         );
 
     lua_setfield(state, -2, "position");
 
     SCRIPT_DO(
-        return Vector2(1, 1)
+        return Vector3(1, 1, 1)
         );
 
     lua_setfield(state, -2, "scale");

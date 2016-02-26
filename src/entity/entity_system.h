@@ -2,7 +2,7 @@
 
 #include "primitives.h"
 #include "array.h"
-#include "vector2.h"
+#include "maths.h"
 #include "script.h"
 #include "debug.h"
 
@@ -51,6 +51,7 @@ public:
 private:
 
     inline void readEntityTransform(script::State state, Entity & entity, const int position);
+    inline void writeEntityTransform(script::State state, const Entity & entity, const int position);
 
     template<typename COMPONENT>
     static void registerComponent(lua_State * state, const char *name)
@@ -130,6 +131,13 @@ inline void System::readEntityTransform(script::State state, Entity & entity, co
         );
 
     lua_pop(state, 3);
+}
+
+inline void System::writeEntityTransform(script::State state, const Entity & entity, const int position)
+{
+    script::push(state, entity.node->GetPosition());
+    lua_setfield(state, position - 1, "position");
+    geDebugLog(entity.node->GetPosition().y_)
 }
 
 }
