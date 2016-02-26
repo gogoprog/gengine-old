@@ -68,18 +68,21 @@ SCRIPT_FUNCTION(addComponent)
     component_instance->setEntity(entity_instance);
     component_instance->init();
 
-    lua_pushvalue(state, 3);
-    lua_pushnil(state);
-
-    while(lua_next(state, -2))
+    if(lua_istable(state, 3))
     {
-        auto key = lua_tostring(state, -2);
-        lua_pushvalue(state, -1);
-        lua_setfield(state, 2, key);
+        lua_pushvalue(state, 3);
+        lua_pushnil(state);
+
+        while(lua_next(state, -2))
+        {
+            auto key = lua_tostring(state, -2);
+            lua_pushvalue(state, -1);
+            lua_setfield(state, 2, key);
+            lua_pop(state, 1);
+        }
+
         lua_pop(state, 1);
     }
-
-    lua_pop(state, 1);
 
     entity_instance.addComponent(*component_instance);
 

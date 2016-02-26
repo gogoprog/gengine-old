@@ -3,7 +3,6 @@
 #include "script.h"
 #include "application.h"
 #include "graphics_spriter_manager.h"
-#include "graphics_sprite_manager.h"
 #include "graphics_spine_manager.h"
 #include "vector4.h"
 #include "core.h"

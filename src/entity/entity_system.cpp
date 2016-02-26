@@ -19,6 +19,10 @@
 #include "entity_component_generic.h"
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Urho2D/StaticSprite2D.h>
+#include <Urho3D/Urho2D/PhysicsWorld2D.h>
+#include <Urho3D/Urho2D/CollisionBox2D.h>
+#include <Urho3D/Urho2D/CollisionCircle2D.h>
+#include <Urho3D/Urho2D/RigidBody2D.h>
 
 namespace gengine
 {
@@ -146,6 +150,11 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_setfield(state, -2, "entity");
 
     registerComponent<ComponentGeneric<Urho3D::StaticSprite2D>>(state, "ComponentStaticSprite2D");
+    registerComponent<ComponentGeneric<Urho3D::PhysicsWorld2D>>(state, "ComponentPhysicsWorld2D");
+    registerComponent<ComponentGeneric<Urho3D::RigidBody2D>>(state, "ComponentRigidBody2D");
+    registerComponent<ComponentGeneric<Urho3D::CollisionBox2D>>(state, "ComponentCollisionBox2D");
+    registerComponent<ComponentGeneric<Urho3D::CollisionCircle2D>>(state, "ComponentCollisionCircle2D");
+
     registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
