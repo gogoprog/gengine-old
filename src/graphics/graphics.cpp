@@ -18,15 +18,6 @@ SCRIPT_REGISTERER()
 {
     lua_newtable(state);
 
-    SpriterManager::luaRegister(state);
-    lua_setfield(state, -2, "spriter");
-
-    SpineManager::luaRegister(state);
-    lua_setfield(state, -2, "spine");
-
-    SpriteManager::luaRegister(state);
-    lua_setfield(state, -2, "sprite");
-
     SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
         setClearColor,
         {

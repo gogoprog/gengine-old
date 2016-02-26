@@ -11,8 +11,6 @@
 #include "entity_entity.h"
 #include "entity_component_camera.h"
 #include "entity_component_mouseable.h"
-#include "entity_component_physic.h"
-#include "entity_component_navigation_agent.h"
 #include "entity_component_particle_system.h"
 #include "entity_component_quad.h"
 #include "entity_component_spriter.h"
@@ -150,8 +148,6 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentGeneric<Urho3D::StaticSprite2D>>(state, "ComponentStaticSprite2D");
     registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
-    registerComponent<ComponentPhysic>(state, "ComponentPhysic");
-    registerComponent<ComponentNavigationAgent>(state, "ComponentNavigationAgent");
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
     registerComponent<ComponentQuad>(state, "ComponentQuad");
     registerComponent<ComponentSpriter>(state, "ComponentSpriter");

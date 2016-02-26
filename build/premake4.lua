@@ -37,14 +37,11 @@ solution "gengine"
             "../src/script",
             "../src/entity",
             "../src/gui",
-            "../src/physics",
-            "../src/navigation",
             "../src/tiled"
             }
 
         links {
-            "Urho3D",
-            "Box2D"
+            "Urho3D"
             }
 
         flags {
@@ -66,15 +63,12 @@ solution "gengine"
 
         includedirs {
             "../deps/common/include",
-            "../deps/common/tilemover2d/src/",
             "../deps/common/jsonxx/",
             "../deps/common/spine/include/",
             "../deps/common/include/Urho3D/ThirdParty/"
             }
 
         files {
-            "../deps/common/tilemover2d/src/micropather.*",
-            "../deps/common/tilemover2d/src/tilemover2d.*",
             "../deps/common/jsonxx/*.*",
             "../deps/common/spine/src/spine/*.*"
             }

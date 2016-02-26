@@ -10,8 +10,6 @@
 #include "audio.h"
 #include "core.h"
 #include "kernel.h"
-#include "physics.h"
-#include "navigation.h"
 #include "tiled.h"
 #include <Urho3D/LuaScript/LuaScript.h>
 
