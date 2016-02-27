@@ -17,12 +17,12 @@
 #include "entity_component_text.h"
 #include "entity_component_spine.h"
 #include "entity_component_generic.h"
+#include "entity_component_rigid_body_2d.h"
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Urho2D/StaticSprite2D.h>
 #include <Urho3D/Urho2D/PhysicsWorld2D.h>
 #include <Urho3D/Urho2D/CollisionBox2D.h>
 #include <Urho3D/Urho2D/CollisionCircle2D.h>
-#include <Urho3D/Urho2D/RigidBody2D.h>
 
 namespace gengine
 {
@@ -47,16 +47,23 @@ void System::update(const float dt)
     for(auto pentity : entitiesToUpdate)
     {
         auto & entity = *pentity;
-
+        bool it_drives_transform = entity.drivesTransform();
         int ref = entity.ref;
         lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
 
-        readEntityTransform(state, entity, -1);
+        if(!it_drives_transform)
+        {
+            readEntityTransform(state, entity, -1);
+        }
 
         if(entity.isInserted())
         {
             entity.update(dt);
-            writeEntityTransform(state, entity, -1);
+
+            if(it_drives_transform)
+            {
+                writeEntityTransform(state, entity, -1);
+            }
         }
 
         lua_pop(state, 1);
@@ -152,11 +159,12 @@ SCRIPT_CLASS_REGISTERER(System)
 
     registerComponent<ComponentGeneric<Urho3D::StaticSprite2D>>(state, "ComponentStaticSprite2D");
     registerComponent<ComponentGeneric<Urho3D::PhysicsWorld2D>>(state, "ComponentPhysicsWorld2D");
-    registerComponent<ComponentGeneric<Urho3D::RigidBody2D>>(state, "ComponentRigidBody2D");
     registerComponent<ComponentGeneric<Urho3D::CollisionBox2D>>(state, "ComponentCollisionBox2D");
     registerComponent<ComponentGeneric<Urho3D::CollisionCircle2D>>(state, "ComponentCollisionCircle2D");
 
     registerComponent<ComponentCamera>(state, "ComponentCamera");
+    registerComponent<ComponentRigidBody2D>(state, "ComponentRigidBody2D");
+
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
     registerComponent<ComponentQuad>(state, "ComponentQuad");

@@ -102,7 +102,7 @@ SCRIPT_REGISTERER()
             auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
             lua_pop(state, 1);
 
-            //script::get(state, entity_instance.transform, 1);
+            System::getInstance().readEntityTransform(state, entity_instance, 1);
 
             entity_instance.insert();
 

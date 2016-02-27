@@ -103,6 +103,8 @@ ENTITY_COMPONENT_SETTERS(ComponentGeneric<C>)
     lua_pushvalue(state, 3);
     lua_setfield(state, -2, key);
     lua_pop(state, 1);
+
+    self.onPropertySet(key);
 }
 ENTITY_COMPONENT_END()
 

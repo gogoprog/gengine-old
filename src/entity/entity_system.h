@@ -48,10 +48,10 @@ public:
     static SCRIPT_FUNCTION(getCount);
     static SCRIPT_FUNCTION(destroy);
 
-private:
-
     inline void readEntityTransform(script::State state, Entity & entity, const int position);
     inline void writeEntityTransform(script::State state, const Entity & entity, const int position);
+
+private:
 
     template<typename COMPONENT>
     static void registerComponent(lua_State * state, const char *name)
@@ -121,8 +121,8 @@ namespace entity
 inline void System::readEntityTransform(script::State state, Entity & entity, const int position)
 {
     lua_getfield(state, position, "position");
-    lua_getfield(state, position - 1, "scale");
-    lua_getfield(state, position - 2, "rotation");
+    lua_getfield(state, position < 0 ? position - 1 : position, "scale");
+    lua_getfield(state, position < 0 ? position - 2 : position, "rotation");
 
     entity.node->SetTransform2D(
         *script::get<math::Vector2>(state, -3),
@@ -137,7 +137,6 @@ inline void System::writeEntityTransform(script::State state, const Entity & ent
 {
     script::push(state, entity.node->GetPosition());
     lua_setfield(state, position - 1, "position");
-    geDebugLog(entity.node->GetPosition().y_)
 }
 
 }

@@ -17,6 +17,19 @@ Entity::Entity()
 {
 }
 
+bool Entity::drivesTransform() const
+{
+    for(auto component : components)
+    {
+        if(component->drivesTransform())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Entity::addComponent(Component & component)
 {
     components.add(& component);

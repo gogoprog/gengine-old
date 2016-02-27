@@ -26,6 +26,7 @@ public:
 
     inline int getRef() const { return ref; }
     inline bool isInserted() const { return itIsInserted; }
+    bool drivesTransform() const;
 
     void addComponent(Component & component);
 
