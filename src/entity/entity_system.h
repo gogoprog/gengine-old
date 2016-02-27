@@ -77,28 +77,11 @@ private:
 
         lua_pushstring(state, "__index");
 
-        lua_pushcfunction(state, &System::componentIndex<COMPONENT>);
+        lua_pushcfunction(state, &COMPONENT::_index);
 
         lua_rawset(state, -3);
 
         lua_setglobal(state, name);
-    }
-
-    template<typename COMPONENT>
-    static int componentIndex(lua_State * state)
-    {
-        if(COMPONENT::getterMap.contains(lua_tostring(state, 2)))
-        {
-            return COMPONENT::_index(state);
-        }
-        else
-        {
-            lua_getmetatable(state, 1);
-            lua_pushvalue(state, 2);
-            lua_rawget(state, -2);
-
-            return 1;
-        }
     }
 
     Array<Entity*>

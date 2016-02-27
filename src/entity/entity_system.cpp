@@ -54,7 +54,7 @@ void System::update(const float dt)
 
         if(!it_drives_transform)
         {
-            //readEntityTransform(state, entity, -1);
+            readEntityTransform(state, entity, -1);
         }
 
         if(entity.isInserted())
@@ -63,7 +63,7 @@ void System::update(const float dt)
 
             if(it_drives_transform)
             {
-                //writeEntityTransform(state, entity, -1);
+                writeEntityTransform(state, entity, -1);
             }
         }
 

@@ -21,6 +21,10 @@ public:
     virtual void insert() override;
     virtual void update(const float dt) override;
     virtual void remove() override;
+    virtual void push(script::State state)
+    {
+        tolua_pushusertype(state, (void*)urhoComponent, C::GetTypeNameStatic().CString());
+    }
 
     ENTITY_COMPONENT_DECLARE(ComponentGeneric);
 
@@ -73,7 +77,7 @@ SCRIPT_CLASS_FUNCTION(ComponentGeneric<C>, index)
 {
     SCRIPT_GET_SELF(ComponentGeneric<C>);
     const char * name = lua_tostring(state, 2);
-    getterMap[name](state, self);
+    geDebugLog(name);
     return 1;
 }
 

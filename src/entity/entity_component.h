@@ -32,6 +32,7 @@ public:
     virtual void update(const float dt);
     virtual void remove();
     virtual void onPropertySet(const char *name);
+    virtual void push(script::State state);
 
     void setEntity(Entity & _entity) { entity = & _entity; }
 

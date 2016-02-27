@@ -36,5 +36,9 @@ void Component::onPropertySet(const char * /*name*/)
 {
 }
 
+void Component::push(script::State /*state*/)
+{
+}
+
 }
 }

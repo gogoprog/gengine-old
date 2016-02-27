@@ -34,13 +34,6 @@ SCRIPT_FUNCTION(addComponent)
     auto component_instance = reinterpret_cast<Component*>(lua_touserdata(state, -1));
     lua_pop(state, 1);
 
-    if(name)
-    {
-        lua_pushstring(state, name);
-        lua_pushvalue(state, 2);
-        lua_rawset(state, 1);
-    }
-
     lua_pushstring(state, "entity");
     lua_pushvalue(state, 1);
     lua_rawset(state, 2);
@@ -67,6 +60,22 @@ SCRIPT_FUNCTION(addComponent)
 
     component_instance->setEntity(entity_instance);
     component_instance->init();
+
+    if(name)
+    {
+        lua_pushstring(state, name);
+
+        if(component_instance)
+        {
+            component_instance->push(state);
+        }
+        else
+        {
+            lua_pushvalue(state, 2);
+        }
+
+        lua_rawset(state, 1);
+    }
 
     if(lua_istable(state, 3))
     {
