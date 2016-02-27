@@ -126,6 +126,7 @@ void Application::Start()
 
     Urho3D::SharedPtr<Urho3D::Scene> scene_(new Urho3D::Scene(context_));
     scene_->CreateComponent<Urho3D::Octree>();
+
     scenes.add(scene_);
 
     auto cameraNode_ = scene_->CreateChild("Camera");

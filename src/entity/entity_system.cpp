@@ -1,5 +1,6 @@
 #include "entity_system.h"
 
+#include "application.h"
 #include "primitives.h"
 #include "array.h"
 #include "script.h"
@@ -20,9 +21,9 @@
 #include "entity_component_rigid_body_2d.h"
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Urho2D/StaticSprite2D.h>
-#include <Urho3D/Urho2D/PhysicsWorld2D.h>
 #include <Urho3D/Urho2D/CollisionBox2D.h>
 #include <Urho3D/Urho2D/CollisionCircle2D.h>
+#include <Urho3D/Urho2D/PhysicsWorld2D.h>
 
 namespace gengine
 {
@@ -53,7 +54,7 @@ void System::update(const float dt)
 
         if(!it_drives_transform)
         {
-            readEntityTransform(state, entity, -1);
+            //readEntityTransform(state, entity, -1);
         }
 
         if(entity.isInserted())
@@ -62,7 +63,7 @@ void System::update(const float dt)
 
             if(it_drives_transform)
             {
-                writeEntityTransform(state, entity, -1);
+                //writeEntityTransform(state, entity, -1);
             }
         }
 
@@ -98,6 +99,7 @@ SCRIPT_CLASS_REGISTERER(System)
 {
     lua_newtable(state);
 
+    SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, getScene);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, getCount);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, destroy);
@@ -158,9 +160,9 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_setfield(state, -2, "entity");
 
     registerComponent<ComponentGeneric<Urho3D::StaticSprite2D>>(state, "ComponentStaticSprite2D");
-    registerComponent<ComponentGeneric<Urho3D::PhysicsWorld2D>>(state, "ComponentPhysicsWorld2D");
     registerComponent<ComponentGeneric<Urho3D::CollisionBox2D>>(state, "ComponentCollisionBox2D");
     registerComponent<ComponentGeneric<Urho3D::CollisionCircle2D>>(state, "ComponentCollisionCircle2D");
+    registerComponent<ComponentGeneric<Urho3D::PhysicsWorld2D>>(state, "ComponentPhysicsWorld2D");
 
     registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentRigidBody2D>(state, "ComponentRigidBody2D");
@@ -176,6 +178,37 @@ SCRIPT_CLASS_REGISTERER(System)
 SCRIPT_CLASS_UNREGISTERER(System)
 {
     // :todo: remove entities/components
+}
+
+SCRIPT_CLASS_FUNCTION(System, getCount)
+{
+    lua_pushnumber(state, getInstance().entities.getSize());
+
+    return 1;
+}
+
+SCRIPT_CLASS_FUNCTION(System, getScene)
+{
+    lua_newtable(state);
+
+    lua_newtable(state);
+    lua_setfield(state, -2, "components");
+
+    lua_rawgeti(state, LUA_REGISTRYINDEX, getMetaTableRef());
+    lua_setmetatable(state, -2);
+
+    int ref = luaL_ref(state, LUA_REGISTRYINDEX);
+
+    Entity *entity = new Entity();
+    entity->node = & application::getScene(0);
+    entity->ref = ref;
+
+    lua_rawgeti(state, LUA_REGISTRYINDEX, ref);
+
+    lua_pushlightuserdata(state, entity);
+    lua_setfield(state, -2, "_e");
+
+    return 1;
 }
 
 SCRIPT_CLASS_FUNCTION(System, create)
@@ -214,13 +247,6 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     lua_pushlightuserdata(state, entity);
     lua_setfield(state, -2, "_e");
-
-    return 1;
-}
-
-SCRIPT_CLASS_FUNCTION(System, getCount)
-{
-    lua_pushnumber(state, getInstance().entities.getSize());
 
     return 1;
 }

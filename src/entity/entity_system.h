@@ -44,8 +44,9 @@ public:
         return 1;
     }
 
-    static SCRIPT_FUNCTION(create);
+    static SCRIPT_FUNCTION(getScene);
     static SCRIPT_FUNCTION(getCount);
+    static SCRIPT_FUNCTION(create);
     static SCRIPT_FUNCTION(destroy);
 
     inline void readEntityTransform(script::State state, Entity & entity, const int position);
