@@ -99,6 +99,16 @@ SCRIPT_CLASS_REGISTERER(System)
 {
     lua_newtable(state);
 
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        getFromNode,
+        {
+            auto node = script::get<Urho3D::Node>(state, 1);
+            auto entity = System::getInstance().nodeToEntityMap[node];
+            lua_rawgeti(state, LUA_REGISTRYINDEX, entity->ref);
+            return 1;
+        }
+    );
+
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, getScene);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, getCount);
     SCRIPT_TABLE_PUSH_CLASS_FUNCTION(System, create);
@@ -240,6 +250,8 @@ SCRIPT_CLASS_FUNCTION(System, create)
     Entity *entity = new Entity();
     entity->init();
     entity->ref = ref;
+
+    getInstance().nodeToEntityMap[entity->node] = entity;
 
     getInstance().entities.add(entity);
 

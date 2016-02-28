@@ -2,9 +2,11 @@
 
 #include "primitives.h"
 #include "array.h"
+#include "map.h"
 #include "maths.h"
 #include "script.h"
 #include "debug.h"
+#include <Urho3D/Scene/Node.h>
 
 namespace gengine
 {
@@ -88,6 +90,8 @@ private:
         entities,
         entitiesToRemove,
         entitiesToUpdate;
+    Map<Urho3D::Node*, Entity*>
+        nodeToEntityMap;
     float
         currentDt;
 };
