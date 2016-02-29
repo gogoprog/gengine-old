@@ -2,3 +2,4 @@
 
 wget http://dl.bintray.com/gogoprog/gengine/linux-64.tar.gz
 tar xvfz linux-64.tar.gz
+wget https://bintray.com/artifact/download/gogoprog/gengine/linux64/libUrho3D.a
