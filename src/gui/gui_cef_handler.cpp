@@ -7,6 +7,7 @@
 #include "core.h"
 #include "script_system.h"
 #include <Urho3D/UI/Sprite.h>
+#include <Urho3D/Graphics/Graphics.h>
 
 #ifdef _WINDOWS
     #include <direct.h>
@@ -29,14 +30,16 @@ void Handler::init()
     uint height = application::getHeight();
 
     texture = new Urho3D::Texture2D(&core::getContext());
-    texture->SetSize(width, height, Urho3D::TEXTURE_DYNAMIC);
+    texture->SetMipsToSkip(Urho3D::QUALITY_LOW, 0);
+    texture->SetNumLevels(1);
+    texture->SetSize(width, height, Urho3D::Graphics::GetRGBAFormat());
 
     auto sprite = new Urho3D::Sprite(&core::getContext());
-    sprite->SetTexture(core::getResourceCache().GetResource<Urho3D::Texture2D>("logo.png"));
-    sprite->SetSize(Urho3D::IntVector2(512, 256));
-    sprite->SetHotSpot(Urho3D::IntVector2(64, 64));
+    sprite->SetTexture(texture);
+    sprite->SetSize(Urho3D::IntVector2(width, height));
+    sprite->SetHotSpot(Urho3D::IntVector2(0, 0));
     sprite->SetColor(Urho3D::Color(1.0f, 1.0f, 1.0f, 1.0f));
-    sprite->SetBlendMode(Urho3D::BLEND_ADD);
+    sprite->SetBlendMode(Urho3D::BLEND_ALPHA);
     core::getUI().GetRoot()->AddChild(sprite);
 }
 
@@ -82,19 +85,7 @@ bool Handler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 
 void Handler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
 {
-    /*glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboId);
-
-    void * memory = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);
-    memcpy(memory, buffer, width * height * 4);
-    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
-
-    glBindTexture(GL_TEXTURE_2D, texture.getId());
-
-
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, 0);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);*/
+    texture->SetData(0, 0, 0, width, height, buffer);
 }
 
 bool Handler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request)

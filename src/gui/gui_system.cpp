@@ -105,35 +105,35 @@ void System::update(const float dt)
     {
         timeSinceLastUpdate += dt;
 
-        /*{
+        {
             CefMouseEvent mouse_event;
-            const input::Mouse & mouse = input::System::getInstance().getMouse(0);
+            const input::System & input = input::System::getInstance();
             int wheelY;
 
-            mouse_event.x = mouse.getX();
-            mouse_event.y = mouse.getY();
+            mouse_event.x = input.getMousePosition().x_;
+            mouse_event.y = input.getMousePosition().y_;
 
-            if(mouse.isJustDown(1))
+            if(input.isMouseButtonJustDown(1))
             {
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
             }
 
-            if(mouse.isJustUp(1))
+            if(input.isMouseButtonUp(1))
             {
                 browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
             }
 
-            wheelY = mouse.getWheelY();
+            /*wheelY = mouse.getWheelY();
 
             if(wheelY != 0)
             {
                 browser->GetHost()->SendMouseWheelEvent(mouse_event, 0, wheelY * 32);
-            }
+            }*/
 
             browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
         }
 
-        CefDoMessageLoopWork();*/
+        CefDoMessageLoopWork();
 
         handler->update();
     }
