@@ -26,6 +26,20 @@ Urho3D::SharedPtr<Urho3D::Context>
     context;
 Urho3D::SharedPtr<application::Application>
     urhoApplication;
+int
+    _argc;
+char
+    ** _argv;
+
+int  getArgc()
+{
+    return _argc;
+}
+
+char **getArgv()
+{
+    return _argv;
+}
 
 bool mustQuit()
 {
@@ -36,7 +50,10 @@ bool init(int argc, char *argv[])
 {
     geDebugLog("core::init()");
 
-    gui::System::getInstance().preinit(argc,argv);
+    _argc = argc;
+    _argv = argv;
+
+    gui::System::getInstance().preinit(argc, argv);
 
     script::System & script_system = script::System::getInstance();
 
@@ -57,7 +74,6 @@ bool init(int argc, char *argv[])
 
     input::System::getInstance().init();
     entity::System::getInstance().init();
-    gui::System::getInstance().init(argc,argv);
     audio::System::getInstance().init();
 
     return true;
@@ -135,6 +151,11 @@ Urho3D::FileSystem & getFileSystem()
 Urho3D::Input & getInput()
 {
     return *urhoApplication->GetSubsystem<Urho3D::Input>();
+}
+
+Urho3D::UI & getUI()
+{
+    return *urhoApplication->GetSubsystem<Urho3D::UI>();
 }
 
 }

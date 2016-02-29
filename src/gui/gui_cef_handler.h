@@ -9,6 +9,7 @@
 #include "include/cef_request_handler.h"
 #include "include/cef_load_handler.h"
 #include "core_sdl.h"
+#include <Urho3D/Graphics/Texture2D.h>
 
 namespace gengine
 {
@@ -18,12 +19,11 @@ namespace gui
 class Handler : public CefRenderHandler, public CefClient, public CefRequestHandler, public CefLoadHandler
 {
 public:
-    Handler() = default;
+    Handler();
 
     void init();
     void finalize();
     void update();
-    void render();
 
     void lock();
     void unlock();
@@ -46,10 +46,8 @@ public:
 private:
     uint
         pboId;
-    /*graphics::Texture
+    Urho3D::SharedPtr<Urho3D::Texture2D>
         texture;
-    graphics::Uniform
-        samplerUniform;*/
     std::string
         textToExecute;
 

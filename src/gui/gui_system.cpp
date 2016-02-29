@@ -140,15 +140,6 @@ void System::update(const float dt)
     #endif
 }
 
-void System::render()
-{
-    #ifndef EMSCRIPTEN
-    {
-        handler->render();
-    }
-    #endif
-}
-
 void System::loadFile(const char *file_path)
 {
     geDebugLog("gui::System::loadFile \"" << file_path << "\"");

@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "array.h"
 #include "script_system.h"
+#include "gui_system.h"
 #include <string>
 
 #include <Urho3D/Core/CoreEvents.h>
@@ -122,6 +123,8 @@ void Application::Setup()
 
 void Application::Start()
 {
+    gui::System::getInstance().init(core::getArgc(), core::getArgv());
+
     SubscribeToEvent(Urho3D::E_UPDATE, URHO3D_HANDLER(Application, Update));
 
     Urho3D::SharedPtr<Urho3D::Scene> scene_(new Urho3D::Scene(context_));

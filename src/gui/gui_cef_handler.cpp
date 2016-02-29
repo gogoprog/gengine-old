@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "core.h"
 #include "script_system.h"
+#include <Urho3D/UI/Sprite.h>
 
 #ifdef _WINDOWS
     #include <direct.h>
@@ -18,40 +19,25 @@ namespace gengine
 namespace gui
 {
 
+Handler::Handler()
+{
+}
+
 void Handler::init()
 {
-    /*uint width = application::getWidth();
+    uint width = application::getWidth();
     uint height = application::getHeight();
 
-    glGenBuffers(1, &pboId);
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboId);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER, width * height * 4, nullptr, GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+    texture = new Urho3D::Texture2D(&core::getContext());
+    texture->SetSize(width, height, Urho3D::TEXTURE_DYNAMIC);
 
-    texture.init();
-
-    glBindTexture(GL_TEXTURE_2D, texture.getId());
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, 0);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    vertexShader.init(GL_VERTEX_SHADER);
-    vertexShader.compile(vertex_shader_source, "gui");
-
-    fragmentShader.init(GL_FRAGMENT_SHADER);
-    fragmentShader.compile(fragment_shader_source, "gui");
-
-    program.init();
-    program.attachShader(vertexShader);
-    program.attachShader(fragmentShader);
-    program.link();
-
-    samplerUniform.init(program, "tex0");
-
-    GL_CHECK();*/
+    auto sprite = new Urho3D::Sprite(&core::getContext());
+    sprite->SetTexture(core::getResourceCache().GetResource<Urho3D::Texture2D>("logo.png"));
+    sprite->SetSize(Urho3D::IntVector2(512, 256));
+    sprite->SetHotSpot(Urho3D::IntVector2(64, 64));
+    sprite->SetColor(Urho3D::Color(1.0f, 1.0f, 1.0f, 1.0f));
+    sprite->SetBlendMode(Urho3D::BLEND_ADD);
+    core::getUI().GetRoot()->AddChild(sprite);
 }
 
 void Handler::finalize()
@@ -67,21 +53,6 @@ void Handler::update()
         textToExecute.clear();
         unlock();
     }
-}
-
-void Handler::render()
-{
-    /*graphics::System & system = graphics::System::getInstance();
-
-    program.use();
-
-    system.getVertexBufferQuad().apply();
-
-    samplerUniform.apply(texture);
-
-    system.getIndexBufferQuad().draw(6);
-
-    glUseProgram(0);*/
 }
 
 void Handler::lock()
