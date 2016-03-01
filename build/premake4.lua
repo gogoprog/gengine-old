@@ -66,7 +66,8 @@ solution "gengine"
         includedirs {
             "../deps/common/include",
             "../deps/common/jsonxx/",
-            "../deps/common/include/Urho3D/ThirdParty/"
+            "../deps/common/include/Urho3D/ThirdParty/",
+            "../deps/common/include/Urho3D/ThirdParty/Lua"
             }
 
         files {
