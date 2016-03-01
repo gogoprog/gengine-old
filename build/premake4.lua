@@ -30,8 +30,6 @@ solution "gengine"
             "../src/math",
             "../src/application",
             "../src/graphics",
-            "../src/graphics/spriter",
-            "../src/graphics/spine",
             "../src/audio",
             "../src/input",
             "../src/script",
@@ -65,8 +63,8 @@ solution "gengine"
 
         includedirs {
             "../deps/common/include",
-            "../deps/common/jsonxx/",
-            "../deps/common/include/Urho3D/ThirdParty/",
+            "../deps/common/jsonxx",
+            "../deps/common/include/Urho3D/ThirdParty",
             "../deps/common/include/Urho3D/ThirdParty/Lua"
             }
 
