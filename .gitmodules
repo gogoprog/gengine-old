@@ -1,3 +1,0 @@
-[submodule "deps/common/tilemover2d"]
-	path = deps/common/tilemover2d
-	url = https://github.com/gogoprog/tilemover2d.git
