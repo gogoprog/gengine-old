@@ -14,13 +14,13 @@
 #include "entity_component_mouseable.h"
 #include "entity_component_particle_system.h"
 #include "entity_component_quad.h"
-#include "entity_component_spriter.h"
 #include "entity_component_text.h"
 #include "entity_component_spine.h"
 #include "entity_component_generic.h"
 #include "entity_component_rigid_body_2d.h"
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Urho2D/StaticSprite2D.h>
+#include <Urho3D/Urho2D/AnimatedSprite2D.h>
 #include <Urho3D/Urho2D/CollisionBox2D.h>
 #include <Urho3D/Urho2D/CollisionCircle2D.h>
 #include <Urho3D/Urho2D/PhysicsWorld2D.h>
@@ -170,6 +170,7 @@ SCRIPT_CLASS_REGISTERER(System)
     lua_setfield(state, -2, "entity");
 
     registerComponent<ComponentGeneric<Urho3D::StaticSprite2D>>(state, "ComponentStaticSprite2D");
+    registerComponent<ComponentGeneric<Urho3D::AnimatedSprite2D>>(state, "ComponentAnimatedSprite2D");
     registerComponent<ComponentGeneric<Urho3D::CollisionBox2D>>(state, "ComponentCollisionBox2D");
     registerComponent<ComponentGeneric<Urho3D::CollisionCircle2D>>(state, "ComponentCollisionCircle2D");
     registerComponent<ComponentGeneric<Urho3D::PhysicsWorld2D>>(state, "ComponentPhysicsWorld2D");
@@ -180,7 +181,6 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
     registerComponent<ComponentQuad>(state, "ComponentQuad");
-    registerComponent<ComponentSpriter>(state, "ComponentSpriter");
     registerComponent<ComponentText>(state, "ComponentText");
     registerComponent<ComponentSpine>(state, "ComponentSpine");
 }
