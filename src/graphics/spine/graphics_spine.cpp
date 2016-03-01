@@ -1,6 +1,6 @@
 #include <spine/spine.h>
 #include <spine/extension.h>
-
+/*
 void _spAtlasPage_createTexture(spAtlasPage *self, const char *path)
 {
     char name[256];
@@ -20,3 +20,4 @@ char *_spUtil_readFile(const char *path, int *length)
 {
     return _readFile(path, length);
 }
+*/

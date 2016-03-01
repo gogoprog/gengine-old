@@ -52,6 +52,8 @@ solution "gengine"
             "NoNativeWChar"
             }
 
+        defines { "URHO3D_SPINE" }
+
         if os.is("linux") then
             defines { "_LINUX" }
             flags { "Cxx11" }

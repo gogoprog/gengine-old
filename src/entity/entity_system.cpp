@@ -15,7 +15,6 @@
 #include "entity_component_particle_system.h"
 #include "entity_component_quad.h"
 #include "entity_component_text.h"
-#include "entity_component_spine.h"
 #include "entity_component_generic.h"
 #include "entity_component_rigid_body_2d.h"
 #include <Urho3D/Graphics/Camera.h>
@@ -182,7 +181,6 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
     registerComponent<ComponentQuad>(state, "ComponentQuad");
     registerComponent<ComponentText>(state, "ComponentText");
-    registerComponent<ComponentSpine>(state, "ComponentSpine");
 }
 
 SCRIPT_CLASS_UNREGISTERER(System)
