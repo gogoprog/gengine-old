@@ -66,13 +66,11 @@ solution "gengine"
         includedirs {
             "../deps/common/include",
             "../deps/common/jsonxx/",
-            "../deps/common/spine/include/",
             "../deps/common/include/Urho3D/ThirdParty/"
             }
 
         files {
-            "../deps/common/jsonxx/*.*",
-            "../deps/common/spine/src/spine/*.*"
+            "../deps/common/jsonxx/*.*"
             }
 
         configuration "Debug*"
