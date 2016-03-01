@@ -104,7 +104,9 @@ solution "gengine"
                     "cef",
                     "cef_dll_wrapper",
                     "pthread",
-                    "dl"
+                    "dl",
+                    "stdc++",
+                    "m"
                     }
 
             elseif os.is("windows") then
