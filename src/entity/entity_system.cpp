@@ -23,6 +23,7 @@
 #include <Urho3D/Urho2D/CollisionBox2D.h>
 #include <Urho3D/Urho2D/CollisionCircle2D.h>
 #include <Urho3D/Urho2D/PhysicsWorld2D.h>
+#include <Urho3D/Urho2D/TileMap2D.h>
 
 namespace gengine
 {
@@ -173,6 +174,7 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentGeneric<Urho3D::CollisionBox2D>>(state, "ComponentCollisionBox2D");
     registerComponent<ComponentGeneric<Urho3D::CollisionCircle2D>>(state, "ComponentCollisionCircle2D");
     registerComponent<ComponentGeneric<Urho3D::PhysicsWorld2D>>(state, "ComponentPhysicsWorld2D");
+    registerComponent<ComponentGeneric<Urho3D::TileMap2D>>(state, "ComponentTileMap2D");
 
     registerComponent<ComponentCamera>(state, "ComponentCamera");
     registerComponent<ComponentRigidBody2D>(state, "ComponentRigidBody2D");
