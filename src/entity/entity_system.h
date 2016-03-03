@@ -25,6 +25,7 @@ public:
     void update(const float dt);
 
     float getCurrentDt() const { return currentDt; }
+    Entity *getFromNode(Urho3D::Node *node) const;
 
     SCRIPT_REGISTERER();
     SCRIPT_UNREGISTERER();

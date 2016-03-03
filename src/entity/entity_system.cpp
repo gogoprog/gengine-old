@@ -95,6 +95,11 @@ void System::update(const float dt)
     }
 }
 
+Entity *System::getFromNode(Urho3D::Node *node) const
+{
+    return nodeToEntityMap[node];
+}
+
 SCRIPT_CLASS_REGISTERER(System)
 {
     lua_newtable(state);
@@ -103,7 +108,7 @@ SCRIPT_CLASS_REGISTERER(System)
         getFromNode,
         {
             auto node = script::get<Urho3D::Node>(state, 1);
-            auto entity = System::getInstance().nodeToEntityMap[node];
+            auto entity = System::getInstance().getFromNode(node);
             lua_rawgeti(state, LUA_REGISTRYINDEX, entity->ref);
             return 1;
         }
@@ -223,21 +228,36 @@ SCRIPT_CLASS_FUNCTION(System, getScene)
 
 SCRIPT_CLASS_FUNCTION(System, create)
 {
+    auto node = script::get<Urho3D::Node>(state, 1);
+
     lua_newtable(state);
 
-    SCRIPT_DO(
-        return Vector3(0, 0, 0)
-        );
+    if(node)
+    {
+        script::push(state, node->GetPosition());
+        lua_setfield(state, -2, "position");
 
-    lua_setfield(state, -2, "position");
+        script::push(state, node->GetScale());
+        lua_setfield(state, -2, "scale");
 
-    SCRIPT_DO(
-        return Vector3(1, 1, 1)
-        );
+        SCRIPT_TABLE_PUSH_NUMBER(rotation, 0);
+    }
+    else
+    {
+        SCRIPT_DO(
+            return Vector3(0, 0, 0)
+            );
 
-    lua_setfield(state, -2, "scale");
+        lua_setfield(state, -2, "position");
 
-    SCRIPT_TABLE_PUSH_NUMBER(rotation, 0);
+        SCRIPT_DO(
+            return Vector3(1, 1, 1)
+            );
+
+        lua_setfield(state, -2, "scale");
+
+        SCRIPT_TABLE_PUSH_NUMBER(rotation, 0);
+    }
 
     lua_newtable(state);
     lua_setfield(state, -2, "components");
@@ -248,7 +268,16 @@ SCRIPT_CLASS_FUNCTION(System, create)
     int ref = luaL_ref(state, LUA_REGISTRYINDEX);
 
     Entity *entity = new Entity();
-    entity->init();
+
+    if(node)
+    {
+        entity->node = node;
+    }
+    else
+    {
+        entity->init();
+    }
+
     entity->ref = ref;
 
     getInstance().nodeToEntityMap[entity->node] = entity;
