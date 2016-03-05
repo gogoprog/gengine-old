@@ -137,7 +137,6 @@ void System::init2()
     input::luaRegister(state);
     entity::luaRegister(state);
     audio::luaRegister(state);
-    //physics::luaRegister(state);
     //navigation::luaRegister(state);
     tiled::luaRegister(state);
 
