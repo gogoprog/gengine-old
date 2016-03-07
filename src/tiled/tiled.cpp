@@ -71,6 +71,20 @@ SCRIPT_REGISTERER()
                         end
                     end
                 end
+
+                local func
+
+                if layer:HasProperty("function") then
+                    func = layer:GetProperty("function")
+                end
+
+                for o=0, layer.numObjects - 1 do
+                    if func then
+                        local tmo = layer:GetObject(o)
+                        local f = loadstring("return " .. func)()
+                        f(tmo)
+                    end
+                end
             end
 
             return result
