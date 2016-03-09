@@ -12,8 +12,6 @@
 #include "entity_entity.h"
 #include "entity_component_camera.h"
 #include "entity_component_mouseable.h"
-#include "entity_component_particle_system.h"
-#include "entity_component_quad.h"
 #include "entity_component_text.h"
 #include "entity_component_generic.h"
 #include "entity_component_rigid_body_2d.h"
@@ -185,8 +183,6 @@ SCRIPT_CLASS_REGISTERER(System)
     registerComponent<ComponentRigidBody2D>(state, "ComponentRigidBody2D");
 
     registerComponent<ComponentMouseable>(state, "ComponentMouseable");
-    registerComponent<ComponentParticleSystem>(state, "ComponentParticleSystem");
-    registerComponent<ComponentQuad>(state, "ComponentQuad");
     registerComponent<ComponentText>(state, "ComponentText");
 }
 

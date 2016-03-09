@@ -26,8 +26,6 @@ public:
 private:
     math::Vector2
         extent;
-    uint
-        worldIndex;
     bool
         itIsHovered;
 };

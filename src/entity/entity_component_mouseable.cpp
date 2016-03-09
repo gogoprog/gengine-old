@@ -1,5 +1,7 @@
 #include "entity_component_mouseable.h"
 
+#include "core.h"
+#include "application.h"
 #include "entity_system.h"
 #include "entity_entity.h"
 #include "script.h"
@@ -8,6 +10,7 @@
 #include "input_system.h"
 #include "script_system.h"
 #include <string.h>
+#include <Urho3D/Graphics/Camera.h>
 
 using namespace gengine::math;
 
@@ -19,7 +22,6 @@ namespace entity
 ComponentMouseable::ComponentMouseable()
     :
     Component(),
-    worldIndex(0),
     itIsHovered(false)
 {
 }
@@ -34,22 +36,20 @@ void ComponentMouseable::insert()
 
 void ComponentMouseable::update(const float /*dt*/)
 {
-    /*const input::Mouse & mouse = input::System::getInstance().getMouse(0);
-    Transform & transform = entity->transform;
-    const Vector2 & entity_position = transform.position;
+    auto & input_system = input::System::getInstance();
+    auto & camera = * core::getRenderer().GetViewport(0)->GetCamera();
+    auto mouse_position = input_system.getMousePosition();
     auto state = script::System::getInstance().getState();
-    uint x,y;
-    Vector2 cursor_position;
 
-    x = mouse.getX();
-    y = mouse.getY();
+    mouse_position /= math::Vector2(application::getWidth(), application::getHeight());
 
-    //graphics::System::getInstance().getWorld(worldIndex).getCurrentCamera().getWorldPosition(cursor_position, Vector2(x, y));
+    auto mouse_world_position = camera.ScreenToWorldPoint(Vector3(mouse_position.x_, mouse_position.y_, 0));
+    auto entity_position = entity->getPosition2D();
 
-    if(cursor_position.x > entity_position.x - extent.x * 0.5f
-        && cursor_position.x < entity_position.x + extent.x * 0.5f
-        && cursor_position.y > entity_position.y - extent.y * 0.5f
-        && cursor_position.y < entity_position.y + extent.y * 0.5f)
+    if(mouse_world_position.x_ > entity_position.x_ - extent.x_ * 0.5f
+        && mouse_world_position.x_ < entity_position.x_ + extent.x_ * 0.5f
+        && mouse_world_position.y_ > entity_position.y_ - extent.y_ * 0.5f
+        && mouse_world_position.y_ < entity_position.y_ + extent.y_ * 0.5f)
     {
         if(!itIsHovered)
         {
@@ -60,9 +60,9 @@ void ComponentMouseable::update(const float /*dt*/)
             itIsHovered = true;
         }
 
-        for(uint i = input::Mouse::BUTTON_FIRST; i <= input::Mouse::BUTTON_LAST; ++i )
+        for(uint i = 0; i <= 3; ++i )
         {
-            if(mouse.isJustDown(i))
+            if(input_system.isMouseButtonJustDown(i))
             {
                 lua_getfield(state, -1, "fireEvent");
                 lua_pushvalue(state, -2);
@@ -82,7 +82,7 @@ void ComponentMouseable::update(const float /*dt*/)
             script::System::getInstance().call(2, 0);
             itIsHovered = false;
         }
-    }*/
+    }
 }
 
 void ComponentMouseable::remove()
@@ -98,10 +98,6 @@ ENTITY_COMPONENT_SETTERS(ComponentMouseable)
     ENTITY_COMPONENT_SETTER_FIRST(extent)
     {
         self.extent = *script::get<Vector2>(state, 3);
-    }
-    ENTITY_COMPONENT_SETTER(world)
-    {
-        self.worldIndex = lua_tonumber(state,3);
     }
     ENTITY_COMPONENT_SETTER_END()
 }

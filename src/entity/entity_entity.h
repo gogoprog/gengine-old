@@ -37,6 +37,7 @@ public:
     void update(const float dt);
 
     Urho3D::Node & getNode() { return *node; }
+    math::Vector2 getPosition2D() const { return node->GetPosition2D(); }
 
 private:
     Array<Component*>
