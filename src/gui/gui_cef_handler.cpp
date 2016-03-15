@@ -32,7 +32,7 @@ void Handler::init()
     texture = new Urho3D::Texture2D(&core::getContext());
     texture->SetMipsToSkip(Urho3D::QUALITY_LOW, 0);
     texture->SetNumLevels(1);
-    texture->SetSize(width, height, Urho3D::Graphics::GetRGBAFormat());
+    texture->SetSize(width, height, Urho3D::Graphics::GetBGRAFormat());
 
     auto sprite = new Urho3D::Sprite(&core::getContext());
     sprite->SetTexture(texture);
