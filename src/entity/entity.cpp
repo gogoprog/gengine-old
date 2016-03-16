@@ -24,6 +24,8 @@ int getMetaTableRef() { return metaTableRef; }
 
 SCRIPT_FUNCTION(addComponent)
 {
+    bool it_is_custom = false;
+
     auto name = lua_tostring(state, 4);
 
     lua_getfield(state, 1, "_e");
@@ -56,6 +58,8 @@ SCRIPT_FUNCTION(addComponent)
         lua_getfield(state, 1, "components");
         lua_pushvalue(state, 2);
         script::System::getInstance().call(2, 0);
+
+        it_is_custom = true;
     }
 
     component_instance->setEntity(entity_instance);
@@ -65,7 +69,7 @@ SCRIPT_FUNCTION(addComponent)
     {
         lua_pushstring(state, name);
 
-        if(component_instance)
+        if(!it_is_custom)
         {
             component_instance->push(state);
         }
