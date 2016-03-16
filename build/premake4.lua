@@ -56,6 +56,7 @@ solution "gengine"
             defines { "_LINUX" }
             flags { "Cxx11" }
             buildoptions { "-Wno-error=unused-variable -Wno-error=unused-parameter" }
+            linkoptions { "-Wl,-rpath=../deps/linux/lib64/"}
         elseif os.is("windows") then
             defines { "_WINDOWS", "NOMINMAX" }
             flags { "StaticRuntime" }
