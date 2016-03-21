@@ -219,6 +219,9 @@ SCRIPT_CLASS_FUNCTION(System, getScene)
     lua_pushlightuserdata(state, entity);
     lua_setfield(state, -2, "_e");
 
+    lua_pushlightuserdata(state, entity->node);
+    lua_setfield(state, -2, "_node");
+
     return 1;
 }
 
@@ -284,6 +287,9 @@ SCRIPT_CLASS_FUNCTION(System, create)
 
     lua_pushlightuserdata(state, entity);
     lua_setfield(state, -2, "_e");
+
+    lua_pushlightuserdata(state, entity->node);
+    lua_setfield(state, -2, "_node");
 
     return 1;
 }

@@ -163,6 +163,22 @@ SCRIPT_REGISTERER()
 
     lua_setfield(state, -2, "removeComponent");
 
+    SCRIPT_TABLE_PUSH_INLINE_FUNCTION(
+        setParent,
+        {
+            lua_getfield(state, 1, "_e");
+            auto & entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
+
+            lua_getfield(state, 2, "_e");
+            auto & other_entity_instance = * reinterpret_cast<Entity*>(lua_touserdata(state, -1));
+            lua_pop(state, 1);
+
+            entity_instance.getNode().SetParent(& other_entity_instance.getNode());
+
+            return 0;
+        });
+
     SCRIPT_DO(
         return function(self, event_name, ...)
             local name = "on" .. event_name

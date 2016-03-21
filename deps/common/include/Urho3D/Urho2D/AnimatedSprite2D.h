@@ -96,6 +96,9 @@ public:
     /// Set animation by name.
     void SetAnimationAttr(const String& name);
 
+    /// Get bone position.
+    Vector2 GetBonePosition(const int boneIndex) const;
+
 protected:
     /// Handle scene being assigned.
     virtual void OnSceneSet(Scene* scene);
@@ -141,7 +144,7 @@ protected:
     /// Animation state.
     spAnimationState* animationState_;
 #endif
-    
+
     /// Spriter instance.
     Spriter::SpriterInstance* spriterInstance_;
 };
