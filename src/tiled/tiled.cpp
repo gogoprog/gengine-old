@@ -36,6 +36,8 @@ SCRIPT_REGISTERER()
 
                         if tile then
                             local physic
+                            local node = layer:GetTileNode(x, y)
+                            local e = gengine.entity.create(node)
 
                             if layer:HasProperty("physic") then
                                 physic = layer:GetProperty("physic")
@@ -46,9 +48,6 @@ SCRIPT_REGISTERER()
                             end
 
                             if physic then
-                                local node = layer:GetTileNode(x, y)
-                                local e = gengine.entity.create(node)
-
                                 e:addComponent(
                                     ComponentRigidBody2D(),
                                     {
@@ -65,9 +64,9 @@ SCRIPT_REGISTERER()
                                         restitution = 0.1
                                     }
                                     )
-
-                                table.insert(result, e)
                             end
+
+                            table.insert(result, e)
                         end
                     end
                 end
