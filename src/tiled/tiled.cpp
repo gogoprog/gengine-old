@@ -30,6 +30,13 @@ SCRIPT_REGISTERER()
 
             for l=0, mainEntity.tileMap.numLayers-1 do
                 local layer = mainEntity.tileMap:GetLayer(l)
+                local func
+
+                if layer:HasProperty("function") then
+                    func = layer:GetProperty("function")
+                    func = loadstring("return " .. func)()
+                end
+
                 for x=0,layer.width - 1 do
                     for y=0,layer.height - 1 do
                         local tile = layer:GetTile(x, y)
@@ -38,6 +45,9 @@ SCRIPT_REGISTERER()
                             local physic
                             local node = layer:GetTileNode(x, y)
                             local e = gengine.entity.create(node)
+                            e.tile = tile
+
+                            -- :todo: add existing component static sprite
 
                             if layer:HasProperty("physic") then
                                 physic = layer:GetProperty("physic")
@@ -67,21 +77,18 @@ SCRIPT_REGISTERER()
                             end
 
                             table.insert(result, e)
+
+                            if func then
+                                func(e, layer, tile)
+                            end
                         end
                     end
-                end
-
-                local func
-
-                if layer:HasProperty("function") then
-                    func = layer:GetProperty("function")
                 end
 
                 for o=0, layer.numObjects - 1 do
                     if func then
                         local tmo = layer:GetObject(o)
-                        local f = loadstring("return " .. func)()
-                        f(tmo)
+                        func(tmo, layer)
                     end
                 end
             end
