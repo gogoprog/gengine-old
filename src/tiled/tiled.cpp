@@ -11,6 +11,7 @@ SCRIPT_REGISTERER()
 {
     lua_newtable(state);
 
+
     SCRIPT_DO(
         return function(filename, offset)
             local result = {}
@@ -46,8 +47,6 @@ SCRIPT_REGISTERER()
                             local node = layer:GetTileNode(x, y)
                             local e = gengine.entity.create(node)
                             e.tile = tile
-
-                            -- :todo: add existing component static sprite
 
                             if layer:HasProperty("physic") then
                                 physic = layer:GetProperty("physic")
