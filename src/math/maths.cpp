@@ -151,6 +151,27 @@ SCRIPT_FUNCTION(doesCircleIntersectRectangle)
     return 1;
 }
 
+SCRIPT_FUNCTION(getRotated)
+{
+    Vector2
+        input;
+    float
+        angle, c, s, nx, ny;
+
+    input = * script::get<Vector2>(state, 1);
+    angle = lua_tonumber(state, 2);
+
+    c = cos(angle);
+    s = sin(angle);
+
+    nx = input.x_ * c - input.y_ * s;
+    ny = input.x_ * s + input.y_ * c;
+
+    script::push(state, Vector2(nx, ny));
+
+    return 1;
+}
+
 SCRIPT_REGISTERER()
 {
     lua_newtable(state);
@@ -161,6 +182,7 @@ SCRIPT_REGISTERER()
     SCRIPT_TABLE_PUSH_FUNCTION(doRectanglesIntersect);
     SCRIPT_TABLE_PUSH_FUNCTION(doCirclesIntersect);
     SCRIPT_TABLE_PUSH_FUNCTION(doesCircleIntersectRectangle);
+    SCRIPT_TABLE_PUSH_FUNCTION(getRotated);
 
     lua_setfield(state, -2, "math");
 }
