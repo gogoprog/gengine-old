@@ -64,9 +64,7 @@ solution "gengine"
 
         includedirs {
             "../deps/common/include",
-            "../deps/common/jsonxx",
-            "../deps/common/include/Urho3D/ThirdParty",
-            "../deps/common/include/Urho3D/ThirdParty/Lua"
+            "../deps/common/jsonxx"
             }
 
         files {
@@ -86,6 +84,11 @@ solution "gengine"
         configuration "*Emscripten"
             defines { "EMSCRIPTEN" }
             libdirs { "../deps/emscripten/lib" }
+            includedirs { "../deps/emscripten/include" }
+            includedirs {
+                "../deps/emscripten/include/Urho3D/ThirdParty",
+                "../deps/emscripten/include/Urho3D/ThirdParty/Lua"
+                }
             targetsuffix ".bc"
             if not os.is("windows") then
                 linkoptions { "-Wno-warn-absolute-paths" }
@@ -95,6 +98,10 @@ solution "gengine"
             if os.is("linux") then
                 includedirs { "../deps/linux/include" }
                 includedirs { "../deps/linux/include/cef" }
+                includedirs {
+                    "../deps/linux/include/Urho3D/ThirdParty",
+                    "../deps/linux/include/Urho3D/ThirdParty/Lua"
+                    }
                 links {
                     "SDL2",
                     "SDL2_image",

@@ -5,11 +5,6 @@
 #include "core_sdl.h"
 #include "pointer.h"
 
-#ifdef EMSCRIPTEN
-    typedef uint SDL_JoystickID;
-    #define SDL_JoystickInstanceID SDL_JoystickIndex
-#endif
-
 namespace gengine
 {
 namespace input
@@ -35,8 +30,6 @@ public:
     void update();
     void connect();
     void disconnect();
-
-    bool isConnected() const { return !joystick.isNull(); }
 
     bool isJustDown(const uint key_index) const;
     bool isDown(const uint key_index) const;
@@ -64,10 +57,6 @@ private:
         axisValueTable[MAXIMUM_AXIS_COUNT];
     uint8
         index;
-    Pointer<SDL_Joystick>
-        joystick;
-    SDL_JoystickID
-        joystickId;
     uint
         buttonCount,
         axisCount,

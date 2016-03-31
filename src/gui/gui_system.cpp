@@ -108,7 +108,7 @@ void System::update(const float dt)
         {
             CefMouseEvent mouse_event;
             const input::System & input = input::System::getInstance();
-            int wheelY;
+            //int wheelY;
 
             mouse_event.x = input.getMousePosition().x_;
             mouse_event.y = input.getMousePosition().y_;

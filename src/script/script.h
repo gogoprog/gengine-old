@@ -1,6 +1,7 @@
 #pragma once
 
 #include "script_lua.h"
+#include "primitives.h"
 #include <functional>
 
 #define SCRIPT_DEBUG_TOP() \
