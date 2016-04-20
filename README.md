@@ -1,6 +1,8 @@
 gengine
 =======
 
+**Deprecated!** See https://github.com/gogoprog/gengine
+
 A C++ game engine with Lua scripting that supports HTML5
 
 ## Status
